@@ -1,0 +1,729 @@
+---
+title: "Introducción a la Programación con R - Tidyverse"
+subtitle: "Sesión 3: Transformación de Datos"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+format:
+  revealjs:
+    theme: slides.scss
+    footer: '[Paul Efren Santos Andrade](https://paulefrensa.rbind.io) // Introducción a R - Tidyverse'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    pause: true
+    slide-number: true
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 10
+  fig-height: 6
+  fig-align: center
+---
+
+## Esquema de la sesión {.smaller}
+
+::: incremental
+- Introducción a dplyr
+- Operaciones con filas: `filter()`, `arrange()`, `distinct()`
+- Operaciones con columnas: `mutate()`, `select()`, `rename()`, `relocate()`
+- El operador pipe `|>`
+- Agrupar datos: `group_by()` y `summarise()`
+- Funciones `slice_*`
+- Ejercicios prácticos
+:::
+
+# Introducción a dplyr {background-color="#2C3E50"}
+
+## ¿Qué es dplyr?
+
+::: incremental
+- Paquete del tidyverse para **manipulación de datos**
+- Proporciona verbos (funciones) para operaciones comunes
+- Diseñado para ser intuitivo y consistente
+- Funciona con tibbles y data frames
+:::
+
+## Los verbos de dplyr {.smaller}
+
+| Verbo | Acción |
+|-------|--------|
+| `filter()` | Selecciona filas según condiciones |
+| `arrange()` | Ordena filas |
+| `distinct()` | Encuentra filas únicas |
+| `mutate()` | Crea o modifica columnas |
+| `select()` | Selecciona columnas |
+| `summarise()` | Resume datos (colapsa filas) |
+| `group_by()` | Agrupa datos para operaciones |
+
+## Estructura común {.smaller}
+
+Todos los verbos de dplyr funcionan de manera similar:
+
+::: incremental
+1. **Primer argumento**: un data frame
+2. **Argumentos siguientes**: qué hacer con el data frame
+3. **Nombres de variables**: sin comillas
+4. **Resultado**: un nuevo data frame (no modifica el original)
+:::
+
+. . .
+
+```r
+# Estructura general
+verbo(datos, operacion)
+```
+
+## Cargar paquetes
+
+```r
+library(tidyverse)
+library(readxl)
+
+# Cargar datos de áreas naturales
+anp <- read_excel("data/areas_naturales_peru.xlsx")
+```
+
+# Operaciones con filas {background-color="#2C3E50"}
+
+## `filter()` - Filtrar filas
+
+Selecciona filas que cumplen una o más condiciones:
+
+```r
+# Áreas naturales de categoría "Parque Nacional"
+filter(anp, categoria == "Parque Nacional")
+```
+
+. . .
+
+```r
+# Áreas con superficie mayor a 100,000 hectáreas
+filter(anp, superficie_oficial > 100000)
+```
+
+## Operadores de comparación {.smaller}
+
+| Operador | Significado |
+|----------|-------------|
+| `>` | mayor que |
+| `>=` | mayor o igual que |
+| `<` | menor que |
+| `<=` | menor o igual que |
+| `==` | igual a |
+| `!=` | diferente de |
+
+::: callout-warning
+## ¡Cuidado!
+Usa `==` para comparar, no `=`
+:::
+
+## Operadores lógicos {.smaller}
+
+Combinar múltiples condiciones:
+
+| Operador | Significado |
+|----------|-------------|
+| `&` | Y (ambas condiciones verdaderas) |
+| `|` | O (al menos una condición verdadera) |
+| `!` | NO (negación) |
+
+. . .
+
+```r
+# Parques Nacionales con más de 100,000 ha
+filter(anp, categoria == "Parque Nacional" & superficie_oficial > 100000)
+```
+
+. . .
+
+```r
+# Áreas en Cusco o Loreto
+filter(anp, ubicacion_politica == "Cusco" | ubicacion_politica == "Loreto")
+```
+
+## Operador `%in%` {.smaller}
+
+Para comparar con múltiples valores:
+
+```r
+# Áreas en varios departamentos (forma larga)
+filter(anp,
+       ubicacion_politica == "Cusco" |
+       ubicacion_politica == "Loreto" |
+       ubicacion_politica == "Madre de Dios")
+```
+
+. . .
+
+```r
+# Forma más elegante con %in%
+departamentos <- c("Cusco", "Loreto", "Madre de Dios")
+filter(anp, ubicacion_politica %in% departamentos)
+```
+
+## Valores faltantes (NA)
+
+```r
+# is.na() identifica valores faltantes
+filter(anp, is.na(superficie_oficial))
+```
+
+. . .
+
+```r
+# !is.na() identifica valores NO faltantes
+filter(anp, !is.na(superficie_oficial))
+```
+
+::: callout-tip
+## Recuerda
+`NA` representa la ausencia de un valor. No uses `== NA`, usa `is.na()`
+:::
+
+## `arrange()` - Ordenar filas
+
+Ordena filas según una o más columnas:
+
+```r
+# Ordenar por superficie (de menor a mayor)
+arrange(anp, superficie_oficial)
+```
+
+. . .
+
+```r
+# Ordenar de mayor a menor con desc()
+arrange(anp, desc(superficie_oficial))
+```
+
+## Ordenar por múltiples columnas
+
+```r
+# Primero por categoría, luego por superficie
+arrange(anp, categoria, desc(superficie_oficial))
+```
+
+::: callout-note
+Los valores `NA` siempre se colocan al final, sin importar si usas `desc()` o no
+:::
+
+## `distinct()` - Filas únicas
+
+Encuentra filas únicas (elimina duplicados):
+
+```r
+# Categorías únicas de áreas naturales
+distinct(anp, categoria)
+```
+
+. . .
+
+```r
+# Mantener todas las columnas
+distinct(anp, categoria, .keep_all = TRUE)
+```
+
+## `distinct()` vs `count()` {.smaller}
+
+```r
+# distinct() muestra valores únicos
+distinct(anp, categoria)
+```
+
+. . .
+
+```r
+# count() cuenta las ocurrencias
+count(anp, categoria)
+```
+
+. . .
+
+```r
+# Ordenar por frecuencia
+count(anp, categoria, sort = TRUE)
+```
+
+# Operaciones con columnas {background-color="#2C3E50"}
+
+## `mutate()` - Crear/modificar columnas
+
+Crea nuevas columnas o modifica existentes:
+
+```r
+# Convertir superficie de hectáreas a km²
+mutate(anp, superficie_km2 = superficie_oficial / 100)
+```
+
+. . .
+
+```r
+# Crear múltiples columnas
+mutate(anp,
+  superficie_km2 = superficie_oficial / 100,
+  area_grande = superficie_oficial > 100000
+)
+```
+
+## Operaciones con `mutate()` {.smaller}
+
+Puedes usar operadores aritméticos:
+
+```r
+mutate(anp,
+  # Operaciones aritméticas
+  superficie_acres = superficie_oficial * 2.47105,
+  # Operaciones lógicas
+  es_parque = str_detect(categoria, "Parque"),
+  # Funciones
+  nombre_mayus = str_to_upper(nombre)
+)
+```
+
+## Opciones de `mutate()` {.smaller}
+
+::: incremental
+- `.before` - colocar nuevas columnas antes de otra columna
+- `.after` - colocar nuevas columnas después de otra columna
+- `.keep` - qué columnas mantener
+:::
+
+. . .
+
+```r
+# Colocar nueva columna al inicio
+mutate(anp,
+  superficie_km2 = superficie_oficial / 100,
+  .before = 1
+)
+```
+
+. . .
+
+```r
+# Mantener solo columnas nuevas
+mutate(anp,
+  superficie_km2 = superficie_oficial / 100,
+  .keep = "none"
+)
+```
+
+## `select()` - Seleccionar columnas
+
+Selecciona columnas por nombre:
+
+```r
+# Seleccionar columnas específicas
+select(anp, nombre, categoria, superficie_oficial)
+```
+
+. . .
+
+```r
+# Seleccionar rango de columnas
+select(anp, nombre:ubicacion_politica)
+```
+
+. . .
+
+```r
+# Excluir columnas con -
+select(anp, -fecha_promulgacion__modificacion)
+```
+
+## Funciones auxiliares de `select()` {.smaller}
+
+| Función | Uso |
+|---------|-----|
+| `starts_with("abc")` | Columnas que empiezan con "abc" |
+| `ends_with("xyz")` | Columnas que terminan con "xyz" |
+| `contains("ijk")` | Columnas que contienen "ijk" |
+| `num_range("x", 1:3)` | Columnas x1, x2, x3 |
+| `everything()` | Todas las columnas |
+| `where(is.numeric)` | Columnas que cumplen una condición |
+
+## Ejemplos de funciones auxiliares
+
+```r
+# Columnas que empiezan con "superficie"
+select(anp, starts_with("superficie"))
+```
+
+. . .
+
+```r
+# Columnas numéricas
+select(anp, where(is.numeric))
+```
+
+. . .
+
+```r
+# Reorganizar: nombre primero, luego todo lo demás
+select(anp, nombre, everything())
+```
+
+## `rename()` - Renombrar columnas
+
+```r
+# Sintaxis: nuevo_nombre = nombre_antiguo
+rename(anp,
+  area = nombre,
+  departamento = ubicacion_politica
+)
+```
+
+::: callout-tip
+## Atajo
+También puedes renombrar con `select()`:
+```r
+select(anp, area = nombre, categoria)
+```
+:::
+
+## `relocate()` - Reordenar columnas
+
+Cambia la posición de columnas:
+
+```r
+# Mover columna al inicio
+relocate(anp, superficie_oficial)
+```
+
+. . .
+
+```r
+# Mover después de otra columna
+relocate(anp, superficie_oficial, .after = nombre)
+```
+
+. . .
+
+```r
+# Mover antes de otra columna
+relocate(anp, superficie_oficial, .before = categoria)
+```
+
+# El operador pipe {background-color="#2C3E50"}
+
+## El pipe `|>` {.smaller}
+
+El **pipe** (tubería) te permite encadenar operaciones:
+
+::: incremental
+- Lee el código de izquierda a derecha
+- Pasa el resultado de una función a la siguiente
+- Hace el código más legible
+- Atajo de teclado: **Ctrl + Shift + M** (Windows) o **Cmd + Shift + M** (Mac)
+:::
+
+## Sin pipe vs con pipe {.smaller}
+
+**Sin pipe** (anidado y difícil de leer):
+
+```r
+arrange(
+  filter(
+    select(anp, nombre, categoria, superficie_oficial),
+    categoria == "Parque Nacional"
+  ),
+  desc(superficie_oficial)
+)
+```
+
+. . .
+
+**Con pipe** (fluido y claro):
+
+```r
+anp |>
+  select(nombre, categoria, superficie_oficial) |>
+  filter(categoria == "Parque Nacional") |>
+  arrange(desc(superficie_oficial))
+```
+
+## Ventajas del pipe {.smaller}
+
+::: incremental
+1. **Legibilidad**: Se lee como una receta paso a paso
+2. **Menos objetos intermedios**: No necesitas guardar resultados temporales
+3. **Fácil modificar**: Agregar o quitar pasos es simple
+4. **Debugging más fácil**: Puedes ejecutar el código línea por línea
+:::
+
+. . .
+
+::: callout-note
+## Dos tipos de pipe
+- `|>` - pipe nativo de R (desde R 4.1)
+- `%>%` - pipe de magrittr (del tidyverse)
+
+Ambos funcionan igual en la mayoría de casos. Usaremos `|>` en este curso.
+:::
+
+## Ejemplo completo con pipe
+
+```r
+anp |>
+  # Seleccionar columnas relevantes
+  select(nombre, categoria, superficie_oficial, ubicacion_politica) |>
+  # Filtrar Parques Nacionales
+  filter(categoria == "Parque Nacional") |>
+  # Crear nueva columna
+  mutate(superficie_km2 = superficie_oficial / 100) |>
+  # Ordenar por superficie
+  arrange(desc(superficie_km2))
+```
+
+# Operaciones agrupadas {background-color="#2C3E50"}
+
+## `group_by()` - Agrupar datos
+
+Agrupa filas para aplicar operaciones por grupo:
+
+```r
+anp |>
+  group_by(categoria)
+```
+
+::: callout-note
+`group_by()` no cambia los datos visualmente, pero afecta cómo funcionan otros verbos
+:::
+
+## `summarise()` - Resumir datos {.smaller}
+
+Colapsa filas en resúmenes estadísticos:
+
+```r
+anp |>
+  group_by(categoria) |>
+  summarise(
+    n_areas = n(),
+    superficie_promedio = mean(superficie_oficial, na.rm = TRUE)
+  )
+```
+
+::: incremental
+- `n()` cuenta el número de filas en cada grupo
+- Puedes usar cualquier función de resumen: `mean()`, `median()`, `sd()`, `min()`, `max()`, `sum()`
+- `na.rm = TRUE` ignora valores faltantes
+:::
+
+## Múltiples resúmenes
+
+```r
+anp |>
+  group_by(categoria) |>
+  summarise(
+    cantidad = n(),
+    sup_total = sum(superficie_oficial, na.rm = TRUE),
+    sup_promedio = mean(superficie_oficial, na.rm = TRUE),
+    sup_min = min(superficie_oficial, na.rm = TRUE),
+    sup_max = max(superficie_oficial, na.rm = TRUE)
+  )
+```
+
+## Funciones de slice {.smaller}
+
+Seleccionan filas específicas dentro de grupos:
+
+| Función | Acción |
+|---------|--------|
+| `slice_head(n = 1)` | Primera(s) fila(s) |
+| `slice_tail(n = 1)` | Última(s) fila(s) |
+| `slice_min(columna, n = 1)` | Fila(s) con valor mínimo |
+| `slice_max(columna, n = 1)` | Fila(s) con valor máximo |
+| `slice_sample(n = 1)` | Fila(s) aleatoria(s) |
+
+## Ejemplos de slice
+
+```r
+# El área más grande de cada categoría
+anp |>
+  group_by(categoria) |>
+  slice_max(superficie_oficial, n = 1)
+```
+
+. . .
+
+```r
+# Las 3 áreas más grandes en total
+anp |>
+  slice_max(superficie_oficial, n = 3)
+```
+
+## Múltiples variables de agrupación
+
+```r
+# Agrupar por categoría y departamento
+anp |>
+  group_by(categoria, ubicacion_politica) |>
+  summarise(
+    cantidad = n(),
+    superficie_total = sum(superficie_oficial, na.rm = TRUE)
+  )
+```
+
+::: callout-warning
+## Desagrupar
+Después de `summarise()`, se elimina el último nivel de agrupación. Usa `ungroup()` para eliminar todos los niveles.
+:::
+
+## El argumento `.by` {.smaller}
+
+Nueva forma de agrupar (dplyr 1.1.0+):
+
+```r
+# Forma tradicional
+anp |>
+  group_by(categoria) |>
+  summarise(cantidad = n())
+```
+
+. . .
+
+```r
+# Con .by (más conciso)
+anp |>
+  summarise(
+    cantidad = n(),
+    .by = categoria
+  )
+```
+
+::: callout-tip
+Con `.by` no necesitas `ungroup()` al final
+:::
+
+# Ejercicios prácticos {background-color="#2C3E50"}
+
+## Ejercicio 1 {.smaller}
+
+::: question
+Con los datos de áreas naturales protegidas:
+
+1. Filtra las áreas con superficie mayor a 50,000 hectáreas
+2. Selecciona las columnas: nombre, categoría, superficie_oficial
+3. Ordena por superficie de mayor a menor
+4. ¿Cuál es el área más grande?
+
+Usa el pipe `|>` para encadenar las operaciones.
+:::
+
+## Ejercicio 2 {.smaller}
+
+::: question
+Responde las siguientes preguntas usando `group_by()` y `summarise()`:
+
+1. ¿Cuántas áreas naturales hay por categoría?
+2. ¿Cuál es la superficie total protegida por categoría?
+3. ¿Cuál categoría tiene la mayor superficie promedio?
+
+Pista: Usa `arrange(desc(...))` al final para ordenar los resultados.
+:::
+
+## Ejercicio 3 {.smaller}
+
+::: question
+Crea un nuevo data frame que:
+
+1. Contenga solo Parques Nacionales y Reservas Nacionales
+2. Agregue una columna que clasifique las áreas como "Grande" (>100,000 ha) o "Mediana" (≤100,000 ha)
+3. Cuente cuántas áreas hay de cada tamaño en cada categoría
+
+Pista: Usa `if_else()` dentro de `mutate()`:
+```r
+mutate(tamaño = if_else(superficie_oficial > 100000, "Grande", "Mediana"))
+```
+:::
+
+## Ejercicio 4 {.smaller}
+
+::: question
+Para cada departamento (ubicacion_politica):
+
+1. Encuentra el área natural más grande
+2. Muestra solo: departamento, nombre del área, superficie
+3. Ordena por superficie de mayor a menor
+
+Pista: Usa `slice_max()` después de agrupar.
+:::
+
+# Recapitulación {background-color="#2C3E50"}
+
+## Resumen de verbos dplyr {.smaller}
+
+::: {.incremental}
+**Operaciones con filas:**
+
+- `filter()` - seleccionar filas por condición
+- `arrange()` - ordenar filas
+- `distinct()` - encontrar filas únicas
+
+**Operaciones con columnas:**
+
+- `mutate()` - crear/modificar columnas
+- `select()` - seleccionar columnas
+- `rename()` - renombrar columnas
+- `relocate()` - reordenar columnas
+
+**Operaciones agrupadas:**
+
+- `group_by()` - agrupar datos
+- `summarise()` - resumir datos
+- `slice_*()` - seleccionar filas específicas
+:::
+
+## Consejos finales {.smaller}
+
+::: incremental
+1. **Usa el pipe `|>`** para encadenar operaciones y hacer tu código más legible
+2. **Los verbos no modifican los datos originales** - siempre crean nuevos data frames
+3. **Guarda los resultados** si los necesitas después:
+   ```r
+   anp_parques <- anp |> filter(categoria == "Parque Nacional")
+   ```
+4. **Combina verbos** para análisis complejos
+5. **Usa `View()` o `glimpse()`** para inspeccionar resultados intermedios
+:::
+
+## Próximos pasos {.smaller}
+
+En las siguientes sesiones veremos:
+
+::: incremental
+- **Tidyr**: reorganizar datos (pivot_longer, pivot_wider)
+- **Stringr**: manipulación de texto
+- **Lubridate**: trabajo con fechas
+- **ggplot2**: visualización de datos
+- **Datos espaciales**: sf package
+:::
+
+## Recursos adicionales {.smaller}
+
+::: incremental
+- [R for Data Science - Data transformation](https://r4ds.hadley.nz/data-transform)
+- [dplyr cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+- [Documentación de dplyr](https://dplyr.tidyverse.org/)
+- Ayuda en R: `?filter`, `?mutate`, etc.
+:::
+
+## ¡Gracias! {.center}
+
+::: {.centered}
+**¿Preguntas?**
+
+📧 paul.santos@example.com
+
+🌐 Materiales del curso disponibles en el repositorio
+:::

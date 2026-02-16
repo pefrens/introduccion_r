@@ -1,0 +1,583 @@
+---
+title: "Introducción a la Programación con R - Tidyverse"
+subtitle: "<span style='font-size:1.8em;'>¡Bienvenidos!</span>"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+date: "2026-02"
+format:
+  revealjs:
+    theme: slides.scss
+    logo: img/logo.png
+    footer: '**[Paul Efren Santos Andrade](https://paulefrensa.rbind.io)** // Introducción a R - Tidyverse'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    pause: true
+    slide-number: true
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 5
+  fig-height: 6
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+# ¡Bienvenidos!<br><br><br> {background-color="#28a87d"}
+
+## Conoce al Instructor {.smaller}
+
+::: {.columns}
+::: {.column width="60%"}
+**Paul Efren Santos Andrade**
+
+Especialista en análisis de datos con R, enfocado en:
+
+- Ciencia de datos aplicada
+- Análisis reproducible
+- Ecosistema Tidyverse
+- Análisis espacial con sf
+
+**Contacto:**
+- Blog: [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
+- Twitter: [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
+- GitHub: [@PaulESantos](https://github.com/PaulESantos)
+:::
+
+::: {.column width="40%"}
+![](img/rlogo.png){fig-align="center" width="60%"}
+:::
+:::
+
+## ¡Conózcanse!
+
+::: question
+Por favor comparte con tus compañeros...
+
+-   Tu nombre
+-   ¿A qué te dedicas?
+-   ¿Has usado R antes?
+-   ¿Por qué quieres aprender R?
+-   ¿Qué tipo de datos te interesan?
+-   ¿Tienes experiencia con programación?
+:::
+
+## ¿Qué es la Ciencia de Datos?
+
+::: incremental
+-   **Ciencia de datos** es convertir datos brutos en conocimiento y comprensión
+-   Aprenderemos a hacerlo de manera **ordenada** (tidy) y **reproducible**
+-   Este es un curso de introducción con énfasis en:
+    - Fundamentos de R
+    - Manipulación de datos con tidyverse
+    - Análisis espacial
+:::
+
+## El Ciclo de la Ciencia de Datos
+
+![](images/01/data-science-cycle.png){fig-alt="Ciclo de la ciencia de datos: Importar, ordenar, transformar, visualizar, modelar, comunicar." fig-align="center"}
+
+# ¿Por qué R?
+
+## R es Poderoso y Popular
+
+::: incremental
+-   **Gratuito y de código abierto**
+-   **Más de 20,000 paquetes** disponibles
+-   **Comunidad activa y solidaria**
+-   **Excelente para visualización** (ggplot2)
+-   **Reproducibilidad** con RMarkdown/Quarto
+-   **Integración con datos espaciales** (sf, terra)
+:::
+
+## R + RStudio
+
+::: {.columns}
+::: {.column width="50%"}
+![](img/rlogo.png){fig-alt="Logo de R" fig-align="center" width="45%"}
+
+El lenguaje de programación
+:::
+
+::: {.column width="50%"}
+![](img/rstudio.png){fig-alt="Logo de RStudio" fig-align="center" width="45%"}
+
+Un programa para escribir código
+:::
+:::
+
+## El Ecosistema Tidyverse
+
+![](img/tidyverse.png){fig-alt="Hexágonos de paquetes tidyverse" fig-align="center" width="70%"}
+
+Una colección de paquetes para ciencia de datos
+
+# Contenido del Curso
+
+## Sesión 1: Fundamentos de R
+
+::: incremental
+-   Valores atómicos y tipos de datos
+-   Creación de objetos (`<-`)
+-   Operadores básicos
+-   Estructuras de datos:
+    - Vectores
+    - Matrices
+    - Data frames
+    - Listas
+-   Funciones en R
+:::
+
+## Sesión 2: Importar y Revisar Datos
+
+::: incremental
+-   Importar desde diferentes formatos:
+    - CSV con `readr`
+    - Excel con `readxl`
+    - Datos espaciales con `sf`
+-   Revisar estructura de datos
+-   Limpiar nombres con `janitor`
+-   Visualizar tipos de datos con `visdat`
+-   El operador pipe `|>`
+:::
+
+## Sesión 3: dplyr - Manipulación de Datos
+
+Los verbos principales de dplyr:
+
+::: incremental
+-   `select()`: Seleccionar columnas
+-   `filter()`: Filtrar filas
+-   `mutate()`: Crear/modificar variables
+-   `summarise()`: Resumir datos
+-   `group_by()`: Agrupar datos
+-   `arrange()`: Ordenar datos
+:::
+
+## Sesión 4: tidyr - Organización de Datos
+
+::: incremental
+-   Principios de **Tidy Data**
+-   `pivot_longer()`: Datos anchos → largos
+-   `pivot_wider()`: Datos largos → anchos
+-   `separate()` y `unite()`: Dividir y unir columnas
+-   Aplicaciones prácticas
+:::
+
+## Sesión 5: Datos Espaciales con sf
+
+::: incremental
+-   ¿Qué son datos espaciales?
+-   El paquete `sf` (Simple Features)
+-   Tipos de geometrías (puntos, líneas, polígonos)
+-   Lectura/escritura de formatos espaciales
+-   Integración con tidyverse
+-   Visualización con `geom_sf()`
+-   Operaciones espaciales básicas
+:::
+
+## Ejemplo de Datos Espaciales
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|1-2|4-5|7-9|11-13"
+# Cargar paquetes
+library(sf)
+library(tidyverse)
+
+# Leer datos espaciales
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+
+# Visualizar
+ggplot(departamentos) +
+  geom_sf(aes(fill = NOMBDEP))
+
+# Calcular área
+departamentos |>
+  mutate(area_km2 = st_area(geometry) / 1e6)
+```
+
+# Datos del Curso
+
+## Datos que Usaremos
+
+::: {.columns}
+::: {.column width="50%"}
+### Datos Tabulares
+-   `areas_naturales_peru.xlsx`
+-   `catalogo_planes.csv`
+-   `catalogo_planes.txt`
+:::
+
+::: {.column width="50%"}
+### Datos Espaciales
+-   `DEPARTAMENTO.gpkg`
+    - Polígonos de departamentos
+    - Sistema WGS84 (EPSG:4326)
+    - Atributos: nombres, capitales
+:::
+:::
+
+## Ejemplo: Áreas Naturales del Perú
+
+Trabajaremos con datos reales de áreas naturales protegidas:
+
+```{r}
+#| eval: false
+#| echo: true
+library(readxl)
+library(janitor)
+
+anp <- read_excel("data/areas_naturales_peru.xlsx", skip = 1) |>
+  clean_names()
+
+# Ver estructura
+glimpse(anp)
+```
+
+# Materiales del Curso
+
+## Página Web del Curso {.center}
+
+Todos los materiales en:
+
+<div style='text-align:center;'>
+<a href="https://introduccion-r.github.io" style='font-family:monospace;font-size:40pt;font-weight:700;'>introduccion-r.github.io</a>
+</div>
+
+<br>
+
+Incluye:
+
+-   Diapositivas de cada sesión
+-   Ejercicios prácticos
+-   Recursos adicionales
+-   Datos del curso
+
+## Libros de Referencia
+
+::: {.columns}
+::: {.column width="50%"}
+### R for Data Science
+![](img/cover.png){width="50%"}
+
+-   [Versión en inglés](https://r4ds.hadley.nz/)
+-   [Versión en español](https://es.r4ds.hadley.nz/)
+:::
+
+::: {.column width="50%"}
+### Geocomputation with R
+
+-   [Versión en línea](https://r.geocompx.org/)
+-   Análisis geoespacial completo
+:::
+:::
+
+# Preparación
+
+## Programas Necesarios
+
+Asegúrate de tener instalados:
+
+::: incremental
+1.  **R** (versión 4.5.2 o superior)
+    -   [cran.r-project.org](https://cran.r-project.org)
+2.  **RStudio** (versión 1.1.401 o superior)
+    -   [posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop/)
+3.  **Rtools 45** (solo Windows)
+    -   [cran.r-project.org/bin/windows/Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+:::
+
+## Paquetes Principales
+
+```{r}
+#| label: packages-install-main
+#| eval: false
+#| echo: true
+# Tidyverse y manipulación de datos
+packages <- c(
+  "tidyverse",  # Colección completa
+  "janitor",    # Limpieza de nombres
+  "here",       # Rutas reproducibles
+  "readxl",     # Leer Excel
+  "writexl",    # Escribir Excel
+  "visdat"      # Visualizar datos
+)
+
+install.packages(packages)
+```
+
+## Paquetes Espaciales
+
+```{r}
+#| label: packages-install-spatial
+#| eval: false
+#| echo: true
+# Paquetes para datos espaciales
+spatial_packages <- c(
+  "sf",        # Simple Features (principal)
+  "terra",     # Datos ráster
+  "mapview",   # Visualización interactiva
+  "leaflet",   # Mapas web
+  "tmap"       # Mapas temáticos
+)
+
+install.packages(spatial_packages)
+```
+
+## Paquetes Adicionales
+
+```{r}
+#| label: packages-install-extra
+#| eval: false
+#| echo: true
+# Paquetes de texto
+install.packages("tm")
+
+# stringr.plus (desde GitHub)
+install.packages("remotes")
+remotes::install_github("johncassil/stringr.plus")
+```
+
+## Requisitos Especiales para sf
+
+### macOS
+```bash
+brew install gdal
+```
+
+### Linux (Ubuntu/Debian)
+```bash
+sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+```
+
+### Windows
+Rtools 45 ya incluye todo lo necesario ✓
+
+## Verificar Instalación
+
+```{r}
+#| label: verify-install
+#| eval: false
+#| echo: true
+# Verificar tidyverse
+library(tidyverse)
+
+# Verificar sf
+library(sf)
+st_point(c(0, 0))  # Debe funcionar sin errores
+
+# Verificar vegan (para ejemplos)
+library(vegan)
+data("BCI")
+```
+
+# Dinámica del Curso
+
+## Metodología
+
+::: incremental
+-   **Clases interactivas** con ejemplos en vivo
+-   **Ejercicios prácticos** al final de cada sesión
+-   **Datos reales** del Perú
+-   **Aprender haciendo**
+-   **Preguntas en cualquier momento**
+:::
+
+## Estrategia de Aprendizaje
+
+::: incremental
+-   **Practica el código** - no solo leas
+-   **Experimenta** - cambia valores y observa qué pasa
+-   **Comete errores** - son parte del aprendizaje
+-   **Consulta la documentación** - usa `?nombre_funcion`
+-   **Busca ayuda** - Stack Overflow, comunidad R
+:::
+
+## Recursos de Ayuda
+
+::: incremental
+-   **Durante el curso**: Pregunta directamente
+-   **Documentación de R**: `?funcion` o `help(funcion)`
+-   **Hojas de referencia**: [posit.co/resources/cheatsheets](https://posit.co/resources/cheatsheets/)
+-   **Stack Overflow**: [stackoverflow.com/questions/tagged/r](https://stackoverflow.com/questions/tagged/r)
+-   **RStudio Community**: [community.rstudio.com](https://community.rstudio.com/)
+:::
+
+## Consejos para el Éxito
+
+::: incremental
+1.  **Escribe el código tú mismo** - no copies y pegues
+2.  **Lee los mensajes de error** - son informativos
+3.  **Usa RStudio Projects** - mantén organizado
+4.  **Comenta tu código** - tu yo futuro te lo agradecerá
+5.  **Practica regularmente** - la constancia es clave
+6.  **Únete a la comunidad** - #rstats en Twitter
+:::
+
+# Objetivos del Curso
+
+## Al finalizar este curso podrás:
+
+::: incremental
+-   ✓ Escribir código R básico de forma legible
+-   ✓ Importar datos desde múltiples formatos
+-   ✓ Limpiar y transformar datos con dplyr
+-   ✓ Organizar datos con tidyr
+-   ✓ Trabajar con datos espaciales usando sf
+-   ✓ Crear visualizaciones con ggplot2
+-   ✓ Integrar análisis espacial con tidyverse
+-   ✓ Crear análisis reproducibles
+:::
+
+## ¿Qué NO cubriremos?
+
+Este es un curso introductorio, NO cubriremos:
+
+::: incremental
+-   Modelado estadístico avanzado
+-   Machine learning
+-   Shiny (aplicaciones web)
+-   Análisis de series temporales avanzadas
+-   Programación avanzada en R
+:::
+
+. . .
+
+¡Pero tendrás las bases para aprender todo esto después!
+
+# Preguntas Frecuentes
+
+## "Nunca he programado antes, ¿podré seguir el curso?"
+
+::: fragment
+**¡Sí!** Este curso está diseñado para principiantes.
+
+-   Empezamos desde cero
+-   Explicamos cada concepto paso a paso
+-   Muchos ejemplos prácticos
+:::
+
+## "¿Necesito conocer estadística?"
+
+::: fragment
+**No es obligatorio** para este curso introductorio.
+
+-   Nos enfocamos en manipulación de datos
+-   Conceptos estadísticos básicos se explican cuando aparecen
+-   El énfasis está en programación y ciencia de datos
+:::
+
+## "¿Cuánto tiempo debo dedicar a practicar?"
+
+::: fragment
+**Recomendación:**
+
+-   Durante el curso: Participación activa
+-   Después de cada sesión: 1-2 horas practicando
+-   Total: Al menos 10-15 horas de práctica adicional
+-   ¡Entre más practiques, mejor!
+:::
+
+## "¿Qué hago si me quedo atascado?"
+
+::: fragment
+**Estrategias:**
+
+1.  Lee el mensaje de error completo
+2.  Busca el error en Google
+3.  Consulta la documentación (`?funcion`)
+4.  Pregunta en Stack Overflow
+5.  Revisa los ejemplos del curso
+6.  Contacta al instructor
+:::
+
+# ¡Comencemos!
+
+## Actividad: Primer Código en R
+
+Abre RStudio y escribe:
+
+```{r}
+#| echo: true
+#| eval: false
+# Mi primer código en R
+print("¡Hola, Mundo!")
+
+# Operaciones básicas
+2 + 2
+10 * 5
+
+# Crear un objeto
+mi_nombre <- "Tu Nombre"
+mi_nombre
+```
+
+## Verificación Rápida
+
+¿Funciona todo correctamente?
+
+```{r}
+#| echo: true
+#| eval: false
+# Verificar tidyverse
+library(tidyverse)
+
+# Crear un gráfico simple
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Mi primer gráfico en R")
+```
+
+## Agenda de Hoy
+
+::: incremental
+1.  ✓ Bienvenida e introducción
+2.  → Fundamentos de R y RStudio
+3.  → Valores y objetos
+4.  → Estructuras de datos
+5.  → Funciones básicas
+6.  → Ejercicios prácticos
+:::
+
+# ¡Gracias por su atención!
+
+## Contacto
+
+::: {.columns}
+::: {.column width="50%"}
+**Paul Efren Santos Andrade**
+
+📧 [Correo electrónico]
+
+🌐 [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
+
+🐦 [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
+
+💻 [github.com/PaulESantos](https://github.com/PaulESantos)
+:::
+
+::: {.column width="50%"}
+![](img/rlogo.png){fig-align="center" width="60%"}
+:::
+:::
+
+. . .
+
+### ¿Preguntas antes de comenzar?

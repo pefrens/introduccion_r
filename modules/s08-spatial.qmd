@@ -1,0 +1,321 @@
+---
+title: "Datos Espaciales con sf"
+subtitle: "<span class='code'>Sesión 5</span>"
+date: "2026-02"
+image: "images/03-colors.png"
+tbl-colwidths: [5,20,75]
+---
+
+# Esquema
+
+-   Introducción a datos espaciales
+-   El paquete `sf` (Simple Features)
+-   Tipos de geometrías
+-   Lectura y escritura de datos espaciales
+-   Manipulación con tidyverse
+-   Visualización con ggplot2
+-   Operaciones espaciales básicas
+
+# Introducción a Datos Espaciales
+
+## ¿Qué son datos espaciales?
+
+Los datos espaciales representan información geográfica con:
+
+- **Geometría**: La forma y ubicación (puntos, líneas, polígonos)
+- **Atributos**: Información asociada a cada geometría
+- **Sistema de Referencia (CRS)**: Define cómo se proyectan las coordenadas
+
+## Tipos de Datos Geográficos
+
+1. **Vectoriales**: Puntos, líneas y polígonos
+2. **Ráster**: Grillas de valores (imágenes, elevación, temperatura)
+
+# El Paquete sf
+
+## Simple Features
+
+`sf` es el paquete moderno para datos espaciales vectoriales en R:
+
+- Compatible con tidyverse
+- Usa data frames estándar
+- Implementa el estándar Simple Features
+- Más rápido y eficiente que paquetes anteriores (sp, rgdal, rgeos)
+
+```r
+library(sf)
+library(tidyverse)
+```
+
+## Estructura de Objetos sf
+
+### Jerarquía de objetos:
+
+1. **sfg** (geometry): Una geometría individual
+2. **sfc** (geometry column): Colección de geometrías + CRS
+3. **sf** (simple feature): Data frame con geometría + atributos
+
+# Tipos de Geometrías
+
+## Geometrías Básicas
+
+- **POINT**: Un punto individual
+- **MULTIPOINT**: Múltiples puntos
+- **LINESTRING**: Una línea
+- **MULTILINESTRING**: Múltiples líneas
+- **POLYGON**: Un polígono
+- **MULTIPOLYGON**: Múltiples polígonos
+- **GEOMETRYCOLLECTION**: Colección mixta
+
+## Crear Puntos Manualmente
+
+```r
+# Un punto simple (longitud, latitud)
+punto <- st_point(c(-76.5, -12.0))
+
+# Múltiples puntos
+ciudades <- data.frame(
+  nombre = c("Lima", "Cusco", "Arequipa"),
+  lon = c(-77.0428, -71.9675, -71.5350),
+  lat = c(-12.0464, -13.5319, -16.4090)
+)
+
+# Convertir a sf
+ciudades_sf <- st_as_sf(ciudades,
+                        coords = c("lon", "lat"),
+                        crs = 4326)  # WGS84
+```
+
+# Leer y Escribir Datos Espaciales
+
+## Lectura
+
+```r
+# Leer shapefile, geopackage, etc.
+departamentos <- st_read("data/DEPARTAMENTO.gpkg")
+
+# También funciona con read_sf()
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+```
+
+## Escritura
+
+```r
+# Guardar en diferentes formatos
+st_write(departamentos, "output/departamentos.shp")
+st_write(departamentos, "output/departamentos.gpkg")
+st_write(departamentos, "output/departamentos.geojson")
+```
+
+# Manipulación con Tidyverse
+
+## sf + dplyr
+
+Los objetos `sf` son data frames, funcionan con verbos de dplyr:
+
+```r
+# Select
+departamentos |>
+  select(NOMBDEP, CAPITAL)
+
+# Filter
+departamentos |>
+  filter(NOMBDEP == "CUSCO")
+
+# Mutate
+departamentos |>
+  mutate(area_km2 = st_area(geometry) / 1e6)
+
+# Summarise
+departamentos |>
+  group_by(REGION) |>
+  summarise(n_departamentos = n())
+```
+
+## Unir geometrías
+
+```r
+# Unir polígonos por región
+regiones <- departamentos |>
+  group_by(REGION) |>
+  summarise(geometry = st_union(geometry))
+```
+
+# Visualización con ggplot2
+
+## Mapas Básicos
+
+```r
+# Mapa simple
+ggplot(departamentos) +
+  geom_sf()
+
+# Con atributos
+ggplot(departamentos) +
+  geom_sf(aes(fill = NOMBDEP)) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Múltiples Capas
+
+```r
+# Departamentos + ciudades
+ggplot() +
+  geom_sf(data = departamentos, fill = "lightgray") +
+  geom_sf(data = ciudades_sf, color = "red", size = 3) +
+  theme_minimal()
+```
+
+## Personalización
+
+```r
+ggplot(departamentos) +
+  geom_sf(aes(fill = area_km2), color = "white") +
+  scale_fill_viridis_c(name = "Área (km²)") +
+  labs(title = "Departamentos del Perú",
+       subtitle = "Área por departamento") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+# Operaciones Espaciales
+
+## Transformación de CRS
+
+```r
+# Ver CRS actual
+st_crs(departamentos)
+
+# Transformar a UTM zona 18S
+departamentos_utm <- st_transform(departamentos, crs = 32718)
+
+# Transformar a WGS84 (común para web maps)
+departamentos_wgs84 <- st_transform(departamentos, crs = 4326)
+```
+
+## Cálculos Geométricos
+
+```r
+# Área
+departamentos |>
+  mutate(area_m2 = st_area(geometry))
+
+# Centroide
+centroides <- st_centroid(departamentos)
+
+# Perímetro
+departamentos |>
+  mutate(perimetro = st_length(st_boundary(geometry)))
+```
+
+## Predicados Espaciales
+
+```r
+# ¿Qué departamentos intersectan con Cusco?
+cusco <- departamentos |>
+  filter(NOMBDEP == "CUSCO")
+
+departamentos |>
+  filter(st_intersects(geometry, cusco, sparse = FALSE))
+
+# Puntos dentro de polígonos
+ciudades_en_cusco <- ciudades_sf |>
+  filter(st_within(geometry, cusco, sparse = FALSE))
+```
+
+# Trabajar con ANP (Ejemplo Práctico)
+
+## Cargar y Explorar
+
+```r
+library(readxl)
+library(sf)
+
+# Leer datos de áreas naturales
+anp <- read_excel("data/areas_naturales_peru.xlsx", skip = 1) |>
+  clean_names()
+
+# Si tuviéramos las geometrías
+anp_espacial <- read_sf("data/anp.gpkg")
+
+# Explorar
+glimpse(anp_espacial)
+st_crs(anp_espacial)
+```
+
+## Análisis Espacial
+
+```r
+# Áreas naturales por departamento
+anp_por_depto <- st_join(anp_espacial, departamentos) |>
+  group_by(NOMBDEP) |>
+  summarise(
+    n_areas = n(),
+    area_total = sum(st_area(geometry))
+  )
+
+# Visualizar
+ggplot() +
+  geom_sf(data = departamentos, fill = "gray95") +
+  geom_sf(data = anp_espacial, aes(fill = categoria)) +
+  theme_minimal() +
+  labs(title = "Áreas Naturales Protegidas del Perú")
+```
+
+# Ejercicios
+
+## Ejercicio 1
+
+::: question
+- Carga el archivo `DEPARTAMENTO.gpkg`
+- Calcula el área en km² de cada departamento
+- Identifica los 5 departamentos más grandes
+- Crea un mapa mostrando el área con una escala de colores
+:::
+
+## Ejercicio 2
+
+::: question
+- Crea un objeto sf con 5 ciudades del Perú (usa sus coordenadas)
+- Asegúrate de asignar el CRS correcto (EPSG:4326)
+- Crea un mapa que muestre los departamentos y las ciudades
+- Añade etiquetas con los nombres de las ciudades
+:::
+
+## Ejercicio 3
+
+::: question
+- Filtra solo el departamento de Cusco
+- Transforma a UTM zona 18S (EPSG:32718)
+- Calcula su área en km²
+- Encuentra su centroide y visualízalo en el mapa
+:::
+
+# Recursos Adicionales
+
+## Tutoriales
+
+- [Introduction to spatial data analysis using the tidyverse](https://mhallwor.github.io/_pages/Tidyverse_intro)
+- [Introduction to spatial points in R](https://mhallwor.github.io/_pages/basics_SpatialPoints)
+- [Introduction to spatial polygons in R](https://mhallwor.github.io/_pages/basics_SpatialPolygons)
+- [Spatial Predicates](https://mhallwor.github.io/_pages/spatial_predicates)
+- [Making maps in R](https://mhallwor.github.io/_pages/MakingMaps)
+
+## Documentación
+
+- [sf package documentation](https://r-spatial.github.io/sf/)
+- [Geocomputation with R](https://r.geocompx.org/)
+
+# Recapitulación
+
+::: recap
+- `sf` es el paquete moderno para datos espaciales vectoriales
+- Los objetos `sf` son data frames compatibles con tidyverse
+- Soporta 7 tipos de geometrías (POINT, POLYGON, etc.)
+- `st_read()` y `st_write()` leen/escriben formatos espaciales
+- `geom_sf()` permite visualización directa en ggplot2
+- `st_transform()` cambia sistemas de coordenadas
+- Operaciones espaciales: área, centroide, intersección, etc.
+- Se integra perfectamente con dplyr, tidyr y ggplot2
+:::

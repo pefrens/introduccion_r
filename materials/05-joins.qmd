@@ -1,0 +1,919 @@
+---
+title: "Introducción a la Programación con R - Tidyverse"
+subtitle: "Sesión 5: Unión de Datos (Joins)"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+format:
+  revealjs:
+    theme: slides.scss
+    footer: '[Paul Efren Santos Andrade](https://paulefrensa.rbind.io) // Introducción a R - Tidyverse'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    pause: true
+    slide-number: true
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 10
+  fig-height: 6
+  fig-align: center  
+---
+
+## Esquema de la sesión {.smaller}
+
+::: incremental
+- Introducción: ¿Por qué unir datos?
+- Claves primarias y foráneas
+- Mutating joins: agregar columnas
+- Filtering joins: filtrar filas
+- Cómo funcionan los joins
+- Non-equi joins: más allá de la igualdad
+- Ejercicios prácticos
+:::
+
+# Introducción {background-color="#2C3E50"}
+
+## El análisis real involucra múltiples tablas
+
+::: incremental
+- Rara vez trabajas con **un solo** data frame
+- Típicamente tienes **muchos** data frames
+- Necesitas **unirlos** para responder preguntas
+- Las **relaciones** entre tablas son clave
+:::
+
+## Tipos de joins
+
+Dos categorías principales:
+
+::: incremental
+1. **Mutating joins**: agregan nuevas **variables** desde otra tabla
+   - Agregan columnas
+
+2. **Filtering joins**: **filtran observaciones** basándose en otra tabla
+   - Afectan filas, no agregan columnas
+:::
+
+## Paquetes necesarios
+
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+::: callout-note
+Usaremos los 5 datasets relacionados del paquete `nycflights13`:
+`flights`, `airlines`, `airports`, `planes`, `weather`
+:::
+
+# Claves (Keys) {background-color="#2C3E50"}
+
+## ¿Qué es una clave?
+
+::: incremental
+- Las claves **conectan** dos tablas
+- Dos tipos de claves:
+  - **Clave primaria** (primary key)
+  - **Clave foránea** (foreign key)
+:::
+
+## Clave primaria
+**Primary key** = variable(s) que identifican **únicamente** cada observación
+
+::: {.columns}
+::: {.column width="50%"}
+
+Ejemplo en `airlines`:
+
+```{r}
+airlines
+```
+:::
+
+::: {.column width="50%"}
+::: callout-note
+`carrier` es la clave primaria (identifica únicamente cada aerolínea)
+:::
+:::
+:::
+
+## Clave compuesta
+
+Cuando necesitas **múltiples variables** para identificar una observación:
+
+```{r}
+weather
+```
+
+
+
+::: callout-note
+**Clave compuesta**: `origin` + `time_hour` identifican cada observación
+:::
+
+## Clave foránea
+
+**Foreign key** = variable(s) que corresponden a una clave primaria en **otra** tabla
+
+. . .
+
+Ejemplos en `flights`:
+
+::: incremental
+- `flights$tailnum` → `planes$tailnum`
+- `flights$carrier` → `airlines$carrier`
+- `flights$origin` → `airports$faa`
+- `flights$dest` → `airports$faa`
+:::
+
+## Relaciones entre tablas
+
+![](https://r4ds.hadley.nz/diagrams/relational.png){fig-align="center"}
+
+::: callout-tip
+Claves primarias y foráneas casi siempre tienen el **mismo nombre**
+:::
+
+## Verificar claves primarias
+
+Siempre verifica que las claves sean **únicas**:
+
+```{r}
+planes |>
+  count(tailnum) |>
+  filter(n > 1)
+```
+
+
+
+::: callout-tip
+0 filas = Perfecto! Cada `tailnum` es único
+:::
+
+## Verificar valores faltantes
+
+Las claves no deben tener `NA`:
+
+```{r}
+planes |>
+  filter(is.na(tailnum))
+
+weather |>
+  filter(is.na(time_hour) | is.na(origin))
+```
+
+
+
+::: callout-note
+0 filas = Bien! No hay NAs en las claves
+:::
+
+## Claves sustitutas (Surrogate keys)
+
+A veces es útil crear un **identificador simple**:
+
+```{r}
+flights2 <- flights |>
+  mutate(id = row_number(), .before = 1)
+
+flights2
+```
+
+
+
+::: callout-tip
+Más fácil decir "vuelo 2001" que "UA430 salió 9am 2013-01-03"
+:::
+
+# Mutating Joins {background-color="#2C3E50"}
+
+## ¿Qué son mutating joins?
+
+::: incremental
+- **Combinan variables** de dos data frames
+- Primero: encuentran observaciones coincidentes por claves
+- Segundo: copian variables de una tabla a otra
+- Como `mutate()`: agregan variables a la **derecha**
+:::
+
+## Dataset simplificado
+
+Para ejemplos más claros:
+
+```{r}
+flights2 <- flights |>
+  select(year, time_hour, origin, dest, tailnum, carrier)
+
+flights2
+```
+
+
+## left_join(): El join más común
+
+`left_join()` mantiene **todas las filas de x**:
+
+```{r}
+flights2 |>
+  left_join(airlines)
+```
+
+
+
+::: callout-note
+Se unió automáticamente por `carrier` (variable común)
+:::
+
+## Agregar información del clima
+
+```{r}
+flights2 |>
+  left_join(weather |> select(origin, time_hour, temp, wind_speed))
+```
+
+
+## Agregar información del avión
+
+```{r}
+flights2 |>
+  left_join(planes |> select(tailnum, type, engines, seats))
+```
+
+
+
+## Valores faltantes en joins
+
+Cuando no hay coincidencia, se crean `NA`:
+
+```{r}
+flights2 |>
+  filter(tailnum == "N3ALAA") |>
+  left_join(planes |> select(tailnum, type, engines, seats))
+```
+
+
+::: callout-warning
+Este avión no está en la tabla `planes`
+:::
+
+## Especificar claves: join_by()
+
+Por defecto, usa **todas** las variables comunes:
+
+```{r}
+flights2 |>
+  left_join(planes)
+```
+
+::: question
+¿Problema? Ambas tablas tienen `year` pero significan cosas diferentes!
+:::
+
+## Solución: join_by() explícito
+
+```{r}
+flights2 |>
+  left_join(planes, join_by(tailnum))
+```
+
+
+
+::: callout-note
+Variables con sufijos `.x` y `.y` para distinguir origen
+:::
+
+## Claves con nombres diferentes
+
+```{r}
+flights2 |>
+  left_join(airports, join_by(dest == faa))
+```
+
+
+
+. . .
+
+```{r}
+flights2 |>
+  left_join(airports, join_by(origin == faa))
+```
+
+
+
+## Otros mutating joins {.smaller}
+
+| Join | Filas mantenidas |
+|------|------------------|
+| `left_join(x, y)` | Todas de **x** |
+| `right_join(x, y)` | Todas de **y** |
+| `inner_join(x, y)` | Solo coincidencias (en **x** Y **y**) |
+| `full_join(x, y)` | Todas (**x** O **y**) |
+
+::: callout-tip
+`left_join()` es el más usado (≈95% del tiempo)
+:::
+
+# Filtering Joins {background-color="#2C3E50"}
+
+## ¿Qué son filtering joins?
+
+::: incremental
+- **No agregan columnas**
+- **Filtran filas** basándose en coincidencias
+- Dos tipos:
+  - `semi_join()`: mantiene coincidencias
+  - `anti_join()`: elimina coincidencias
+:::
+
+## semi_join(): Mantener coincidencias
+
+Aeropuertos que son **origen** de vuelos:
+
+```{r}
+airports |>
+  semi_join(flights2, join_by(faa == origin))
+```
+
+
+
+## semi_join(): Destinos
+
+```{r}
+airports |>
+  semi_join(flights2, join_by(faa == dest))
+```
+
+
+::: callout-note
+`semi_join()` solo mantiene columnas de la **primera** tabla
+:::
+
+## anti_join(): Encontrar faltantes
+
+Destinos que **no están** en `airports`:
+
+```{r}
+flights2 |>
+  anti_join(airports, join_by(dest == faa)) |>
+  distinct(dest)
+```
+
+
+::: callout-tip
+Útil para encontrar valores **implícitamente faltantes**
+:::
+
+## anti_join(): Aviones faltantes
+
+```{r}
+flights2 |>
+  anti_join(planes, join_by(tailnum)) |>
+  distinct(tailnum)
+```
+
+
+
+::: question
+¿Por qué estos aviones no están en la tabla `planes`?
+:::
+
+# ¿Cómo funcionan los joins? {background-color="#2C3E50"}
+
+## Tablas de ejemplo
+
+Tablas simples para entender la mecánica:
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     3, "x3"
+)
+
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     4, "y3"
+)
+```
+
+## Visualización de potenciales coincidencias
+
+![](https://r4ds.hadley.nz/diagrams/join/setup2.png){fig-align="center"}
+
+::: incremental
+- Cada **línea horizontal** = fila de `x`
+- Cada **línea vertical** = fila de `y`
+- **Intersecciones** = coincidencias potenciales
+:::
+
+## inner_join()
+
+![](https://r4ds.hadley.nz/diagrams/join/inner.png){fig-align="center"}
+
+```{r}
+x |> inner_join(y, join_by(key))
+```
+
+
+
+::: callout-note
+Solo filas donde las claves **coinciden** en ambas tablas
+:::
+
+## left_join()
+
+![](https://r4ds.hadley.nz/diagrams/join/left.png){fig-align="center"}
+
+```{r}
+x |> left_join(y, join_by(key))
+```
+
+
+::: callout-note
+Todas las filas de `x`, con `NA` si no hay coincidencia
+:::
+
+## right_join()
+
+![](https://r4ds.hadley.nz/diagrams/join/right.png){fig-align="center"}
+
+```{r}
+x |> right_join(y, join_by(key))
+```
+
+
+::: callout-note
+Todas las filas de `y`, con `NA` si no hay coincidencia
+:::
+
+## full_join()
+
+![](https://r4ds.hadley.nz/diagrams/join/full.png){fig-align="center"}
+
+```{r}
+x |> full_join(y, join_by(key))
+```
+
+
+
+::: callout-note
+**Todas** las filas de `x` **y** `y`
+:::
+
+## Diagrama de Venn
+
+![](https://r4ds.hadley.nz/diagrams/join/venn.png){fig-align="center"}
+
+::: callout-warning
+Útil para recordar qué filas se mantienen, pero no muestra qué pasa con las **columnas**
+:::
+
+## Coincidencias múltiples
+
+¿Qué pasa si una fila coincide con **múltiples** filas?
+
+```{r}
+df1 <- tibble(key = c(1, 2, 2), val_x = c("x1", "x2", "x3"))
+df2 <- tibble(key = c(1, 2, 2), val_y = c("y1", "y2", "y3"))
+```
+
+. . .
+
+```{r}
+df1 |> inner_join(df2, join_by(key))
+```
+
+
+
+## Explosión combinatoria
+
+::: callout-warning
+## Cuidado con many-to-many
+- La fila 2 de `df1` coincide con 2 filas de `df2`
+- La fila 3 de `df1` coincide con 2 filas de `df2`
+- Resultado: 2 × 2 = **4 filas** para key = 2
+:::
+
+. . .
+
+Si es intencional:
+
+```{r}
+df1 |>
+  inner_join(df2, join_by(key), relationship = "many-to-many")
+```
+
+## Filtering joins y coincidencias
+
+![](https://r4ds.hadley.nz/diagrams/join/semi.png){fig-align="center"}
+
+::: callout-note
+`semi_join()`: solo importa que **exista** una coincidencia, no cuántas veces
+:::
+
+## anti_join()
+
+![](https://r4ds.hadley.nz/diagrams/join/anti.png){fig-align="center"}
+
+::: callout-note
+`anti_join()`: inverso de `semi_join()`, elimina coincidencias
+:::
+
+# Non-Equi Joins {background-color="#2C3E50"}
+
+## Más allá de la igualdad
+
+Hasta ahora: **equi joins** (claves son **iguales**)
+
+. . .
+
+Ahora: otras formas de coincidencia
+
+::: incremental
+- **Cross joins**: todas las combinaciones
+- **Inequality joins**: `<`, `<=`, `>`, `>=`
+- **Rolling joins**: coincidencia más cercana
+- **Overlap joins**: rangos que se superponen
+:::
+
+## Mostrar ambas claves
+
+Con `keep = TRUE`:
+
+```{r}
+x |> inner_join(y, join_by(key == key), keep = TRUE)
+```
+
+```
+  key.x val_x key.y val_y
+      1 x1        1 y1
+      2 x2        2 y2
+```
+
+::: callout-note
+En equi joins, `key.x == key.y` siempre. En non-equi joins, pueden diferir.
+:::
+
+## Cross join
+
+**Todas** las combinaciones posibles:
+
+```{r}
+df <- tibble(name = c("John", "Simon", "Tracy", "Max"))
+df |> cross_join(df)
+```
+
+
+
+::: callout-note
+`nrow(x) * nrow(y)` filas en el resultado
+:::
+
+## Inequality join
+
+```{r}
+x |> inner_join(y, join_by(key >= key), keep = TRUE)
+```
+
+![](https://r4ds.hadley.nz/diagrams/join/gte.png){fig-align="center"}
+
+## Generar combinaciones
+
+```{r}
+df <- tibble(id = 1:4, name = c("John", "Simon", "Tracy", "Max"))
+
+df |> inner_join(df, join_by(id < id))
+```
+
+
+
+::: callout-tip
+Solo combinaciones (no permutaciones con repetición)
+:::
+
+## Rolling join
+
+Coincidencia **más cercana** en lugar de todas:
+
+```{r}
+x |> inner_join(y, join_by(closest(key >= key)))
+```
+
+![](https://r4ds.hadley.nz/diagrams/join/closest.png){fig-align="center"}
+
+## Ejemplo: Fechas de fiestas {.smaller}
+
+```{r}
+parties <- tibble(
+  q = 1:4,
+  party = ymd(c("2022-01-10", "2022-04-04", "2022-07-11", "2022-10-03"))
+)
+
+employees <- tibble(
+  name = sample(babynames::babynames$name, 100),
+  birthday = ymd("2022-01-01") + (sample(365, 100, replace = TRUE) - 1)
+)
+```
+
+¿Qué fiesta corresponde a cada cumpleaños?
+
+```{r}
+employees |>
+  left_join(parties, join_by(closest(birthday >= party)))
+```
+
+## Overlap joins
+
+Ayudantes para trabajar con **intervalos**:
+
+::: incremental
+- `between(x, y_lower, y_upper)`
+  - Equivale a: `x >= y_lower, x <= y_upper`
+- `within(x_lower, x_upper, y_lower, y_upper)`
+  - Equivale a: `x_lower >= y_lower, x_upper <= y_upper`
+- `overlaps(x_lower, x_upper, y_lower, y_upper)`
+  - Equivale a: `x_lower <= y_upper, x_upper >= y_lower`
+:::
+
+## Ejemplo: Periodos de fiestas {.smaller}
+
+```{r}
+parties <- tibble(
+  q = 1:4,
+  party = ymd(c("2022-01-10", "2022-04-04", "2022-07-11", "2022-10-03")),
+  start = ymd(c("2022-01-01", "2022-04-04", "2022-07-11", "2022-10-03")),
+  end = ymd(c("2022-04-03", "2022-07-10", "2022-10-02", "2022-12-31"))
+)
+```
+
+. . .
+
+```{r}
+employees |>
+  inner_join(parties, join_by(between(birthday, start, end)))
+```
+
+::: callout-tip
+Ahora incluye cumpleaños de enero 1-9
+:::
+
+## Detectar superposiciones
+
+```{r}
+parties |>
+  inner_join(parties, join_by(overlaps(start, end, start, end), q < q)) |>
+  select(start.x, end.x, start.y, end.y)
+```
+
+::: callout-note
+Self-join para verificar que los periodos no se superpongan
+:::
+
+# Ejemplo Práctico: Áreas Naturales {background-color="#2C3E50"}
+
+## Datos de ejemplo
+
+```{r}
+library(readxl)
+library(janitor)
+library(sf)
+
+anp <- read_excel("data/areas_naturales_peru.xlsx") |>
+  clean_names()
+
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg") |>
+  clean_names()
+```
+
+## Agregar información de departamento
+
+```{r eval=FALSE}
+# Contar áreas por ubicación
+anp_por_depto <- anp |>
+  count(ubicacion_politica, name = "n_areas")
+
+# Unir con datos espaciales
+departamentos |>
+  left_join(anp_por_depto,
+            join_by(nombdep == ubicacion_politica))
+```
+
+## Filtrar departamentos con ANPs
+
+```{r eval=FALSE}
+# Solo departamentos que tienen áreas naturales
+departamentos |>
+  semi_join(anp_por_depto,
+            join_by(nombdep == ubicacion_politica))
+```
+
+## Encontrar departamentos sin ANPs
+
+```{r eval=FALSE}
+# Departamentos SIN áreas naturales protegidas
+departamentos |>
+  anti_join(anp_por_depto,
+            join_by(nombdep == ubicacion_politica)) |>
+  select(nombdep)
+```
+
+# Ejercicios Prácticos {background-color="#2C3E50"}
+
+## Ejercicio 1: ANPs y departamentos
+
+::: task
+1. Une `anp` con información de departamentos
+2. Calcula el área total protegida por departamento
+3. ¿Qué departamento tiene más hectáreas protegidas?
+4. ¿Qué porcentaje del área del departamento está protegido?
+:::
+
+## Ejercicio 2: Filtering joins
+
+::: task
+Usando `anp` y `departamentos`:
+
+1. Usa `semi_join()` para filtrar solo departamentos con Parques Nacionales
+2. Usa `anti_join()` para encontrar departamentos sin ninguna ANP
+3. Cuenta cuántos departamentos están en cada caso
+:::
+
+## Ejercicio 3: Multiple joins {.smaller}
+
+::: task
+Crea un análisis que:
+
+1. Una `anp` con información de departamentos
+2. Calcule áreas por categoría y departamento
+3. Encuentre la categoría más común por departamento
+4. Use `pivot_wider()` para crear una tabla departamento × categoría
+:::
+
+## Ejercicio 4: Non-equi join
+
+::: task
+Crea datos de monitoreo de ANPs:
+
+```{r}
+#| eval: false
+#| 
+monitoreo <- tibble(
+  area = sample(anp$nombre, 50, replace = TRUE),
+  fecha = ymd("2023-01-01") + days(sample(365, 50)),
+  guardaparques = sample(1:10, 50, replace = TRUE)
+)
+```
+
+1. Agrupa fechas por trimestre
+2. Usa `join_by(between())` para asignar cada monitoreo a un trimestre
+3. Calcula promedio de guardaparques por trimestre
+:::
+
+# Resumen {background-color="#2C3E50"}
+
+## Conceptos clave
+
+::: incremental
+- **Claves primarias**: identifican observaciones únicamente
+- **Claves foráneas**: conectan con claves primarias en otras tablas
+- **Mutating joins**: agregan columnas (left, right, inner, full)
+- **Filtering joins**: filtran filas (semi, anti)
+- **Non-equi joins**: más allá de la igualdad (cross, inequality, rolling, overlap)
+:::
+
+## Funciones de joins
+
+| Función | Tipo | Filas resultantes |
+|---------|------|-------------------|
+| `left_join()` | Mutating | Todas de x |
+| `right_join()` | Mutating | Todas de y |
+| `inner_join()` | Mutating | Solo coincidencias |
+| `full_join()` | Mutating | Todas de x o y |
+| `semi_join()` | Filtering | x que coinciden en y |
+| `anti_join()` | Filtering | x que NO coinciden en y |
+
+## join_by() y sus usos
+
+```{r}
+# Equi join
+join_by(key)
+join_by(key == key)
+
+# Diferentes nombres
+join_by(dest == faa)
+
+# Inequality
+join_by(key >= key)
+
+# Rolling
+join_by(closest(birthday >= party))
+
+# Overlap
+join_by(between(x, lower, upper))
+join_by(overlaps(x_lo, x_hi, y_lo, y_hi))
+```
+
+## Workflow típico {.smaller}
+
+```{r}
+#| eval: false
+# 1. Identificar claves
+flights |> count(time_hour, carrier, flight) |> filter(n > 1)
+
+# 2. Verificar claves
+planes |> filter(is.na(tailnum))
+
+# 3. Decidir tipo de join
+# - ¿Agregar columnas? → mutating join (left_join)
+# - ¿Filtrar filas? → filtering join (semi/anti_join)
+
+# 4. Especificar claves explícitamente
+flights2 |>
+  left_join(planes, join_by(tailnum))
+
+# 5. Revisar resultado
+glimpse(resultado)
+```
+
+## Consejos importantes
+
+::: incremental
+1. **Usa `left_join()`** en el 95% de los casos
+2. **Especifica claves** explícitamente con `join_by()`
+3. **Verifica duplicados** antes de unir
+4. **Cuidado con many-to-many** (puede explotar filas)
+5. **Usa `keep = TRUE`** cuando necesites ver ambas claves
+6. **anti_join()** es perfecto para encontrar valores faltantes
+:::
+
+## Errores comunes {.smaller}
+
+| Error | Solución |
+|-------|----------|
+| Unir por todas las variables comunes | Especifica `join_by()` explícitamente |
+| Sufijos confusos (`.x`, `.y`) | Cambia con argumento `suffix` |
+| Many-to-many warning | Investiga duplicados, usa `relationship = "many-to-many"` si es intencional |
+| NAs inesperados | Usa `anti_join()` para encontrar qué no coincide |
+| Demasiadas filas | Revisa coincidencias múltiples |
+
+## Debugging joins
+
+```{r}
+# Ver qué filas no coinciden
+x |>
+  anti_join(y, join_by(key))
+
+# Contar coincidencias
+x |>
+  left_join(y, join_by(key)) |>
+  count(is.na(val_y))
+
+# Encontrar duplicados
+x |>
+  count(key) |>
+  filter(n > 1)
+```
+
+## Recursos adicionales
+
+- [R for Data Science - Joins](https://r4ds.hadley.nz/joins)
+- [dplyr join vignette](https://dplyr.tidyverse.org/articles/two-table.html)
+- [SQL joins explained](https://www.sql-join.com/) - Visual
+- [Data transformation cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
+
+## Próximos pasos
+
+En las siguientes sesiones:
+
+::: incremental
+- **Trabajo con texto** (stringr)
+- **Fechas y tiempos** (lubridate)
+- **Funciones** (escribir tus propias funciones)
+- **Iteración** (purrr)
+- **Visualización avanzada** (ggplot2)
+:::
+
+# ¡Gracias! {.center background-color="#2C3E50"}
+
+::: {.centered}
+**¿Preguntas?**
+
+📧 paul.santos@example.com
+
+🌐 Materiales del curso disponibles en el repositorio
+
+### Próxima sesión: Trabajo con Texto (stringr)
+:::

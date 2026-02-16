@@ -1,0 +1,1450 @@
+---
+title: "Introducción a la Programación con R - Tidyverse"
+subtitle: "Sesión 2: Importar y Revisar Datos"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+format:
+  revealjs:
+    theme: slides.scss
+    logo: img/logo.png
+    footer: '[Paul Efren Santos Andrade](https://paulefrensa.rbind.io) // Introducción a R - Tidyverse'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    pause: true
+    slide-number: true
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 10
+  fig-height: 6
+  fig-align: center
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+ggplot2::theme_set(ggplot2::theme_gray(base_size = 16))
+```
+
+# Repaso de la Sesión Anterior
+
+## ¿Qué Aprendimos?
+
+::: incremental
+-   R y RStudio: diferencias y componentes
+-   Valores atómicos y creación de objetos
+-   Estructuras de datos (vectores, matrices, data frames)
+-   Funciones y paquetes
+-   El operador pipe `|>`
+-   Conceptos de reproducibilidad
+:::
+
+## Pregunta Rápida
+
+::: question
+¿Cuál es la diferencia entre instalar y cargar un paquete?
+:::
+
+. . .
+
+::: incremental
+-   **Instalar**: `install.packages("tidyverse")` - Una vez por sistema
+-   **Cargar**: `library(tidyverse)` - Una vez por sesión
+-   **Analogía**: Comprar ingredientes vs. sacarlos de la despensa
+:::
+
+# Objetivos de Hoy
+
+## Lo que Aprenderemos
+
+::: incremental
+-   Leer datos desde archivos (CSV, Excel, texto)
+-   Entender la estructura de archivos rectangulares
+-   Manejar valores faltantes y tipos de datos
+-   Limpiar nombres de variables
+-   Revisar y explorar datos importados
+-   Trabajar con múltiples archivos
+-   Guardar datos procesados
+:::
+
+# Lectura de Datos desde Archivos
+
+## Introducción
+
+::: incremental
+-   Trabajar con datos de paquetes R es útil para aprender
+-   Pero eventualmente querrás usar tus propios datos
+-   Nos enfocaremos en **archivos de texto rectangulares**
+-   El formato más común: **CSV** (Comma-Separated Values)
+:::
+
+## ¿Qué es un Archivo CSV?
+
+Un archivo de texto donde:
+
+-   Cada línea es una fila
+-   Los valores están separados por comas
+-   La primera línea generalmente contiene los nombres de columnas
+
+```
+Student ID,Full Name,favourite.food,mealPlan,AGE
+1,Sunil Huffmann,Strawberry yoghurt,Lunch only,4
+2,Barclay Lynn,French fries,Lunch only,5
+3,Jayendra Lyne,N/A,Breakfast and lunch,7
+```
+
+## Anatomía de un CSV
+
+::: columns
+::: {.column width="50%"}
+**Archivo de texto:**
+
+```
+pais,año,poblacion
+Peru,2020,32971846
+Peru,2021,33359416
+Chile,2020,19116209
+Chile,2021,19212362
+```
+:::
+
+::: {.column width="50%" .fragment}
+**Como tabla:**
+
+| pais  | año  | poblacion |
+|-------|------|-----------|
+| Peru  | 2020 | 32971846  |
+| Peru  | 2021 | 33359416  |
+| Chile | 2020 | 19116209  |
+| Chile | 2021 | 19212362  |
+:::
+:::
+
+# Usando read_csv()
+
+## Configuración
+
+Primero, cargar el paquete tidyverse:
+
+```{r}
+#| echo: true
+library(tidyverse)
+```
+
+El paquete **readr** (parte de tidyverse) proporciona funciones para leer datos.
+
+## Leer un Archivo CSV
+
+```{r}
+#| eval: false
+#| echo: true
+# Sintaxis básica
+datos <- read_csv("ruta/al/archivo.csv")
+
+# Ejemplo con datos de estudiantes
+students <- read_csv("data/students.csv")
+```
+
+. . .
+
+`read_csv()` imprime información útil:
+
+-   Número de filas y columnas
+-   Delimitador usado
+-   Especificación de columnas (tipos de datos)
+
+## Mensaje de read_csv() {.smaller}
+
+```{r}
+#| echo: false
+#| eval: false
+students <- read_csv("data/students.csv")
+```
+
+```
+Rows: 6 Columns: 5
+── Column specification ─────────────────────────────────
+Delimiter: ","
+chr (4): Full Name, favourite.food, mealPlan, AGE
+dbl (1): Student ID
+
+ℹ Use `spec()` to retrieve the full column specification
+ℹ Specify column types or set `show_col_types = FALSE`
+```
+
+::: callout-note
+Este mensaje es **importante** y útil. Te dice cómo interpretó readr tu archivo.
+:::
+
+## Rutas de Archivos
+
+Dos formas de especificar la ubicación del archivo:
+
+```{r}
+#| eval: false
+#| echo: true
+# 1. Ruta relativa (dentro de tu proyecto)
+students <- read_csv("data/students.csv")
+
+# 2. URL directa
+students <- read_csv("https://pos.it/r4ds-students-csv")
+```
+
+::: callout-tip
+Las rutas relativas son más reproducibles. Usa RStudio Projects para organizarte.
+:::
+
+# Consejos Prácticos
+
+## Primer Vistazo a los Datos
+
+Después de importar, siempre revisa los datos:
+
+```{r}
+#| eval: false
+#| echo: true
+students
+```
+
+```
+# A tibble: 6 × 5
+  `Student ID` `Full Name`      favourite.food     mealPlan            AGE
+         <dbl> <chr>            <chr>              <chr>               <chr>
+1            1 Sunil Huffmann   Strawberry yoghurt Lunch only          4
+2            2 Barclay Lynn     French fries       Lunch only          5
+3            3 Jayendra Lyne    N/A                Breakfast and lunch 7
+4            4 Leon Rossini     Anchovies          Lunch only          <NA>
+5            5 Chidiegwu Dunkel Pizza              Breakfast and lunch five
+6            6 Güvenç Attila    Ice cream          Lunch only          6
+```
+
+## Problemas Comunes: Valores Faltantes
+
+::: question
+¿Ves algún problema en los datos de estudiantes?
+:::
+
+. . .
+
+-   Fila 3: `favourite.food` tiene `"N/A"` (texto) en lugar de `NA` (valor faltante)
+-   Fila 5: `AGE` tiene `"five"` (texto) en lugar de `5` (número)
+
+## Solución: Argumento `na`
+
+Especifica qué cadenas deben interpretarse como valores faltantes:
+
+```{r}
+#| eval: false
+#| echo: true
+students <- read_csv(
+  "data/students.csv",
+  na = c("N/A", "")  # Reconocer "N/A" y "" como NA
+)
+```
+
+. . .
+
+Ahora `favourite.food` tiene un verdadero `NA`:
+
+```
+3            3 Jayendra Lyne    <NA>               Breakfast and lunch 7
+```
+
+## Problemas Comunes: Nombres de Columnas {.smaller}
+
+Los nombres de columnas tienen espacios:
+
+-   `Student ID`
+-   `Full Name`
+
+. . .
+
+En R, estos son **nombres no sintácticos** y necesitan backticks:
+
+```{r}
+#| eval: false
+#| echo: true
+students$`Student ID`  # Necesita backticks
+students$Student ID    # ❌ Error!
+```
+
+## Solución 1: rename()
+
+Renombrar manualmente con `rename()`:
+
+```{r}
+#| eval: false
+#| echo: true
+students |>
+  rename(
+    student_id = `Student ID`,
+    full_name = `Full Name`
+  )
+```
+
+## Solución 2: janitor::clean_names() {.smaller}
+
+La forma más fácil y recomendada:
+
+```{r}
+#| eval: false
+#| echo: true
+library(janitor)
+
+students |>
+  clean_names()
+```
+
+```
+# A tibble: 6 × 5
+  student_id full_name        favourite_food     meal_plan           age
+       <dbl> <chr>            <chr>              <chr>               <chr>
+1          1 Sunil Huffmann   Strawberry yoghurt Lunch only          4
+2          2 Barclay Lynn     French fries       Lunch only          5
+```
+
+::: callout-tip
+`clean_names()` convierte todos los nombres a **snake_case** automáticamente.
+:::
+
+## Problemas Comunes: Tipos de Datos
+
+La columna `AGE` es character (`<chr>`) pero debería ser numérica:
+
+```{r}
+#| eval: false
+#| echo: true
+students |>
+  clean_names() |>
+  glimpse()
+```
+
+```
+$ age           <chr> "4", "5", "7", NA, "five", "6"
+```
+
+::: question
+¿Por qué `AGE` es character?
+:::
+
+. . .
+
+Porque tiene `"five"` (texto) mezclado con números.
+
+## Solución: Limpiar y Convertir {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+students <- students |>
+  clean_names() |>
+  mutate(
+    age = parse_number(if_else(age == "five", "5", age))
+  )
+```
+
+. . .
+
+Qué hace este código:
+
+1.  `if_else()`: Si `age` es `"five"`, cámbialo a `"5"`, si no déjalo igual
+2.  `parse_number()`: Convierte texto a número
+
+## Variables Categóricas: Factores
+
+`meal_plan` debería ser un **factor** (variable categórica):
+
+```{r}
+#| eval: false
+#| echo: true
+students <- students |>
+  clean_names() |>
+  mutate(
+    meal_plan = factor(meal_plan)
+  )
+```
+
+. . .
+
+Ahora `meal_plan` es `<fct>` en lugar de `<chr>`:
+
+```
+$ meal_plan     <fct> Lunch only, Lunch only, Breakfast and lunch
+```
+
+## Pipeline Completo de Limpieza {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+students <- read_csv("data/students.csv", na = c("N/A", "")) |>
+  clean_names() |>
+  mutate(
+    meal_plan = factor(meal_plan),
+    age = parse_number(if_else(age == "five", "5", age))
+  )
+
+students
+```
+
+```
+# A tibble: 6 × 5
+  student_id full_name        favourite_food     meal_plan             age
+       <dbl> <chr>            <chr>              <fct>               <dbl>
+1          1 Sunil Huffmann   Strawberry yoghurt Lunch only              4
+2          2 Barclay Lynn     French fries       Lunch only              5
+3          3 Jayendra Lyne    <NA>               Breakfast and lunch     7
+```
+
+# Otros Argumentos de read_csv()
+
+## Leer Texto Directamente
+
+Útil para ejemplos y pruebas:
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  "a,b,c
+   1,2,3
+   4,5,6"
+)
+```
+
+## Saltar Líneas: skip
+
+Algunas archivos tienen metadatos al inicio:
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  "La primera línea de metadata
+   La segunda línea de metadata
+   x,y,z
+   1,2,3",
+  skip = 2  # Saltar primeras 2 líneas
+)
+```
+
+## Saltar Comentarios: comment
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  "# Un comentario que quiero saltar
+   x,y,z
+   1,2,3",
+  comment = "#"  # Saltar líneas que empiezan con #
+)
+```
+
+## Sin Nombres de Columnas: col_names
+
+Si tu archivo no tiene encabezados:
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  "1,2,3
+   4,5,6",
+  col_names = FALSE  # No usar primera fila como nombres
+)
+```
+
+## Proporcionar Nombres de Columnas
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  "1,2,3
+   4,5,6",
+  col_names = c("x", "y", "z")  # Especificar nombres
+)
+```
+
+# Otros Tipos de Archivos
+
+## Familia de Funciones read_*()
+
+readr proporciona funciones para diferentes formatos:
+
+| Función          | Formato                               |
+|------------------|---------------------------------------|
+| `read_csv()`     | Valores separados por comas           |
+| `read_csv2()`    | Valores separados por punto y coma    |
+| `read_tsv()`     | Valores separados por tabulación      |
+| `read_delim()`   | Cualquier delimitador                 |
+| `read_fwf()`     | Archivos de ancho fijo                |
+| `read_table()`   | Archivos separados por espacios       |
+
+# Trabajando con Hojas de Cálculo (Excel) {background-color="#2C3E50"}
+
+## Introducción a Hojas de Cálculo
+
+::: incremental
+- Microsoft Excel es ampliamente usado para organizar datos
+- Los datos se almacenan en **hojas** (worksheets) dentro de **libros** (workbooks)
+- Excel permite múltiples hojas en un solo archivo
+- **Importante**: Leer el artículo "Data Organization in Spreadsheets" (Broman & Woo, 2018)
+:::
+
+## Paquetes para Excel
+
+Usaremos dos paquetes principales:
+
+```{r}
+#| eval: false
+#| echo: true
+library(readxl)   # Para leer archivos Excel
+library(writexl)  # Para escribir archivos Excel
+library(tidyverse)
+```
+
+::: callout-note
+`readxl` está incluido en tidyverse pero debe cargarse explícitamente
+:::
+
+## Funciones de readxl
+
+| Función | Uso |
+|---------|-----|
+| `read_xls()` | Lee archivos con formato `.xls` (Excel 97-2003) |
+| `read_xlsx()` | Lee archivos con formato `.xlsx` (Excel 2007+) |
+| `read_excel()` | **Detecta automáticamente** el formato |
+
+. . .
+
+::: callout-tip
+Usa `read_excel()` para no preocuparte por el formato
+:::
+
+## Ejemplo: Leer Archivo Excel
+
+```{r}
+#| eval: false
+#| echo: true
+library(readxl)
+
+students <- read_excel("data/students.xlsx")
+students
+```
+
+```
+# A tibble: 6 × 5
+  `Student ID` `Full Name`      favourite.food     mealPlan            AGE
+         <dbl> <chr>            <chr>              <chr>               <chr>
+1            1 Sunil Huffmann   Strawberry yoghurt Lunch only          4
+2            2 Barclay Lynn     French fries       Lunch only          5
+```
+
+## Problemas con Excel
+
+Similar a CSV, necesitamos limpiar:
+
+::: incremental
+1. Nombres de columnas con espacios
+2. Valores faltantes no reconocidos (`"N/A"`)
+3. Tipos de datos incorrectos
+:::
+
+. . .
+
+```{r}
+#| eval: false
+#| echo: true
+students <- read_excel("data/students.xlsx", na = c("", "N/A"))
+```
+
+## Limpiar Nombres de Columnas
+
+```{r}
+#| eval: false
+#| echo: true
+students <- read_excel(
+  "data/students.xlsx",
+  col_names = c("student_id", "full_name", "favourite_food",
+                "meal_plan", "age"),
+  skip = 1  # Saltar fila de encabezados originales
+)
+```
+
+. . .
+
+::: callout-tip
+O usa `janitor::clean_names()` después de importar
+:::
+
+## Especificar Tipos en Excel {.smaller}
+
+Excel usa diferentes tipos que R:
+
+```{r}
+#| eval: false
+#| echo: true
+students <- read_excel(
+  "data/students.xlsx",
+  col_types = c("numeric", "text", "text", "text", "text")
+)
+```
+
+Opciones para `col_types`:
+
+- `"skip"` - saltar columna
+- `"guess"` - adivinar tipo
+- `"logical"` - booleano
+- `"numeric"` - numérico
+- `"date"` - fecha
+- `"text"` - texto
+- `"list"` - lista (mezcla de tipos)
+
+## Trabajar con Múltiples Hojas
+
+Ver todas las hojas de un archivo:
+
+```{r}
+#| eval: false
+#| echo: true
+excel_sheets("data/penguins.xlsx")
+```
+
+```
+[1] "Torgersen Island" "Biscoe Island"    "Dream Island"
+```
+
+. . .
+
+Leer una hoja específica:
+
+```{r}
+#| eval: false
+#| echo: true
+penguins_torgersen <- read_excel(
+  "data/penguins.xlsx",
+  sheet = "Torgersen Island",
+  na = "NA"
+)
+```
+
+## Leer Todas las Hojas {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+# Leer cada hoja
+penguins_torgersen <- read_excel("data/penguins.xlsx",
+                                  sheet = "Torgersen Island", na = "NA")
+penguins_biscoe <- read_excel("data/penguins.xlsx",
+                               sheet = "Biscoe Island", na = "NA")
+penguins_dream <- read_excel("data/penguins.xlsx",
+                              sheet = "Dream Island", na = "NA")
+
+# Combinar todas
+penguins <- bind_rows(penguins_torgersen, penguins_biscoe, penguins_dream)
+```
+
+. . .
+
+::: callout-note
+En el Capítulo 26 aprenderemos métodos más eficientes con `purrr::map()`
+:::
+
+## Leer Parte de una Hoja
+
+A veces solo necesitas un rango específico:
+
+```{r}
+#| eval: false
+#| echo: true
+# Leer rango específico (A5:F15)
+deaths <- read_excel(
+  "data/deaths.xlsx",
+  range = "A5:F15"
+)
+```
+
+. . .
+
+::: callout-tip
+**Notación de celdas en Excel**: A1 = primera celda (columna A, fila 1)
+:::
+
+## Tipos de Datos en Excel {.smaller}
+
+Excel almacena datos internamente diferente a como los muestra:
+
+::: incremental
+- **Booleanos**: TRUE, FALSE, NA
+- **Números**: Todos son decimales (no hay enteros)
+- **Fechas**: Almacenadas como número de días desde 1900-01-01
+- **Texto**: Cadenas de caracteres
+:::
+
+. . .
+
+::: callout-warning
+## Cuidado
+Lo que **ves** en Excel puede no ser lo que está **almacenado**. Por ejemplo, "10" podría ser número o texto.
+:::
+
+## Escribir a Excel
+
+```{r}
+#| eval: false
+#| echo: true
+library(writexl)
+
+# Crear datos de ejemplo
+bake_sale <- tibble(
+  item = factor(c("brownie", "cupcake", "cookie")),
+  quantity = c(10, 5, 8)
+)
+
+# Escribir a Excel
+write_xlsx(bake_sale, path = "data/bake-sale.xlsx")
+```
+
+. . .
+
+::: callout-warning
+Al leer de vuelta, los tipos de datos se pierden (factor → character)
+:::
+
+## Ejemplo Práctico: Áreas Naturales {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+library(readxl)
+library(janitor)
+
+# Leer y limpiar en un pipeline
+anp <- read_excel("data/areas_naturales_peru.xlsx", na = c("", "N/A")) |>
+  clean_names() |>
+  mutate(
+    categoria = str_squish(categoria),
+    superficie_oficial = as.numeric(superficie_oficial)
+  )
+
+glimpse(anp)
+```
+
+```
+Rows: 76
+Columns: 8
+$ nombre                              <chr> "Parque Nacional Cutervo", …
+$ categoria                           <chr> "Parque Nacional", …
+$ superficie_oficial                  <dbl> 8214.23, 334000.00, …
+$ ubicacion_politica                  <chr> "Cajamarca", "Loreto", …
+```
+
+## Consejos para Hojas de Cálculo
+
+::: incremental
+1. **Siempre mira el archivo primero** en Excel (hacer copia)
+2. **Proceso iterativo**: importa → revisa → ajusta → reimporta
+3. **Especifica `na`** explícitamente
+4. **Usa `range`** si hay texto extra arriba/abajo
+5. **No confíes en el formato visual** - verifica tipos
+6. **Para archivos complejos**: considera tidyxl package
+:::
+
+# Importar Datos Espaciales {background-color="#2C3E50"}
+
+## Introducción a Datos Espaciales
+
+::: incremental
+- Datos geográficos representan ubicaciones en la superficie terrestre
+- Dos modelos principales: **vectorial** y **ráster**
+- **Vector**: puntos, líneas, polígonos (ubicaciones discretas)
+- **Ráster**: celdas/píxeles en una cuadrícula (fenómenos continuos)
+:::
+
+## Paquete sf para Datos Vectoriales
+
+```{r}
+#| eval: false
+#| echo: true
+library(sf)  # Simple Features for R
+```
+
+. . .
+
+`sf` proporciona:
+
+::: incremental
+- Clases para datos geográficos vectoriales
+- Interfaz a GDAL (lectura/escritura de formatos)
+- Interfaz a GEOS (operaciones geométricas)
+- Interfaz a PROJ (sistemas de coordenadas)
+- Compatible con **tidyverse**
+:::
+
+## Sistemas de Coordenadas (CRS)
+
+Dos tipos principales:
+
+::: columns
+::: {.column width="50%"}
+**Geográficas** (lon/lat)
+
+- Grados de longitud/latitud
+- Ejemplo: WGS84 (GPS)
+- EPSG:4326
+:::
+
+::: {.column width="50%" .fragment}
+**Proyectadas** (x/y)
+
+- Metros o pies
+- Superficie plana
+- Ejemplo: UTM
+- Mejor para cálculos
+:::
+:::
+
+## Leer Datos Espaciales
+
+```{r}
+#| eval: false
+#| echo: true
+# Leer shapefile, geopackage, geojson, etc.
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+
+# Alternativa más verbosa
+departamentos <- st_read("data/DEPARTAMENTO.gpkg")
+```
+
+. . .
+
+```
+Simple feature collection with 25 features and 10 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.3 ymin: -18.3 xmax: -68.7 ymax: -0.04
+Geodetic CRS:  WGS 84
+```
+
+## Estructura de Objetos sf
+
+```{r}
+#| eval: false
+#| echo: true
+class(departamentos)
+```
+
+```
+[1] "sf"         "tbl_df"     "tbl"        "data.frame"
+```
+
+. . .
+
+::: callout-note
+## sf es un data frame especial
+- Columnas normales para atributos
+- Columna especial `geometry` o `geom` para geometría
+- Funciona con `dplyr`, `ggplot2`, etc.
+:::
+
+## Explorar Datos Espaciales {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+# Ver estructura
+glimpse(departamentos)
+
+# Ver primeras filas
+head(departamentos)
+
+# Obtener CRS
+st_crs(departamentos)
+
+# Calcular área
+departamentos <- departamentos |>
+  mutate(area_km2 = st_area(geometry) |>
+           units::set_units(km^2))
+```
+
+## Visualizar Datos Espaciales
+
+```{r}
+#| eval: false
+#| echo: true
+# Mapa básico con plot()
+plot(departamentos["NOMBDEP"])
+
+# Con ggplot2
+ggplot(departamentos) +
+  geom_sf(aes(fill = NOMBDEP)) +
+  theme_minimal()
+```
+
+## Operaciones Espaciales Básicas {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+# Filtrar (funciona como data frame normal)
+lima <- departamentos |>
+  filter(NOMBDEP == "LIMA")
+
+# Transformar CRS (proyectar)
+departamentos_utm <- departamentos |>
+  st_transform(crs = "EPSG:32718")  # UTM Zone 18S
+
+# Centroides
+centroides <- st_centroid(departamentos)
+
+# Buffer (zona de influencia)
+buffer_lima <- st_buffer(lima, dist = 50000)  # 50 km
+```
+
+## Escribir Datos Espaciales
+
+```{r}
+#| eval: false
+#| echo: true
+# Guardar como GeoPackage (recomendado)
+write_sf(departamentos, "data/departamentos_procesado.gpkg")
+
+# Guardar como shapefile
+write_sf(departamentos, "data/departamentos.shp")
+
+# Guardar como GeoJSON
+write_sf(departamentos, "data/departamentos.geojson")
+```
+
+## Integración con tidyverse
+
+```{r}
+#| eval: false
+#| echo: true
+# sf funciona perfectamente con dplyr
+departamentos_resumen <- departamentos |>
+  mutate(area_km2 = as.numeric(st_area(geometry) / 1e6)) |>
+  select(NOMBDEP, CAPITAL, area_km2) |>
+  arrange(desc(area_km2))
+
+# La columna geometry es "sticky" - se mantiene automáticamente
+```
+
+## Formatos Espaciales Comunes
+
+| Formato | Extensión | Características |
+|---------|-----------|-----------------|
+| GeoPackage | `.gpkg` | ✅ Moderno, eficiente, recomendado |
+| Shapefile | `.shp` | Legacy, múltiples archivos |
+| GeoJSON | `.geojson` | Formato web, legible |
+| KML | `.kml` | Google Earth |
+
+::: callout-tip
+**Recomendación**: Usa GeoPackage (`.gpkg`) para proyectos nuevos
+:::
+
+## Ejemplo Completo: Workflow Espacial {.smaller}
+
+```{r}
+#| eval: false
+#| echo: true
+library(sf)
+library(tidyverse)
+
+# 1. Leer datos espaciales
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+
+# 2. Limpiar y transformar
+departamentos_clean <- departamentos |>
+  clean_names() |>
+  select(nombre = nombdep, capital, region = nombdistri) |>
+  st_transform(crs = "EPSG:32718")  # Proyectar a UTM
+
+# 3. Calcular métricas espaciales
+departamentos_metrics <- departamentos_clean |>
+  mutate(
+    area_km2 = as.numeric(st_area(geometry) / 1e6),
+    perimetro_km = as.numeric(st_length(st_cast(geometry, "MULTILINESTRING")) / 1000)
+  )
+
+# 4. Guardar resultado
+write_sf(departamentos_metrics, "output/departamentos_procesado.gpkg")
+```
+
+# Controlando Tipos de Columnas
+
+## Adivinanza de Tipos
+
+readr intenta adivinar el tipo de cada columna:
+
+::: incremental
+1.  ¿Solo `TRUE`/`FALSE`? → **lógico**
+2.  ¿Solo números? → **numérico**
+3.  ¿Cumple estándar ISO8601? → **fecha/fecha-hora**
+4.  Si no → **character**
+:::
+
+. . .
+
+readr revisa las primeras **1,000 filas** para decidir.
+
+## Ejemplo de Adivinanza
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  "logical,numeric,date,string
+   TRUE,1,2021-01-15,abc
+   false,4.5,2021-02-15,def
+   T,Inf,2021-02-16,ghi"
+)
+```
+
+## Cuando Falla la Adivinanza {.smaller}
+
+Problema común: valores inesperados causan que la columna sea character:
+
+```{r}
+#| echo: true
+#| warning: false
+simple_csv <- "
+  x
+  10
+  .
+  20
+  30"
+
+read_csv(simple_csv)
+```
+
+`x` es character porque tiene un `.` (punto).
+
+## Solución: Especificar Tipo {.smaller}
+
+```{r}
+#| echo: true
+#| warning: false
+df <- read_csv(
+  simple_csv,
+  col_types = list(x = col_double())
+)
+```
+
+. . .
+
+readr reporta un problema. Usa `problems()` para ver detalles:
+
+```{r}
+#| eval: false
+#| echo: true
+problems(df)
+```
+
+```
+# A tibble: 1 × 5
+    row   col expected actual file
+  <int> <int> <chr>    <chr>  <chr>
+1     3     1 a double .      /tmp/...
+```
+
+## Solución Final: Especificar NA
+
+El problema es que `.` representa valores faltantes:
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(simple_csv, na = ".")
+```
+
+Ahora `x` es numérico y `.` se convierte en `NA`.
+
+## Tipos de Columna Disponibles {.smaller}
+
+| Función              | Tipo                                    |
+|----------------------|-----------------------------------------|
+| `col_logical()`      | Valores lógicos (TRUE/FALSE)            |
+| `col_double()`       | Números reales                          |
+| `col_integer()`      | Números enteros                         |
+| `col_character()`    | Texto/cadenas                           |
+| `col_factor()`       | Factores (variables categóricas)        |
+| `col_date()`         | Fechas                                  |
+| `col_datetime()`     | Fecha-hora                              |
+| `col_number()`       | Números con formato (ej. monedas)       |
+| `col_skip()`         | Saltar columna                          |
+
+## Ejemplo: Especificar Tipos
+
+```{r}
+#| echo: true
+#| warning: false
+another_csv <- "
+x,y,z
+1,2,3"
+
+read_csv(
+  another_csv,
+  col_types = cols(.default = col_character())
+)
+```
+
+## Solo Leer Columnas Específicas
+
+```{r}
+#| echo: true
+#| warning: false
+read_csv(
+  another_csv,
+  col_types = cols_only(x = col_character())
+)
+```
+
+# Múltiples Archivos
+
+## Leer Varios Archivos a la Vez
+
+A veces los datos están divididos en múltiples archivos:
+
+```{r}
+#| eval: false
+#| echo: true
+sales_files <- c(
+  "data/01-sales.csv",
+  "data/02-sales.csv",
+  "data/03-sales.csv"
+)
+
+sales <- read_csv(sales_files, id = "file")
+```
+
+El argumento `id` añade una columna identificando el archivo de origen.
+
+## Resultado
+
+```
+# A tibble: 19 × 6
+  file              month    year brand  item     n
+  <chr>             <chr>   <dbl> <dbl> <dbl> <dbl>
+1 data/01-sales.csv January  2019     1  1234     3
+2 data/01-sales.csv January  2019     1  8721     9
+3 data/02-sales.csv February 2019     2  3333     1
+```
+
+## Encontrar Archivos Automáticamente
+
+Usa `list.files()` para buscar archivos por patrón:
+
+```{r}
+#| eval: false
+#| echo: true
+# Encontrar todos los CSV que contienen "sales"
+sales_files <- list.files(
+  "data",
+  pattern = "sales\\.csv$",
+  full.names = TRUE
+)
+
+sales_files
+```
+
+```
+[1] "data/01-sales.csv" "data/02-sales.csv" "data/03-sales.csv"
+```
+
+# Guardar Datos
+
+## Escribir a CSV
+
+```{r}
+#| eval: false
+#| echo: true
+# Guardar data frame como CSV
+write_csv(students, "students-clean.csv")
+```
+
+. . .
+
+**Problema**: Se pierden los tipos de datos (factores, etc.)
+
+```{r}
+#| eval: false
+#| echo: true
+# meal_plan era factor, ahora es character
+students_leido <- read_csv("students-clean.csv")
+```
+
+## Solución 1: RDS (Formato R)
+
+```{r}
+#| eval: false
+#| echo: true
+# Guardar en formato R
+write_rds(students, "students.rds")
+
+# Leer - mantiene todos los tipos
+students <- read_rds("students.rds")
+```
+
+::: callout-tip
+RDS preserva **exactamente** el objeto R, incluyendo tipos de datos.
+:::
+
+## Solución 2: Parquet (Recomendado)
+
+```{r}
+#| eval: false
+#| echo: true
+library(arrow)
+
+# Guardar en formato Parquet
+write_parquet(students, "students.parquet")
+
+# Leer
+students <- read_parquet("students.parquet")
+```
+
+::: callout-tip
+Parquet es **más rápido** que RDS y **compatible** con otros lenguajes.
+:::
+
+## Comparación de Formatos
+
+| Formato | Velocidad | Tipos preservados | Compatible otros lenguajes |
+|---------|-----------|-------------------|----------------------------|
+| CSV     | Media     | ❌ No              | ✅ Sí                       |
+| RDS     | Rápida    | ✅ Sí              | ❌ No (solo R)              |
+| Parquet | Muy rápida| ✅ Sí              | ✅ Sí (Python, etc.)        |
+
+# Entrada Manual de Datos
+
+## tibble(): Por Columnas
+
+Crear data frames pequeños manualmente:
+
+```{r}
+#| echo: true
+tibble(
+  x = c(1, 2, 5),
+  y = c("h", "m", "g"),
+  z = c(0.08, 0.83, 0.60)
+)
+```
+
+## tribble(): Por Filas
+
+Más legible para entrada manual:
+
+```{r}
+#| echo: true
+tribble(
+  ~x, ~y, ~z,
+  #--|--|----
+  1,  "h", 0.08,
+  2,  "m", 0.83,
+  5,  "g", 0.60
+)
+```
+
+::: callout-tip
+`~` indica nombres de columnas. Las comas separan valores.
+:::
+
+# Ejercicios Prácticos
+
+## Ejercicio 1: Importar CSV
+
+::: task
+1.  Importa `catalogo_planes.csv` con `read_csv()`
+2.  Examina los tipos de datos con `glimpse()`
+3.  ¿Hay columnas con tipo incorrecto?
+4.  Corrige los tipos usando `mutate()` y funciones parse
+:::
+
+## Ejercicio 2: Excel - Hojas Múltiples
+
+::: task
+1.  Importa `areas_naturales_peru.xlsx` con `read_excel()`
+2.  Usa `clean_names()` para limpiar nombres
+3.  Especifica valores NA apropiados
+4.  Convierte `categoria` a factor
+5.  Calcula estadísticas por categoría
+:::
+
+## Ejercicio 3: Datos Espaciales
+
+::: task
+1.  Lee el archivo `DEPARTAMENTO.gpkg` con `read_sf()`
+2.  Examina el CRS con `st_crs()`
+3.  Calcula el área de cada departamento en km²
+4.  Encuentra el departamento más grande
+5.  Crea un mapa simple con `plot()`
+:::
+
+## Ejercicio 4: Múltiples Archivos
+
+::: task
+1.  Crea 3 pequeños CSV con datos similares
+2.  Guárdalos con nombres `data_01.csv`, `data_02.csv`, `data_03.csv`
+3.  Usa `list.files()` para encontrarlos
+4.  Léelos todos con un solo `read_csv()` usando el argumento `id`
+:::
+
+## Ejercicio 5: Workflow Completo
+
+::: task
+1.  Lee `areas_naturales_peru.xlsx` y `DEPARTAMENTO.gpkg`
+2.  Limpia ambos datasets (nombres, tipos, NA)
+3.  Cuenta cuántas áreas naturales hay por departamento
+4.  Guarda el resultado en formato Parquet
+5.  Crea un mapa mostrando número de áreas por departamento
+:::
+
+# Resumen de la Sesión
+
+## Lo que Aprendimos Hoy
+
+::: incremental
+-   ✓ Leer archivos CSV con `read_csv()`
+-   ✓ Trabajar con hojas de cálculo Excel (`readxl`)
+-   ✓ Importar datos espaciales con `sf`
+-   ✓ Manejar valores faltantes con el argumento `na`
+-   ✓ Limpiar nombres de columnas con `janitor::clean_names()`
+-   ✓ Especificar y corregir tipos de datos
+-   ✓ Leer múltiples archivos/hojas a la vez
+-   ✓ Guardar datos en diferentes formatos
+-   ✓ Entender sistemas de coordenadas (CRS)
+:::
+
+## Funciones Clave
+
+| Función                 | Propósito                           |
+|-------------------------|-------------------------------------|
+| `read_csv()`            | Leer archivos CSV                   |
+| `read_excel()`          | Leer archivos Excel                 |
+| `read_sf()`             | Leer datos espaciales               |
+| `clean_names()`         | Limpiar nombres de columnas         |
+| `glimpse()`             | Ver estructura de datos             |
+| `parse_number()`        | Convertir texto a número            |
+| `st_crs()`              | Ver/establecer CRS                  |
+| `write_csv()`           | Guardar como CSV                    |
+| `write_rds()`           | Guardar como RDS                    |
+| `write_parquet()`       | Guardar como Parquet                |
+| `write_sf()`            | Guardar datos espaciales            |
+
+## Flujo de Trabajo Típico
+
+```{r}
+#| eval: false
+#| echo: true
+# 1. Importar
+datos <- read_csv("ruta/archivo.csv", na = c("N/A", ""))
+
+# 2. Limpiar nombres
+datos <- datos |> clean_names()
+
+# 3. Revisar
+glimpse(datos)
+
+# 4. Corregir tipos
+datos <- datos |>
+  mutate(
+    categoria = factor(categoria),
+    edad = parse_number(edad)
+  )
+
+# 5. Guardar limpio
+write_rds(datos, "datos_limpios.rds")
+```
+
+## Buenas Prácticas
+
+::: incremental
+1.  **Siempre revisa** los datos después de importar (`glimpse()`, `head()`)
+2.  **Especifica valores NA** explícitamente
+3.  **Limpia nombres** inmediatamente con `clean_names()`
+4.  **Documenta** qué archivos importaste y por qué
+5.  **Guarda versiones limpias** en formatos que preserven tipos
+6.  **Usa rutas relativas** dentro de proyectos
+:::
+
+## Errores Comunes y Soluciones {.smaller}
+
+| Error                          | Solución                                |
+|--------------------------------|-----------------------------------------|
+| Archivo no encontrado          | Verifica ruta, usa RStudio Projects     |
+| Tipos incorrectos              | Usa `col_types` o limpia después        |
+| Valores NA no reconocidos      | Especifica con argumento `na`           |
+| Nombres con espacios           | Usa `clean_names()`                     |
+| Encoding (acentos raros)       | Usa `locale = locale(encoding = "UTF-8")`|
+
+## Próximos Pasos
+
+**Para la próxima sesión:**
+
+::: incremental
+-   Practica importando diferentes tipos de archivos
+-   Explora tus propios datos
+-   Familiarízate con `dplyr` para manipulación de datos
+-   Lee el capítulo sobre transformación de datos en R4DS
+:::
+
+## Recursos Adicionales {.smaller}
+
+**Importación de datos:**
+
+-   [R for Data Science - Data Import](https://r4ds.hadley.nz/data-import)
+-   [R for Data Science - Spreadsheets](https://r4ds.hadley.nz/spreadsheets)
+-   [readr documentation](https://readr.tidyverse.org/)
+-   [readxl documentation](https://readxl.tidyverse.org/)
+-   [janitor documentation](https://sfirke.github.io/janitor/)
+
+**Datos espaciales:**
+
+-   [Geocomputation with R - Chapter 2](https://r.geocompx.org/spatial-class)
+-   [sf documentation](https://r-spatial.github.io/sf/)
+-   [Simple Features vignettes](https://r-spatial.github.io/sf/articles/)
+
+**Hojas de referencia:**
+
+-   [Data Import Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
+-   [sf Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf)
+
+# ¡Gracias!
+
+## Contacto y Preguntas
+
+::: columns
+::: {.column width="60%"}
+**Paul Efren Santos Andrade**
+
+🌐 [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
+
+🐦 [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
+
+💻 [github.com/PaulESantos](https://github.com/PaulESantos)
+:::
+
+::: {.column width="40%"}
+![](img/DSC_0140.JPG){fig-align="center" width="60%" style="border-radius: 50% / 35%; object-fit: cover;"}
+:::
+:::
+
+. . .
+
+### Nos vemos en la próxima sesión: dplyr - Manipulación de Datos
