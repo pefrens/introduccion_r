@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"D:\\\\dataviz-ggplot2\\\\fonts\"\" 2>/dev/null || echo \"Directorio de fuentes no encontrado \")"
+    ]
+  }
+}

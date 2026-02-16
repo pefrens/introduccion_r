@@ -1,0 +1,48 @@
+---
+title: "Recursos"
+---
+
+## Libros Recomendados
+
+### R for Data Science
+El libro principal de referencia para este curso:
+
+* [Versión en inglés](https://r4ds.hadley.nz/)
+* [Versión en español](https://es.r4ds.hadley.nz/)
+
+## Recursos de Tidyverse
+
+### Documentación Oficial
+* [Tidyverse](https://www.tidyverse.org/)
+* [dplyr](https://dplyr.tidyverse.org/): Manipulación de datos
+* [tidyr](https://tidyr.tidyverse.org/): Organización de datos
+* [readr](https://readr.tidyverse.org/): Lectura de datos
+* [ggplot2](https://ggplot2.tidyverse.org/): Visualización de datos
+* [stringr](https://stringr.tidyverse.org/): Manipulación de cadenas de texto
+* [forcats](https://forcats.tidyverse.org/): Manejo de factores
+* [lubridate](https://lubridate.tidyverse.org/): Manejo de fechas
+
+### Paquetes Adicionales
+* [janitor](https://sfirke.github.io/janitor/): Limpieza de datos
+* [here](https://here.r-lib.org/): Rutas de archivos reproducibles
+* [sf](https://r-spatial.github.io/sf/): Datos espaciales
+* [readxl](https://readxl.tidyverse.org/): Lectura de archivos Excel
+* [writexl](https://docs.ropensci.org/writexl/): Escritura de archivos Excel
+
+## Hojas de Referencia (Cheatsheets)
+
+* [RStudio Cheatsheets](https://posit.co/resources/cheatsheets/): Colección completa de hojas de referencia
+* [dplyr Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
+* [tidyr Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+* [readr/readxl Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
+
+## Comunidades y Recursos de Aprendizaje
+
+* [RStudio Community](https://community.rstudio.com/): Foro de la comunidad
+* [Stack Overflow - R](https://stackoverflow.com/questions/tagged/r): Preguntas y respuestas
+* [R-bloggers](https://www.r-bloggers.com/): Blog agregador de contenido sobre R
+
+## Recursos en Español
+
+* [R para Ciencia de Datos (libro traducido)](https://es.r4ds.hadley.nz/)
+* [Ciencia de Datos con R](https://github.com/cienciadedatos)

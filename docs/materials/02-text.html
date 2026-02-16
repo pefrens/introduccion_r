@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="..//images/favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
+
+  <meta name="author" content="Cédric Scherer // posit::conf // Septiembre 2023">
+  <title>Visualizaciones de Datos Atractivas y Hermosas con ggplot2</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #000000; background-color: #ffffff; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #000000; } /* Normal */
+    code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+    code span.an { color: #ca60ca; } /* Annotation */
+    code span.at { color: #0057ae; } /* Attribute */
+    code span.bn { color: #b08000; } /* BaseN */
+    code span.bu { color: #644a9b; } /* BuiltIn */
+    code span.cf { color: #000000; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #924c9d; } /* Char */
+    code span.cn { color: #aa5500; } /* Constant */
+    code span.co { color: #898887; } /* Comment */
+    code span.cv { color: #0095ff; } /* CommentVar */
+    code span.do { color: #607880; } /* Documentation */
+    code span.dt { color: #0057ae; } /* DataType */
+    code span.dv { color: #b08000; } /* DecVal */
+    code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+    code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #b08000; } /* Float */
+    code span.fu { color: #644a9b; } /* Function */
+    code span.im { color: #644a9b; } /* Import */
+    code span.in { color: #b08000; } /* Information */
+    code span.kw { color: #000000; font-weight: bold; } /* Keyword */
+    code span.op { color: #000000; } /* Operator */
+    code span.ot { color: #006e28; } /* Other */
+    code span.pp { color: #006e28; } /* Preprocessor */
+    code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+    code span.sc { color: #ff5500; } /* SpecialChar */
+    code span.ss { color: #ff5500; } /* SpecialString */
+    code span.st { color: #bf0303; } /* String */
+    code span.va { color: #0057ae; } /* Variable */
+    code span.vs { color: #bf0303; } /* VerbatimString */
+    code span.wa { color: #bf0303; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-1689b0f0abb7a24a2a855b68885a866e.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<meta property="og:title" content="Visualizaciones de Datos Atractivas y Hermosas con ggplot2">
+<meta property="og:description" content="Trabajando con Texto">
+<meta name="twitter:title" content="Visualizaciones de Datos Atractivas y Hermosas con ggplot2">
+<meta name="twitter:description" content="Trabajando con Texto">
+<meta name="twitter:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2//images/twitter-card.png">
+<meta name="twitter:creator" content="@CedScherer">
+<meta name="twitter:image-height" content="681">
+<meta name="twitter:image-width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Visualizaciones de Datos Atractivas y Hermosas con ggplot2</h1>
+  <p class="subtitle"><span style="font-size:1.8em;">Trabajando con Texto</span></p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+<a href="https://www.cedricscherer.com" style="color:#28a87d;font-weight:600;">Cédric Scherer</a> // posit::conf // Septiembre 2023 
+</div>
+</div>
+</div>
+
+</section>
+<section id="setup" class="slide level2">
+<h2>Setup</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="1,2,3|5,6,7,8|10,12,13,14,15,16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="1,2,3|5,6,7,8|10,12,13,14,15,16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(stringr)</span>
+<span id="cb5-2"><a></a></span>
+<span id="cb5-3"><a></a>bikes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb5-4"><a></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"london-bikes-custom.csv"</span>), </span>
+<span id="cb5-5"><a></a>  <span class="at">col_types =</span> <span class="st">"Dcfffilllddddc"</span></span>
+<span id="cb5-6"><a></a>)</span>
+<span id="cb5-7"><a></a></span>
+<span id="cb5-8"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>, <span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>))</span>
+<span id="cb5-9"><a></a></span>
+<span id="cb5-10"><a></a><span class="fu">theme_update</span>(</span>
+<span id="cb5-11"><a></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-12"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb5-13"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb5-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section>
+<section id="labels-theme" class="title-slide slide level1 center">
+<h1>Labels + <code style="font-style:normal;color:#222222;font-size:.9em;">theme()</code></h1>
+
+</section>
+<section id="working-with-labels" class="slide level2">
+<h2>Working with Labels</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="9,10,11,12,13,14,15,16,17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb6-2"><a></a>    bikes,</span>
+<span id="cb6-3"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> count,</span>
+<span id="cb6-4"><a></a>        <span class="at">color =</span> season)</span>
+<span id="cb6-5"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb6-6"><a></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb6-7"><a></a>    <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb6-8"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb6-9"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-10"><a></a>    <span class="at">x =</span> <span class="st">"Temperature (°C)"</span>,</span>
+<span id="cb6-11"><a></a>    <span class="at">y =</span> <span class="st">"Reported bike shares"</span>,</span>
+<span id="cb6-12"><a></a>    <span class="at">title =</span> <span class="st">"TfL bike sharing trends"</span>,</span>
+<span id="cb6-13"><a></a>    <span class="at">subtitle =</span> <span class="st">"Reported bike rents versus air temperature in London"</span>,</span>
+<span id="cb6-14"><a></a>    <span class="at">caption =</span> <span class="st">"Data: TfL"</span>,</span>
+<span id="cb6-15"><a></a>    <span class="at">color =</span> <span class="st">"Season:"</span>,</span>
+<span id="cb6-16"><a></a>    <span class="at">tag =</span> <span class="st">"1."</span></span>
+<span id="cb6-17"><a></a>  )</span>
+<span id="cb6-18"><a></a></span>
+<span id="cb6-19"><a></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-bundled-extended-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb7-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb7-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb7-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-theme-title-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme-1" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="4,5,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb8-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb8-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb8-4"><a></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb8-5"><a></a>    <span class="at">color =</span> <span class="st">"#28a87d"</span></span>
+<span id="cb8-6"><a></a>  )</span>
+<span id="cb8-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-theme-element-text-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme-2" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="6,7,8|9,10,11,12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb9-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb9-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb9-4"><a></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb9-5"><a></a>    <span class="at">color =</span> <span class="st">"#28a87d"</span>,</span>
+<span id="cb9-6"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb9-7"><a></a>    <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb9-8"><a></a>    <span class="at">lineheight =</span> <span class="fl">1.3</span>, <span class="co"># no effect here</span></span>
+<span id="cb9-9"><a></a>    <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb9-10"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb9-11"><a></a>    <span class="at">vjust =</span> <span class="dv">0</span>,</span>
+<span id="cb9-12"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">0</span>)</span>
+<span id="cb9-13"><a></a>  )</span>
+<span id="cb9-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-theme-element-text-more-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme-3" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="10,11,12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb10-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb10-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb10-4"><a></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb10-5"><a></a>    <span class="at">color =</span> <span class="st">"#28a87d"</span>,</span>
+<span id="cb10-6"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb10-7"><a></a>    <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb10-8"><a></a>    <span class="at">lineheight =</span> <span class="fl">1.3</span>, <span class="co"># no effect here</span></span>
+<span id="cb10-9"><a></a>    <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb10-10"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span>, <span class="co"># no effect here</span></span>
+<span id="cb10-11"><a></a>    <span class="at">vjust =</span> <span class="dv">0</span>, <span class="co"># no effect here</span></span>
+<span id="cb10-12"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">0</span>) <span class="co"># no effect here</span></span>
+<span id="cb10-13"><a></a>  )</span>
+<span id="cb10-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-theme-element-text-no-effect-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme-4" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="14,15,16,17,18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb11-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb11-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb11-4"><a></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb11-5"><a></a>    <span class="at">color =</span> <span class="st">"#28a87d"</span>,</span>
+<span id="cb11-6"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb11-7"><a></a>    <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb11-8"><a></a>    <span class="at">lineheight =</span> <span class="fl">1.3</span>, <span class="co"># no effect here</span></span>
+<span id="cb11-9"><a></a>    <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb11-10"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span>, <span class="co"># no effect here</span></span>
+<span id="cb11-11"><a></a>    <span class="at">vjust =</span> <span class="dv">0</span>, <span class="co"># no effect here</span></span>
+<span id="cb11-12"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">0</span>) <span class="co"># no effect here</span></span>
+<span id="cb11-13"><a></a>  ),</span>
+<span id="cb11-14"><a></a>  <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb11-15"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb11-16"><a></a>    <span class="at">vjust =</span> <span class="dv">0</span>,</span>
+<span id="cb11-17"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">0</span>) <span class="co"># trbl</span></span>
+<span id="cb11-18"><a></a>  )</span>
+<span id="cb11-19"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-theme-element-text-x-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme-5" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="14,15,16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb12-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb12-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb12-4"><a></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb12-5"><a></a>    <span class="at">color =</span> <span class="st">"#28a87d"</span>,</span>
+<span id="cb12-6"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb12-7"><a></a>    <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb12-8"><a></a>    <span class="at">lineheight =</span> <span class="fl">1.3</span>, <span class="co"># no effect here</span></span>
+<span id="cb12-9"><a></a>    <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb12-10"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span>, <span class="co"># no effect here</span></span>
+<span id="cb12-11"><a></a>    <span class="at">vjust =</span> <span class="dv">0</span>, <span class="co"># no effect here</span></span>
+<span id="cb12-12"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">0</span>) <span class="co"># no effect here</span></span>
+<span id="cb12-13"><a></a>  ),</span>
+<span id="cb12-14"><a></a>  <span class="at">plot.tag =</span> <span class="fu">element_text</span>(</span>
+<span id="cb12-15"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="dv">0</span>) <span class="co"># trbl</span></span>
+<span id="cb12-16"><a></a>  )</span>
+<span id="cb12-17"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-theme-element-text-tag-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="customize-labels-via-theme-6" class="slide level2">
+<h2>Customize Labels via theme()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="13,17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>g <span class="sc">+</span> <span class="fu">theme</span>(</span>
+<span id="cb13-2"><a></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb13-3"><a></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb13-4"><a></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb13-5"><a></a>    <span class="at">color =</span> <span class="st">"#28a87d"</span>,</span>
+<span id="cb13-6"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb13-7"><a></a>    <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb13-8"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb13-9"><a></a>    <span class="at">vjust =</span> <span class="dv">0</span>,</span>
+<span id="cb13-10"><a></a>    <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb13-11"><a></a>    <span class="at">lineheight =</span> <span class="fl">1.3</span>, <span class="co"># no effect here</span></span>
+<span id="cb13-12"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">0</span>), <span class="co"># no effect here</span></span>
+<span id="cb13-13"><a></a>    <span class="at">debug =</span> <span class="cn">TRUE</span></span>
+<span id="cb13-14"><a></a>  ),</span>
+<span id="cb13-15"><a></a>  <span class="at">plot.tag =</span> <span class="fu">element_text</span>(</span>
+<span id="cb13-16"><a></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="dv">0</span>), <span class="co"># trbl</span></span>
+<span id="cb13-17"><a></a>    <span class="at">debug =</span> <span class="cn">TRUE</span></span>
+<span id="cb13-18"><a></a>  )</span>
+<span id="cb13-19"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggplot-labs-theme-element-text-debug-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section></section>
+<section>
+<section id="labels-scale_" class="title-slide slide level1 center">
+<h1>Labels + <code style="font-style:normal;color:#222222;font-size:.9em;">scale_*()</code></h1>
+
+</section>
+<section id="format-labels-via-scale_" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="1,2|4,5,6,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">tag =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>, </span>
+<span id="cb14-2"><a></a>              <span class="at">subtitle =</span> <span class="cn">NULL</span>)</span>
+<span id="cb14-3"><a></a></span>
+<span id="cb14-4"><a></a>g <span class="sc">+</span></span>
+<span id="cb14-5"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb14-6"><a></a>    <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span><span class="sc">*</span><span class="dv">15000</span></span>
+<span id="cb14-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-scales-prep-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-1" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb15-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb15-3"><a></a>    <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">breaks_pretty</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb15-4"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-scales-pretty-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-2" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb16-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb16-3"><a></a>    <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span><span class="sc">*</span><span class="dv">15000</span>,</span>
+<span id="cb16-4"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">comma_format</span>()</span>
+<span id="cb16-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-scales-1-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-3" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="4,5,6|5|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb17-3"><a></a>    <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span><span class="sc">*</span><span class="dv">15000</span>,</span>
+<span id="cb17-4"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">comma_format</span>(</span>
+<span id="cb17-5"><a></a>      <span class="at">suffix =</span> <span class="st">" bikes"</span></span>
+<span id="cb17-6"><a></a>    ),</span>
+<span id="cb17-7"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span></span>
+<span id="cb17-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-scales-2-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-4" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="5|5,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb18-3"><a></a>    <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span><span class="sc">*</span><span class="dv">15000</span>,</span>
+<span id="cb18-4"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">comma_format</span>(</span>
+<span id="cb18-5"><a></a>      <span class="at">scale =</span> .<span class="dv">001</span></span>
+<span id="cb18-6"><a></a>    ),</span>
+<span id="cb18-7"><a></a>    <span class="at">name =</span> <span class="st">"Reported bike shares in thousands"</span></span>
+<span id="cb18-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-scales-4-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-5" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb19-3"><a></a>    <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span><span class="sc">*</span><span class="dv">15000</span>,</span>
+<span id="cb19-4"><a></a>    <span class="at">labels =</span> <span class="cf">function</span>(y) y <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb19-5"><a></a>    <span class="at">name =</span> <span class="st">"Reported bike shares in thousands"</span></span>
+<span id="cb19-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-function-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-6" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="2,5|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb20-3"><a></a>    <span class="at">labels =</span> <span class="cf">function</span>(y) <span class="fu">paste0</span>(y, <span class="st">"°C"</span>),</span>
+<span id="cb20-4"><a></a>    <span class="at">name =</span> <span class="st">"Temperature"</span></span>
+<span id="cb20-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-xy-continuous-labels-function-paste-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="format-labels-via-scale_-7" class="slide level2">
+<h2>Format Labels via scale_*</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="2,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb21-2"><a></a>  <span class="fu">scale_color_discrete</span>(</span>
+<span id="cb21-3"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb21-4"><a></a>    <span class="at">labels =</span> str_to_title</span>
+<span id="cb21-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/scales-color-discrete-name-labels-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="style-labels-of-dual-axis-plots" class="slide level2">
+<h2>Style Labels of Dual Axis Plots</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" data-code-line-numbers="2,3,4,5|6|7,8|7,9,10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>sec <span class="ot">&lt;-</span> </span>
+<span id="cb22-2"><a></a>  bikes <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a></a>  <span class="fu">group_by</span>(</span>
+<span id="cb22-4"><a></a>    <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-5"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb22-6"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">sum</span>(count), <span class="at">temp =</span> <span class="fu">mean</span>(temp)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-7"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month)) <span class="sc">+</span></span>
+<span id="cb22-8"><a></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">y =</span> n), <span class="at">fill =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> temp <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span>), <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> temp <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span>, <span class="at">group =</span> <span class="dv">1</span>), <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="02-text_files/figure-html/sec-axis-prep-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1600"></section>
+<section id="style-labels-of-dual-axis-plots-1" class="slide level2">
+<h2>Style Labels of Dual Axis Plots</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="2,10|3,4|5,9|6|7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>sec <span class="sc">+</span></span>
+<span id="cb23-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb23-3"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(<span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>),</span>
+<span id="cb23-4"><a></a>    <span class="at">name =</span> <span class="st">"Rented bikes"</span>,</span>
+<span id="cb23-5"><a></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(</span>
+<span id="cb23-6"><a></a>      <span class="at">trans =</span> <span class="sc">~</span> . <span class="sc">/</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span>,</span>
+<span id="cb23-7"><a></a>      <span class="at">name =</span> <span class="st">"Average daily temperature"</span>,</span>
+<span id="cb23-8"><a></a>      <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(<span class="at">suffix =</span> <span class="st">"°C"</span>)</span>
+<span id="cb23-9"><a></a>    )</span>
+<span id="cb23-10"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `trans` argument of `sec_axis()` is deprecated as of ggplot2 3.5.0.
+ℹ Please use the `transform` argument instead.</code></pre>
+</div>
+
+</div>
+<img data-src="02-text_files/figure-html/sec-axis-scales-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1600"></section>
+<section id="style-labels-of-dual-axis-plots-2" class="slide level2">
+<h2>Style Labels of Dual Axis Plots</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" data-code-line-numbers="11,12,13,14,15|12|13,14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>sec <span class="sc">+</span></span>
+<span id="cb25-2"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb25-3"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(<span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>),</span>
+<span id="cb25-4"><a></a>    <span class="at">name =</span> <span class="st">"Rented bikes"</span>,</span>
+<span id="cb25-5"><a></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(</span>
+<span id="cb25-6"><a></a>      <span class="at">trans =</span> <span class="sc">~</span> . <span class="sc">/</span> <span class="dv">30000</span>,</span>
+<span id="cb25-7"><a></a>      <span class="at">name =</span> <span class="st">"Average daily temperature"</span>,</span>
+<span id="cb25-8"><a></a>      <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(<span class="at">suffix =</span> <span class="st">"°C"</span>)</span>
+<span id="cb25-9"><a></a>    )</span>
+<span id="cb25-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb25-11"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb25-12"><a></a>    <span class="at">axis.title.y.left =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb25-13"><a></a>    <span class="at">axis.title.y.right =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"firebrick"</span>, <span class="at">face =</span> <span class="st">"bold"</span>,</span>
+<span id="cb25-14"><a></a>                                      <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">l =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>))</span>
+<span id="cb25-15"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="02-text_files/figure-html/sec-axis-color-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1600"></section>
+<section class="slide level2">
+
+
+<img data-src="02-text_files/figure-html/sec-axis-bad-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1600"></section></section>
+<section>
+<section id="styling-labels-with-ggtext" class="title-slide slide level1 center">
+<h1>Styling Labels<br>with {ggtext}</h1>
+
+</section>
+<section id="styling-labels-with-ggtext-1" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb26-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"**TfL bike sharing trends by _season_**"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggtext-prep-markdown-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="styling-labels-with-ggtext-2" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb27" data-code-line-numbers="2,3,4,5|2|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb27-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"**TfL bike sharing trends by _season_**"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb27-4"><a></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>()</span>
+<span id="cb27-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggtext-element-markdown-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="styling-labels-with-ggtext-3" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb28" data-code-line-numbers="2|2,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb28-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"&lt;b style='font-family:Times;font-size:25pt'&gt;TfL&lt;/b&gt; bike sharing trends by &lt;i style='color:#28A87D;'&gt;season&lt;/i&gt;"</span>) <span class="sc">+</span></span>
+<span id="cb28-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-4"><a></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>()</span>
+<span id="cb28-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggtext-element-markdown-html-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<p><span style="font-size:.5em;"><code>&lt;b style='font-family:Times;font-size:25pt;'&gt;TfL&lt;/b&gt; bike sharing trends by &lt;i style='color:#28A87;'&gt;season&lt;/i&gt;</code></span></p>
+<div class="footer">
+
+</div>
+</section>
+<section id="styling-labels-with-ggtext-4" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb29" data-code-line-numbers="2,7|2,3|4|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb29-2"><a></a>  ggtext<span class="sc">::</span><span class="fu">geom_richtext</span>(</span>
+<span id="cb29-3"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">18</span>, <span class="at">y =</span> <span class="dv">48500</span>,</span>
+<span id="cb29-4"><a></a>        <span class="at">label =</span> <span class="st">"What happened on these&lt;br&gt;two &lt;b style='color:#F7B01B;'&gt;summer days&lt;/b&gt;?"</span>),</span>
+<span id="cb29-5"><a></a>    <span class="at">stat =</span> <span class="st">"unique"</span></span>
+<span id="cb29-6"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb29-7"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb29-8"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#6681FE"</span>, <span class="st">"#1EC98D"</span>, <span class="st">"#F7B01B"</span>, <span class="st">"#A26E7C"</span>)</span>
+<span id="cb29-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggtext-geom-richtext-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<p><span style="font-size:.5em;"><code>What happened on these&lt;br&gt;two &lt;b style='color:#F7B01B;'&gt;summer days&lt;/b&gt;?</code></span></p>
+<div class="footer">
+
+</div>
+</section>
+<section id="styling-labels-with-ggtext-5" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb30" data-code-line-numbers="6|7|8,9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb30-2"><a></a>  ggtext<span class="sc">::</span><span class="fu">geom_richtext</span>(</span>
+<span id="cb30-3"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">18</span>, <span class="at">y =</span> <span class="dv">48500</span>,</span>
+<span id="cb30-4"><a></a>        <span class="at">label =</span> <span class="st">"What happened on these&lt;br&gt;two &lt;b style='color:#F7B01B;'&gt;summer days&lt;/b&gt;?"</span>),</span>
+<span id="cb30-5"><a></a>    <span class="at">stat =</span> <span class="st">"unique"</span>, </span>
+<span id="cb30-6"><a></a>    <span class="at">color =</span> <span class="st">"grey20"</span>,</span>
+<span id="cb30-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb30-8"><a></a>    <span class="at">fill =</span> <span class="cn">NA</span>, </span>
+<span id="cb30-9"><a></a>    <span class="at">label.color =</span> <span class="cn">NA</span></span>
+<span id="cb30-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb30-11"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb30-12"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#6681FE"</span>, <span class="st">"#1EC98D"</span>, <span class="st">"#F7B01B"</span>, <span class="st">"#A26E7C"</span>)</span>
+<span id="cb30-13"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in ggtext::geom_richtext(aes(x = 18, y = 48500, label = "What happened on these&lt;br&gt;two &lt;b style='color:#F7B01B;'&gt;summer days&lt;/b&gt;?"), : All aesthetics have length 1, but the data has 1454 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing
+  a single row.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/ggtext-geom-richtext-no-box-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<p><span style="font-size:.5em;"><code>What happened on these&lt;br&gt;two &lt;b style='color:#F7B01B;'&gt;summer days&lt;/b&gt;?</code></span></p>
+<div class="footer">
+
+</div>
+</section>
+<section id="styling-labels-with-ggtext-6" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>friends <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb32-2"><a></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"friends-mentions-partners.csv"</span>)</span>
+<span id="cb32-3"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 725 Columns: 6
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): key, partners
+dbl (4): id, season, episode, mentions
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>friends</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 725 × 6
+      id season episode key               partners          mentions
+   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;                &lt;dbl&gt;
+ 1     1      1       1 Ross &amp; Rachel     Ross &amp; Rachel            4
+ 2     1      1       1 Rachel &amp; Joey     Rachel &amp; Joey            1
+ 3     2      1       2 Ross &amp; Rachel     Ross &amp; Rachel            1
+ 4     2      1       2 Ross              Ross &amp; Carol             2
+ 5     2      1       2 Rachel &amp; Joey     Rachel &amp; Joey            1
+ 6     2      1       2 Rachel            Rachel &amp; Barry           3
+ 7     2      1       2 Monica &amp; Chandler Monica &amp; Chandler        1
+ 8     5      1       5 Ross &amp; Rachel     Ross &amp; Rachel            3
+ 9     5      1       5 Ross              Ross &amp; Carol             1
+10     5      1       5 Chandler          Chandler &amp; Janice        2
+# ℹ 715 more rows</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="https://raw.githubusercontent.com/Z3tt/TidyTuesday/main/plots/2020_37/2020_37_Friends.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="styling-labels-with-ggtext-7" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>match_colors <span class="ot">&lt;-</span></span>
+<span id="cb36-2"><a></a>  <span class="fu">tibble</span>(</span>
+<span id="cb36-3"><a></a>    <span class="at">key =</span> <span class="fu">c</span>(<span class="st">"Chandler"</span>, <span class="st">"Joey"</span>, <span class="st">"Monica"</span>, <span class="st">"Monica &amp; Chandler"</span>, </span>
+<span id="cb36-4"><a></a>            <span class="st">"Phoebe"</span>, <span class="st">"Rachel"</span>, <span class="st">"Rachel &amp; Joey"</span>, <span class="st">"Ross"</span>, <span class="st">"Ross &amp; Rachel"</span>),</span>
+<span id="cb36-5"><a></a>    <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#48508c"</span>, <span class="st">"#55331d"</span>, <span class="st">"#a64d64"</span>, <span class="st">"#774f78"</span>, </span>
+<span id="cb36-6"><a></a>              <span class="st">"#5b7233"</span>, <span class="st">"#ba2a22"</span>, <span class="st">"#882f20"</span>, <span class="st">"#f6ab18"</span>, <span class="st">"#d86b1d"</span>)</span>
+<span id="cb36-7"><a></a>  )</span>
+<span id="cb36-8"><a></a></span>
+<span id="cb36-9"><a></a>match_colors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  key               color  
+  &lt;chr&gt;             &lt;chr&gt;  
+1 Chandler          #48508c
+2 Joey              #55331d
+3 Monica            #a64d64
+4 Monica &amp; Chandler #774f78
+5 Phoebe            #5b7233
+6 Rachel            #ba2a22
+7 Rachel &amp; Joey     #882f20
+8 Ross              #f6ab18
+9 Ross &amp; Rachel     #d86b1d</code></pre>
+</div>
+</div>
+</section>
+<section id="styling-labels-with-ggtext-8" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38" data-code-line-numbers="2,3,4,5|3,4|6,7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>friends <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a></a>  <span class="fu">mutate</span>(<span class="at">key =</span> <span class="fu">if_else</span>(</span>
+<span id="cb38-3"><a></a>    <span class="sc">!</span>partners <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ross &amp; Rachel"</span>, <span class="st">"Rachel &amp; Joey"</span>, <span class="st">"Monica &amp; Chandler"</span>),</span>
+<span id="cb38-4"><a></a>    <span class="fu">word</span>(partners, <span class="dv">1</span>), partners</span>
+<span id="cb38-5"><a></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb38-6"><a></a>  <span class="fu">left_join</span>(</span>
+<span id="cb38-7"><a></a>    match_colors</span>
+<span id="cb38-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(key)`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 725 × 7
+      id season episode key               partners          mentions color  
+   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;  
+ 1     1      1       1 Ross &amp; Rachel     Ross &amp; Rachel            4 #d86b1d
+ 2     1      1       1 Rachel &amp; Joey     Rachel &amp; Joey            1 #882f20
+ 3     2      1       2 Ross &amp; Rachel     Ross &amp; Rachel            1 #d86b1d
+ 4     2      1       2 Ross              Ross &amp; Carol             2 #f6ab18
+ 5     2      1       2 Rachel &amp; Joey     Rachel &amp; Joey            1 #882f20
+ 6     2      1       2 Rachel            Rachel &amp; Barry           3 #ba2a22
+ 7     2      1       2 Monica &amp; Chandler Monica &amp; Chandler        1 #774f78
+ 8     5      1       5 Ross &amp; Rachel     Ross &amp; Rachel            3 #d86b1d
+ 9     5      1       5 Ross              Ross &amp; Carol             1 #f6ab18
+10     5      1       5 Chandler          Chandler &amp; Janice        2 #48508c
+# ℹ 715 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="styling-labels-with-ggtext-9" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41" data-code-line-numbers="9,10,11,12,13,14,15|12,13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>friends_render <span class="ot">&lt;-</span> friends <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a></a>  <span class="fu">mutate</span>(<span class="at">key =</span> <span class="fu">if_else</span>(</span>
+<span id="cb41-3"><a></a>    <span class="sc">!</span>partners <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ross &amp; Rachel"</span>, <span class="st">"Rachel &amp; Joey"</span>, <span class="st">"Monica &amp; Chandler"</span>),</span>
+<span id="cb41-4"><a></a>    <span class="fu">word</span>(partners, <span class="dv">1</span>), partners</span>
+<span id="cb41-5"><a></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb41-6"><a></a>  <span class="fu">left_join</span>(</span>
+<span id="cb41-7"><a></a>    match_colors</span>
+<span id="cb41-8"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb41-9"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb41-10"><a></a>    <span class="at">partners =</span> <span class="fu">if_else</span>(</span>
+<span id="cb41-11"><a></a>      key <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ross &amp; Rachel"</span>, <span class="st">"Rachel &amp; Joey"</span>, <span class="st">"Monica &amp; Chandler"</span>),</span>
+<span id="cb41-12"><a></a>      <span class="fu">paste0</span>(<span class="st">"&lt;b style='color:"</span>, color, <span class="st">"'&gt;"</span>, partners, <span class="st">"&lt;/b&gt;"</span>),</span>
+<span id="cb41-13"><a></a>      <span class="fu">str_replace</span>(partners, key, <span class="fu">paste0</span>(<span class="st">"&lt;b style='color:"</span>, color, <span class="st">"'&gt;"</span>, key, <span class="st">"&lt;/b&gt;"</span>))</span>
+<span id="cb41-14"><a></a>    )</span>
+<span id="cb41-15"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(key)`</code></pre>
+</div>
+</div>
+</section>
+<section id="styling-labels-with-ggtext-10" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>friends_render <span class="sc">|&gt;</span> <span class="fu">select</span>(key, color, partners) <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 3
+   key               color   partners                                      
+   &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;                                         
+ 1 Ross &amp; Rachel     #d86b1d &lt;b style='color:#d86b1d'&gt;Ross &amp; Rachel&lt;/b&gt;    
+ 2 Rachel &amp; Joey     #882f20 &lt;b style='color:#882f20'&gt;Rachel &amp; Joey&lt;/b&gt;    
+ 3 Ross              #f6ab18 &lt;b style='color:#f6ab18'&gt;Ross&lt;/b&gt; &amp; Carol     
+ 4 Rachel            #ba2a22 &lt;b style='color:#ba2a22'&gt;Rachel&lt;/b&gt; &amp; Barry   
+ 5 Monica &amp; Chandler #774f78 &lt;b style='color:#774f78'&gt;Monica &amp; Chandler&lt;/b&gt;
+ 6 Chandler          #48508c &lt;b style='color:#48508c'&gt;Chandler&lt;/b&gt; &amp; Janice
+ 7 Rachel            #ba2a22 &lt;b style='color:#ba2a22'&gt;Rachel&lt;/b&gt; &amp; Paolo   
+ 8 Phoebe            #5b7233 &lt;b style='color:#5b7233'&gt;Phoebe&lt;/b&gt; &amp; David   
+ 9 Rachel            #ba2a22 &lt;b style='color:#ba2a22'&gt;Rachel&lt;/b&gt; &amp; Tag     
+10 Ross              #f6ab18 &lt;b style='color:#f6ab18'&gt;Ross&lt;/b&gt; &amp; Julie     
+# ℹ 15 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="styling-labels-with-ggtext-11" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">ggplot</span>(friends_render,</span>
+<span id="cb45-2"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> partners)) <span class="sc">+</span> </span>
+<span id="cb45-3"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="02-text_files/figure-html/friends-plot-axis-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1800"></section>
+<section id="styling-labels-with-ggtext-12" class="slide level2">
+<h2>Styling Labels with {ggtext}</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46" data-code-line-numbers="3|3,4|3,5|6|7|8|9,11,12,13,14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">ggplot</span>(friends_render,</span>
+<span id="cb46-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> partners)) <span class="sc">+</span> </span>
+<span id="cb46-3"><a></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> mentions, <span class="at">color =</span> color), <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
+<span id="cb46-5"><a></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">5</span>, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb46-6"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>, <span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
+<span id="cb46-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Episodes"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb46-8"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>) <span class="sc">+</span></span>
+<span id="cb46-9"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb46-10"><a></a>    <span class="at">axis.text.y =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb46-11"><a></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb46-12"><a></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb46-13"><a></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb46-14"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="02-text_files/figure-html/friends-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1600"></section></section>
+<section>
+<section id="facet-labellers" class="title-slide slide level1 center">
+<h1>Facet Labellers</h1>
+
+</section>
+<section id="facet-labellers-1" class="slide level2">
+<h2>Facet Labellers</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb47" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb47-2"><a></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb47-3"><a></a>    <span class="sc">~</span> day_night,</span>
+<span id="cb47-4"><a></a>    <span class="at">labeller =</span> label_both</span>
+<span id="cb47-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/facet-wrap-labels-1-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="facet-labellers-2" class="slide level2">
+<h2>Facet Labellers</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb48" data-code-line-numbers="3,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb48-2"><a></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb48-3"><a></a>    <span class="sc">~</span> is_workday <span class="sc">+</span> day_night,</span>
+<span id="cb48-4"><a></a>    <span class="at">labeller =</span> label_both</span>
+<span id="cb48-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/facet-wrap-labels-2-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="facet-labellers-3" class="slide level2">
+<h2>Facet Labellers</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb49" data-code-line-numbers="4,6|4,5,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb49-2"><a></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb49-3"><a></a>    <span class="sc">~</span> is_workday <span class="sc">+</span> day_night,</span>
+<span id="cb49-4"><a></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(</span>
+<span id="cb49-5"><a></a>      <span class="at">day_night =</span> str_to_title</span>
+<span id="cb49-6"><a></a>    )</span>
+<span id="cb49-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/facet-wrap-labels-3-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="facet-labellers-4" class="slide level2">
+<h2>Facet Labellers</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb50" data-code-line-numbers="1,2,3,4|10,11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>codes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb50-2"><a></a>  <span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Workday"</span>,</span>
+<span id="cb50-3"><a></a>  <span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Weekend or Holiday"</span></span>
+<span id="cb50-4"><a></a>)</span>
+<span id="cb50-5"><a></a></span>
+<span id="cb50-6"><a></a>g <span class="sc">+</span></span>
+<span id="cb50-7"><a></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb50-8"><a></a>    <span class="sc">~</span> is_workday <span class="sc">+</span> day_night,</span>
+<span id="cb50-9"><a></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(</span>
+<span id="cb50-10"><a></a>      <span class="at">day_night =</span> str_to_title,</span>
+<span id="cb50-11"><a></a>      <span class="at">is_workday =</span> codes</span>
+<span id="cb50-12"><a></a>    )</span>
+<span id="cb50-13"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/facet-wrap-labels-4-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="facet-labellers-5" class="slide level2">
+<h2>Facet Labellers</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb51" data-code-line-numbers="10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>codes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb51-2"><a></a>  <span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Workday"</span>,</span>
+<span id="cb51-3"><a></a>  <span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Weekend or Holiday"</span></span>
+<span id="cb51-4"><a></a>)</span>
+<span id="cb51-5"><a></a></span>
+<span id="cb51-6"><a></a>g <span class="sc">+</span></span>
+<span id="cb51-7"><a></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb51-8"><a></a>    <span class="sc">~</span> is_workday <span class="sc">+</span> day_night,</span>
+<span id="cb51-9"><a></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(</span>
+<span id="cb51-10"><a></a>      <span class="at">.default =</span> str_to_title,</span>
+<span id="cb51-11"><a></a>      <span class="at">is_workday =</span> codes</span>
+<span id="cb51-12"><a></a>    )</span>
+<span id="cb51-13"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/facet-wrap-labels-5-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="facet-labeller" class="slide level2">
+<h2>Facet Labeller</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb52" data-code-line-numbers="4,5,6,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb52-2"><a></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb52-3"><a></a>    day_night <span class="sc">~</span> is_workday,</span>
+<span id="cb52-4"><a></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(</span>
+<span id="cb52-5"><a></a>      <span class="at">day_night =</span> str_to_title,</span>
+<span id="cb52-6"><a></a>      <span class="at">is_workday =</span> codes</span>
+<span id="cb52-7"><a></a>    )</span>
+<span id="cb52-8"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb52-9"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb52-10"><a></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb52-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/facet-grid-labeller-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section></section>
+<section>
+<section id="handling-long-labels" class="title-slide slide level1 center">
+<h1>Handling Long Labels</h1>
+
+</section>
+<section id="handling-long-labels-1" class="slide level2">
+<h2>Handling Long Labels</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">ggplot</span>(</span>
+<span id="cb53-2"><a></a>    <span class="fu">filter</span>(bikes, <span class="sc">!</span><span class="fu">is.na</span>(weather_type)),</span>
+<span id="cb53-3"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> weather_type,</span>
+<span id="cb53-4"><a></a>        <span class="at">y =</span> count)</span>
+<span id="cb53-5"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb53-6"><a></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-labels-default-labs-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-labels-with-stringr" class="slide level2">
+<h2>Handling Long Labels with {stringr}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">ggplot</span>(</span>
+<span id="cb54-2"><a></a>    <span class="fu">filter</span>(bikes, <span class="sc">!</span><span class="fu">is.na</span>(weather_type)),</span>
+<span id="cb54-3"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> weather_type,</span>
+<span id="cb54-4"><a></a>        <span class="at">y =</span> count)</span>
+<span id="cb54-5"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb54-6"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb54-7"><a></a>  <span class="fu">scale_x_discrete</span>(</span>
+<span id="cb54-8"><a></a>    <span class="at">guide =</span> <span class="fu">guide_axis</span>(</span>
+<span id="cb54-9"><a></a>      <span class="at">n.dodge =</span> <span class="dv">2</span></span>
+<span id="cb54-10"><a></a>    )</span>
+<span id="cb54-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-labels-guide-axis-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-labels-with-stringr-1" class="slide level2">
+<h2>Handling Long Labels with {stringr}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb55" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">ggplot</span>(</span>
+<span id="cb55-2"><a></a>    <span class="fu">filter</span>(bikes, <span class="sc">!</span><span class="fu">is.na</span>(weather_type)),</span>
+<span id="cb55-3"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">str_wrap</span>(weather_type, <span class="dv">6</span>),</span>
+<span id="cb55-4"><a></a>        <span class="at">y =</span> count)</span>
+<span id="cb55-5"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb55-6"><a></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-labels-stringr-wrap-labs-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-titles" class="slide level2">
+<h2>Handling Long Titles</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb56" data-code-line-numbers="2|3,4,5,6|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>g <span class="sc">+</span> </span>
+<span id="cb56-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"TfL bike sharing trends in 2015 and 2016 by season for day and night periods"</span>) <span class="sc">+</span></span>
+<span id="cb56-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb56-4"><a></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb56-5"><a></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb56-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-titles-default-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-titles-with" class="slide level2">
+<h2>Handling Long Titles with </h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb57" data-code-line-numbers="2|3,4,5,6|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>g <span class="sc">+</span> </span>
+<span id="cb57-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"TfL bike sharing trends in 2015 and 2016</span><span class="sc">\n</span><span class="st">by season for day and night periods"</span>) <span class="sc">+</span></span>
+<span id="cb57-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb57-4"><a></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb57-5"><a></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb57-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-titles-linebreak-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<p><span style="font-size:.5em;"><code>TfL bike sharing trends in 2015 and 2016\nby season for day and night periods</code></span></p>
+<div class="footer">
+
+</div>
+</section>
+<section id="handling-long-titles-with-ggtext" class="slide level2">
+<h2>Handling Long Titles with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb58" data-code-line-numbers="5,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb58-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"TfL bike sharing trends in 2015 and 2016 by season for day and night periods"</span>) <span class="sc">+</span></span>
+<span id="cb58-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb58-4"><a></a>    <span class="at">plot.title =</span></span>
+<span id="cb58-5"><a></a>      ggtext<span class="sc">::</span><span class="fu">element_textbox_simple</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb58-6"><a></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb58-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-titles-ggtext-textbox-default-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-titles-with-ggtext-1" class="slide level2">
+<h2>Handling Long Titles with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb59" data-code-line-numbers="5,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb59-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"TfL bike sharing trends in 2015 and 2016 by season for day and night periods"</span>) <span class="sc">+</span></span>
+<span id="cb59-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb59-4"><a></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_textbox_simple</span>(</span>
+<span id="cb59-5"><a></a>      <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">12</span>, <span class="at">b =</span> <span class="dv">12</span>),</span>
+<span id="cb59-6"><a></a>      <span class="at">lineheight =</span> .<span class="dv">9</span></span>
+<span id="cb59-7"><a></a>    ),</span>
+<span id="cb59-8"><a></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb59-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-titles-ggtext-textbox-margin-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-titles-with-ggtext-2" class="slide level2">
+<h2>Handling Long Titles with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb60" data-code-line-numbers="6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb60-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"TfL bike sharing trends in 2015 and 2016 by season for day and night periods"</span>) <span class="sc">+</span></span>
+<span id="cb60-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb60-4"><a></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_textbox_simple</span>(</span>
+<span id="cb60-5"><a></a>      <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">12</span>, <span class="at">b =</span> <span class="dv">12</span>),</span>
+<span id="cb60-6"><a></a>      <span class="at">fill =</span> <span class="st">"grey90"</span>,</span>
+<span id="cb60-7"><a></a>      <span class="at">lineheight =</span> .<span class="dv">9</span></span>
+<span id="cb60-8"><a></a>    ),</span>
+<span id="cb60-9"><a></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb60-10"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-titles-ggtext-textbox-box-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="handling-long-titles-with-ggtext-3" class="slide level2">
+<h2>Handling Long Titles with {ggtext}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb61" data-code-line-numbers="6|8|9|10|11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb61-2"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"TfL bike sharing trends in 2015 and 2016 by season for day and night periods"</span>) <span class="sc">+</span></span>
+<span id="cb61-3"><a></a>  <span class="fu">theme</span>(</span>
+<span id="cb61-4"><a></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_textbox_simple</span>(</span>
+<span id="cb61-5"><a></a>      <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">12</span>, <span class="at">b =</span> <span class="dv">12</span>),</span>
+<span id="cb61-6"><a></a>      <span class="at">padding =</span> <span class="fu">margin</span>(<span class="fu">rep</span>(<span class="dv">12</span>, <span class="dv">4</span>)),</span>
+<span id="cb61-7"><a></a>      <span class="at">fill =</span> <span class="st">"grey90"</span>,</span>
+<span id="cb61-8"><a></a>      <span class="at">box.color =</span> <span class="st">"grey40"</span>,</span>
+<span id="cb61-9"><a></a>      <span class="at">r =</span> <span class="fu">unit</span>(<span class="dv">9</span>, <span class="st">"pt"</span>),</span>
+<span id="cb61-10"><a></a>      <span class="at">halign =</span> .<span class="dv">5</span>,</span>
+<span id="cb61-11"><a></a>      <span class="at">face =</span> <span class="st">"bold"</span>,</span>
+<span id="cb61-12"><a></a>      <span class="at">lineheight =</span> .<span class="dv">9</span></span>
+<span id="cb61-13"><a></a>    ),</span>
+<span id="cb61-14"><a></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb61-15"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: In `margin()`, the argument `t` should have length 1, not length 4.
+ℹ Argument get(s) truncated to length 1.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/long-titles-ggtext-textbox-box-styled-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section></section>
+<section>
+<section id="annotations" class="title-slide slide level1 center">
+<h1>Annotations</h1>
+
+</section>
+<section id="add-single-text-annotations" class="slide level2">
+<h2>Add Single Text Annotations</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb63" data-code-line-numbers="1|2,3|4,5,6,7|8,9,10,11|5,9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>ga <span class="ot">&lt;-</span> </span>
+<span id="cb63-2"><a></a>  <span class="fu">ggplot</span>(bikes, </span>
+<span id="cb63-3"><a></a>         <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> count)) <span class="sc">+</span></span>
+<span id="cb63-4"><a></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb63-5"><a></a>    <span class="fu">aes</span>(<span class="at">color =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>),</span>
+<span id="cb63-6"><a></a>    <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb63-7"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb63-8"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb63-9"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"firebrick"</span>),</span>
+<span id="cb63-10"><a></a>    <span class="at">guide =</span> <span class="st">"none"</span></span>
+<span id="cb63-11"><a></a>  )</span>
+<span id="cb63-12"><a></a></span>
+<span id="cb63-13"><a></a>ga</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-setup-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-single-text-annotations-1" class="slide level2">
+<h2>Add Single Text Annotations</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb64" data-code-line-numbers="1,2,3,4,5,6|2|3,4|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb64-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb64-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb64-4"><a></a>    <span class="at">x =</span> <span class="dv">18</span>,</span>
+<span id="cb64-5"><a></a>    <span class="at">y =</span> <span class="dv">48000</span>,</span>
+<span id="cb64-6"><a></a>    <span class="at">label =</span> <span class="st">"What happened here?"</span></span>
+<span id="cb64-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="style-text-annotations" class="slide level2">
+<h2>Style Text Annotations</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb65" data-code-line-numbers="7,8,9,10,11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb65-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb65-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb65-4"><a></a>    <span class="at">x =</span> <span class="dv">18</span>,</span>
+<span id="cb65-5"><a></a>    <span class="at">y =</span> <span class="dv">48000</span>,</span>
+<span id="cb65-6"><a></a>    <span class="at">label =</span> <span class="st">"What happened here?"</span>,</span>
+<span id="cb65-7"><a></a>    <span class="at">color =</span> <span class="st">"firebrick"</span>,</span>
+<span id="cb65-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb65-9"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb65-10"><a></a>    <span class="at">fontface =</span> <span class="st">"bold"</span>,</span>
+<span id="cb65-11"><a></a>    <span class="at">lineheight =</span>  .<span class="dv">8</span></span>
+<span id="cb65-12"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-adj-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-multiple-text-annotations" class="slide level2">
+<h2>Add Multiple Text Annotations</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb66" data-code-line-numbers="4,5,6|4,5,6,7,8,9,10,11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb66-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb66-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb66-4"><a></a>    <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="fu">max</span>(bikes<span class="sc">$</span>temp)),</span>
+<span id="cb66-5"><a></a>    <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">48000</span>, <span class="dv">1000</span>),</span>
+<span id="cb66-6"><a></a>    <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"What happened here?"</span>, <span class="st">"Powered by TfL"</span>),</span>
+<span id="cb66-7"><a></a>    <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"black"</span>),</span>
+<span id="cb66-8"><a></a>    <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">3</span>),</span>
+<span id="cb66-9"><a></a>    <span class="at">family =</span> <span class="fu">c</span>(<span class="st">"Asap SemiCondensed"</span>, <span class="st">"Hepta Slab"</span>),</span>
+<span id="cb66-10"><a></a>    <span class="at">fontface =</span> <span class="fu">c</span>(<span class="st">"bold"</span>, <span class="st">"plain"</span>),</span>
+<span id="cb66-11"><a></a>    <span class="at">hjust =</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>)</span>
+<span id="cb66-12"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-multiple-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="pointnclick-annotations" class="slide level2">
+<h2>“Point’n’Click” Annotations</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>ggannotate<span class="sc">::</span><span class="fu">ggannotate</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img data-src="img/ggannotate.png" class="quarto-figure quarto-figure-center r-stretch" alt="A screenshot of the Shiny app provided by the ggannotate package which allows to place a text annotation by clicking and returns the code."></section>
+<section id="add-boxes" class="slide level2">
+<h2>Add Boxes</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb68" data-code-line-numbers="11,18|11,12,18|13,14,15,16|17,18|5,8,15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>ga <span class="sc">+</span> </span>
+<span id="cb68-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb68-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb68-4"><a></a>    <span class="at">x =</span> <span class="fl">19.5</span>,</span>
+<span id="cb68-5"><a></a>    <span class="at">y =</span> <span class="dv">42000</span>,</span>
+<span id="cb68-6"><a></a>    <span class="at">label =</span> <span class="st">"What happened here?"</span>,</span>
+<span id="cb68-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb68-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb68-9"><a></a>    <span class="at">vjust =</span> <span class="fl">1.3</span></span>
+<span id="cb68-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb68-11"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb68-12"><a></a>    <span class="at">geom =</span> <span class="st">"rect"</span>,</span>
+<span id="cb68-13"><a></a>    <span class="at">xmin =</span> <span class="dv">17</span>, </span>
+<span id="cb68-14"><a></a>    <span class="at">xmax =</span> <span class="dv">22</span>,</span>
+<span id="cb68-15"><a></a>    <span class="at">ymin =</span> <span class="dv">42000</span>, </span>
+<span id="cb68-16"><a></a>    <span class="at">ymax =</span> <span class="dv">54000</span>,</span>
+<span id="cb68-17"><a></a>    <span class="at">color =</span> <span class="st">"firebrick"</span>, </span>
+<span id="cb68-18"><a></a>    <span class="at">fill =</span> <span class="cn">NA</span></span>
+<span id="cb68-19"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-rect-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-lines" class="slide level2">
+<h2>Add Lines</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb69" data-code-line-numbers="11,17|12|13,14,15,16|4,5,13,15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb69-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb69-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb69-4"><a></a>    <span class="at">x =</span> <span class="dv">10</span>,</span>
+<span id="cb69-5"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>,</span>
+<span id="cb69-6"><a></a>    <span class="at">label =</span> <span class="st">"The</span><span class="sc">\n</span><span class="st">highest</span><span class="sc">\n</span><span class="st">count"</span>,</span>
+<span id="cb69-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb69-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb69-9"><a></a>    <span class="at">lineheight =</span>  .<span class="dv">8</span></span>
+<span id="cb69-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb69-11"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb69-12"><a></a>    <span class="at">geom =</span> <span class="st">"segment"</span>,</span>
+<span id="cb69-13"><a></a>    <span class="at">x =</span> <span class="dv">13</span>, </span>
+<span id="cb69-14"><a></a>    <span class="at">xend =</span> <span class="fl">18.2</span>,</span>
+<span id="cb69-15"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>, </span>
+<span id="cb69-16"><a></a>    <span class="at">yend =</span> <span class="dv">51870</span></span>
+<span id="cb69-17"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-line-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-lines-1" class="slide level2">
+<h2>Add Lines</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb70" data-code-line-numbers="13,14,15,16|6,11,15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb70-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb70-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb70-4"><a></a>    <span class="at">x =</span> <span class="dv">10</span>,</span>
+<span id="cb70-5"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>,</span>
+<span id="cb70-6"><a></a>    <span class="at">label =</span> <span class="st">"The</span><span class="sc">\n</span><span class="st">highest</span><span class="sc">\n</span><span class="st">count"</span>,</span>
+<span id="cb70-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb70-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb70-9"><a></a>    <span class="at">lineheight =</span>  .<span class="dv">8</span></span>
+<span id="cb70-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb70-11"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb70-12"><a></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb70-13"><a></a>    <span class="at">x =</span> <span class="dv">13</span>, </span>
+<span id="cb70-14"><a></a>    <span class="at">xend =</span> <span class="fl">18.2</span>,</span>
+<span id="cb70-15"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>, </span>
+<span id="cb70-16"><a></a>    <span class="at">yend =</span> <span class="dv">51870</span></span>
+<span id="cb70-17"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-curve-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-arrows" class="slide level2">
+<h2>Add Arrows</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb71" data-code-line-numbers="17,18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb71-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb71-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb71-4"><a></a>    <span class="at">x =</span> <span class="dv">10</span>,</span>
+<span id="cb71-5"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>,</span>
+<span id="cb71-6"><a></a>    <span class="at">label =</span> <span class="st">"The</span><span class="sc">\n</span><span class="st">highest</span><span class="sc">\n</span><span class="st">count"</span>,</span>
+<span id="cb71-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb71-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb71-9"><a></a>    <span class="at">lineheight =</span>  .<span class="dv">8</span></span>
+<span id="cb71-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb71-11"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb71-12"><a></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb71-13"><a></a>    <span class="at">x =</span> <span class="dv">13</span>, </span>
+<span id="cb71-14"><a></a>    <span class="at">xend =</span> <span class="fl">18.2</span>,</span>
+<span id="cb71-15"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>, </span>
+<span id="cb71-16"><a></a>    <span class="at">yend =</span> <span class="dv">51870</span>,</span>
+<span id="cb71-17"><a></a>    <span class="at">curvature =</span> .<span class="dv">25</span>,</span>
+<span id="cb71-18"><a></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>()</span>
+<span id="cb71-19"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-arrow-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-arrows-1" class="slide level2">
+<h2>Add Arrows</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb72" data-code-line-numbers="18,19,20,21,22|19,20,21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb72-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb72-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb72-4"><a></a>    <span class="at">x =</span> <span class="dv">10</span>,</span>
+<span id="cb72-5"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>,</span>
+<span id="cb72-6"><a></a>    <span class="at">label =</span> <span class="st">"The</span><span class="sc">\n</span><span class="st">highest</span><span class="sc">\n</span><span class="st">count"</span>,</span>
+<span id="cb72-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb72-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb72-9"><a></a>    <span class="at">lineheight =</span>  .<span class="dv">8</span></span>
+<span id="cb72-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb72-11"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb72-12"><a></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb72-13"><a></a>    <span class="at">x =</span> <span class="dv">13</span>, </span>
+<span id="cb72-14"><a></a>    <span class="at">xend =</span> <span class="fl">18.2</span>,</span>
+<span id="cb72-15"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>, </span>
+<span id="cb72-16"><a></a>    <span class="at">yend =</span> <span class="dv">51870</span>,</span>
+<span id="cb72-17"><a></a>    <span class="at">curvature =</span> .<span class="dv">25</span>,</span>
+<span id="cb72-18"><a></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(</span>
+<span id="cb72-19"><a></a>      <span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">10</span>, <span class="st">"pt"</span>),</span>
+<span id="cb72-20"><a></a>      <span class="at">type =</span> <span class="st">"closed"</span>,</span>
+<span id="cb72-21"><a></a>      <span class="at">ends =</span> <span class="st">"both"</span></span>
+<span id="cb72-22"><a></a>    )</span>
+<span id="cb72-23"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-arrow-type2-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="add-arrows-2" class="slide level2">
+<h2>Add Arrows</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb73" data-code-line-numbers="18|19,20,21,22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>ga <span class="sc">+</span></span>
+<span id="cb73-2"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb73-3"><a></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb73-4"><a></a>    <span class="at">x =</span> <span class="dv">10</span>,</span>
+<span id="cb73-5"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>,</span>
+<span id="cb73-6"><a></a>    <span class="at">label =</span> <span class="st">"The</span><span class="sc">\n</span><span class="st">highest</span><span class="sc">\n</span><span class="st">count"</span>,</span>
+<span id="cb73-7"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb73-8"><a></a>    <span class="at">size =</span> <span class="dv">6</span>,</span>
+<span id="cb73-9"><a></a>    <span class="at">lineheight =</span>  .<span class="dv">8</span></span>
+<span id="cb73-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb73-11"><a></a>  <span class="fu">annotate</span>(</span>
+<span id="cb73-12"><a></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb73-13"><a></a>    <span class="at">x =</span> <span class="dv">13</span>, </span>
+<span id="cb73-14"><a></a>    <span class="at">xend =</span> <span class="fl">18.2</span>,</span>
+<span id="cb73-15"><a></a>    <span class="at">y =</span> <span class="dv">38000</span>, </span>
+<span id="cb73-16"><a></a>    <span class="at">yend =</span> <span class="dv">51870</span>,</span>
+<span id="cb73-17"><a></a>    <span class="at">curvature =</span> .<span class="dv">8</span>,</span>
+<span id="cb73-18"><a></a>    <span class="at">angle =</span> <span class="dv">130</span>,</span>
+<span id="cb73-19"><a></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(</span>
+<span id="cb73-20"><a></a>      <span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">10</span>, <span class="st">"pt"</span>),</span>
+<span id="cb73-21"><a></a>      <span class="at">type =</span> <span class="st">"closed"</span></span>
+<span id="cb73-22"><a></a>    )</span>
+<span id="cb73-23"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/annotate-text-arrow-skewed-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="highlight-hot-days" class="slide level2">
+<h2>Highlight Hot Days</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb74" data-code-line-numbers="1|2,3,4,5,6|2,3,4,5,6,11|7,8,9,10|5,12,13,14,15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a>gh <span class="ot">&lt;-</span> </span>
+<span id="cb74-2"><a></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb74-3"><a></a>    <span class="at">data =</span> <span class="fu">filter</span>(bikes, temp <span class="sc">&gt;=</span> <span class="dv">27</span>),</span>
+<span id="cb74-4"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temp)</span>
+<span id="cb74-5"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb74-6"><a></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb74-7"><a></a>    <span class="at">data =</span> bikes,</span>
+<span id="cb74-8"><a></a>    <span class="at">color =</span> <span class="st">"grey65"</span>, <span class="at">alpha =</span> .<span class="dv">3</span></span>
+<span id="cb74-9"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb74-10"><a></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>)</span>
+<span id="cb74-11"><a></a></span>
+<span id="cb74-12"><a></a>gh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-hot-periods-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-geom_text" class="slide level2">
+<h2>Annotations with geom_text()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb75" data-code-line-numbers="2,6|3|4,5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb75-2"><a></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb75-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%m/%d"</span>)),</span>
+<span id="cb75-4"><a></a>    <span class="at">nudge_x =</span> <span class="dv">10</span>,</span>
+<span id="cb75-5"><a></a>    <span class="at">hjust =</span> <span class="dv">0</span></span>
+<span id="cb75-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-geom_label" class="slide level2">
+<h2>Annotations with geom_label()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb76" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb76-2"><a></a>  <span class="fu">geom_label</span>(</span>
+<span id="cb76-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%m/%d"</span>)),</span>
+<span id="cb76-4"><a></a>    <span class="at">nudge_x =</span> .<span class="dv">3</span>,</span>
+<span id="cb76-5"><a></a>    <span class="at">hjust =</span> <span class="dv">0</span></span>
+<span id="cb76-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-label-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggrepel" class="slide level2">
+<h2>Annotations with {ggrepel}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb77" data-code-line-numbers="2,3,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb77-2"><a></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(</span>
+<span id="cb77-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%m/%d"</span>))</span>
+<span id="cb77-4"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-repel-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggrepel-1" class="slide level2">
+<h2>Annotations with {ggrepel}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb78" data-code-line-numbers="3|4,5,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a>gh <span class="sc">+</span> </span>
+<span id="cb78-2"><a></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(</span>
+<span id="cb78-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%m/%d"</span>)),</span>
+<span id="cb78-4"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb78-5"><a></a>    <span class="at">size =</span> <span class="fl">4.5</span>,</span>
+<span id="cb78-6"><a></a>    <span class="at">fontface =</span> <span class="st">"bold"</span></span>
+<span id="cb78-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-repel-styling-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggrepel-2" class="slide level2">
+<h2>Annotations with {ggrepel}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb79" data-code-line-numbers="5,6|7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb79-2"><a></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(</span>
+<span id="cb79-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%m/%d"</span>)),</span>
+<span id="cb79-4"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb79-5"><a></a>    <span class="co"># space between points + labels</span></span>
+<span id="cb79-6"><a></a>    <span class="at">box.padding =</span> .<span class="dv">8</span>,</span>
+<span id="cb79-7"><a></a>    <span class="co"># always draw segments</span></span>
+<span id="cb79-8"><a></a>    <span class="at">min.segment.length =</span> <span class="dv">0</span></span>
+<span id="cb79-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-repel-dist-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggrepel-3" class="slide level2">
+<h2>Annotations with {ggrepel}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb80" data-code-line-numbers="5,6|5,6,7|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb80-2"><a></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(</span>
+<span id="cb80-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%y/%m/%d"</span>)),</span>
+<span id="cb80-4"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb80-5"><a></a>    <span class="co"># force to the right</span></span>
+<span id="cb80-6"><a></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">as.Date</span>(<span class="st">"2015-06-01"</span>)), </span>
+<span id="cb80-7"><a></a>    <span class="at">hjust =</span> <span class="dv">1</span></span>
+<span id="cb80-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-repel-lim-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggrepel-4" class="slide level2">
+<h2>Annotations with {ggrepel}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb81" data-code-line-numbers="6,7,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb81-2"><a></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(</span>
+<span id="cb81-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%y/%m/%d"</span>)),</span>
+<span id="cb81-4"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb81-5"><a></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">as.Date</span>(<span class="st">"2015-06-01"</span>)),</span>
+<span id="cb81-6"><a></a>    <span class="co"># style segment</span></span>
+<span id="cb81-7"><a></a>    <span class="at">segment.curvature =</span> .<span class="dv">01</span>,</span>
+<span id="cb81-8"><a></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(.<span class="dv">02</span>, <span class="st">"npc"</span>), <span class="at">type =</span> <span class="st">"closed"</span>)</span>
+<span id="cb81-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-repel-arrow-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggrepel-5" class="slide level2">
+<h2>Annotations with {ggrepel}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb82" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a></a>gh <span class="sc">+</span></span>
+<span id="cb82-2"><a></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(</span>
+<span id="cb82-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(date, <span class="st">"%y/%m/%d"</span>)),</span>
+<span id="cb82-4"><a></a>    <span class="at">family =</span> <span class="st">"Spline Sans Mono"</span>,</span>
+<span id="cb82-5"><a></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">as.Date</span>(<span class="st">"2015-06-01"</span>)),</span>
+<span id="cb82-6"><a></a>    <span class="co"># style segment</span></span>
+<span id="cb82-7"><a></a>    <span class="at">segment.curvature =</span> .<span class="dv">001</span>,</span>
+<span id="cb82-8"><a></a>    <span class="at">segment.inflect =</span> <span class="cn">TRUE</span></span>
+<span id="cb82-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-text-repel-inflect-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggforce" class="slide level2">
+<h2>Annotations with {ggforce}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb83" data-code-line-numbers="2,5|3,4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb83-2"><a></a>  ggforce<span class="sc">::</span><span class="fu">geom_mark_rect</span>(</span>
+<span id="cb83-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="st">"Outliers?"</span>,</span>
+<span id="cb83-4"><a></a>        <span class="at">filter =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>)</span>
+<span id="cb83-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-mark-rect-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggforce-1" class="slide level2">
+<h2>Annotations with {ggforce}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb84" data-code-line-numbers="5,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb84-2"><a></a>  ggforce<span class="sc">::</span><span class="fu">geom_mark_rect</span>(</span>
+<span id="cb84-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="st">"Outliers?"</span>,</span>
+<span id="cb84-4"><a></a>        <span class="at">filter =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>),</span>
+<span id="cb84-5"><a></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb84-6"><a></a>    <span class="at">label.family =</span> <span class="st">"Asap SemiCondensed"</span></span>
+<span id="cb84-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-mark-rect-color-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggforce-2" class="slide level2">
+<h2>Annotations with {ggforce}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb85" data-code-line-numbers="11,12,13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb85-2"><a></a>  ggforce<span class="sc">::</span><span class="fu">geom_mark_rect</span>(</span>
+<span id="cb85-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="st">"Outliers?"</span>,</span>
+<span id="cb85-4"><a></a>        <span class="at">filter =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>),</span>
+<span id="cb85-5"><a></a>    <span class="at">description =</span> <span class="st">"What happened on</span><span class="sc">\n</span><span class="st">these two days?"</span>,</span>
+<span id="cb85-6"><a></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb85-7"><a></a>    <span class="at">label.family =</span> <span class="st">"Asap SemiCondensed"</span></span>
+<span id="cb85-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-mark-rect-description-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggforce-3" class="slide level2">
+<h2>Annotations with {ggforce}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb86" data-code-line-numbers="8,9,10,11,12,13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb86-2"><a></a>  ggforce<span class="sc">::</span><span class="fu">geom_mark_rect</span>(</span>
+<span id="cb86-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="st">"Outliers?"</span>,</span>
+<span id="cb86-4"><a></a>        <span class="at">filter =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>),</span>
+<span id="cb86-5"><a></a>    <span class="at">description =</span> <span class="st">"What happened on</span><span class="sc">\n</span><span class="st">these two days?"</span>,</span>
+<span id="cb86-6"><a></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb86-7"><a></a>    <span class="at">label.family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb86-8"><a></a>    <span class="at">expand =</span> <span class="fu">unit</span>(<span class="dv">8</span>, <span class="st">"pt"</span>),</span>
+<span id="cb86-9"><a></a>    <span class="at">radius =</span> <span class="fu">unit</span>(<span class="dv">12</span>, <span class="st">"pt"</span>),</span>
+<span id="cb86-10"><a></a>    <span class="at">con.cap =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"pt"</span>),</span>
+<span id="cb86-11"><a></a>    <span class="at">label.buffer =</span> <span class="fu">unit</span>(<span class="dv">15</span>, <span class="st">"pt"</span>),</span>
+<span id="cb86-12"><a></a>    <span class="at">con.type =</span> <span class="st">"straight"</span>,</span>
+<span id="cb86-13"><a></a>    <span class="at">label.fill =</span> <span class="st">"transparent"</span></span>
+<span id="cb86-14"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-mark-rect-modify-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggforce-4" class="slide level2">
+<h2>Annotations with {ggforce}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb87" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb87-2"><a></a>  ggforce<span class="sc">::</span><span class="fu">geom_mark_circle</span>(</span>
+<span id="cb87-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="st">"Outliers?"</span>,</span>
+<span id="cb87-4"><a></a>        <span class="at">filter =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>),</span>
+<span id="cb87-5"><a></a>    <span class="at">description =</span> <span class="st">"What happened on</span><span class="sc">\n</span><span class="st">these two days?"</span>,</span>
+<span id="cb87-6"><a></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb87-7"><a></a>    <span class="at">label.family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb87-8"><a></a>    <span class="at">expand =</span> <span class="fu">unit</span>(<span class="dv">8</span>, <span class="st">"pt"</span>),</span>
+<span id="cb87-9"><a></a>    <span class="at">con.cap =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"pt"</span>),</span>
+<span id="cb87-10"><a></a>    <span class="at">label.buffer =</span> <span class="fu">unit</span>(<span class="dv">15</span>, <span class="st">"pt"</span>),</span>
+<span id="cb87-11"><a></a>    <span class="at">con.type =</span> <span class="st">"straight"</span>,</span>
+<span id="cb87-12"><a></a>    <span class="at">label.fill =</span> <span class="st">"transparent"</span></span>
+<span id="cb87-13"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-mark-circle-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-ggforce-5" class="slide level2">
+<h2>Annotations with {ggforce}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb88" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a>g <span class="sc">+</span></span>
+<span id="cb88-2"><a></a>  ggforce<span class="sc">::</span><span class="fu">geom_mark_hull</span>(</span>
+<span id="cb88-3"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="st">"Outliers?"</span>,</span>
+<span id="cb88-4"><a></a>        <span class="at">filter =</span> count <span class="sc">&gt;</span> <span class="dv">40000</span>),</span>
+<span id="cb88-5"><a></a>    <span class="at">description =</span> <span class="st">"What happened on</span><span class="sc">\n</span><span class="st">these two days?"</span>,</span>
+<span id="cb88-6"><a></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb88-7"><a></a>    <span class="at">label.family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb88-8"><a></a>    <span class="at">expand =</span> <span class="fu">unit</span>(<span class="dv">8</span>, <span class="st">"pt"</span>),</span>
+<span id="cb88-9"><a></a>    <span class="at">con.cap =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"pt"</span>),</span>
+<span id="cb88-10"><a></a>    <span class="at">label.buffer =</span> <span class="fu">unit</span>(<span class="dv">15</span>, <span class="st">"pt"</span>),</span>
+<span id="cb88-11"><a></a>    <span class="at">con.type =</span> <span class="st">"straight"</span>,</span>
+<span id="cb88-12"><a></a>    <span class="at">label.fill =</span> <span class="st">"transparent"</span></span>
+<span id="cb88-13"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/highlight-geom-mark-hull-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-geomtextpath" class="slide level2">
+<h2>Annotations with {geomtextpath}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb89" data-code-line-numbers="1,2,3,4|5,6,7,8|9|10,11,12,13,14,15|16,17,18,19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb89-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2016"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb89-3"><a></a>  <span class="fu">group_by</span>(month, day_night) <span class="sc">|&gt;</span> </span>
+<span id="cb89-4"><a></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">sum</span>(count)) <span class="sc">|&gt;</span> </span>
+<span id="cb89-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count, </span>
+<span id="cb89-6"><a></a>             <span class="at">color =</span> day_night,</span>
+<span id="cb89-7"><a></a>             <span class="at">group =</span> day_night)) <span class="sc">+</span></span>
+<span id="cb89-8"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb89-9"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb89-10"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb89-11"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(</span>
+<span id="cb89-12"><a></a>      <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>, <span class="at">suffix =</span> <span class="st">"K"</span></span>
+<span id="cb89-13"><a></a>    ),</span>
+<span id="cb89-14"><a></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">850000</span>)</span>
+<span id="cb89-15"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb89-16"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb89-17"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#FFA200"</span>, <span class="st">"#757BC7"</span>),</span>
+<span id="cb89-18"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span></span>
+<span id="cb89-19"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by month and day_night.
+ℹ Output is grouped by month.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(month, day_night))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/geomtextpath-prep-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-geomtextpath-1" class="slide level2">
+<h2>Annotations with {geomtextpath}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb91" data-code-line-numbers="8,9,10,11,12,13,14|24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb91-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2016"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb91-3"><a></a>  <span class="fu">group_by</span>(month, day_night) <span class="sc">|&gt;</span> </span>
+<span id="cb91-4"><a></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">sum</span>(count)) <span class="sc">|&gt;</span> </span>
+<span id="cb91-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count, </span>
+<span id="cb91-6"><a></a>             <span class="at">color =</span> day_night,</span>
+<span id="cb91-7"><a></a>             <span class="at">group =</span> day_night)) <span class="sc">+</span></span>
+<span id="cb91-8"><a></a>  geomtextpath<span class="sc">::</span><span class="fu">geom_textline</span>(</span>
+<span id="cb91-9"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> day_night),</span>
+<span id="cb91-10"><a></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb91-11"><a></a>    <span class="at">vjust =</span> <span class="sc">-</span>.<span class="dv">5</span>, </span>
+<span id="cb91-12"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb91-13"><a></a>    <span class="at">fontface =</span> <span class="st">"bold"</span></span>
+<span id="cb91-14"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb91-15"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb91-16"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb91-17"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(</span>
+<span id="cb91-18"><a></a>      <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>, <span class="at">suffix =</span> <span class="st">"K"</span></span>
+<span id="cb91-19"><a></a>    ),</span>
+<span id="cb91-20"><a></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">850000</span>)</span>
+<span id="cb91-21"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb91-22"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb91-23"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#FFA200"</span>, <span class="st">"#757BC7"</span>),</span>
+<span id="cb91-24"><a></a>    <span class="at">guide =</span> <span class="st">"none"</span></span>
+<span id="cb91-25"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by month and day_night.
+ℹ Output is grouped by month.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(month, day_night))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/geomtextpath-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annotations-with-geomtextpath-2" class="slide level2">
+<h2>Annotations with {geomtextpath}</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb93" data-code-line-numbers="5,6,7,8,9|17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb93-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2016"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb93-3"><a></a>  <span class="fu">group_by</span>(month, day_night) <span class="sc">|&gt;</span> </span>
+<span id="cb93-4"><a></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">sum</span>(count)) <span class="sc">|&gt;</span> </span>
+<span id="cb93-5"><a></a>  <span class="fu">mutate</span>(<span class="at">day_night =</span> <span class="fu">if_else</span>(</span>
+<span id="cb93-6"><a></a>    day_night <span class="sc">==</span> <span class="st">"day"</span>, </span>
+<span id="cb93-7"><a></a>    <span class="st">"Day period (6am-6pm)"</span>, </span>
+<span id="cb93-8"><a></a>    <span class="st">"Night period (6pm-6am)"</span></span>
+<span id="cb93-9"><a></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb93-10"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count, </span>
+<span id="cb93-11"><a></a>             <span class="at">color =</span> day_night,</span>
+<span id="cb93-12"><a></a>             <span class="at">group =</span> day_night)) <span class="sc">+</span></span>
+<span id="cb93-13"><a></a>  geomtextpath<span class="sc">::</span><span class="fu">geom_textline</span>(</span>
+<span id="cb93-14"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> day_night),</span>
+<span id="cb93-15"><a></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb93-16"><a></a>    <span class="at">vjust =</span> <span class="sc">-</span>.<span class="dv">5</span>, </span>
+<span id="cb93-17"><a></a>    <span class="at">hjust =</span> .<span class="dv">05</span>,</span>
+<span id="cb93-18"><a></a>    <span class="at">family =</span> <span class="st">"Asap SemiCondensed"</span>,</span>
+<span id="cb93-19"><a></a>    <span class="at">fontface =</span> <span class="st">"bold"</span></span>
+<span id="cb93-20"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb93-21"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb93-22"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb93-23"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(</span>
+<span id="cb93-24"><a></a>      <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>, <span class="at">suffix =</span> <span class="st">"K"</span></span>
+<span id="cb93-25"><a></a>    ),</span>
+<span id="cb93-26"><a></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">850000</span>)</span>
+<span id="cb93-27"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb93-28"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb93-29"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#FFA200"</span>, <span class="st">"#757BC7"</span>),</span>
+<span id="cb93-30"><a></a>    <span class="at">guide =</span> <span class="st">"none"</span></span>
+<span id="cb93-31"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by month and day_night.
+ℹ Output is grouped by month.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(month, day_night))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/geomtextpath-long-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="line-chart-with-stat_summary" class="slide level2">
+<h2>Line Chart with stat_summary()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb95" data-code-line-numbers="1,2|6,7,8,9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb95-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2016"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb95-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count, </span>
+<span id="cb95-4"><a></a>             <span class="at">color =</span> day_night,</span>
+<span id="cb95-5"><a></a>             <span class="at">group =</span> day_night)) <span class="sc">+</span></span>
+<span id="cb95-6"><a></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb95-7"><a></a>    <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">fun =</span> sum,</span>
+<span id="cb95-8"><a></a>    <span class="at">linewidth =</span> <span class="dv">1</span></span>
+<span id="cb95-9"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb95-10"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb95-11"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb95-12"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(</span>
+<span id="cb95-13"><a></a>      <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>, <span class="at">suffix =</span> <span class="st">"K"</span></span>
+<span id="cb95-14"><a></a>    ),</span>
+<span id="cb95-15"><a></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">850000</span>)</span>
+<span id="cb95-16"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb95-17"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb95-18"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#FFA200"</span>, <span class="st">"#757BC7"</span>),</span>
+<span id="cb95-19"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span></span>
+<span id="cb95-20"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/line-stat-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="line-chart-with-stat_summary-1" class="slide level2">
+<h2>Line Chart with stat_summary()</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb96" data-code-line-numbers="6,7,8,9,10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb96-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2016"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb96-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count, </span>
+<span id="cb96-4"><a></a>             <span class="at">color =</span> day_night,</span>
+<span id="cb96-5"><a></a>             <span class="at">group =</span> day_night)) <span class="sc">+</span></span>
+<span id="cb96-6"><a></a>  geomtextpath<span class="sc">::</span><span class="fu">geom_textline</span>(</span>
+<span id="cb96-7"><a></a>    <span class="fu">aes</span>(<span class="at">label =</span> day_night), </span>
+<span id="cb96-8"><a></a>    <span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> sum,</span>
+<span id="cb96-9"><a></a>    <span class="at">linewidth =</span> <span class="dv">1</span></span>
+<span id="cb96-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb96-11"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb96-12"><a></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb96-13"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(</span>
+<span id="cb96-14"><a></a>      <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>, <span class="at">suffix =</span> <span class="st">"K"</span></span>
+<span id="cb96-15"><a></a>    ),</span>
+<span id="cb96-16"><a></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">850000</span>)</span>
+<span id="cb96-17"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb96-18"><a></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb96-19"><a></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#FFA200"</span>, <span class="st">"#757BC7"</span>),</span>
+<span id="cb96-20"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span></span>
+<span id="cb96-21"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-text_files/figure-html/line-stat-textpath-1.png" width="1000"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="recap" class="slide level2">
+<h2><b style="color:#663399;">Recap</b></h2>
+<div class="recap">
+<ul>
+<li class="fragment">style labels such as title, axis and legend texts with <code>theme()</code></li>
+<li class="fragment">format data-related labels with the <code>labels</code> argument of <code>scale_*()</code></li>
+<li class="fragment">adjust strip text with the <code>facet_*(labeller)</code> functionality</li>
+<li class="fragment">add data-related annotations with <code>geom_text|label()</code></li>
+<li class="fragment">… and data-unrelated annotations with <code>annotate()</code></li>
+<li class="fragment"><code>{ggtext}</code> allows to render labels with markdown and basic html</li>
+<li class="fragment"><code>{ggtext}</code> also allows to add dynamic linebreaks and images</li>
+<li class="fragment"><code>{ggrepel}</code> ensures clever placement of annotations</li>
+<li class="fragment"><code>ggforce::geom_mark_*()</code> provide a set of advanced annotations</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="exercises" class="title-slide slide level1 center">
+<h1>Exercises</h1>
+
+</section>
+<section id="exercise-1" class="slide level2">
+<h2>Exercise 1</h2>
+<div class="question">
+<ul>
+<li><strong>Take a look at the following visualization.</strong>
+<ul>
+<li>For each group of text labels, note how one would add and modify them.</li>
+<li>Discuss how to automate the placement of the labels in- and outside of the bars.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="02-text_files/figure-html/exercise-plot-1.png" width="1500" class="r-stretch"></section>
+<section id="exercise-2" class="slide level2">
+<h2>Exercise 2</h2>
+<div class="question">
+<ul>
+<li><strong>Create a function that plots the famous Gapminder chart, highlighting one of the continents.</strong>
+<ul>
+<li>Extend the code in <code>02-text-exercises.qmd</code> to annotate a continent your choice of with {ggforce}.</li>
+<li>Turn the code into a function with the utility to annotate any continent.</li>
+<li>Optional: Create a second function to highlight a country.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97" data-code-line-numbers="1|3|5|6,7,8|9,10,11,12|13,14,15,16,17|18|19,20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a></a><span class="co"># install.packages("gapminder")</span></span>
+<span id="cb97-2"><a></a></span>
+<span id="cb97-3"><a></a>(gm2007 <span class="ot">&lt;-</span> <span class="fu">filter</span>(gapminder<span class="sc">::</span>gapminder, year <span class="sc">==</span> <span class="dv">2007</span>))</span>
+<span id="cb97-4"><a></a></span>
+<span id="cb97-5"><a></a><span class="fu">ggplot</span>(gm2007, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb97-6"><a></a>  <span class="fu">geom_point</span>( </span>
+<span id="cb97-7"><a></a>    <span class="fu">aes</span>(<span class="at">size =</span> pop), <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb97-8"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb97-9"><a></a>  <span class="fu">scale_x_log10</span>(</span>
+<span id="cb97-10"><a></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">2000</span>, <span class="dv">8000</span>, <span class="dv">32000</span>),</span>
+<span id="cb97-11"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)</span>
+<span id="cb97-12"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb97-13"><a></a>  <span class="fu">scale_size</span>(</span>
+<span id="cb97-14"><a></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">12</span>), <span class="at">name =</span> <span class="st">"Population:"</span>, </span>
+<span id="cb97-15"><a></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)<span class="sc">*</span><span class="dv">1000000</span>, </span>
+<span id="cb97-16"><a></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(<span class="at">scale =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>)</span>
+<span id="cb97-17"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb97-18"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"GDP per capita"</span>, <span class="at">y =</span> <span class="st">"Life expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb97-19"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"Asap SemiCondensed"</span>) <span class="sc">+</span></span>
+<span id="cb97-20"><a></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 142 × 6
+   country     continent  year lifeExp       pop gdpPercap
+   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+ 1 Afghanistan Asia       2007    43.8  31889923      975.
+ 2 Albania     Europe     2007    76.4   3600523     5937.
+ 3 Algeria     Africa     2007    72.3  33333216     6223.
+ 4 Angola      Africa     2007    42.7  12420476     4797.
+ 5 Argentina   Americas   2007    75.3  40301927    12779.
+ 6 Australia   Oceania    2007    81.2  20434176    34435.
+ 7 Austria     Europe     2007    79.8   8199783    36126.
+ 8 Bahrain     Asia       2007    75.6    708573    29796.
+ 9 Bangladesh  Asia       2007    64.1 150448339     1391.
+10 Belgium     Europe     2007    79.4  10392226    33693.
+# ℹ 132 more rows</code></pre>
+</div>
+
+</div>
+<img data-src="02-text_files/figure-html/gapminder-plot-template-1.png" width="1000" class="r-stretch"></section>
+<section id="section" class="slide level2" data-background-image="img/exercises/exercise-what-now.png" data-background-position="center" data-background-size="75%">
+<h2></h2>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://cedricscherer.com">Cédric Scherer</a> // posit::conf(2023)</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":4},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: true,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

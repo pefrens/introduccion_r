@@ -1,0 +1,146 @@
+---
+title: "Fundamentos de R y RStudio"
+subtitle: "<span class='code'>Sesión 1</span>"
+date: "2026-02"
+image: "images/01-fundamentals.png"
+tbl-colwidths: [5,20,75]
+---
+
+# Esquema
+
+-   Introducción a R y RStudio
+-   El lenguaje de programación R
+-   Valores atómicos
+-   Creación de objetos
+-   Operadores básicos
+-   Estructuras básicas de datos
+-   Funciones en R
+
+# Contenido
+
+## El Lenguaje de Programación
+
+### Valores Atómicos
+
+```r
+"cusco"
+"  Cusco"
+"16-08-2021"
+1
+1.2
+```
+
+### Creación de Objetos
+
+El operador usado para crear objetos es `<-`
+
+```r
+x <- 1
+x
+
+y <- "ser"
+y
+```
+
+### Vectores
+
+Para almacenar más de un elemento en un objeto se usa `c()`:
+
+```r
+x <- c(1, 2, 3, 4, 5)
+x
+
+x <- c("El", "dia", "cusco", "r", "programacion")
+x
+```
+
+### Operadores
+
+#### Secuencia `:`
+```r
+1:6
+```
+
+#### Indexación `[]`
+```r
+letters
+letters[1:5]
+letters[2]
+letters[c(2, 4)]
+```
+
+### Operadores Lógicos
+
+| Operador | Significado |
+|:---------|:------------|
+| x < y    | menor que   |
+| x > y    | mayor que   |
+| x == y   | igual       |
+| x <= y   | menor igual |
+| x >= y   | mayor igual |
+| x != y   | diferente   |
+| x %in% y | pertenece   |
+
+### Operadores Booleanos
+
+- `&` - y
+- `|` - o
+- `!` - negación
+- `%in%` - perteneciente a un grupo
+
+# Estructuras Básicas
+
+## Vectores
+
+```r
+x <- c(1:6)
+class(x)
+
+x <- c(1.5:5.5)
+class(x)
+
+x <- c("a", "e", "i", "o", "u")
+class(x)
+
+x <- c(TRUE, TRUE, FALSE, TRUE, FALSE)
+class(x)
+```
+
+## Matrices
+
+```r
+matrix(1:10, ncol = 5)
+matrix(letters[1:15], nrow = 3)
+```
+
+## Dataframes y Tibbles
+
+Los dataframes son estructuras bidimensionales que pueden contener diferentes tipos de datos en cada columna.
+
+# Ejercicios
+
+## Ejercicio 1
+
+::: question
+- Crea un vector con los números del 1 al 10
+- Crea un vector con tu nombre, apellido y ciudad
+- Indexa el vector de números para obtener los elementos del 5 al 8
+:::
+
+## Ejercicio 2
+
+::: question
+- Crea una matriz de 3x3 con los números del 1 al 9
+- Verifica la clase de diferentes tipos de objetos usando `class()`
+:::
+
+# Recapitulación
+
+::: recap
+- R es un lenguaje de programación orientado a objetos
+- Los valores atómicos son los elementos básicos
+- El operador `<-` se usa para crear objetos
+- Los vectores almacenan múltiples elementos del mismo tipo
+- Las funciones toman argumentos entre paréntesis `()`
+- Existen múltiples estructuras de datos: vectores, matrices, dataframes, listas
+:::

@@ -1,0 +1,11 @@
+---
+title: "Descanso para Almorzar"
+subtitle: "<span class='code' style='color:#b3b3b3;'>12:30-13:30</span>"
+date: "2023-09-18"
+image: "images/lunch-break.png"
+image-alt: "Plato y utensilios."
+---
+
+::: callout-warning
+Por favor evita hacer preguntas durante el descanso de almuerzo para darnos la oportunidad de recuperarnos y reflexionar.
+:::

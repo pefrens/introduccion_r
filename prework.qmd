@@ -1,0 +1,62 @@
+---
+title: "Requisitos Previos"
+---
+
+Este curso está diseñado para personas que desean aprender programación en R desde cero o que tienen conocimientos básicos y quieren fortalecer sus habilidades en el ecosistema Tidyverse. No se requiere experiencia previa en programación, pero es útil estar familiarizado con conceptos básicos de análisis de datos.
+
+Para aprovechar al máximo el curso, te recomendamos revisar el libro "R for Data Science" (<a href="https://r4ds.hadley.nz/" target="_blank">versión en inglés</a> o <a href="https://es.r4ds.hadley.nz/" target="_blank">versión en español</a>), especialmente los capítulos introductorios.
+
+Necesitarás tu propia computadora portátil con una versión reciente de R (4.5.2 o más nueva) y RStudio (1.1.401 o más nuevo) así como varios paquetes de R instalados.
+
+
+## Requisitos Técnicos
+
+### Instalar R y RStudio
+
+Descarga e instala los siguientes programas:
+
+1. **R** (versión 4.5.2 o superior): <a href="https://cloud.r-project.org" target="_blank">cloud.r-project.org</a>
+2. **RStudio** (versión 1.1.401 o superior): <a href="https://posit.co/download/rstudio-desktop/" target="_blank">posit.co/download/rstudio-desktop/</a>
+3. **Rtools 45** (solo Windows): <a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank">cran.r-project.org/bin/windows/Rtools/</a>
+
+
+### Instalar Paquetes de R
+
+Puedes instalar todos los paquetes necesarios ejecutando el siguiente código en la consola de R:
+
+```r
+packages <- c("tidyverse", "janitor",
+              "here", "writexl", "readxl",
+              "sf", "pdftools", "visdat",
+              "tm", "remotes")
+install.packages(packages)
+```
+
+**Paquetes adicionales** que se usarán en el curso:
+
+```r
+# stringr.plus (para manipulación avanzada de texto)
+remotes::install_github("johncassil/stringr.plus")
+```
+
+Para ejecutar el código, abre RStudio. Copia y pega el código en el panel de consola (por defecto en la parte inferior izquierda) y presiona Enter. Deberían aparecer varios mensajes. Revisa estos mensajes en busca de errores y soluciónalos si es necesario. Se pueden ignorar advertencias y otros mensajes informativos.
+
+### Descripción de los Paquetes Principales
+
+* **tidyverse**: Colección de paquetes para ciencia de datos (dplyr, tidyr, ggplot2, readr, etc.)
+* **janitor**: Limpieza de nombres de variables y datos
+* **here**: Manejo de rutas de archivos de forma reproducible
+* **readxl/writexl**: Lectura y escritura de archivos Excel
+* **sf**: Manejo de datos espaciales
+* **visdat**: Visualización de tipos de datos
+* **tm**: Procesamiento de texto
+* **stringr.plus**: Funciones adicionales para manipulación de cadenas de texto
+
+
+## Datos del Curso
+
+Los archivos de datos que se utilizarán en el curso están disponibles en la carpeta `data/` del repositorio del curso. Incluyen:
+
+* `areas_naturales_peru.xlsx`: Datos de áreas naturales protegidas del Perú
+* `catalogo_planes.csv`, `catalogo_planes.txt`, `catalogo_planes.xlsx`: Datos de ejemplo en diferentes formatos
+* `DEPARTAMENTO.gpkg`: Datos espaciales de departamentos del Perú 

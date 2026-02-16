@@ -1,0 +1,206 @@
+---
+title: "tidyr - Organización de Datos"
+subtitle: "<span class='code'>Sesión 4</span>"
+date: "2026-02"
+image: "images/04-theming.png"
+tbl-colwidths: [5,20,75]
+---
+
+# Esquema
+
+-   Principios de Tidy Data
+-   `pivot_longer()`: Datos largos
+-   `pivot_wider()`: Datos anchos
+-   `separate()` y `unite()`: Separar y unir columnas
+-   Aplicaciones prácticas
+
+# Tidy Data
+
+## Principios
+
+Un dataset es "tidy" cuando:
+
+1. Cada variable es una columna
+2. Cada observación es una fila
+3. Cada valor tiene su propia celda
+
+## ¿Por qué Tidy Data?
+
+- Facilita el análisis y visualización
+- Estructura consistente
+- Funciona mejor con tidyverse
+
+# pivot_longer() - Datos Largos
+
+Convierte datos anchos a formato largo.
+
+## Ejemplo básico
+
+```r
+library(tidyr)
+
+# De ancho a largo
+data_wide <- data.frame(
+  pais = c("Peru", "Chile"),
+  año_2020 = c(100, 150),
+  año_2021 = c(120, 160)
+)
+
+data_long <- data_wide |>
+  pivot_longer(
+    cols = starts_with("año"),
+    names_to = "año",
+    values_to = "valor"
+  )
+```
+
+## Ejemplo con datos reales
+
+```r
+library(vegan)
+data("BCI")
+
+# Convertir a formato largo
+bci_long <- BCI |>
+  as_tibble(rownames = "plot_n") |>
+  pivot_longer(
+    -plot_n,
+    names_to = "especies",
+    values_to = "abundancia"
+  )
+```
+
+## Filtrar ceros
+
+```r
+bci_long_clean <- bci_long |>
+  filter(abundancia != 0)
+```
+
+# pivot_wider() - Datos Anchos
+
+Convierte datos largos a formato ancho.
+
+## Ejemplo básico
+
+```r
+# De largo a ancho
+data_long |>
+  pivot_wider(
+    names_from = año,
+    values_from = valor
+  )
+```
+
+## Rellenar valores faltantes
+
+```r
+bci_long_clean |>
+  pivot_wider(
+    names_from = especies,
+    values_from = abundancia,
+    values_fill = 0
+  )
+```
+
+# separate() y unite()
+
+## separate() - Separar columnas
+
+```r
+# Ejemplo: separar fecha
+data <- data.frame(
+  fecha = c("2021-01-15", "2021-02-20")
+)
+
+data |>
+  separate(
+    fecha,
+    into = c("año", "mes", "dia"),
+    sep = "-"
+  )
+```
+
+## separate_rows() - Separar y expandir
+
+```r
+anp |>
+  separate_rows(
+    ubicacion_politica,
+    sep = " y |\\, | Y "
+  )
+```
+
+## unite() - Unir columnas
+
+```r
+# Unir columnas
+data |>
+  unite(
+    "fecha_completa",
+    año, mes, dia,
+    sep = "-"
+  )
+```
+
+# Aplicación Práctica
+
+## Limpieza de datos ANP
+
+```r
+anp_clean <- anp |>
+  # Separar ubicaciones múltiples
+  separate_rows(ubicacion_politica, sep = " y |\\, | Y ") |>
+  # Separar fechas múltiples
+  separate_rows(
+    fecha_promulgacion__modificacion,
+    sep = " \\/ |\\;|\\-"
+  ) |>
+  # Limpiar texto
+  mutate(
+    categoria = str_squish(categoria) |>
+      removeNumbers() |>
+      removePunctuation() |>
+      str_to_title()
+  )
+```
+
+# Ejercicios
+
+## Ejercicio 1
+
+::: question
+- Carga los datos BCI del paquete vegan
+- Convierte los datos a formato largo
+- Filtra las especies con abundancia mayor a 10
+- ¿Cuántas observaciones quedan?
+:::
+
+## Ejercicio 2
+
+::: question
+- Crea un dataset simple con datos en formato ancho (3 columnas de años)
+- Convierte a formato largo
+- Vuelve a convertir a formato ancho
+- Verifica que obtienes el mismo resultado inicial
+:::
+
+## Ejercicio 3
+
+::: question
+- Trabaja con el dataset de áreas naturales
+- Separa las ubicaciones políticas que tienen múltiples departamentos
+- Cuenta cuántas áreas hay por departamento
+- ¿Qué departamento tiene más áreas naturales protegidas?
+:::
+
+# Recapitulación
+
+::: recap
+- Tidy data tiene cada variable en una columna y cada observación en una fila
+- `pivot_longer()` convierte datos anchos a largos
+- `pivot_wider()` convierte datos largos a anchos
+- `separate()` y `separate_rows()` dividen columnas
+- `unite()` combina columnas
+- Estos verbos son esenciales para preparar datos para análisis
+:::
