@@ -64,7 +64,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href=".//images/logo1.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -106,18 +105,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="Introducción a la Programación con R - Tidyverse">
 <meta property="og:description" content="Página principal del taller posit::conf(2023)">
-<meta property="og:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/images/logo.png">
-<meta property="og:image:alt" content="Logo del Curso">
-<meta property="og:image:height" content="2558">
-<meta property="og:image:width" content="2558">
 <meta name="twitter:title" content="Introducción a la Programación con R - Tidyverse">
 <meta name="twitter:description" content="Página principal del taller posit::conf(2023)">
-<meta name="twitter:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/images/logo.png">
-<meta name="twitter:creator" content="@PaulESantosr">
-<meta name="twitter:image:alt" content="Logo del Curso">
-<meta name="twitter:image-height" content="2558">
-<meta name="twitter:image-width" content="2558">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@PaulESantos">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -126,11 +117,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/logo1.png" alt="" class="navbar-logo">
-    </a>
-  </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -155,19 +141,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-sesiones">    
         <li>
     <a class="dropdown-item" href="./modules/s01-fundamentals.html">
- <span class="dropdown-text">Fundamentos y Flujos de Trabajo</span></a>
+ <span class="dropdown-text">Fundamentos de R y RStudio</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./modules/s03-text.html">
- <span class="dropdown-text">Trabajando con Texto</span></a>
+ <span class="dropdown-text">Importar y Revisar Datos</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./modules/s05-colors.html">
- <span class="dropdown-text">Trabajando con Colores</span></a>
+ <span class="dropdown-text">dplyr - Manipulación de Datos</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./modules/s07-theming.html">
- <span class="dropdown-text">Trabajando con Temas</span></a>
+ <span class="dropdown-text">tidyr - Organización de Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/s08-spatial.html">
+ <span class="dropdown-text">Datos Espaciales con sf</span></a>
   </li>  
     </ul>
   </li>
@@ -184,22 +174,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./materials/positconf-2023-ggplot2-materials.zip">
  <span class="dropdown-text">Todos los Materiales del Curso</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./materials/positconf-2023-ggplot2-data.zip">
- <span class="dropdown-text">Conjuntos de Datos</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./materials/positconf-2023-ggplot2-fonts.zip">
- <span class="dropdown-text">Archivos de Fuentes</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./materials/positconf-2023-ggplot2-scripts.zip">
- <span class="dropdown-text">Scripts</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./materials/positconf-2023-ggplot2-exercises.zip">
- <span class="dropdown-text">Ejercicios</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -208,14 +182,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Licencia</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/posit-conf-2023/dataviz-ggplot2"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/pefrens/introduccion_r"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text">GitHub</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://posit.cloud/spaces/397253"> <i class="bi bi-cloud-fill" role="img">
-</i> 
-<span class="menu-text">Posit Cloud</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -235,11 +204,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#descripción-general-del-curso" id="toc-descripción-general-del-curso" class="nav-link active" data-scroll-target="#descripción-general-del-curso">Descripción General del Curso</a>
   <ul class="collapse">
-  <li><a href="#aprenderemos" id="toc-aprenderemos" class="nav-link" data-scroll-target="#aprenderemos">Aprenderemos</a></li>
+  <li><a href="#aprenderemos" id="toc-aprenderemos" class="nav-link" data-scroll-target="#aprenderemos">Aprenderemos</a>
+  <ul class="collapse">
+  <li><a href="#fundamentos-de-r-y-tidyverse" id="toc-fundamentos-de-r-y-tidyverse" class="nav-link" data-scroll-target="#fundamentos-de-r-y-tidyverse">Fundamentos de R y Tidyverse</a></li>
+  <li><a href="#datos-espaciales" id="toc-datos-espaciales" class="nav-link" data-scroll-target="#datos-espaciales">Datos Espaciales</a></li>
+  </ul></li>
   <li><a href="#programas-necesarios" id="toc-programas-necesarios" class="nav-link" data-scroll-target="#programas-necesarios">Programas Necesarios</a></li>
   <li><a href="#paquetes-necesarios" id="toc-paquetes-necesarios" class="nav-link" data-scroll-target="#paquetes-necesarios">Paquetes Necesarios</a></li>
   <li><a href="#es-este-curso-para-mí" id="toc-es-este-curso-para-mí" class="nav-link" data-scroll-target="#es-este-curso-para-mí">¿Es este curso para mí?</a></li>
-  <li><a href="#libro-de-referencia" id="toc-libro-de-referencia" class="nav-link" data-scroll-target="#libro-de-referencia">Libro de Referencia</a></li>
+  <li><a href="#libros-de-referencia" id="toc-libros-de-referencia" class="nav-link" data-scroll-target="#libros-de-referencia">Libros de Referencia</a>
+  <ul class="collapse">
+  <li><a href="#r-for-data-science" id="toc-r-for-data-science" class="nav-link" data-scroll-target="#r-for-data-science">R for Data Science</a></li>
+  <li><a href="#geocomputation-with-r" id="toc-geocomputation-with-r" class="nav-link" data-scroll-target="#geocomputation-with-r">Geocomputation with R</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a></li>
   </ul>
@@ -267,7 +244,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><img src="images/logo.png" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Logo del Curso" width="185"></p>
 <p>Un Curso de Introducción por Paul Efren Santos Andrade</p>
 <hr>
 <p><span class="code">📆  Febrero, 2026</span><br>
@@ -278,14 +254,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Este curso proporciona una introducción completa a la programación con R utilizando el ecosistema Tidyverse. Aprenderás conceptos básicos de R usando el IDE RStudio, escritura de códigos legibles y reproducibles, y conceptos básicos de ciencia de datos.</p>
 <section id="aprenderemos" class="level2">
 <h2 class="anchored" data-anchor-id="aprenderemos">Aprenderemos</h2>
+<section id="fundamentos-de-r-y-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="fundamentos-de-r-y-tidyverse">Fundamentos de R y Tidyverse</h3>
 <ul>
 <li>Conceptos básicos de R usando el IDE RStudio (Entorno de desarrollo integrado)</li>
 <li>Escritura de códigos legibles y reproducibles</li>
 <li>Conceptos básicos de ciencia de datos</li>
-<li>Importación y manipulación de datos con Tidyverse</li>
-<li>Limpieza y transformación de datos con dplyr y tidyr</li>
-<li>Manejo de datos espaciales con sf</li>
+<li>Importación de datos desde múltiples formatos (CSV, Excel, texto)</li>
+<li>Manipulación de datos con dplyr (select, filter, mutate, summarise)</li>
+<li>Organización de datos con tidyr (pivot_longer, pivot_wider)</li>
 </ul>
+</section>
+<section id="datos-espaciales" class="level3">
+<h3 class="anchored" data-anchor-id="datos-espaciales">Datos Espaciales</h3>
+<ul>
+<li>Introducción a datos geoespaciales vectoriales</li>
+<li>Lectura y escritura de formatos espaciales (shapefile, geopackage, geojson)</li>
+<li>Manejo de datos espaciales con el paquete sf (Simple Features)</li>
+<li>Integración de sf con tidyverse</li>
+<li>Visualización de mapas con ggplot2 y geom_sf()</li>
+<li>Operaciones espaciales básicas (transformaciones de CRS, cálculos de área, intersecciones)</li>
+</ul>
+</section>
 </section>
 <section id="programas-necesarios" class="level2">
 <h2 class="anchored" data-anchor-id="programas-necesarios">Programas Necesarios</h2>
@@ -310,20 +300,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Quieres aprender a trabajar con datos de manera eficiente</li>
 <li>Te interesa la ciencia de datos y el análisis reproducible</li>
 <li>Necesitas herramientas para importar, limpiar y transformar datos</li>
+<li>Trabajas o planeas trabajar con datos geográficos/espaciales</li>
+<li>Deseas integrar análisis espacial con flujos de trabajo de tidyverse</li>
 </ul>
 </section>
-<section id="libro-de-referencia" class="level2">
-<h2 class="anchored" data-anchor-id="libro-de-referencia">Libro de Referencia</h2>
-<p><strong>R for Data Science</strong></p>
+<section id="libros-de-referencia" class="level2">
+<h2 class="anchored" data-anchor-id="libros-de-referencia">Libros de Referencia</h2>
+<section id="r-for-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="r-for-data-science">R for Data Science</h3>
 <ul>
 <li><a href="https://r4ds.hadley.nz/">Versión en inglés</a></li>
 <li><a href="https://es.r4ds.hadley.nz/">Versión en español</a></li>
 </ul>
 </section>
+<section id="geocomputation-with-r" class="level3">
+<h3 class="anchored" data-anchor-id="geocomputation-with-r">Geocomputation with R</h3>
+<ul>
+<li><a href="https://r.geocompx.org/">Versión en línea</a>: Libro completo sobre análisis geoespacial</li>
+</ul>
+</section>
+</section>
 </section>
 <section id="instructor" class="level1">
 <h1>Instructor</h1>
-<p><strong>Paul Efren Santos Andrade</strong> es un especialista en análisis de datos con R, enfocado en ciencia de datos aplicada y análisis reproducible. Tiene amplia experiencia en el uso del ecosistema Tidyverse para importación, limpieza y transformación de datos.</p>
+<p><a href="https://github.com/PaulESantos"><strong>Paul Efren Santos Andrade</strong></a>es un especialista en análisis de datos con R, enfocado en ciencia de datos aplicada y análisis reproducible. Tiene amplia experiencia en el uso del ecosistema Tidyverse para importación, limpieza y transformación de datos.</p>
 <div data-align="center">
 <p><a href="https://paulefrensa.rbind.io"><img border="0" alt="Blog" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>  <a href="https://twitter.com/PaulEfrenSantos"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>  <a href="https://github.com/PaulESantos"><img border="0" alt="GitHub" src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="35" height="35"></a> </p>
 </div>

@@ -57,14 +57,14 @@ departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 ### Nombres de variables
 
 ```r
-names(anp)
+names(planes)
 ```
 
 ### Estructura del dataframe
 
 ```r
-str(anp)
-glimpse(anp)  # tidyverse
+str(planes)
+glimpse(planes)  # tidyverse
 ```
 
 ## Limpieza de Nombres
@@ -73,7 +73,7 @@ glimpse(anp)  # tidyverse
 
 ```r
 library(janitor)
-anp_clean <- clean_names(anp)
+planes_clean <- clean_names(planes)
 ```
 
 Evita:
@@ -81,46 +81,23 @@ Evita:
 - Mayúsculas
 - Espacios entre palabras
 
-## Visualización de Datos
 
-### Usando visdat
-
-```r
-library(visdat)
-vis_dat(anp)
-```
-
-# El Pipe Operator
+# Pipe
 
 ## `|>` o `%>%`
 
 ```r
-anp |>
+planes |>
   head()
 
-anp |>
+planes |>
   clean_names() |>
   head()
 ```
 
 Shortcut: `Ctrl + Shift + M`
 
-## Renombrar Columnas
 
-### Usando colnames()
-
-```r
-correct_names <- c("categoria", "codigo", "nombre_area",
-                   "base_legal_creacion", "fecha_promulgacion_creacion")
-colnames(anp) <- correct_names
-```
-
-### Usando set_names()
-
-```r
-anp <- anp |>
-  set_names(correct_names)
-```
 
 # Ejercicios
 

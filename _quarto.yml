@@ -16,15 +16,13 @@ website:
   repo-actions: [edit, issue]
   open-graph: true
   twitter-card:
-    creator: "@PaulESantosr"
-  favicon: "/images/logo1.png"
+    creator: "@PaulESantos"
   page-footer:
     left: "Esta página fue creada con ❤️ y [Quarto](https://quarto.org/)."
     right: "&copy; Derechos de autor 2026"
     background: "#D4EEE5"
   navbar:
     background: "#D4EEE5"
-    logo: "images/logo1.png"
     pinned: true
     align: center
     right:
@@ -33,22 +31,11 @@ website:
         menu: 
           - text: Todos los Materiales del Curso
             href: materials/positconf-2023-ggplot2-materials.zip
-          - text: Conjuntos de Datos
-            href: materials/positconf-2023-ggplot2-data.zip
-          - text: Archivos de Fuentes
-            href: materials/positconf-2023-ggplot2-fonts.zip
-          - text: Scripts
-            href: materials/positconf-2023-ggplot2-scripts.zip
-          - text: Ejercicios
-            href: materials/positconf-2023-ggplot2-exercises.zip
       - icon: file-certificate
         href: license.qmd
       - icon: github
-        href: https://github.com/posit-conf-2023/dataviz-ggplot2
+        href: https://github.com/pefrens/introduccion_r
         text: GitHub
-      - icon: cloud-fill
-        href: https://posit.cloud/spaces/397253
-        text: Posit Cloud
     left:
       - text: Información
         menu: 
@@ -56,14 +43,16 @@ website:
             href: prework.qmd
       - text: Sesiones
         menu: 
-          - text: Fundamentos y Flujos de Trabajo
+          - text: Fundamentos de R y RStudio
             href: modules/s01-fundamentals.qmd
-          - text: Trabajando con Texto
+          - text: Importar y Revisar Datos
             href: modules/s03-text.qmd
-          - text: Trabajando con Colores
+          - text: dplyr - Manipulación de Datos
             href: modules/s05-colors.qmd
-          - text: Trabajando con Temas
+          - text: tidyr - Organización de Datos
             href: modules/s07-theming.qmd
+          - text: Datos Espaciales con sf
+            href: modules/s08-spatial.qmd
 format:
   html:
     theme:

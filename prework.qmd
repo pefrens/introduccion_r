@@ -43,20 +43,55 @@ Para ejecutar el código, abre RStudio. Copia y pega el código en el panel de c
 
 ### Descripción de los Paquetes Principales
 
+#### Paquetes de Tidyverse y Manipulación de Datos
 * **tidyverse**: Colección de paquetes para ciencia de datos (dplyr, tidyr, ggplot2, readr, etc.)
 * **janitor**: Limpieza de nombres de variables y datos
 * **here**: Manejo de rutas de archivos de forma reproducible
 * **readxl/writexl**: Lectura y escritura de archivos Excel
-* **sf**: Manejo de datos espaciales
 * **visdat**: Visualización de tipos de datos
 * **tm**: Procesamiento de texto
 * **stringr.plus**: Funciones adicionales para manipulación de cadenas de texto
+
+#### Paquetes Espaciales
+* **sf**: Simple Features - Paquete principal para datos espaciales vectoriales (puntos, líneas, polígonos)
+  - Compatible con tidyverse
+  - Lee/escribe múltiples formatos: shapefile, geopackage, geojson, etc.
+  - Integración perfecta con ggplot2 mediante `geom_sf()`
+
+**Paquetes espaciales opcionales** (para análisis avanzado):
+```r
+# Paquetes adicionales para trabajo espacial avanzado
+spatial_packages <- c("terra", "mapview", "leaflet", "tmap")
+install.packages(spatial_packages)
+```
+
+* **terra**: Datos ráster (elevación, temperatura, imágenes satelitales)
+* **mapview**: Visualización interactiva de datos espaciales
+* **leaflet**: Mapas web interactivos
+* **tmap**: Mapas temáticos estáticos e interactivos
 
 
 ## Datos del Curso
 
 Los archivos de datos que se utilizarán en el curso están disponibles en la carpeta `data/` del repositorio del curso. Incluyen:
 
+### Datos Tabulares
 * `areas_naturales_peru.xlsx`: Datos de áreas naturales protegidas del Perú
 * `catalogo_planes.csv`, `catalogo_planes.txt`, `catalogo_planes.xlsx`: Datos de ejemplo en diferentes formatos
-* `DEPARTAMENTO.gpkg`: Datos espaciales de departamentos del Perú 
+
+### Datos Espaciales
+* `DEPARTAMENTO.gpkg`: Datos espaciales vectoriales de departamentos del Perú en formato GeoPackage
+  - Geometría: Polígonos
+  - Sistema de coordenadas: WGS84 (EPSG:4326)
+  - Atributos: Nombres de departamentos, capitales, regiones
+
+
+### Verificar instalación de sf
+
+Después de instalar los requisitos, verifica que sf funciona correctamente:
+
+```r
+library(sf)
+# Si no hay errores, la instalación fue exitosa
+st_point(c(0, 0))
+``` 

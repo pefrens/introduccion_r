@@ -2,8 +2,6 @@
 title: "Introducción a la Programación con R - Tidyverse"
 ---
 
-![](images/logo.png){style="float:right;padding: 0 0 0 10px;" fig-alt="Logo del Curso" width="185"}
-
 Un Curso de Introducción por Paul Efren Santos Andrade
 
 ------------------------------------------------------------------------
@@ -18,12 +16,21 @@ Este curso proporciona una introducción completa a la programación con R utili
 
 ## Aprenderemos
 
+### Fundamentos de R y Tidyverse
 * Conceptos básicos de R usando el IDE RStudio (Entorno de desarrollo integrado)
 * Escritura de códigos legibles y reproducibles
 * Conceptos básicos de ciencia de datos
-* Importación y manipulación de datos con Tidyverse
-* Limpieza y transformación de datos con dplyr y tidyr
-* Manejo de datos espaciales con sf
+* Importación de datos desde múltiples formatos (CSV, Excel, texto)
+* Manipulación de datos con dplyr (select, filter, mutate, summarise)
+* Organización de datos con tidyr (pivot_longer, pivot_wider)
+
+### Datos Espaciales
+* Introducción a datos geoespaciales vectoriales
+* Lectura y escritura de formatos espaciales (shapefile, geopackage, geojson)
+* Manejo de datos espaciales con el paquete sf (Simple Features)
+* Integración de sf con tidyverse
+* Visualización de mapas con ggplot2 y geom_sf()
+* Operaciones espaciales básicas (transformaciones de CRS, cálculos de área, intersecciones)
 
 ## Programas Necesarios
 
@@ -49,17 +56,22 @@ Este curso será apropiado para ti si:
 * Quieres aprender a trabajar con datos de manera eficiente
 * Te interesa la ciencia de datos y el análisis reproducible
 * Necesitas herramientas para importar, limpiar y transformar datos
+* Trabajas o planeas trabajar con datos geográficos/espaciales
+* Deseas integrar análisis espacial con flujos de trabajo de tidyverse
 
-## Libro de Referencia
+## Libros de Referencia
 
-**R for Data Science**
-
+### R for Data Science
 * [Versión en inglés](https://r4ds.hadley.nz/)
 * [Versión en español](https://es.r4ds.hadley.nz/)
 
+### Geocomputation with R
+* [Versión en línea](https://r.geocompx.org/): Libro completo sobre análisis geoespacial
+
+
 # Instructor
 
-**Paul Efren Santos Andrade** es un especialista en análisis de datos con R, enfocado en ciencia de datos aplicada y análisis reproducible. Tiene amplia experiencia en el uso del ecosistema Tidyverse para importación, limpieza y transformación de datos.
+[**Paul Efren Santos Andrade**](https://github.com/PaulESantos)es un especialista en análisis de datos con R, enfocado en ciencia de datos aplicada y análisis reproducible. Tiene amplia experiencia en el uso del ecosistema Tidyverse para importación, limpieza y transformación de datos.
 
 <div align="center">
 <a href="https://paulefrensa.rbind.io"><img border="0" alt="Blog" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>&ensp;

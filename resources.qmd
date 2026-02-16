@@ -46,3 +46,45 @@ El libro principal de referencia para este curso:
 
 * [R para Ciencia de Datos (libro traducido)](https://es.r4ds.hadley.nz/)
 * [Ciencia de Datos con R](https://github.com/cienciadedatos)
+
+## Recursos de Datos Espaciales
+
+### Libros y Tutoriales
+
+* [Geocomputation with R](https://r.geocompx.org/): Libro completo sobre análisis geoespacial con R
+* [Spatial Data Science](https://r-spatial.org/book/): Libro sobre ciencia de datos espaciales
+* [sf package documentation](https://r-spatial.github.io/sf/): Documentación oficial del paquete sf
+
+### Tutoriales de Michael T. Hallworth
+
+* [Introduction to spatial data analysis using the tidyverse](https://mhallwor.github.io/_pages/Tidyverse_intro): Integración de sf con tidyverse
+* [Introduction to spatial points in R](https://mhallwor.github.io/_pages/basics_SpatialPoints): Trabajo con puntos espaciales
+* [Introduction to spatial lines in R](https://mhallwor.github.io/_pages/basics_SpatialLines): Trabajo con líneas
+* [Introduction to spatial polygons in R](https://mhallwor.github.io/_pages/basics_SpatialPolygons): Trabajo con polígonos
+* [Spatial Predicates](https://mhallwor.github.io/_pages/spatial_predicates): Operaciones espaciales
+* [Making maps in R](https://mhallwor.github.io/_pages/MakingMaps): Creación de mapas
+* [Introduction to raster data in R](https://mhallwor.github.io/_pages/basics_Rasters): Datos ráster
+* [Extracting raster data](https://mhallwor.github.io/_pages/activities_ExtractingRasterValues): Extracción de valores ráster
+* [Advanced tools for raster data in R](https://mhallwor.github.io/_pages/advanced_Rasters): Herramientas avanzadas para ráster
+* [Generating territories](https://mhallwor.github.io/_pages/activities_GenerateTerritories): Generación de territorios
+
+### Paquetes Espaciales Principales
+
+* **sf**: Simple Features para datos vectoriales
+* **terra**: Paquete moderno para datos ráster (reemplaza a raster)
+* **stars**: Datos espacio-temporales en arrays
+* **mapview**: Visualización interactiva de datos espaciales
+* **leaflet**: Mapas interactivos web
+* **tmap**: Mapas temáticos
+* **ggspatial**: Extensión de ggplot2 para mapas
+
+### Hojas de Referencia Espaciales
+
+* [sf Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf): Referencia rápida del paquete sf
+* [Spatial Data in R](https://github.com/rstudio/cheatsheets): Hojas de referencia espaciales
+
+### Sistemas de Coordenadas
+
+* [EPSG.io](https://epsg.io/): Búsqueda de códigos EPSG y sistemas de coordenadas
+* [Spatial Reference](https://spatialreference.org/): Referencia de sistemas espaciales
+* [Projection Wizard](https://projectionwizard.org/): Asistente para elegir proyecciones

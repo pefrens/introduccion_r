@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/resources.html</loc>
-    <lastmod>2026-02-16T00:16:12.044Z</lastmod>
+    <lastmod>2026-02-16T01:31:53.489Z</lastmod>
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/modules/s07-theming.html</loc>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/modules/s03-text.html</loc>
-    <lastmod>2026-02-16T00:17:59.154Z</lastmod>
+    <lastmod>2026-02-16T01:45:22.600Z</lastmod>
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/modules/s01-fundamentals.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/index.html</loc>
-    <lastmod>2026-02-16T00:42:03.874Z</lastmod>
+    <lastmod>2026-02-16T02:30:45.841Z</lastmod>
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/00-welcome.html</loc>
@@ -82,10 +82,42 @@
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/prework.html</loc>
-    <lastmod>2026-02-16T00:15:55.727Z</lastmod>
+    <lastmod>2026-02-16T02:33:11.785Z</lastmod>
   </url>
   <url>
     <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/schedule.html</loc>
     <lastmod>2026-02-16T00:16:18.309Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/modules/s08-spatial.html</loc>
+    <lastmod>2026-02-16T01:31:31.663Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/00-bienvenida-intro-r.html</loc>
+    <lastmod>2026-02-16T02:26:33.203Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/01-fundamentals-intro-r.html</loc>
+    <lastmod>2026-02-16T03:28:23.299Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/modules/s07-tidying-data.html</loc>
+    <lastmod>2026-02-16T03:02:12.328Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/02-importing-data.html</loc>
+    <lastmod>2026-02-16T03:42:30.581Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/03-data-manipulation.html</loc>
+    <lastmod>2026-02-16T03:52:36.718Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/04-tidying-data.html</loc>
+    <lastmod>2026-02-16T04:14:22.077Z</lastmod>
+  </url>
+  <url>
+    <loc>https://posit-conf-2023.github.io/dataviz-ggplot2/materials/05-joins.html</loc>
+    <lastmod>2026-02-16T04:36:59.256Z</lastmod>
   </url>
 </urlset>
