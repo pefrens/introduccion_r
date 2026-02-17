@@ -1,0 +1,210 @@
+---
+title: "dplyr - Manipulación de Datos"
+subtitle: "<span class='code'>Sesión 3</span>"
+date: "2026-02"
+image: "images/03-colors.png"
+tbl-colwidths: [5,20,75]
+---
+
+# Esquema
+
+-   Los verbos de dplyr
+-   `select()`: Seleccionar columnas
+-   `filter()`: Filtrar filas
+-   `mutate()`: Crear/modificar variables
+-   `summarise()` y `group_by()`
+-   `arrange()`: Ordenar datos
+
+# Los Verbos de dplyr
+
+dplyr proporciona funciones (verbos) para manipular datos:
+
+- `select()`: Selecciona columnas
+- `filter()`: Filtra filas
+- `mutate()`: Crea o modifica variables
+- `summarise()`: Resume datos
+- `group_by()`: Agrupa datos
+- `arrange()`: Ordena datos
+
+# select() - Seleccionar Columnas
+
+## Por nombre
+
+```r
+anp |>
+  select(nombre_area)
+
+anp |>
+  select(nombre_area, categoria, extension_ha)
+```
+
+## Por posición
+
+```r
+anp |>
+  select(1:3)
+```
+
+## Con helpers
+
+```r
+# Columnas que empiezan con...
+anp |>
+  select(starts_with("base"))
+
+# Columnas que terminan con...
+anp |>
+  select(ends_with("cion"))
+
+# Columnas que contienen...
+anp |>
+  select(contains("legal"))
+```
+
+# filter() - Filtrar Filas
+
+## Igualdad
+
+```r
+anp |>
+  filter(codigo == "PN 01")
+
+anp |>
+  filter(nombre_area == "Huascarán")
+```
+
+## Operadores
+
+```r
+# Pertenece a
+anp |>
+  filter(codigo %in% c("PN 01", "PN 02", "PN 03"))
+
+# No pertenece
+anp |>
+  filter(!codigo %in% c("PN 01", "PN 02", "PN 03"))
+```
+
+## Detectar patrones
+
+```r
+library(stringr)
+anp |>
+  filter(str_detect(nombre_area, "Alto"))
+```
+
+## Múltiples condiciones
+
+```r
+# Y (&)
+anp |>
+  filter(str_detect(nombre_area, "Alto") &
+         extension_ha > 1000)
+
+# O (|)
+anp |>
+  filter(str_detect(nombre_area, "Alto") |
+         ubicacion_politica == "CUSCO")
+```
+
+# mutate() - Crear/Modificar Variables
+
+## Operaciones matemáticas
+
+```r
+anp |>
+  mutate(extension_doble = extension_ha * 2)
+```
+
+## Manipulación de texto
+
+```r
+# Eliminar espacios
+anp |>
+  mutate(nombre_area = str_trim(nombre_area))
+
+# Minúsculas
+anp |>
+  mutate(categoria = str_to_lower(categoria))
+
+# Mayúsculas
+anp |>
+  mutate(nombre_area = str_to_upper(nombre_area))
+
+# Título
+anp |>
+  mutate(ubicacion_politica = str_to_title(ubicacion_politica))
+```
+
+## Limpiar texto
+
+```r
+library(tm)
+
+anp |>
+  mutate(categoria_clean = removePunctuation(categoria) |>
+           removeNumbers() |>
+           str_squish())
+```
+
+# summarise() y group_by()
+
+## Resúmenes simples
+
+```r
+anp |>
+  summarise(numero_categorias = n_distinct(categoria))
+
+anp |>
+  summarise(area_total = sum(extension_ha))
+```
+
+## Resúmenes por grupo
+
+```r
+anp |>
+  group_by(categoria) |>
+  summarise(numero_areas = n_distinct(nombre_area))
+```
+
+# arrange() - Ordenar
+
+```r
+# Ascendente
+anp |>
+  arrange(extension_ha)
+
+# Descendente
+anp |>
+  arrange(desc(extension_ha))
+```
+
+# Ejercicios
+
+## Ejercicio 1
+
+::: question
+- Selecciona las columnas `nombre_area`, `categoria` y `extension_ha`
+- Filtra solo las áreas con extensión mayor a 10000 hectáreas
+- Ordena por extensión de mayor a menor
+:::
+
+## Ejercicio 2
+
+::: question
+- Crea una nueva variable que indique si el área es grande (> 50000 ha) o pequeña
+- Cuenta cuántas áreas hay en cada categoría
+- Calcula la extensión promedio por categoría
+:::
+
+# Recapitulación
+
+::: recap
+- `select()` selecciona columnas por nombre, posición o patrones
+- `filter()` filtra filas basado en condiciones lógicas
+- `mutate()` crea o modifica variables
+- `summarise()` resume datos calculando estadísticas
+- `group_by()` agrupa datos para resúmenes por grupo
+- `arrange()` ordena filas por una o más variables
+- Todos los verbos se pueden encadenar con el pipe `|>`
+:::

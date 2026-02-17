@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bienvenida e Introducción a R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="Bienvenida e Introducción a R">
+<meta property="og:description" content="Página principal del taller posit::conf(2023)">
+<meta name="twitter:title" content="Bienvenida e Introducción a R">
+<meta name="twitter:description" content="Página principal del taller posit::conf(2023)">
+<meta name="twitter:creator" content="@PaulESantos">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-información" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Información</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-información">    
+        <li>
+    <a class="dropdown-item" href="../prework.html">
+ <span class="dropdown-text">Preparación</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sesiones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sesiones</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sesiones">    
+        <li>
+    <a class="dropdown-item" href="../modules/s00-bienvenida-intro-r.html">
+ <span class="dropdown-text">Introducción</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s01-fundamentals.html">
+ <span class="dropdown-text">Fundamentos de R y RStudio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s03-text.html">
+ <span class="dropdown-text">Importar y Revisar Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s05-colors.html">
+ <span class="dropdown-text">dplyr - Manipulación de Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s07-theming.html">
+ <span class="dropdown-text">tidyr - Organización de Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s08-spatial.html">
+ <span class="dropdown-text">Datos Espaciales con sf</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-descargas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-download" role="img">
+</i> 
+ <span class="menu-text">Descargas</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">    
+        <li>
+    <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-materials.zip">
+ <span class="dropdown-text">Todos los Materiales del Curso</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../license.html"> <i class="bi bi-file-certificate" role="img">
+</i> 
+<span class="menu-text">Licencia</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/pefrens/introduccion_r"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">GitHub</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sobre-el-curso" id="toc-sobre-el-curso" class="nav-link active" data-scroll-target="#sobre-el-curso">Sobre el Curso</a></li>
+  <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a></li>
+  <li><a href="#objetivos-del-curso" id="toc-objetivos-del-curso" class="nav-link" data-scroll-target="#objetivos-del-curso">Objetivos del Curso</a></li>
+  <li><a href="#contenido-del-curso" id="toc-contenido-del-curso" class="nav-link" data-scroll-target="#contenido-del-curso">Contenido del Curso</a>
+  <ul class="collapse">
+  <li><a href="#sesión-1-fundamentos-de-r" id="toc-sesión-1-fundamentos-de-r" class="nav-link" data-scroll-target="#sesión-1-fundamentos-de-r">Sesión 1: Fundamentos de R</a></li>
+  <li><a href="#sesión-2-importar-y-revisar-datos" id="toc-sesión-2-importar-y-revisar-datos" class="nav-link" data-scroll-target="#sesión-2-importar-y-revisar-datos">Sesión 2: Importar y Revisar Datos</a></li>
+  <li><a href="#sesión-3-dplyr---manipulación-de-datos" id="toc-sesión-3-dplyr---manipulación-de-datos" class="nav-link" data-scroll-target="#sesión-3-dplyr---manipulación-de-datos">Sesión 3: dplyr - Manipulación de Datos</a></li>
+  <li><a href="#sesión-4-tidyr---organización-de-datos" id="toc-sesión-4-tidyr---organización-de-datos" class="nav-link" data-scroll-target="#sesión-4-tidyr---organización-de-datos">Sesión 4: tidyr - Organización de Datos</a></li>
+  <li><a href="#sesión-5-datos-espaciales-con-sf" id="toc-sesión-5-datos-espaciales-con-sf" class="nav-link" data-scroll-target="#sesión-5-datos-espaciales-con-sf">Sesión 5: Datos Espaciales con sf</a></li>
+  </ul></li>
+  <li><a href="#datos-del-curso" id="toc-datos-del-curso" class="nav-link" data-scroll-target="#datos-del-curso">Datos del Curso</a>
+  <ul class="collapse">
+  <li><a href="#datos-tabulares" id="toc-datos-tabulares" class="nav-link" data-scroll-target="#datos-tabulares">Datos Tabulares</a></li>
+  <li><a href="#datos-espaciales" id="toc-datos-espaciales" class="nav-link" data-scroll-target="#datos-espaciales">Datos Espaciales</a></li>
+  </ul></li>
+  <li><a href="#instalación-de-software" id="toc-instalación-de-software" class="nav-link" data-scroll-target="#instalación-de-software">Instalación de Software</a>
+  <ul class="collapse">
+  <li><a href="#programas-necesarios" id="toc-programas-necesarios" class="nav-link" data-scroll-target="#programas-necesarios">Programas Necesarios</a></li>
+  <li><a href="#paquetes-principales" id="toc-paquetes-principales" class="nav-link" data-scroll-target="#paquetes-principales">Paquetes Principales</a></li>
+  <li><a href="#paquetes-espaciales" id="toc-paquetes-espaciales" class="nav-link" data-scroll-target="#paquetes-espaciales">Paquetes Espaciales</a></li>
+  <li><a href="#paquetes-adicionales" id="toc-paquetes-adicionales" class="nav-link" data-scroll-target="#paquetes-adicionales">Paquetes Adicionales</a></li>
+  <li><a href="#requisitos-especiales-para-sf" id="toc-requisitos-especiales-para-sf" class="nav-link" data-scroll-target="#requisitos-especiales-para-sf">Requisitos Especiales para sf</a></li>
+  <li><a href="#verificar-instalación" id="toc-verificar-instalación" class="nav-link" data-scroll-target="#verificar-instalación">Verificar Instalación</a></li>
+  </ul></li>
+  <li><a href="#metodología" id="toc-metodología" class="nav-link" data-scroll-target="#metodología">Metodología</a></li>
+  <li><a href="#estrategia-de-aprendizaje" id="toc-estrategia-de-aprendizaje" class="nav-link" data-scroll-target="#estrategia-de-aprendizaje">Estrategia de Aprendizaje</a></li>
+  <li><a href="#recursos-de-ayuda" id="toc-recursos-de-ayuda" class="nav-link" data-scroll-target="#recursos-de-ayuda">Recursos de Ayuda</a></li>
+  <li><a href="#libros-de-referencia" id="toc-libros-de-referencia" class="nav-link" data-scroll-target="#libros-de-referencia">Libros de Referencia</a>
+  <ul class="collapse">
+  <li><a href="#r-for-data-science" id="toc-r-for-data-science" class="nav-link" data-scroll-target="#r-for-data-science">R for Data Science</a></li>
+  <li><a href="#geocomputation-with-r" id="toc-geocomputation-with-r" class="nav-link" data-scroll-target="#geocomputation-with-r">Geocomputation with R</a></li>
+  </ul></li>
+  <li><a href="#consejos-para-el-éxito" id="toc-consejos-para-el-éxito" class="nav-link" data-scroll-target="#consejos-para-el-éxito">Consejos para el Éxito</a></li>
+  <li><a href="#preguntas-frecuentes" id="toc-preguntas-frecuentes" class="nav-link" data-scroll-target="#preguntas-frecuentes">Preguntas Frecuentes</a>
+  <ul class="collapse">
+  <li><a href="#nunca-he-programado-antes-podré-seguir-el-curso" id="toc-nunca-he-programado-antes-podré-seguir-el-curso" class="nav-link" data-scroll-target="#nunca-he-programado-antes-podré-seguir-el-curso">“Nunca he programado antes, ¿podré seguir el curso?”</a></li>
+  <li><a href="#necesito-conocer-estadística" id="toc-necesito-conocer-estadística" class="nav-link" data-scroll-target="#necesito-conocer-estadística">“¿Necesito conocer estadística?”</a></li>
+  <li><a href="#cuánto-tiempo-debo-dedicar-a-practicar" id="toc-cuánto-tiempo-debo-dedicar-a-practicar" class="nav-link" data-scroll-target="#cuánto-tiempo-debo-dedicar-a-practicar">“¿Cuánto tiempo debo dedicar a practicar?”</a></li>
+  <li><a href="#qué-hago-si-me-quedo-atascado" id="toc-qué-hago-si-me-quedo-atascado" class="nav-link" data-scroll-target="#qué-hago-si-me-quedo-atascado">“¿Qué hago si me quedo atascado?”</a></li>
+  </ul></li>
+  <li><a href="#qué-no-cubriremos" id="toc-qué-no-cubriremos" class="nav-link" data-scroll-target="#qué-no-cubriremos">¿Qué NO cubriremos?</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Bienvenida e Introducción a R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sobre-el-curso" class="level2">
+<h2 class="anchored" data-anchor-id="sobre-el-curso">Sobre el Curso</h2>
+<p>Este es un curso introductorio de programación en R con énfasis en el ecosistema Tidyverse y análisis espacial. El curso está diseñado para personas que desean aprender a trabajar con datos de manera ordenada, reproducible y eficiente.</p>
+</section>
+<section id="instructor" class="level2">
+<h2 class="anchored" data-anchor-id="instructor">Instructor</h2>
+<p><strong>Paul Efren Santos Andrade</strong></p>
+<p>Especialista en análisis de datos con R, enfocado en:</p>
+<ul>
+<li>Ciencia de datos aplicada</li>
+<li>Análisis reproducible</li>
+<li>Ecosistema Tidyverse</li>
+<li>Análisis espacial con sf</li>
+</ul>
+<p><strong>Contacto:</strong></p>
+<ul>
+<li>Blog: <a href="https://paulefrensa.rbind.io">paulefrensa.rbind.io</a></li>
+<li>Twitter: <a href="https://twitter.com/PaulEfrenSantos"><span class="citation" data-cites="PaulEfrenSantos">@PaulEfrenSantos</span></a></li>
+<li>GitHub: <a href="https://github.com/PaulESantos"><span class="citation" data-cites="PaulESantos">@PaulESantos</span></a></li>
+</ul>
+</section>
+<section id="objetivos-del-curso" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos-del-curso">Objetivos del Curso</h2>
+<p>Al finalizar este curso podrás:</p>
+<ul>
+<li>✓ Escribir código R básico de forma legible</li>
+<li>✓ Importar datos desde múltiples formatos</li>
+<li>✓ Limpiar y transformar datos con dplyr</li>
+<li>✓ Organizar datos con tidyr</li>
+<li>✓ Trabajar con datos espaciales usando sf</li>
+<li>✓ Crear visualizaciones con ggplot2</li>
+<li>✓ Integrar análisis espacial con tidyverse</li>
+<li>✓ Crear análisis reproducibles</li>
+</ul>
+</section>
+<section id="contenido-del-curso" class="level2">
+<h2 class="anchored" data-anchor-id="contenido-del-curso">Contenido del Curso</h2>
+<section id="sesión-1-fundamentos-de-r" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-1-fundamentos-de-r">Sesión 1: Fundamentos de R</h3>
+<ul>
+<li>Valores atómicos y tipos de datos</li>
+<li>Creación de objetos (<code>&lt;-</code>)</li>
+<li>Operadores básicos</li>
+<li>Estructuras de datos: vectores, matrices, data frames, listas</li>
+<li>Funciones en R</li>
+</ul>
+</section>
+<section id="sesión-2-importar-y-revisar-datos" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-2-importar-y-revisar-datos">Sesión 2: Importar y Revisar Datos</h3>
+<ul>
+<li>Importar desde diferentes formatos (CSV con <code>readr</code>, Excel con <code>readxl</code>, datos espaciales con <code>sf</code>)</li>
+<li>Revisar estructura de datos</li>
+<li>Limpiar nombres con <code>janitor</code></li>
+<li>Visualizar tipos de datos con <code>visdat</code></li>
+<li>El operador pipe <code>|&gt;</code></li>
+</ul>
+</section>
+<section id="sesión-3-dplyr---manipulación-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-3-dplyr---manipulación-de-datos">Sesión 3: dplyr - Manipulación de Datos</h3>
+<p>Los verbos principales de dplyr:</p>
+<ul>
+<li><code>select()</code>: Seleccionar columnas</li>
+<li><code>filter()</code>: Filtrar filas</li>
+<li><code>mutate()</code>: Crear/modificar variables</li>
+<li><code>summarise()</code>: Resumir datos</li>
+<li><code>group_by()</code>: Agrupar datos</li>
+<li><code>arrange()</code>: Ordenar datos</li>
+</ul>
+</section>
+<section id="sesión-4-tidyr---organización-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-4-tidyr---organización-de-datos">Sesión 4: tidyr - Organización de Datos</h3>
+<ul>
+<li>Principios de <strong>Tidy Data</strong></li>
+<li><code>pivot_longer()</code>: Datos anchos → largos</li>
+<li><code>pivot_wider()</code>: Datos largos → anchos</li>
+<li><code>separate()</code> y <code>unite()</code>: Dividir y unir columnas</li>
+<li>Aplicaciones prácticas</li>
+</ul>
+</section>
+<section id="sesión-5-datos-espaciales-con-sf" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-5-datos-espaciales-con-sf">Sesión 5: Datos Espaciales con sf</h3>
+<ul>
+<li>¿Qué son datos espaciales?</li>
+<li>El paquete <code>sf</code> (Simple Features)</li>
+<li>Tipos de geometrías (puntos, líneas, polígonos)</li>
+<li>Lectura/escritura de formatos espaciales</li>
+<li>Integración con tidyverse</li>
+<li>Visualización con <code>geom_sf()</code></li>
+<li>Operaciones espaciales básicas</li>
+</ul>
+</section>
+</section>
+<section id="datos-del-curso" class="level2">
+<h2 class="anchored" data-anchor-id="datos-del-curso">Datos del Curso</h2>
+<section id="datos-tabulares" class="level3">
+<h3 class="anchored" data-anchor-id="datos-tabulares">Datos Tabulares</h3>
+<ul>
+<li><code>areas_naturales_peru.xlsx</code></li>
+<li><code>catalogo_planes.csv</code></li>
+<li><code>catalogo_planes.txt</code></li>
+</ul>
+</section>
+<section id="datos-espaciales" class="level3">
+<h3 class="anchored" data-anchor-id="datos-espaciales">Datos Espaciales</h3>
+<ul>
+<li><code>DEPARTAMENTO.gpkg</code>
+<ul>
+<li>Polígonos de departamentos</li>
+<li>Sistema WGS84 (EPSG:4326)</li>
+<li>Atributos: nombres, capitales</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="instalación-de-software" class="level2">
+<h2 class="anchored" data-anchor-id="instalación-de-software">Instalación de Software</h2>
+<section id="programas-necesarios" class="level3">
+<h3 class="anchored" data-anchor-id="programas-necesarios">Programas Necesarios</h3>
+<ol type="1">
+<li><strong>R</strong> (versión 4.5.2 o superior)
+<ul>
+<li><a href="https://cran.r-project.org">cran.r-project.org</a></li>
+</ul></li>
+<li><strong>RStudio</strong> (versión 1.1.401 o superior)
+<ul>
+<li><a href="https://posit.co/download/rstudio-desktop/">posit.co/download/rstudio-desktop</a></li>
+</ul></li>
+<li><strong>Rtools 45</strong> (solo Windows)
+<ul>
+<li><a href="https://cran.r-project.org/bin/windows/Rtools/">cran.r-project.org/bin/windows/Rtools</a></li>
+</ul></li>
+</ol>
+</section>
+<section id="paquetes-principales" class="level3">
+<h3 class="anchored" data-anchor-id="paquetes-principales">Paquetes Principales</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse y manipulación de datos</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>,  <span class="co"># Colección completa</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,    <span class="co"># Limpieza de nombres</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"here"</span>,       <span class="co"># Rutas reproducibles</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"readxl"</span>,     <span class="co"># Leer Excel</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"writexl"</span>,    <span class="co"># Escribir Excel</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"visdat"</span>      <span class="co"># Visualizar datos</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="paquetes-espaciales" class="level3">
+<h3 class="anchored" data-anchor-id="paquetes-espaciales">Paquetes Espaciales</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes para datos espaciales</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>spatial_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sf"</span>,        <span class="co"># Simple Features (principal)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"terra"</span>,     <span class="co"># Datos ráster</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mapview"</span>,   <span class="co"># Visualización interactiva</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"leaflet"</span>,   <span class="co"># Mapas web</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tmap"</span>       <span class="co"># Mapas temáticos</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(spatial_packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="paquetes-adicionales" class="level3">
+<h3 class="anchored" data-anchor-id="paquetes-adicionales">Paquetes Adicionales</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes de texto</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tm"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># stringr.plus (desde GitHub)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"johncassil/stringr.plus"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="requisitos-especiales-para-sf" class="level3">
+<h3 class="anchored" data-anchor-id="requisitos-especiales-para-sf">Requisitos Especiales para sf</h3>
+<p><strong>macOS:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install gdal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Linux (Ubuntu/Debian):</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Windows:</strong> Rtools 45 ya incluye todo lo necesario ✓</p>
+</section>
+<section id="verificar-instalación" class="level3">
+<h3 class="anchored" data-anchor-id="verificar-instalación">Verificar Instalación</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar tidyverse</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar sf</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))  <span class="co"># Debe funcionar sin errores</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar vegan (para ejemplos)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"BCI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="metodología" class="level2">
+<h2 class="anchored" data-anchor-id="metodología">Metodología</h2>
+<ul>
+<li><strong>Clases interactivas</strong> con ejemplos en vivo</li>
+<li><strong>Ejercicios prácticos</strong> al final de cada sesión</li>
+<li><strong>Datos reales</strong> del Perú</li>
+<li><strong>Aprender haciendo</strong></li>
+<li><strong>Preguntas en cualquier momento</strong></li>
+</ul>
+</section>
+<section id="estrategia-de-aprendizaje" class="level2">
+<h2 class="anchored" data-anchor-id="estrategia-de-aprendizaje">Estrategia de Aprendizaje</h2>
+<ul>
+<li><strong>Practica el código</strong> - no solo leas</li>
+<li><strong>Experimenta</strong> - cambia valores y observa qué pasa</li>
+<li><strong>Comete errores</strong> - son parte del aprendizaje</li>
+<li><strong>Consulta la documentación</strong> - usa <code>?nombre_funcion</code></li>
+<li><strong>Busca ayuda</strong> - Stack Overflow, comunidad R</li>
+</ul>
+</section>
+<section id="recursos-de-ayuda" class="level2">
+<h2 class="anchored" data-anchor-id="recursos-de-ayuda">Recursos de Ayuda</h2>
+<ul>
+<li><strong>Durante el curso</strong>: Pregunta directamente</li>
+<li><strong>Documentación de R</strong>: <code>?funcion</code> o <code>help(funcion)</code></li>
+<li><strong>Hojas de referencia</strong>: <a href="https://posit.co/resources/cheatsheets/">posit.co/resources/cheatsheets</a></li>
+<li><strong>Stack Overflow</strong>: <a href="https://stackoverflow.com/questions/tagged/r">stackoverflow.com/questions/tagged/r</a></li>
+<li><strong>RStudio Community</strong>: <a href="https://community.rstudio.com/">community.rstudio.com</a></li>
+</ul>
+</section>
+<section id="libros-de-referencia" class="level2">
+<h2 class="anchored" data-anchor-id="libros-de-referencia">Libros de Referencia</h2>
+<section id="r-for-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="r-for-data-science">R for Data Science</h3>
+<ul>
+<li><a href="https://r4ds.hadley.nz/">Versión en inglés</a></li>
+<li><a href="https://es.r4ds.hadley.nz/">Versión en español</a></li>
+</ul>
+</section>
+<section id="geocomputation-with-r" class="level3">
+<h3 class="anchored" data-anchor-id="geocomputation-with-r">Geocomputation with R</h3>
+<ul>
+<li><a href="https://r.geocompx.org/">Versión en línea</a></li>
+<li>Análisis geoespacial completo</li>
+</ul>
+</section>
+</section>
+<section id="consejos-para-el-éxito" class="level2">
+<h2 class="anchored" data-anchor-id="consejos-para-el-éxito">Consejos para el Éxito</h2>
+<ol type="1">
+<li><strong>Escribe el código tú mismo</strong> - no copies y pegues</li>
+<li><strong>Lee los mensajes de error</strong> - son informativos</li>
+<li><strong>Usa RStudio Projects</strong> - mantén organizado</li>
+<li><strong>Comenta tu código</strong> - tu yo futuro te lo agradecerá</li>
+<li><strong>Practica regularmente</strong> - la constancia es clave</li>
+<li><strong>Únete a la comunidad</strong> - #rstats en Twitter</li>
+</ol>
+</section>
+<section id="preguntas-frecuentes" class="level2">
+<h2 class="anchored" data-anchor-id="preguntas-frecuentes">Preguntas Frecuentes</h2>
+<section id="nunca-he-programado-antes-podré-seguir-el-curso" class="level3">
+<h3 class="anchored" data-anchor-id="nunca-he-programado-antes-podré-seguir-el-curso">“Nunca he programado antes, ¿podré seguir el curso?”</h3>
+<p><strong>¡Sí!</strong> Este curso está diseñado para principiantes.</p>
+<ul>
+<li>Empezamos desde cero</li>
+<li>Explicamos cada concepto paso a paso</li>
+<li>Muchos ejemplos prácticos</li>
+</ul>
+</section>
+<section id="necesito-conocer-estadística" class="level3">
+<h3 class="anchored" data-anchor-id="necesito-conocer-estadística">“¿Necesito conocer estadística?”</h3>
+<p><strong>No es obligatorio</strong> para este curso introductorio.</p>
+<ul>
+<li>Nos enfocamos en manipulación de datos</li>
+<li>Conceptos estadísticos básicos se explican cuando aparecen</li>
+<li>El énfasis está en programación y ciencia de datos</li>
+</ul>
+</section>
+<section id="cuánto-tiempo-debo-dedicar-a-practicar" class="level3">
+<h3 class="anchored" data-anchor-id="cuánto-tiempo-debo-dedicar-a-practicar">“¿Cuánto tiempo debo dedicar a practicar?”</h3>
+<p><strong>Recomendación:</strong></p>
+<ul>
+<li>Durante el curso: Participación activa</li>
+<li>Después de cada sesión: 1-2 horas practicando</li>
+<li>Total: Al menos 10-15 horas de práctica adicional</li>
+<li>¡Entre más practiques, mejor!</li>
+</ul>
+</section>
+<section id="qué-hago-si-me-quedo-atascado" class="level3">
+<h3 class="anchored" data-anchor-id="qué-hago-si-me-quedo-atascado">“¿Qué hago si me quedo atascado?”</h3>
+<p><strong>Estrategias:</strong></p>
+<ol type="1">
+<li>Lee el mensaje de error completo</li>
+<li>Busca el error en Google</li>
+<li>Consulta la documentación (<code>?funcion</code>)</li>
+<li>Pregunta en Stack Overflow</li>
+<li>Revisa los ejemplos del curso</li>
+<li>Contacta al instructor</li>
+</ol>
+</section>
+</section>
+<section id="qué-no-cubriremos" class="level2">
+<h2 class="anchored" data-anchor-id="qué-no-cubriremos">¿Qué NO cubriremos?</h2>
+<p>Este es un curso introductorio, NO cubriremos:</p>
+<ul>
+<li>Modelado estadístico avanzado</li>
+<li>Machine learning</li>
+<li>Shiny (aplicaciones web)</li>
+<li>Análisis de series temporales avanzadas</li>
+<li>Programación avanzada en R</li>
+</ul>
+<p>¡Pero tendrás las bases para aprender todo esto después!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Esta página fue creada con ❤️ y <a href="https://quarto.org/">Quarto</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>© Derechos de autor 2026</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

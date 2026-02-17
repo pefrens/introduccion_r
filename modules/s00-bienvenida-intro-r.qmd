@@ -1,0 +1,74 @@
+---
+title: "Bienvenida e Introducción a R"
+subtitle: "<span class='code'>Sesión 1</span>"
+date: "2026-02"
+image: "images/01-fundamentals.png"
+tbl-colwidths: [5,20,75]
+---
+```{=html}
+<iframe class="slide-deck" src="../materials/00-bienvenida-intro-r.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+```
+
+<a href='../materials/00-bienvenida-intro-r.html' target="_blank">Ver diapositivas en pantalla completa</a>
+
+
+## Objetivos del Curso
+
+Al finalizar este curso podrás:
+
+- ✓ Escribir código R básico de forma legible
+- ✓ Importar datos desde múltiples formatos
+- ✓ Limpiar y transformar datos con dplyr
+- ✓ Organizar datos con tidyr
+- ✓ Trabajar con datos espaciales usando sf
+- ✓ Crear visualizaciones con ggplot2
+- ✓ Integrar análisis espacial con tidyverse
+- ✓ Crear análisis reproducibles
+
+## Contenido del Curso
+
+### Sesión 1: Fundamentos de R
+
+- Valores atómicos y tipos de datos
+- Creación de objetos (`<-`)
+- Operadores básicos
+- Estructuras de datos: vectores, matrices, data frames, listas
+- Funciones en R
+
+### Sesión 2: Importar y Revisar Datos
+
+- Importar desde diferentes formatos (CSV con `readr`, Excel con `readxl`, datos espaciales con `sf`)
+- Revisar estructura de datos
+- Limpiar nombres con `janitor`
+- Visualizar tipos de datos con `visdat`
+- El operador pipe `|>`
+
+### Sesión 3: dplyr - Manipulación de Datos
+
+Los verbos principales de dplyr:
+
+- `select()`: Seleccionar columnas
+- `filter()`: Filtrar filas
+- `mutate()`: Crear/modificar variables
+- `summarise()`: Resumir datos
+- `group_by()`: Agrupar datos
+- `arrange()`: Ordenar datos
+
+### Sesión 4: tidyr - Organización de Datos
+
+- Principios de **Tidy Data**
+- `pivot_longer()`: Datos anchos → largos
+- `pivot_wider()`: Datos largos → anchos
+- `separate()` y `unite()`: Dividir y unir columnas
+- Aplicaciones prácticas
+
+### Sesión 5: Datos Espaciales con sf
+
+- ¿Qué son datos espaciales?
+- El paquete `sf` (Simple Features)
+- Tipos de geometrías (puntos, líneas, polígonos)
+- Lectura/escritura de formatos espaciales
+- Integración con tidyverse
+- Visualización con `geom_sf()`
+- Operaciones espaciales básicas
+
