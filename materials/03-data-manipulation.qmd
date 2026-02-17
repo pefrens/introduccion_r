@@ -30,27 +30,15 @@ execute:
   fig-align: center
 ---
 
-## Esquema de la sesión {.smaller}
-
-::: incremental
-- Introducción a dplyr
-- Operaciones con filas: `filter()`, `arrange()`, `distinct()`
-- Operaciones con columnas: `mutate()`, `select()`, `rename()`, `relocate()`
-- El operador pipe `|>`
-- Agrupar datos: `group_by()` y `summarise()`
-- Funciones `slice_*`
-- Ejercicios prácticos
-:::
-
 # Introducción a dplyr {background-color="#2C3E50"}
 
 ## ¿Qué es dplyr?
 
 ::: incremental
-- Paquete del tidyverse para **manipulación de datos**
+- Paquete de tidyverse para la **manipulación de datos**
 - Proporciona verbos (funciones) para operaciones comunes
 - Diseñado para ser intuitivo y consistente
-- Funciona con tibbles y data frames
+- Funciona con tibbles, data frames y sf (Simple Features)
 :::
 
 ## Los verbos de dplyr {.smaller}
@@ -85,12 +73,14 @@ verbo(datos, operacion)
 
 ## Cargar paquetes
 
-```r
+```{r}
+
 library(tidyverse)
 library(readxl)
-
+library(janitor)
 # Cargar datos de áreas naturales
-anp <- read_excel("data/areas_naturales_peru.xlsx")
+planes <- read_excel("data/catalogo_planes.xlsx") |> 
+  clean_names()
 ```
 
 # Operaciones con filas {background-color="#2C3E50"}
@@ -99,17 +89,26 @@ anp <- read_excel("data/areas_naturales_peru.xlsx")
 
 Selecciona filas que cumplen una o más condiciones:
 
-```r
-# Áreas naturales de categoría "Parque Nacional"
-filter(anp, categoria == "Parque Nacional")
+```{r}
+# Planes Urbanos
+filter(planes,
+       departamento == "TUMBES")
 ```
 
-. . .
+## `filter()` - Filtrar filas
 
-```r
-# Áreas con superficie mayor a 100,000 hectáreas
-filter(anp, superficie_oficial > 100000)
+```{r}
+library(sf)
+distrito <- read_sf("data/DISTRITO.gpkg")
+
+distrito |> 
+  filter( ccdd %in% c("08", # Cusco 
+                      "04") # Arequipa
+          )
+
+
 ```
+
 
 ## Operadores de comparación {.smaller}
 
@@ -137,52 +136,43 @@ Combinar múltiples condiciones:
 | `|` | O (al menos una condición verdadera) |
 | `!` | NO (negación) |
 
-. . .
-
-```r
-# Parques Nacionales con más de 100,000 ha
-filter(anp, categoria == "Parque Nacional" & superficie_oficial > 100000)
-```
-
-. . .
-
-```r
-# Áreas en Cusco o Loreto
-filter(anp, ubicacion_politica == "Cusco" | ubicacion_politica == "Loreto")
-```
 
 ## Operador `%in%` {.smaller}
 
 Para comparar con múltiples valores:
 
-```r
+```{r}
 # Áreas en varios departamentos (forma larga)
-filter(anp,
-       ubicacion_politica == "Cusco" |
-       ubicacion_politica == "Loreto" |
-       ubicacion_politica == "Madre de Dios")
+departamentos |> 
+filter(ccdd == "08" | # CUSCO
+       ccdd == "05" | # AYACUCHO
+       ccdd == "04")  # AREQUIPA
 ```
 
 . . .
 
-```r
+```{r}
 # Forma más elegante con %in%
-departamentos <- c("Cusco", "Loreto", "Madre de Dios")
-filter(anp, ubicacion_politica %in% departamentos)
+departamentos |> 
+filter( ccdd %in% c("08", "05", "04"))
 ```
 
 ## Valores faltantes (NA)
 
-```r
+```{r}
+indicadores_anta <- read_csv("data/reporte_centro_poblado_ANTA.csv") |> 
+  clean_names()
 # is.na() identifica valores faltantes
-filter(anp, is.na(superficie_oficial))
+indicadores_anta |> 
+filter(is.na(percent))
 ```
 
 . . .
 
-```r
+```{r}
 # !is.na() identifica valores NO faltantes
-filter(anp, !is.na(superficie_oficial))
+indicadores_anta |> 
+filter(!is.na(percent))
 ```
 
 ::: callout-tip
@@ -194,23 +184,29 @@ filter(anp, !is.na(superficie_oficial))
 
 Ordena filas según una o más columnas:
 
-```r
-# Ordenar por superficie (de menor a mayor)
-arrange(anp, superficie_oficial)
+```{r}
+# Ordenar por población (de menor a mayor)
+# ?population
+population |> 
+arrange(population)
 ```
 
 . . .
 
-```r
+```{r}
 # Ordenar de mayor a menor con desc()
-arrange(anp, desc(superficie_oficial))
+population |> 
+arrange(desc(population))
 ```
 
 ## Ordenar por múltiples columnas
 
-```r
-# Primero por categoría, luego por superficie
-arrange(anp, categoria, desc(superficie_oficial))
+```{r}
+library(gapminder)
+# Primero por expectativa de vida, luego por poblacion
+gapminder |> 
+arrange(lifeExp, 
+        desc(pop))
 ```
 
 ::: callout-note
@@ -221,37 +217,35 @@ Los valores `NA` siempre se colocan al final, sin importar si usas `desc()` o no
 
 Encuentra filas únicas (elimina duplicados):
 
-```r
+```{r}
 # Categorías únicas de áreas naturales
-distinct(anp, categoria)
+departamentos |> 
+distinct(nombdep)
 ```
 
-. . .
-
-```r
-# Mantener todas las columnas
-distinct(anp, categoria, .keep_all = TRUE)
-```
 
 ## `distinct()` vs `count()` {.smaller}
 
-```r
+```{r}
 # distinct() muestra valores únicos
-distinct(anp, categoria)
+planes |> 
+distinct(estado)
 ```
 
 . . .
 
-```r
+```{r}
 # count() cuenta las ocurrencias
-count(anp, categoria)
+planes |> 
+  count(estado)
 ```
 
 . . .
 
-```r
+```{r}
 # Ordenar por frecuencia
-count(anp, categoria, sort = TRUE)
+planes |> 
+count(estado, sort = TRUE)
 ```
 
 # Operaciones con columnas {background-color="#2C3E50"}
@@ -260,34 +254,44 @@ count(anp, categoria, sort = TRUE)
 
 Crea nuevas columnas o modifica existentes:
 
-```r
+```{r}
 # Convertir superficie de hectáreas a km²
-mutate(anp, superficie_km2 = superficie_oficial / 100)
+departamentos |> 
+mutate( superficie_m2 = st_area(departamentos))
 ```
 
 . . .
 
-```r
+```{r}
+#| echo: true
+#| eval: false
 # Crear múltiples columnas
-mutate(anp,
-  superficie_km2 = superficie_oficial / 100,
-  area_grande = superficie_oficial > 100000
-)
+pob_peru <- read_csv("data/poblacion_peru.csv") |> 
+  clean_names()
+pob_peru |> 
+   mutate(
+    total = hombres + mujeres,
+    pct_hombres = (hombres / total) * 100,
+    pct_mujeres = (mujeres / total) * 100
+  )
 ```
 
 ## Operaciones con `mutate()` {.smaller}
 
 Puedes usar operadores aritméticos:
 
-```r
-mutate(anp,
-  # Operaciones aritméticas
-  superficie_acres = superficie_oficial * 2.47105,
-  # Operaciones lógicas
-  es_parque = str_detect(categoria, "Parque"),
-  # Funciones
-  nombre_mayus = str_to_upper(nombre)
-)
+```{r}
+pob_peru |> 
+  mutate(
+    # Operaciones aritméticas
+   pob_total = hombres + mujeres,
+    # Operaciones lógicas
+    sexo_dominante = if_else(
+      mujeres > hombres,
+      "Mayoría Mujeres", 
+      "Mayoría Hombres"
+    )
+  )
 ```
 
 ## Opciones de `mutate()` {.smaller}
@@ -300,45 +304,50 @@ mutate(anp,
 
 . . .
 
-```r
+```{r}
 # Colocar nueva columna al inicio
-mutate(anp,
-  superficie_km2 = superficie_oficial / 100,
+pob_peru |> 
+mutate(
+  pob_total = hombres + mujeres,
   .before = 1
 )
 ```
 
 . . .
 
-```r
+```{r}
 # Mantener solo columnas nuevas
-mutate(anp,
-  superficie_km2 = superficie_oficial / 100,
-  .keep = "none"
-)
+pob_peru |> 
+    mutate(
+        pob_total = hombres + mujeres,
+        .keep  = "none"
+    )
 ```
 
 ## `select()` - Seleccionar columnas
 
 Selecciona columnas por nombre:
 
-```r
+```{r}
 # Seleccionar columnas específicas
-select(anp, nombre, categoria, superficie_oficial)
+departamentos |> 
+  select(ccdd, nombdep)
 ```
 
 . . .
 
-```r
+```{r}
 # Seleccionar rango de columnas
-select(anp, nombre:ubicacion_politica)
+distrito |> 
+select(ccdd:ccdi)
 ```
 
 . . .
 
-```r
+```{r}
 # Excluir columnas con -
-select(anp, -fecha_promulgacion__modificacion)
+departamentos |> 
+  select(-nombdep)
 ```
 
 ## Funciones auxiliares de `select()` {.smaller}
@@ -354,32 +363,36 @@ select(anp, -fecha_promulgacion__modificacion)
 
 ## Ejemplos de funciones auxiliares
 
-```r
+```{r}
 # Columnas que empiezan con "superficie"
-select(anp, starts_with("superficie"))
+departamentos |> 
+select( starts_with("cc"))
 ```
 
 . . .
 
-```r
+```{r}
 # Columnas numéricas
-select(anp, where(is.numeric))
+gapminder |> 
+select( where(is.numeric))
 ```
 
 . . .
 
-```r
+```{r}
 # Reorganizar: nombre primero, luego todo lo demás
-select(anp, nombre, everything())
+departamentos |> 
+select(nombdep, everything())
 ```
 
 ## `rename()` - Renombrar columnas
 
-```r
+```{r}
 # Sintaxis: nuevo_nombre = nombre_antiguo
-rename(anp,
-  area = nombre,
-  departamento = ubicacion_politica
+departamentos |> 
+rename(
+  departamento = nombdep,
+  cod_dep = ccdd
 )
 ```
 
@@ -387,7 +400,9 @@ rename(anp,
 ## Atajo
 También puedes renombrar con `select()`:
 ```r
-select(anp, area = nombre, categoria)
+departamentos |> 
+select( departamento = nombdep,
+  cod_dep = ccdd)
 ```
 :::
 
@@ -397,21 +412,24 @@ Cambia la posición de columnas:
 
 ```r
 # Mover columna al inicio
-relocate(anp, superficie_oficial)
+departamentos |> 
+relocate(nombdep)
 ```
 
 . . .
 
 ```r
 # Mover después de otra columna
-relocate(anp, superficie_oficial, .after = nombre)
+departamentos |> 
+relocate(ccdd, .after = nombdep)
 ```
 
 . . .
 
 ```r
 # Mover antes de otra columna
-relocate(anp, superficie_oficial, .before = categoria)
+departamentos |> 
+relocate(fuente, .before = geometry)
 ```
 
 # El operador pipe {background-color="#2C3E50"}
@@ -434,10 +452,10 @@ El **pipe** (tubería) te permite encadenar operaciones:
 ```r
 arrange(
   filter(
-    select(anp, nombre, categoria, superficie_oficial),
-    categoria == "Parque Nacional"
+    select(distrito, nombdist, ccdd, ccdi),
+    ccdd == "08"
   ),
-  desc(superficie_oficial)
+  desc(as.numeric(ccdi))
 )
 ```
 
@@ -446,10 +464,10 @@ arrange(
 **Con pipe** (fluido y claro):
 
 ```r
-anp |>
-  select(nombre, categoria, superficie_oficial) |>
-  filter(categoria == "Parque Nacional") |>
-  arrange(desc(superficie_oficial))
+distrito |>
+  select(nombdist, ccdd, ccdi) |>
+  filter(ccdd == "08") |>
+  arrange(desc(as.numeric(ccdi)))
 ```
 
 ## Ventajas del pipe {.smaller}
@@ -474,15 +492,12 @@ Ambos funcionan igual en la mayoría de casos. Usaremos `|>` en este curso.
 ## Ejemplo completo con pipe
 
 ```r
-anp |>
-  # Seleccionar columnas relevantes
-  select(nombre, categoria, superficie_oficial, ubicacion_politica) |>
-  # Filtrar Parques Nacionales
-  filter(categoria == "Parque Nacional") |>
-  # Crear nueva columna
-  mutate(superficie_km2 = superficie_oficial / 100) |>
-  # Ordenar por superficie
-  arrange(desc(superficie_km2))
+departamentos |>
+  mutate(
+    area_km2 = as.numeric(st_area(geom)) / 1e6  # Convertir m² a km²
+  ) |>
+  arrange(desc(area_km2)) |>
+  select(nombdep, area_km2)
 ```
 
 # Operaciones agrupadas {background-color="#2C3E50"}
@@ -492,8 +507,8 @@ anp |>
 Agrupa filas para aplicar operaciones por grupo:
 
 ```r
-anp |>
-  group_by(categoria)
+planes |>
+  group_by(departamento)
 ```
 
 ::: callout-note
@@ -504,17 +519,18 @@ anp |>
 
 Colapsa filas en resúmenes estadísticos:
 
-```r
-anp |>
-  group_by(categoria) |>
+```{r}
+planes |>
+  group_by(departamento) |>
   summarise(
-    n_areas = n(),
-    superficie_promedio = mean(superficie_oficial, na.rm = TRUE)
+    n_planes = n(),
+    n_tipos = n_distinct(tipo_de_plan)
   )
 ```
 
 ::: incremental
 - `n()` cuenta el número de filas en cada grupo
+- `n_distinct()` cuenta el número de casos unicos dentro de un grupo
 - Puedes usar cualquier función de resumen: `mean()`, `median()`, `sd()`, `min()`, `max()`, `sum()`
 - `na.rm = TRUE` ignora valores faltantes
 :::
@@ -522,15 +538,19 @@ anp |>
 ## Múltiples resúmenes
 
 ```r
-anp |>
-  group_by(categoria) |>
+planes |>
+  group_by(departamento) |>
   summarise(
-    cantidad = n(),
-    sup_total = sum(superficie_oficial, na.rm = TRUE),
-    sup_promedio = mean(superficie_oficial, na.rm = TRUE),
-    sup_min = min(superficie_oficial, na.rm = TRUE),
-    sup_max = max(superficie_oficial, na.rm = TRUE)
-  )
+    # Conteos
+    total_planes        = n(),
+    total_aprobados     = sum(estado == "Aprobado",    na.rm = TRUE),
+    total_terminados    = sum(estado == "Terminado",   na.rm = TRUE),
+    total_en_proceso    = sum(estado == "En proceso",  na.rm = TRUE),
+    no_detarminado      = sum(is.na(estado)),
+    # Proporciones
+    pct_aprobados       = round(total_aprobados / total_planes * 100, 1)
+  ) |>
+  arrange(desc(total_planes))
 ```
 
 ## Funciones de slice {.smaller}
@@ -547,19 +567,20 @@ Seleccionan filas específicas dentro de grupos:
 
 ## Ejemplos de slice
 
-```r
+```{r}
 # El área más grande de cada categoría
-anp |>
-  group_by(categoria) |>
-  slice_max(superficie_oficial, n = 1)
+gapminder |>
+  group_by(continent) |>
+  slice_max(pop, n = 1)
 ```
 
 . . .
 
-```r
-# Las 3 áreas más grandes en total
-anp |>
-  slice_max(superficie_oficial, n = 3)
+```{r}
+# Los 6 paises más poblados en 2002 
+gapminder |>
+  filter(year == 2002) |> 
+  slice_max(pop, n = 6)
 ```
 
 ## Múltiples variables de agrupación

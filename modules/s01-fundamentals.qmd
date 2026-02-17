@@ -123,28 +123,47 @@ Los dataframes son estructuras bidimensionales que pueden contener diferentes ti
 
 # Ejercicios
 
-## Ejercicio 1
+# Ejercicios Prácticos
 
-::: question
-- Crea un vector con los números del 1 al 10
-- Crea un vector con tu nombre, apellido y ciudad
-- Indexa el vector de números para obtener los elementos del 5 al 8
+## Ejercicio 1: Vectores y Operaciones {.smaller}
+
+::: task
+1. Crea un vector con los números del 1 al 10
+2. Calcula la media del vector
+3. Crea un vector con nombres de 3 ciudades peruanas
+4. Verifica si "Lima" está en tu vector de ciudades
 :::
 
-## Ejercicio 2
+## Ejercicio 2: Data Frames {.smaller}
 
-::: question
-- Crea una matriz de 3x3 con los números del 1 al 9
-- Verifica la clase de diferentes tipos de objetos usando `class()`
+::: task
+1. Examina el data frame `mtcars` (viene incluido en R)
+2. ¿Cuántas filas y columnas tiene?
+3. ¿Cuáles son los nombres de las variables?
+4. Calcula la media de la variable `mpg`
 :::
 
-# Recapitulación
+## Ejercicio 3: Importar Datos {.smaller}
 
-::: recap
-- R es un lenguaje de programación orientado a objetos
-- Los valores atómicos son los elementos básicos
-- El operador `<-` se usa para crear objetos
-- Los vectores almacenan múltiples elementos del mismo tipo
-- Las funciones toman argumentos entre paréntesis `()`
-- Existen múltiples estructuras de datos: vectores, matrices, dataframes, listas
+::: task
+1. Instala y carga el paquete `readxl`
+2. Intenta leer un archivo de datos (si tienes uno disponible)
+3. Usa `head()` y `glimpse()` para explorarlo
+4. Limpia los nombres de variables con `janitor::clean_names()`
+:::
+
+# Resumen de la Sesión
+
+## Lo que Aprendimos Hoy
+
+::: incremental
+-   ✓ R y RStudio: diferencias y uso
+-   ✓ Valores atómicos y tipos de datos
+-   ✓ Creación de objetos con `<-`
+-   ✓ Estructuras de datos: vectores, matrices, data frames, listas
+-   ✓ Funciones y su sintaxis
+-   ✓ Paquetes: instalación y carga
+-   ✓ El operador pipe `|>`
+-   ✓ Conceptos de reproducibilidad
+-   ✓ Git/GitHub para control de versiones
 :::

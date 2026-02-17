@@ -48,13 +48,15 @@ website:
           - text: Fundamentos de R y RStudio
             href: modules/s01-fundamentals.qmd
           - text: Importar y Revisar Datos
-            href: modules/s03-text.qmd
+            href: modules/s03-import-data.qmd
           - text: dplyr - Manipulación de Datos
-            href: modules/s05-colors.qmd
+            href: modules/s05-dplyr.qmd
           - text: tidyr - Organización de Datos
-            href: modules/s07-theming.qmd
+            href: modules/s07-tidying-data.qmd
           - text: Datos Espaciales con sf
             href: modules/s08-spatial.qmd
+          - text: Unión de Datos (Joins)
+            href: modules/s05-joins.qmd
 format:
   html:
     theme:

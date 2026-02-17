@@ -37,108 +37,18 @@ library(tidyverse)
 ggplot2::theme_set(ggplot2::theme_gray(base_size = 16))
 ```
 
-# Kit de Herramientas del Curso
-
-## Kit de Herramientas del Curso {.smaller}
-
-::::: columns
-::: {.column width="50%"}
-**Aprendizaje**
-
--   Materiales: Sitio web del curso
--   Libro de referencia: [R for Data Science](https://r4ds.hadley.nz/)
--   Datos: Carpeta `data/`
--   Ejercicios prácticos en cada sesión
-:::
-
-::: {.column width="50%"}
-**Haciendo Ciencia de Datos**
-
--   Computación:
-    -   Lenguaje: R
-    -   IDE: RStudio
-    -   Paquetes: tidyverse, sf, janitor
-    -   Documentos: Quarto/RMarkdown
--   Gestión de código:
-    -   Control de versiones: Git
-    -   Colaboración: GitHub
-:::
-:::::
-
-## Objetivos de Aprendizaje {.smaller}
-
-Al final de este curso, serás capaz de...
-
-::: incremental
--   Obtener conocimiento de los datos
--   Obtener conocimiento de los datos, **reproduciblemente**
--   Obtener conocimiento de los datos, reproduciblemente, **usando herramientas modernas de programación**
--   Obtener conocimiento de los datos, reproduciblemente **y colaborativamente**, usando herramientas modernas
--   Obtener conocimiento de los datos, reproduciblemente **(con código documentado y control de versiones)** y colaborativamente
-:::
-
-# R y RStudio
-
-## R y RStudio {.smaller}
-
-::::: columns
-::: {.column width="50%"}
-![](img/r-logo.png){fig-alt="Logo de R" fig-align="center" width="40%"}
-
--   R es un **lenguaje de programación** estadístico de código abierto
--   R es también un entorno para computación estadística y gráficos
--   Es fácilmente extensible con *paquetes*
-:::
-
-::: {.column .fragment width="50%"}
-![](img/rstudio-logo.png){fig-alt="Logo de RStudio" width="40%"}
-
--   RStudio es una interfaz conveniente para R llamada un **IDE** (entorno de desarrollo integrado)
--   RStudio no es un requisito para programar con R, pero es muy comúnmente usado
--   *"Escribo código R en el IDE RStudio"*
-:::
-:::::
-
-## R vs. RStudio
-
-[![](img/r_vs_rstudio.png){fig-alt="A la izquierda: un motor de coche. A la derecha: un tablero de coche. El motor está etiquetado como R. El tablero está etiquetado como RStudio." fig-align="center"}](https://moderndive.com/1-getting-started.html)
-
-::: aside
-Fuente: [Modern Dive](https://moderndive.com/1-getting-started.html).
-:::
-
-## Paquetes de R {.smaller}
-
-::: incremental
--   **Paquetes**: Unidades fundamentales de código R reproducible, incluyendo funciones R reutilizables, documentación y datos de muestra
--   Al 15 de febrero de 2026, hay 23, 178 paquetes R disponibles en **CRAN** (Comprehensive R Archive Network)
--   ¡Trabajaremos con un subconjunto importante de estos!
-:::
-
-## Tour: R + RStudio {.smaller}
-
-::::::: columns
-:::: {.column width="50%"}
-::: demo
-Abre RStudio y exploraremos juntos:
-
--   Panel de Source (código)
--   Panel de Console (consola)
--   Panel de Environment (entorno)
--   Panel de Files/Plots/Help
-:::
-::::
-
-:::: {.column width="50%"}
-![](img/tour-r-rstudio.png){fig-align="center"}
-::::
-:::::::
-
-## Resumen del Tour: R + RStudio
-
-![](img/tour-r-rstudio.png)
-
 # Fundamentos de R
+
+## Valores Atómicos
+
+### Tipos de elementos atomicos
+
+1. Numericos
+  - Enteros - int
+  - Dobles - double
+2. Carcater / Textos - char
+3. Logicos - logical
+4. Factor
 
 ## Valores Atómicos
 
@@ -178,21 +88,6 @@ y
 En RStudio: `Alt + -` (Windows) o `Option + -` (Mac)
 :::
 
-## Vectores
-
-Para almacenar más de un elemento usamos `c()`:
-
-```{r}
-#| echo: true
-# Vector numérico
-x <- c(1, 2, 3, 4, 5)
-x
-
-# Vector de caracteres
-ciudades <- c("Lima", "Cusco", "Arequipa", "Trujillo")
-ciudades
-```
-
 ## Operadores Básicos
 
 ### Secuencia `:`
@@ -209,7 +104,6 @@ ciudades
 #| echo: true
 letters[1:5]
 letters[c(2, 4, 6)]
-ciudades[1]
 ```
 
 ## Operadores Lógicos {.smaller}
@@ -303,13 +197,10 @@ Los data frames son **la estructura más importante** para análisis de datos:
 head(mtcars, 3)
 ```
 
-## Data Frames y Variables {.smaller}
-
-![](img/tidy_data.png)
 
 ## Tibbles
 
-Tibbles son data frames "mejorados" del tidyverse:
+Tibbles son data frames "mejorados" de tidyverse:
 
 ```{r}
 #| echo: true
@@ -331,6 +222,21 @@ list(
 )
 ```
 
+## sf
+
+Los objetos `sf` (**simple features**) son `data.frames` extendidos con características especiales para datos espaciales. Específicamente:
+
+- Estructura jerárquica
+
+```r
+class(objeto_sf)
+# [1] "sf"         "tbl_df"     "tbl"        "data.frame"
+```
+Un objeto sf es:
+
+- Primariamente un data.frame con una columna especial de geometría
+- Tiene la clase adicional "sf" que permite métodos específicos
+
 # Funciones en R
 
 ## ¿Qué son las Funciones?
@@ -349,6 +255,12 @@ haz_eso(a_esto, a_eso, con_aquellos)
 ### Sintaxis
 
 `nombre_funcion(argumento1, argumento2, ...)`
+ `round(x, digits = 3)`
+
+- `round`: nombre de la función
+- `( )`: complemeto de la función
+- `x ; digits = 3`: argumentos de la función
+
 
 ```{r}
 #| echo: true
@@ -372,12 +284,11 @@ help(sum)
 ```
 
 ## Funciones Útiles:
-### Resumen
 
 ```{r}
 #| echo: true
 # Longitud de un vector
-length(ciudades)
+length(letters[1:5])
 
 # Valores únicos
 unique(c(1, 2, 2, 3, 3, 3))
@@ -387,8 +298,6 @@ summary(mtcars$mpg)
 ```
 
 ## Funciones Útiles: 
-
-### Manipulación
 
 ```{r}
 #| echo: true
@@ -402,99 +311,31 @@ seq(from = 0, to = 10, by = 2)
 rep("R", times = 3)
 ```
 
-# Paquetes de R
 
-## Paquetes {.smaller}
-
--   Instalados con `install.packages() - pak::pak()`, **una vez por sistema**:
-
-```{r}
-#| eval: false
-#| echo: true
-install.packages("tidyverse")
-
-library(pak)
-pak::pkg_install("sf")
-```
-
-. . .
-
--   Cargados con `library()`, **una vez por sesión**:
-
-```{r}
-#| eval: false
-#| echo: true
-library(tidyverse)
-library(sf)
-```
-
-
-## tidyverse
-
-::: columns
-::: {.column width="40%"}
-[![](img/tidyverse.png){fig-alt="Logos hexagonales de paquetes tidyverse"}](https://tidyverse.org)
-:::
-
-::: {.column .fragment width="60%"}
-[tidyverse.org](https://www.tidyverse.org/)
-
--   **tidyverse** es una colección de paquetes R diseñados para ciencia de datos
--   Todos comparten una filosofía y gramática común
--   Incluye: dplyr, ggplot2, tidyr, readr, purrr, tibble, stringr, forcats
-:::
-:::
-
-## Paquetes para este curso
-
-```{r}
-#| eval: false
-#| echo: true
-# Tidyverse y manipulación
-install.packages("tidyverse")
-install.packages("janitor")
-install.packages("here")
-
-# Lectura de datos
-install.packages("readxl")
-install.packages("writexl")
-
-# Datos espaciales
-install.packages("sf")
-
-```
-
-# Trabajando con Datos
-
-## Importar Datos
-
-```{r}
-#| eval: false
-#| echo: true
-library(readr)
-
-# CSV
-datos <- read_csv("data/mi_archivo.csv")
-
-# Excel
-library(readxl)
-datos <- read_excel("data/mi_archivo.xlsx")
-```
-
-## Primer Vistazo a los Datos
+## Primer Vistazo a los datos
 
 ```{r}
 #| eval: false
 #| echo: true
 # Ver primeras filas
-head(datos)
+head(iris)
 
 # Ver estructura
-str(datos)
-glimpse(datos)  # tidyverse
+str(iris)
+glimpse(iris)  # tidyverse
 
 # Ver nombres de variables
-names(datos)
+names(mtcars)
+```
+```{r include=FALSE, echo=FALSE}
+nc = st_read(system.file("shape/nc.shp", package="sf"))
+```
+
+```{r}
+#| eval: false
+#| echo: true
+head(nc)
+names(nc)
 ```
 
 ## Ejemplo Práctico {.smaller}
@@ -507,20 +348,21 @@ library(readxl)
 library(janitor)
 
 # Importar datos
-anp <- read_excel("data/areas_naturales_peru.xlsx", skip = 1)
+planes <- read_excel("data/catalogo_planes.xlsx")
 
 # Limpiar nombres
-anp <- anp |> clean_names()
+planes_clean <- planes |> 
+  clean_names()
 
 # Ver estructura
-glimpse(anp)
+glimpse(planes_clean)
 ```
 
 # El Operador Pipe
 
 ## El Pipe `|>`
 
-El operador pipe permite encadenar operaciones:
+El operador `pipe` permite encadenar operaciones:
 
 ```{r}
 #| eval: false
@@ -546,142 +388,42 @@ datos_final <- datos |>
 #| eval: false
 #| echo: true
 # Ver primeras filas después de limpiar nombres
-anp |>
+planes |>
   clean_names() |>
   head()
 
 # Encadenar múltiples operaciones
-anp |>
+planes |>
   clean_names() |>
-  select(categoria, nombre_area, extension_ha) |>
+  select(ubigeo, ambito, estado) |>
   head()
 ```
 
-# Análisis Reproducible
 
 
-## Kit de Herramientas para Reproducibilidad
+## base R | dplyr - tidyverse
 
-::: incremental
--   **Programabilidad** -- Código en lugar de apuntar y hacer clic → R
--   **Programación literaria** -- Código, narrativa y salida en un lugar → Quarto/RMarkdown
--   **Control de versiones** -- Rastrear cambios con mensajes descriptivos → Git/GitHub
-:::
-
-# Git y GitHub
-
-## Git y GitHub {.smaller}
-
-::: columns
-::: {.column .fragment width="50%"}
-![](img/git-logo.png){fig-alt="Logo de Git" fig-align="center" width="150"}
-
--   Git es un sistema de control de versiones
--   Como "Control de cambios" de Word, pero mucho más poderoso
--   No es el único, pero es muy popular
-:::
-
-::: {.column .fragment width="50%"}
-![](img/github-logo.png){fig-alt="Logo de GitHub" fig-align="center" width="150"}
-
--   GitHub es el hogar para proyectos Git en internet
--   Como Dropbox pero mejor
--   Usaremos GitHub para colaboración y compartir código
-:::
-:::
+| base                                             | dplyr  - tidyverse             |
+|--------------------------------------------------|------------------------------- |
+| `df[order(x), , drop = FALSE]`                   | `arrange(df, x)`               |
+| `df[!duplicated(x), , drop = FALSE]`, `unique()` | `distinct(df, x)`              |
+| `df[which(x), , drop = FALSE]`, `subset()`       | `filter(df, x)`                |
+| `df$z <- df$x + df$y`, `transform()`             | `mutate(df, z = x + y)`        |
+| `df[[1]]`, `df$x`                                | `pull(df, 1)`, `pull(df, x)`   |
 
 
-## Flujo de Trabajo con Git/GitHub
+## base R | dplyr - tidyverse
 
-![](img/whole-game-04.png){fig-align="center"}
+| base                                             | dplyr  - tidyverse             |
+|--------------------------------------------------|------------------------------- |
+| `names(df)[names(df) == "x"] <- "y"`             | `rename(df, y = x)`            |
+| `df[union("y", names(df))]`                      | `relocate(df, y)`              |
+| `df[c("x", "y")]`, `subset()`                    | `select(df, x, y)`             |
+| `df[grepl("^x", names(df))]`                     | `select(df, starts_with("x"))` |
+| `mean(df$x)`, `tapply()`, `aggregate()`, `by()`  | `summarise(df, mean(x))`       |
+| `df[c(1, 2, 5), , drop = FALSE]`                 | `slice(df, c(1, 2, 5))`        |
 
-# Quarto
 
-## Quarto para Documentos Reproducibles
-
-::: incremental
--   Reportes completamente reproducibles
--   Cada vez que renderizas, el análisis se ejecuta desde el principio
--   El código va en celdas (chunks)
--   La narrativa va fuera de las celdas
--   Opcional: Editor visual para experiencia similar a Word/Google Docs
-:::
-
-## Ejemplo de Quarto
-
-````markdown
----
-title: "Mi Análisis"
-format: html
----
-
-## Introducción
-
-Este es un análisis de datos de áreas naturales.
-
-```{{r}}
-library(tidyverse)
-anp <- read_csv("data/areas_naturales.csv")
-summary(anp)
-```
-````
-
-# Ejercicios Prácticos
-
-## Ejercicio 1: Vectores y Operaciones {.smaller}
-
-::: task
-1. Crea un vector con los números del 1 al 10
-2. Calcula la media del vector
-3. Crea un vector con nombres de 3 ciudades peruanas
-4. Verifica si "Lima" está en tu vector de ciudades
-:::
-
-## Ejercicio 2: Data Frames {.smaller}
-
-::: task
-1. Examina el data frame `mtcars` (viene incluido en R)
-2. ¿Cuántas filas y columnas tiene?
-3. ¿Cuáles son los nombres de las variables?
-4. Calcula la media de la variable `mpg`
-:::
-
-## Ejercicio 3: Importar Datos {.smaller}
-
-::: task
-1. Instala y carga el paquete `readxl`
-2. Intenta leer un archivo de datos (si tienes uno disponible)
-3. Usa `head()` y `glimpse()` para explorarlo
-4. Limpia los nombres de variables con `janitor::clean_names()`
-:::
-
-# Resumen de la Sesión
-
-## Lo que Aprendimos Hoy
-
-::: incremental
--   ✓ R y RStudio: diferencias y uso
--   ✓ Valores atómicos y tipos de datos
--   ✓ Creación de objetos con `<-`
--   ✓ Estructuras de datos: vectores, matrices, data frames, listas
--   ✓ Funciones y su sintaxis
--   ✓ Paquetes: instalación y carga
--   ✓ El operador pipe `|>`
--   ✓ Conceptos de reproducibilidad
--   ✓ Git/GitHub para control de versiones
-:::
-
-## Próximos Pasos
-
-**Para la próxima sesión:**
-
-::: incremental
--   Practica creando objetos y vectores
--   Instala los paquetes necesarios (tidyverse, readxl, janitor, sf)
--   Familiarízate con RStudio
--   Explora los datos en la carpeta `data/`
--   Lee el capítulo 1 de R for Data Science
-:::
 
 ## Recursos Adicionales
 
@@ -710,5 +452,3 @@ summary(anp)
 
 :::
 :::
-
-. . .

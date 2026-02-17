@@ -38,42 +38,6 @@ library(tidyverse)
 
 # ¡Bienvenidos!<br><br><br> {background-color="#28a87d"}
 
-## Conoce al Instructor {.smaller}
-
-::: {.columns}
-::: {.column width="60%"}
-**Paul Efren Santos Andrade**
-
-Especialista en análisis de datos con R, enfocado en:
-
-- Ciencia de datos aplicada
-- Análisis reproducible
-- Ecosistema Tidyverse
-- Análisis espacial con sf
-
-**Contacto:**
-- Blog: [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
-- Twitter: [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
-- GitHub: [@PaulESantos](https://github.com/PaulESantos)
-:::
-
-::: {.column width="40%"}
-![](img/rlogo.png){fig-align="center" width="60%"}
-:::
-:::
-
-## ¡Conózcanse!
-
-::: question
-Por favor comparte con tus compañeros...
-
--   Tu nombre
--   ¿A qué te dedicas?
--   ¿Has usado R antes?
--   ¿Por qué quieres aprender R?
--   ¿Qué tipo de datos te interesan?
--   ¿Tienes experiencia con programación?
-:::
 
 ## ¿Qué es la Ciencia de Datos?
 
@@ -88,7 +52,7 @@ Por favor comparte con tus compañeros...
 
 ## El Ciclo de la Ciencia de Datos
 
-![](images/01/data-science-cycle.png){fig-alt="Ciclo de la ciencia de datos: Importar, ordenar, transformar, visualizar, modelar, comunicar." fig-align="center"}
+![](img/data-science-cycle.png){fig-alt="Ciclo de la ciencia de datos: Importar, ordenar, transformar, visualizar, modelar, comunicar." fig-align="center"}
 
 # ¿Por qué R?
 
@@ -99,21 +63,21 @@ Por favor comparte con tus compañeros...
 -   **Más de 20,000 paquetes** disponibles
 -   **Comunidad activa y solidaria**
 -   **Excelente para visualización** (ggplot2)
--   **Reproducibilidad** con RMarkdown/Quarto
--   **Integración con datos espaciales** (sf, terra)
+-   **Reproducibilidad** con Quarto/RMarkdown
+-   **Integración con datos espaciales** (sf,)
 :::
 
 ## R + RStudio
 
 ::: {.columns}
 ::: {.column width="50%"}
-![](img/rlogo.png){fig-alt="Logo de R" fig-align="center" width="45%"}
+![](img/r-logo.png){fig-alt="Logo de R" fig-align="center" width="45%"}
 
 El lenguaje de programación
 :::
 
 ::: {.column width="50%"}
-![](img/rstudio.png){fig-alt="Logo de RStudio" fig-align="center" width="45%"}
+img/rstudio-logo.png){fig-alt="Logo de RStudio" fig-align="center" width="45%"}
 
 Un programa para escribir código
 :::
@@ -125,148 +89,108 @@ Un programa para escribir código
 
 Una colección de paquetes para ciencia de datos
 
-# Contenido del Curso
+# Kit de Herramientas del Curso
 
-## Sesión 1: Fundamentos de R
+## Kit de Herramientas del Curso {.smaller}
 
-::: incremental
--   Valores atómicos y tipos de datos
--   Creación de objetos (`<-`)
--   Operadores básicos
--   Estructuras de datos:
-    - Vectores
-    - Matrices
-    - Data frames
-    - Listas
--   Funciones en R
-:::
-
-## Sesión 2: Importar y Revisar Datos
-
-::: incremental
--   Importar desde diferentes formatos:
-    - CSV con `readr`
-    - Excel con `readxl`
-    - Datos espaciales con `sf`
--   Revisar estructura de datos
--   Limpiar nombres con `janitor`
--   Visualizar tipos de datos con `visdat`
--   El operador pipe `|>`
-:::
-
-## Sesión 3: dplyr - Manipulación de Datos
-
-Los verbos principales de dplyr:
-
-::: incremental
--   `select()`: Seleccionar columnas
--   `filter()`: Filtrar filas
--   `mutate()`: Crear/modificar variables
--   `summarise()`: Resumir datos
--   `group_by()`: Agrupar datos
--   `arrange()`: Ordenar datos
-:::
-
-## Sesión 4: tidyr - Organización de Datos
-
-::: incremental
--   Principios de **Tidy Data**
--   `pivot_longer()`: Datos anchos → largos
--   `pivot_wider()`: Datos largos → anchos
--   `separate()` y `unite()`: Dividir y unir columnas
--   Aplicaciones prácticas
-:::
-
-## Sesión 5: Datos Espaciales con sf
-
-::: incremental
--   ¿Qué son datos espaciales?
--   El paquete `sf` (Simple Features)
--   Tipos de geometrías (puntos, líneas, polígonos)
--   Lectura/escritura de formatos espaciales
--   Integración con tidyverse
--   Visualización con `geom_sf()`
--   Operaciones espaciales básicas
-:::
-
-## Ejemplo de Datos Espaciales
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: "|1-2|4-5|7-9|11-13"
-# Cargar paquetes
-library(sf)
-library(tidyverse)
-
-# Leer datos espaciales
-departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
-
-# Visualizar
-ggplot(departamentos) +
-  geom_sf(aes(fill = NOMBDEP))
-
-# Calcular área
-departamentos |>
-  mutate(area_km2 = st_area(geometry) / 1e6)
-```
-
-# Datos del Curso
-
-## Datos que Usaremos
-
-::: {.columns}
+::::: columns
 ::: {.column width="50%"}
-### Datos Tabulares
--   `areas_naturales_peru.xlsx`
--   `catalogo_planes.csv`
--   `catalogo_planes.txt`
+**Aprendizaje**
+
+-   Materiales: Sitio web del curso
+-   Libro de referencia: [R for Data Science](https://r4ds.hadley.nz/)
+-   Datos: Carpeta `data/`
+-   Ejercicios prácticos en cada sesión
 :::
 
 ::: {.column width="50%"}
-### Datos Espaciales
--   `DEPARTAMENTO.gpkg`
-    - Polígonos de departamentos
-    - Sistema WGS84 (EPSG:4326)
-    - Atributos: nombres, capitales
+**Haciendo Ciencia de Datos**
+
+-   Computación:
+    -   Lenguaje: R
+    -   IDE: RStudio
+    -   Paquetes: tidyverse, sf, janitor
+    -   Documentos: Quarto/RMarkdown
+-   Gestión de código:
+    -   Control de versiones: Git
+    -   Colaboración: GitHub
 :::
+:::::
+
+## Objetivos de Aprendizaje {.smaller}
+
+Al final de este curso, serás capaz de...
+
+::: incremental
+-   Obtener conocimiento de los datos
+-   Obtener conocimiento de los datos, **reproduciblemente**
+-   Obtener conocimiento de los datos, reproduciblemente, **usando herramientas modernas de programación**
+-   Obtener conocimiento de los datos, reproduciblemente **y colaborativamente**, usando herramientas modernas
+-   Obtener conocimiento de los datos, reproduciblemente **(con código documentado y control de versiones)** y colaborativamente
 :::
 
-## Ejemplo: Áreas Naturales del Perú
+# R y RStudio
 
-Trabajaremos con datos reales de áreas naturales protegidas:
+## R y RStudio {.smaller}
 
-```{r}
-#| eval: false
-#| echo: true
-library(readxl)
-library(janitor)
+::::: columns
+::: {.column width="50%"}
+![](img/r-logo.png){fig-alt="Logo de R" fig-align="center" width="40%"}
 
-anp <- read_excel("data/areas_naturales_peru.xlsx", skip = 1) |>
-  clean_names()
+-   R es un **lenguaje de programación** estadístico de código abierto
+-   R es también un entorno para computación estadística y gráficos
+-   Es fácilmente extensible con *paquetes*
+:::
 
-# Ver estructura
-glimpse(anp)
-```
+::: {.column .fragment width="50%"}
+![](img/rstudio-logo.png){fig-alt="Logo de RStudio" width="40%"}
 
-# Materiales del Curso
+-   RStudio es una interfaz conveniente para R llamada un **IDE** (entorno de desarrollo integrado)
+-   RStudio no es un requisito para programar con R, pero es muy comúnmente usado
+-   *"Escribo código R en el IDE RStudio"*
+:::
+:::::
 
-## Página Web del Curso {.center}
+## R vs. RStudio
 
-Todos los materiales en:
+[![](img/r_vs_rstudio.png){fig-alt="A la izquierda: un motor de coche. A la derecha: un tablero de coche. El motor está etiquetado como R. El tablero está etiquetado como RStudio." fig-align="center"}](https://moderndive.com/1-getting-started.html)
 
-<div style='text-align:center;'>
-<a href="https://introduccion-r.github.io" style='font-family:monospace;font-size:40pt;font-weight:700;'>introduccion-r.github.io</a>
-</div>
+::: aside
+Fuente: [Modern Dive](https://moderndive.com/1-getting-started.html).
+:::
 
-<br>
+## Paquetes de R {.smaller}
 
-Incluye:
+::: incremental
+-   **Paquetes**: Unidades fundamentales de código R reproducible, incluyendo funciones R reutilizables, documentación y datos de muestra
+-   Al 15 de febrero de 2026, hay 23, 178 paquetes R disponibles en **CRAN** (Comprehensive R Archive Network)
+-   ¡Trabajaremos con un subconjunto importante de estos!
+:::
 
--   Diapositivas de cada sesión
--   Ejercicios prácticos
--   Recursos adicionales
--   Datos del curso
+## Tour: R + RStudio {.smaller}
+
+::::::: columns
+:::: {.column width="50%"}
+::: demo
+Abre RStudio y exploraremos juntos:
+
+-   Panel de Source (código)
+-   Panel de Console (consola)
+-   Panel de Environment (entorno)
+-   Panel de Files/Plots/Help
+:::
+::::
+
+:::: {.column width="50%"}
+![](img/tour-r-rstudio.png){fig-align="center"}
+::::
+:::::::
+
+## Resumen del Tour: R + RStudio
+
+![](img/tour-r-rstudio.png)
+
+
 
 ## Libros de Referencia
 
@@ -352,159 +276,68 @@ install.packages("tm")
 install.packages("remotes")
 remotes::install_github("johncassil/stringr.plus")
 ```
+# Paquetes de R
 
-## Requisitos Especiales para sf
+## Paquetes {.smaller}
 
-### macOS
-```bash
-brew install gdal
-```
-
-### Linux (Ubuntu/Debian)
-```bash
-sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev
-```
-
-### Windows
-Rtools 45 ya incluye todo lo necesario ✓
-
-## Verificar Instalación
+-   Instalados con `install.packages() - pak::pak()`, **una vez por sistema**:
 
 ```{r}
-#| label: verify-install
 #| eval: false
 #| echo: true
-# Verificar tidyverse
-library(tidyverse)
+install.packages("tidyverse")
 
-# Verificar sf
-library(sf)
-st_point(c(0, 0))  # Debe funcionar sin errores
-
-# Verificar vegan (para ejemplos)
-library(vegan)
-data("BCI")
+library(pak)
+pak::pkg_install("sf")
 ```
-
-# Dinámica del Curso
-
-## Metodología
-
-::: incremental
--   **Clases interactivas** con ejemplos en vivo
--   **Ejercicios prácticos** al final de cada sesión
--   **Datos reales** del Perú
--   **Aprender haciendo**
--   **Preguntas en cualquier momento**
-:::
-
-## Estrategia de Aprendizaje
-
-::: incremental
--   **Practica el código** - no solo leas
--   **Experimenta** - cambia valores y observa qué pasa
--   **Comete errores** - son parte del aprendizaje
--   **Consulta la documentación** - usa `?nombre_funcion`
--   **Busca ayuda** - Stack Overflow, comunidad R
-:::
-
-## Recursos de Ayuda
-
-::: incremental
--   **Durante el curso**: Pregunta directamente
--   **Documentación de R**: `?funcion` o `help(funcion)`
--   **Hojas de referencia**: [posit.co/resources/cheatsheets](https://posit.co/resources/cheatsheets/)
--   **Stack Overflow**: [stackoverflow.com/questions/tagged/r](https://stackoverflow.com/questions/tagged/r)
--   **RStudio Community**: [community.rstudio.com](https://community.rstudio.com/)
-:::
-
-## Consejos para el Éxito
-
-::: incremental
-1.  **Escribe el código tú mismo** - no copies y pegues
-2.  **Lee los mensajes de error** - son informativos
-3.  **Usa RStudio Projects** - mantén organizado
-4.  **Comenta tu código** - tu yo futuro te lo agradecerá
-5.  **Practica regularmente** - la constancia es clave
-6.  **Únete a la comunidad** - #rstats en Twitter
-:::
-
-# Objetivos del Curso
-
-## Al finalizar este curso podrás:
-
-::: incremental
--   ✓ Escribir código R básico de forma legible
--   ✓ Importar datos desde múltiples formatos
--   ✓ Limpiar y transformar datos con dplyr
--   ✓ Organizar datos con tidyr
--   ✓ Trabajar con datos espaciales usando sf
--   ✓ Crear visualizaciones con ggplot2
--   ✓ Integrar análisis espacial con tidyverse
--   ✓ Crear análisis reproducibles
-:::
-
-## ¿Qué NO cubriremos?
-
-Este es un curso introductorio, NO cubriremos:
-
-::: incremental
--   Modelado estadístico avanzado
--   Machine learning
--   Shiny (aplicaciones web)
--   Análisis de series temporales avanzadas
--   Programación avanzada en R
-:::
 
 . . .
 
-¡Pero tendrás las bases para aprender todo esto después!
+-   Cargados con `library()`, **una vez por sesión**:
 
-# Preguntas Frecuentes
+```{r}
+#| eval: false
+#| echo: true
+library(tidyverse)
+library(sf)
+```
 
-## "Nunca he programado antes, ¿podré seguir el curso?"
 
-::: fragment
-**¡Sí!** Este curso está diseñado para principiantes.
+## tidyverse
 
--   Empezamos desde cero
--   Explicamos cada concepto paso a paso
--   Muchos ejemplos prácticos
+::: columns
+::: {.column width="40%"}
+[![](img/tidyverse.png){fig-alt="Logos hexagonales de paquetes tidyverse"}](https://tidyverse.org)
 :::
 
-## "¿Necesito conocer estadística?"
+::: {.column .fragment width="60%"}
+[tidyverse.org](https://www.tidyverse.org/)
 
-::: fragment
-**No es obligatorio** para este curso introductorio.
-
--   Nos enfocamos en manipulación de datos
--   Conceptos estadísticos básicos se explican cuando aparecen
--   El énfasis está en programación y ciencia de datos
+-   **tidyverse** es una colección de paquetes R diseñados para ciencia de datos
+-   Todos comparten una filosofía y gramática común
+-   Incluye: dplyr, ggplot2, tidyr, readr, purrr, tibble, stringr, forcats
+:::
 :::
 
-## "¿Cuánto tiempo debo dedicar a practicar?"
+## Paquetes para este curso
 
-::: fragment
-**Recomendación:**
+```{r}
+#| eval: false
+#| echo: true
+# Tidyverse y manipulación
+install.packages("tidyverse")
+install.packages("janitor")
+install.packages("here")
 
--   Durante el curso: Participación activa
--   Después de cada sesión: 1-2 horas practicando
--   Total: Al menos 10-15 horas de práctica adicional
--   ¡Entre más practiques, mejor!
-:::
+# Lectura de datos
+install.packages("readxl")
+install.packages("writexl")
 
-## "¿Qué hago si me quedo atascado?"
+# Datos espaciales
+install.packages("sf")
 
-::: fragment
-**Estrategias:**
+```
 
-1.  Lee el mensaje de error completo
-2.  Busca el error en Google
-3.  Consulta la documentación (`?funcion`)
-4.  Pregunta en Stack Overflow
-5.  Revisa los ejemplos del curso
-6.  Contacta al instructor
-:::
 
 # ¡Comencemos!
 
@@ -544,18 +377,74 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
   labs(title = "Mi primer gráfico en R")
 ```
 
-## Agenda de Hoy
+# Análisis Reproducible
+
+
+## Kit de Herramientas para Reproducibilidad
 
 ::: incremental
-1.  ✓ Bienvenida e introducción
-2.  → Fundamentos de R y RStudio
-3.  → Valores y objetos
-4.  → Estructuras de datos
-5.  → Funciones básicas
-6.  → Ejercicios prácticos
+-   **Programabilidad** -- Código en lugar de apuntar y hacer clic → R
+-   **Programación literaria** -- Código, narrativa y salida en un lugar → Quarto/RMarkdown
+-   **Control de versiones** -- Rastrear cambios con mensajes descriptivos → Git/GitHub
 :::
 
-# ¡Gracias por su atención!
+# Git y GitHub
+
+## Git y GitHub {.smaller}
+
+::: columns
+::: {.column .fragment width="50%"}
+![](img/git-logo.png){fig-alt="Logo de Git" fig-align="center" width="150"}
+
+-   Git es un sistema de control de versiones
+-   Como "Control de cambios" de Word, pero mucho más poderoso
+-   No es el único, pero es muy popular
+:::
+
+::: {.column .fragment width="50%"}
+![](img/github-logo.png){fig-alt="Logo de GitHub" fig-align="center" width="150"}
+
+-   GitHub es el hogar para proyectos Git en internet
+-   Como Dropbox pero mejor
+-   Usaremos GitHub para colaboración y compartir código
+:::
+:::
+
+
+## Flujo de Trabajo con Git/GitHub
+
+![](img/whole-game-04.png){fig-align="center"}
+
+# Quarto
+
+## Quarto para Documentos Reproducibles
+
+::: incremental
+-   Reportes completamente reproducibles
+-   Cada vez que renderizas, el análisis se ejecuta desde el principio
+-   El código va en celdas (chunks)
+-   La narrativa va fuera de las celdas
+-   Opcional: Editor visual para experiencia similar a Word/Google Docs
+:::
+
+## Ejemplo de Quarto
+
+````markdown
+---
+title: "Mi Análisis"
+format: html
+---
+
+## Introducción
+
+Este es un análisis de datos de áreas naturales.
+
+```{{r}}
+library(tidyverse)
+anp <- read_csv("data/areas_naturales.csv")
+summary(anp)
+```
+````
 
 ## Contacto
 
@@ -573,7 +462,7 @@ ggplot(mtcars, aes(x = mpg, y = hp)) +
 :::
 
 ::: {.column width="50%"}
-![](img/rlogo.png){fig-align="center" width="60%"}
+![](img/DSC_0140.JPG){fig-align="center" width="60%" style="border-radius: 50% / 35%; object-fit: cover;"}
 :::
 :::
 

@@ -3658,14 +3658,14 @@
     "href": "materials/00-bienvenida-intro-r.html#r-es-poderoso-y-popular",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "R es Poderoso y Popular",
-    "text": "R es Poderoso y Popular\n\nGratuito y de código abierto\nMás de 20,000 paquetes disponibles\nComunidad activa y solidaria\nExcelente para visualización (ggplot2)\nReproducibilidad con RMarkdown/Quarto\nIntegración con datos espaciales (sf, terra)"
+    "text": "R es Poderoso y Popular\n\nGratuito y de código abierto\nMás de 20,000 paquetes disponibles\nComunidad activa y solidaria\nExcelente para visualización (ggplot2)\nReproducibilidad con Quarto/RMarkdown\nIntegración con datos espaciales (sf,)"
   },
   {
     "objectID": "materials/00-bienvenida-intro-r.html#r-rstudio",
     "href": "materials/00-bienvenida-intro-r.html#r-rstudio",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "R + RStudio",
-    "text": "R + RStudio\n\n\n\n\n\n\n\nEl lenguaje de programación\n\n\n\n\n\n\nUn programa para escribir código"
+    "text": "R + RStudio\n\n\n\n\n\n\n\nEl lenguaje de programación\n\nimg/rstudio-logo.png){fig-alt=“Logo de RStudio” fig-align=“center” width=“45%”}\nUn programa para escribir código"
   },
   {
     "objectID": "materials/00-bienvenida-intro-r.html#el-ecosistema-tidyverse",
@@ -4665,22 +4665,22 @@
     "objectID": "materials/02-importing-data.html#pregunta-rápida",
     "href": "materials/02-importing-data.html#pregunta-rápida",
     "title": "Introducción a la Programación con R - Tidyverse",
-    "section": "",
-    "text": "¿Cuál es la diferencia entre instalar y cargar un paquete?\n\n. . .\n\n\nInstalar: install.packages(\"tidyverse\") - Una vez por sistema\nCargar: library(tidyverse) - Una vez por sesión\nAnalogía: Comprar ingredientes vs. sacarlos de la despensa"
+    "section": "Pregunta Rápida",
+    "text": "Pregunta Rápida\n\n¿Cuál es la diferencia entre instalar y cargar un paquete?\n\n\n\nInstalar: install.packages(\"tidyverse\") - Una vez por sistema\nCargar: library(tidyverse) - Una vez por sesión\nAnalogía: Comprar ingredientes vs. sacarlos de la despensa"
   },
   {
     "objectID": "materials/02-importing-data.html#lo-que-aprenderemos",
     "href": "materials/02-importing-data.html#lo-que-aprenderemos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Lo que Aprenderemos",
-    "text": "Lo que Aprenderemos\n\n\nLeer datos desde archivos (CSV, Excel, texto)\nEntender la estructura de archivos rectangulares\nManejar valores faltantes y tipos de datos\nLimpiar nombres de variables\nRevisar y explorar datos importados\nTrabajar con múltiples archivos\nGuardar datos procesados"
+    "text": "Lo que Aprenderemos\n\nLeer datos desde archivos (CSV, Excel, texto)\nEntender la estructura de archivos rectangulares\nManejar valores faltantes y tipos de datos\nLimpiar nombres de variables\nRevisar y explorar datos importados\nTrabajar con múltiples archivos\nGuardar datos procesados"
   },
   {
     "objectID": "materials/02-importing-data.html#introducción",
     "href": "materials/02-importing-data.html#introducción",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Introducción",
-    "text": "Introducción\n\n\nTrabajar con datos de paquetes R es útil para aprender\nPero eventualmente querrás usar tus propios datos\nNos enfocaremos en archivos de texto rectangulares\nEl formato más común: CSV (Comma-Separated Values)"
+    "text": "Introducción\n\nTrabajar con datos de paquetes R es útil para aprender\nPero eventualmente querrás usar tus propios datos\nNos enfocaremos en archivos de texto rectangulares\nEl formato más común: CSV (Comma-Separated Values)"
   },
   {
     "objectID": "materials/02-importing-data.html#qué-es-un-archivo-csv",
@@ -4708,21 +4708,21 @@
     "href": "materials/02-importing-data.html#leer-un-archivo-csv",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Leer un Archivo CSV",
-    "text": "Leer un Archivo CSV\n\n# Sintaxis básica\ndatos &lt;- read_csv(\"ruta/al/archivo.csv\")\n\n# Ejemplo con datos de estudiantes\nstudents &lt;- read_csv(\"data/students.csv\")\n\n. . .\nread_csv() imprime información útil:\n\nNúmero de filas y columnas\nDelimitador usado\nEspecificación de columnas (tipos de datos)"
+    "text": "Leer un Archivo CSV\n\n# Sintaxis básica\ndatos &lt;- read_csv(\"ruta/al/archivo.csv\")\n\n# Ejemplo con datos de estudiantes\nstudents &lt;- read_csv(\"data/students.csv\")\n\n\nread_csv() imprime información útil:\n\nNúmero de filas y columnas\nDelimitador usado\nEspecificación de columnas (tipos de datos)"
   },
   {
     "objectID": "materials/02-importing-data.html#mensaje-de-read_csv",
     "href": "materials/02-importing-data.html#mensaje-de-read_csv",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Mensaje de read_csv()",
-    "text": "Mensaje de read_csv()\nRows: 6 Columns: 5\n── Column specification ─────────────────────────────────\nDelimiter: \",\"\nchr (4): Full Name, favourite.food, mealPlan, AGE\ndbl (1): Student ID\n\nℹ Use `spec()` to retrieve the full column specification\nℹ Specify column types or set `show_col_types = FALSE`\n\n\n\n\n\n\nNote\n\n\n\nEste mensaje es importante y útil. Te dice cómo interpretó readr tu archivo."
+    "text": "Mensaje de read_csv()\nRows: 6 Columns: 5\n── Column specification ─────────────────────────────────\nDelimiter: \",\"\nchr (4): Full Name, favourite.food, mealPlan, AGE\ndbl (1): Student ID\n\nℹ Use `spec()` to retrieve the full column specification\nℹ Specify column types or set `show_col_types = FALSE`\n\n\n\n\n\n\nNote\n\n\nEste mensaje es importante y útil. Te dice cómo interpretó readr tu archivo."
   },
   {
     "objectID": "materials/02-importing-data.html#rutas-de-archivos",
     "href": "materials/02-importing-data.html#rutas-de-archivos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Rutas de Archivos",
-    "text": "Rutas de Archivos\nDos formas de especificar la ubicación del archivo:\n\n# 1. Ruta relativa (dentro de tu proyecto)\nstudents &lt;- read_csv(\"data/students.csv\")\n\n# 2. URL directa\nstudents &lt;- read_csv(\"https://pos.it/r4ds-students-csv\")\n\n\n\n\n\n\n\nTip\n\n\n\nLas rutas relativas son más reproducibles. Usa RStudio Projects para organizarte."
+    "text": "Rutas de Archivos\nDos formas de especificar la ubicación del archivo:\n\n# 1. Ruta relativa (dentro de tu proyecto)\nstudents &lt;- read_csv(\"data/students.csv\")\n\n# 2. URL directa\nstudents &lt;- read_csv(\"https://pos.it/r4ds-students-csv\")\n\n\n\n\n\n\n\nTip\n\n\nLas rutas relativas son más reproducibles. Usa RStudio Projects para organizarte."
   },
   {
     "objectID": "materials/02-importing-data.html#primer-vistazo-a-los-datos",
@@ -4736,21 +4736,21 @@
     "href": "materials/02-importing-data.html#problemas-comunes-valores-faltantes",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Problemas Comunes: Valores Faltantes",
-    "text": "Problemas Comunes: Valores Faltantes\n\n¿Ves algún problema en los datos de estudiantes?\n\n. . .\n\nFila 3: favourite.food tiene \"N/A\" (texto) en lugar de NA (valor faltante)\nFila 5: AGE tiene \"five\" (texto) en lugar de 5 (número)"
+    "text": "Problemas Comunes: Valores Faltantes\n\n¿Ves algún problema en los datos de estudiantes?\n\n\n\nFila 3: favourite.food tiene \"N/A\" (texto) en lugar de NA (valor faltante)\nFila 5: AGE tiene \"five\" (texto) en lugar de 5 (número)"
   },
   {
     "objectID": "materials/02-importing-data.html#solución-argumento-na",
     "href": "materials/02-importing-data.html#solución-argumento-na",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Solución: Argumento na",
-    "text": "Solución: Argumento na\nEspecifica qué cadenas deben interpretarse como valores faltantes:\n\nstudents &lt;- read_csv(\n  \"data/students.csv\",\n  na = c(\"N/A\", \"\")  # Reconocer \"N/A\" y \"\" como NA\n)\n\n. . .\nAhora favourite.food tiene un verdadero NA:\n3            3 Jayendra Lyne    &lt;NA&gt;               Breakfast and lunch 7"
+    "text": "Solución: Argumento na\nEspecifica qué cadenas deben interpretarse como valores faltantes:\n\nstudents &lt;- read_csv(\n  \"data/students.csv\",\n  na = c(\"N/A\", \"\")  # Reconocer \"N/A\" y \"\" como NA\n)\n\n\nAhora favourite.food tiene un verdadero NA:\n3            3 Jayendra Lyne    &lt;NA&gt;               Breakfast and lunch 7"
   },
   {
     "objectID": "materials/02-importing-data.html#problemas-comunes-nombres-de-columnas",
     "href": "materials/02-importing-data.html#problemas-comunes-nombres-de-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Problemas Comunes: Nombres de Columnas",
-    "text": "Problemas Comunes: Nombres de Columnas\nLos nombres de columnas tienen espacios:\n\nStudent ID\nFull Name\n\n. . .\nEn R, estos son nombres no sintácticos y necesitan backticks:\n\nstudents$`Student ID`  # Necesita backticks\nstudents$Student ID    # ❌ Error!"
+    "text": "Problemas Comunes: Nombres de Columnas\nLos nombres de columnas tienen espacios:\n\nStudent ID\nFull Name\n\n\nEn R, estos son nombres no sintácticos y necesitan backticks:\n\nstudents$`Student ID`  # Necesita backticks\nstudents$Student ID    # ❌ Error!"
   },
   {
     "objectID": "materials/02-importing-data.html#solución-1-rename",
@@ -4764,28 +4764,28 @@
     "href": "materials/02-importing-data.html#solución-2-janitorclean_names",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Solución 2: janitor::clean_names()",
-    "text": "Solución 2: janitor::clean_names()\nLa forma más fácil y recomendada:\n\nlibrary(janitor)\n\nstudents |&gt;\n  clean_names()\n\n# A tibble: 6 × 5\n  student_id full_name        favourite_food     meal_plan           age\n       &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;\n1          1 Sunil Huffmann   Strawberry yoghurt Lunch only          4\n2          2 Barclay Lynn     French fries       Lunch only          5\n\n\n\n\n\n\nTip\n\n\n\nclean_names() convierte todos los nombres a snake_case automáticamente."
+    "text": "Solución 2: janitor::clean_names()\nLa forma más fácil y recomendada:\n\nlibrary(janitor)\n\nstudents |&gt;\n  clean_names()\n\n# A tibble: 6 × 5\n  student_id full_name        favourite_food     meal_plan           age\n       &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;\n1          1 Sunil Huffmann   Strawberry yoghurt Lunch only          4\n2          2 Barclay Lynn     French fries       Lunch only          5\n\n\n\n\n\n\nTip\n\n\nclean_names() convierte todos los nombres a snake_case automáticamente."
   },
   {
     "objectID": "materials/02-importing-data.html#problemas-comunes-tipos-de-datos",
     "href": "materials/02-importing-data.html#problemas-comunes-tipos-de-datos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Problemas Comunes: Tipos de Datos",
-    "text": "Problemas Comunes: Tipos de Datos\nLa columna AGE es character (&lt;chr&gt;) pero debería ser numérica:\n\nstudents |&gt;\n  clean_names() |&gt;\n  glimpse()\n\n$ age           &lt;chr&gt; \"4\", \"5\", \"7\", NA, \"five\", \"6\"\n\n¿Por qué AGE es character?\n\n. . .\nPorque tiene \"five\" (texto) mezclado con números."
+    "text": "Problemas Comunes: Tipos de Datos\nLa columna AGE es character (&lt;chr&gt;) pero debería ser numérica:\n\nstudents |&gt;\n  clean_names() |&gt;\n  glimpse()\n\n$ age           &lt;chr&gt; \"4\", \"5\", \"7\", NA, \"five\", \"6\"\n\n¿Por qué AGE es character?\n\n\nPorque tiene \"five\" (texto) mezclado con números."
   },
   {
     "objectID": "materials/02-importing-data.html#solución-limpiar-y-convertir",
     "href": "materials/02-importing-data.html#solución-limpiar-y-convertir",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Solución: Limpiar y Convertir",
-    "text": "Solución: Limpiar y Convertir\n\nstudents &lt;- students |&gt;\n  clean_names() |&gt;\n  mutate(\n    age = parse_number(if_else(age == \"five\", \"5\", age))\n  )\n\n. . .\nQué hace este código:\n\nif_else(): Si age es \"five\", cámbialo a \"5\", si no déjalo igual\nparse_number(): Convierte texto a número"
+    "text": "Solución: Limpiar y Convertir\n\nstudents &lt;- students |&gt;\n  clean_names() |&gt;\n  mutate(\n    age = parse_number(if_else(age == \"five\", \"5\", age))\n  )\n\n\nQué hace este código:\n\nif_else(): Si age es \"five\", cámbialo a \"5\", si no déjalo igual\nparse_number(): Convierte texto a número"
   },
   {
     "objectID": "materials/02-importing-data.html#variables-categóricas-factores",
     "href": "materials/02-importing-data.html#variables-categóricas-factores",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Variables Categóricas: Factores",
-    "text": "Variables Categóricas: Factores\nmeal_plan debería ser un factor (variable categórica):\n\nstudents &lt;- students |&gt;\n  clean_names() |&gt;\n  mutate(\n    meal_plan = factor(meal_plan)\n  )\n\n. . .\nAhora meal_plan es &lt;fct&gt; en lugar de &lt;chr&gt;:\n$ meal_plan     &lt;fct&gt; Lunch only, Lunch only, Breakfast and lunch"
+    "text": "Variables Categóricas: Factores\nmeal_plan debería ser un factor (variable categórica):\n\nstudents &lt;- students |&gt;\n  clean_names() |&gt;\n  mutate(\n    meal_plan = factor(meal_plan)\n  )\n\n\nAhora meal_plan es &lt;fct&gt; en lugar de &lt;chr&gt;:\n$ meal_plan     &lt;fct&gt; Lunch only, Lunch only, Breakfast and lunch"
   },
   {
     "objectID": "materials/02-importing-data.html#pipeline-completo-de-limpieza",
@@ -4855,7 +4855,7 @@
     "href": "materials/02-importing-data.html#adivinanza-de-tipos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Adivinanza de Tipos",
-    "text": "Adivinanza de Tipos\nreadr intenta adivinar el tipo de cada columna:\n\n\n¿Solo TRUE/FALSE? → lógico\n¿Solo números? → numérico\n¿Cumple estándar ISO8601? → fecha/fecha-hora\nSi no → character\n\n\n. . .\nreadr revisa las primeras 1,000 filas para decidir."
+    "text": "Adivinanza de Tipos\nreadr intenta adivinar el tipo de cada columna:\n\n¿Solo TRUE/FALSE? → lógico\n¿Solo números? → numérico\n¿Cumple estándar ISO8601? → fecha/fecha-hora\nSi no → character\n\n\nreadr revisa las primeras 1,000 filas para decidir."
   },
   {
     "objectID": "materials/02-importing-data.html#ejemplo-de-adivinanza",
@@ -4876,7 +4876,7 @@
     "href": "materials/02-importing-data.html#solución-especificar-tipo",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Solución: Especificar Tipo",
-    "text": "Solución: Especificar Tipo\n\ndf &lt;- read_csv(\n  simple_csv,\n  col_types = list(x = col_double())\n)\n\n. . .\nreadr reporta un problema. Usa problems() para ver detalles:\n\nproblems(df)\n\n# A tibble: 1 × 5\n    row   col expected actual file\n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;\n1     3     1 a double .      /tmp/..."
+    "text": "Solución: Especificar Tipo\n\ndf &lt;- read_csv(\n  simple_csv,\n  col_types = list(x = col_double())\n)\n\n\nreadr reporta un problema. Usa problems() para ver detalles:\n\nproblems(df)\n\n# A tibble: 1 × 5\n    row   col expected actual file\n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;\n1     3     1 a double .      /tmp/..."
   },
   {
     "objectID": "materials/02-importing-data.html#solución-final-especificar-na",
@@ -4932,21 +4932,21 @@
     "href": "materials/02-importing-data.html#escribir-a-csv",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Escribir a CSV",
-    "text": "Escribir a CSV\n\n# Guardar data frame como CSV\nwrite_csv(students, \"students-clean.csv\")\n\n. . .\nProblema: Se pierden los tipos de datos (factores, etc.)\n\n# meal_plan era factor, ahora es character\nstudents_leido &lt;- read_csv(\"students-clean.csv\")"
+    "text": "Escribir a CSV\n\n# Guardar data frame como CSV\nwrite_csv(students, \"students-clean.csv\")\n\n\nProblema: Se pierden los tipos de datos (factores, etc.)\n\n# meal_plan era factor, ahora es character\nstudents_leido &lt;- read_csv(\"students-clean.csv\")"
   },
   {
     "objectID": "materials/02-importing-data.html#solución-1-rds-formato-r",
     "href": "materials/02-importing-data.html#solución-1-rds-formato-r",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Solución 1: RDS (Formato R)",
-    "text": "Solución 1: RDS (Formato R)\n\n# Guardar en formato R\nwrite_rds(students, \"students.rds\")\n\n# Leer - mantiene todos los tipos\nstudents &lt;- read_rds(\"students.rds\")\n\n\n\n\n\n\n\nTip\n\n\n\nRDS preserva exactamente el objeto R, incluyendo tipos de datos."
+    "text": "Solución 1: RDS (Formato R)\n\n# Guardar en formato R\nwrite_rds(students, \"students.rds\")\n\n# Leer - mantiene todos los tipos\nstudents &lt;- read_rds(\"students.rds\")\n\n\n\n\n\n\n\nTip\n\n\nRDS preserva exactamente el objeto R, incluyendo tipos de datos."
   },
   {
     "objectID": "materials/02-importing-data.html#solución-2-parquet-recomendado",
     "href": "materials/02-importing-data.html#solución-2-parquet-recomendado",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Solución 2: Parquet (Recomendado)",
-    "text": "Solución 2: Parquet (Recomendado)\n\nlibrary(arrow)\n\n# Guardar en formato Parquet\nwrite_parquet(students, \"students.parquet\")\n\n# Leer\nstudents &lt;- read_parquet(\"students.parquet\")\n\n\n\n\n\n\n\nTip\n\n\n\nParquet es más rápido que RDS y compatible con otros lenguajes."
+    "text": "Solución 2: Parquet (Recomendado)\n\nlibrary(arrow)\n\n# Guardar en formato Parquet\nwrite_parquet(students, \"students.parquet\")\n\n# Leer\nstudents &lt;- read_parquet(\"students.parquet\")\n\n\n\n\n\n\n\nTip\n\n\nParquet es más rápido que RDS y compatible con otros lenguajes."
   },
   {
     "objectID": "materials/02-importing-data.html#comparación-de-formatos",
@@ -4967,7 +4967,7 @@
     "href": "materials/02-importing-data.html#tribble-por-filas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "tribble(): Por Filas",
-    "text": "tribble(): Por Filas\nMás legible para entrada manual:\n\ntribble(\n  ~x, ~y, ~z,\n  #--|--|----\n  1,  \"h\", 0.08,\n  2,  \"m\", 0.83,\n  5,  \"g\", 0.60\n)\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 h      0.08\n2     2 m      0.83\n3     5 g      0.6 \n\n\n\n\n\n\n\n\nTip\n\n\n\n~ indica nombres de columnas. Las comas separan valores."
+    "text": "tribble(): Por Filas\nMás legible para entrada manual:\n\ntribble(\n  ~x, ~y, ~z,\n  #--|--|----\n  1,  \"h\", 0.08,\n  2,  \"m\", 0.83,\n  5,  \"g\", 0.60\n)\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 h      0.08\n2     2 m      0.83\n3     5 g      0.6 \n\n\n\n\n\n\n\n\nTip\n\n\n~ indica nombres de columnas. Las comas separan valores."
   },
   {
     "objectID": "materials/02-importing-data.html#ejercicio-1-importar-y-limpiar",
@@ -5002,7 +5002,7 @@
     "href": "materials/02-importing-data.html#lo-que-aprendimos-hoy",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Lo que Aprendimos Hoy",
-    "text": "Lo que Aprendimos Hoy\n\n\n✓ Leer archivos CSV con read_csv()\n✓ Trabajar con hojas de cálculo Excel (readxl)\n✓ Importar datos espaciales con sf\n✓ Manejar valores faltantes con el argumento na\n✓ Limpiar nombres de columnas con janitor::clean_names()\n✓ Especificar y corregir tipos de datos\n✓ Leer múltiples archivos/hojas a la vez\n✓ Guardar datos en diferentes formatos\n✓ Entender sistemas de coordenadas (CRS)"
+    "text": "Lo que Aprendimos Hoy\n\n✓ Leer archivos CSV con read_csv()\n✓ Trabajar con hojas de cálculo Excel (readxl)\n✓ Importar datos espaciales con sf\n✓ Manejar valores faltantes con el argumento na\n✓ Limpiar nombres de columnas con janitor::clean_names()\n✓ Especificar y corregir tipos de datos\n✓ Leer múltiples archivos/hojas a la vez\n✓ Guardar datos en diferentes formatos\n✓ Entender sistemas de coordenadas (CRS)"
   },
   {
     "objectID": "materials/02-importing-data.html#funciones-clave",
@@ -5023,7 +5023,7 @@
     "href": "materials/02-importing-data.html#buenas-prácticas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Buenas Prácticas",
-    "text": "Buenas Prácticas\n\n\nSiempre revisa los datos después de importar (glimpse(), head())\nEspecifica valores NA explícitamente\nLimpia nombres inmediatamente con clean_names()\nDocumenta qué archivos importaste y por qué\nGuarda versiones limpias en formatos que preserven tipos\nUsa rutas relativas dentro de proyectos"
+    "text": "Buenas Prácticas\n\nSiempre revisa los datos después de importar (glimpse(), head())\nEspecifica valores NA explícitamente\nLimpia nombres inmediatamente con clean_names()\nDocumenta qué archivos importaste y por qué\nGuarda versiones limpias en formatos que preserven tipos\nUsa rutas relativas dentro de proyectos"
   },
   {
     "objectID": "materials/02-importing-data.html#errores-comunes-y-soluciones",
@@ -5037,7 +5037,7 @@
     "href": "materials/02-importing-data.html#próximos-pasos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Próximos Pasos",
-    "text": "Próximos Pasos\nPara la próxima sesión:\n\n\nPractica importando diferentes tipos de archivos\nExplora tus propios datos\nFamiliarízate con dplyr para manipulación de datos\nLee el capítulo sobre transformación de datos en R4DS"
+    "text": "Próximos Pasos\nPara la próxima sesión:\n\nPractica importando diferentes tipos de archivos\nExplora tus propios datos\nFamiliarízate con dplyr para manipulación de datos\nLee el capítulo sobre transformación de datos en R4DS"
   },
   {
     "objectID": "materials/02-importing-data.html#recursos-adicionales",
@@ -5051,21 +5051,21 @@
     "href": "materials/02-importing-data.html#contacto-y-preguntas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Contacto y Preguntas",
-    "text": "Contacto y Preguntas\n\n\nPaul Efren Santos Andrade\n🌐 paulefrensa.rbind.io\n🐦 @PaulEfrenSantos\n💻 github.com/PaulESantos\n\n\n\n\n\n\n\n\n. . .\n\nNos vemos en la próxima sesión: dplyr - Manipulación de Datos"
+    "text": "Contacto y Preguntas\n\n\nPaul Efren Santos Andrade\n🌐 paulefrensa.rbind.io\n🐦 @PaulEfrenSantos\n💻 github.com/PaulESantos\n\n\n\n\n\n\n\n\nNos vemos en la próxima sesión: dplyr - Manipulación de Datos"
   },
   {
     "objectID": "materials/03-data-manipulation.html#esquema-de-la-sesión",
     "href": "materials/03-data-manipulation.html#esquema-de-la-sesión",
     "title": "Introducción a la Programación con R - Tidyverse",
-    "section": "",
-    "text": "Introducción a dplyr\nOperaciones con filas: filter(), arrange(), distinct()\nOperaciones con columnas: mutate(), select(), rename(), relocate()\nEl operador pipe |&gt;\nAgrupar datos: group_by() y summarise()\nFunciones slice_*\nEjercicios prácticos"
+    "section": "Esquema de la sesión",
+    "text": "Esquema de la sesión\n\nIntroducción a dplyr\nOperaciones con filas: filter(), arrange(), distinct()\nOperaciones con columnas: mutate(), select(), rename(), relocate()\nEl operador pipe |&gt;\nAgrupar datos: group_by() y summarise()\nFunciones slice_*\nEjercicios prácticos"
   },
   {
     "objectID": "materials/03-data-manipulation.html#qué-es-dplyr",
     "href": "materials/03-data-manipulation.html#qué-es-dplyr",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "¿Qué es dplyr?",
-    "text": "¿Qué es dplyr?\n\n\nPaquete del tidyverse para manipulación de datos\nProporciona verbos (funciones) para operaciones comunes\nDiseñado para ser intuitivo y consistente\nFunciona con tibbles y data frames"
+    "text": "¿Qué es dplyr?\n\nPaquete del tidyverse para manipulación de datos\nProporciona verbos (funciones) para operaciones comunes\nDiseñado para ser intuitivo y consistente\nFunciona con tibbles y data frames"
   },
   {
     "objectID": "materials/03-data-manipulation.html#los-verbos-de-dplyr",
@@ -5079,7 +5079,7 @@
     "href": "materials/03-data-manipulation.html#estructura-común",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Estructura común",
-    "text": "Estructura común\nTodos los verbos de dplyr funcionan de manera similar:\n\n\nPrimer argumento: un data frame\nArgumentos siguientes: qué hacer con el data frame\nNombres de variables: sin comillas\nResultado: un nuevo data frame (no modifica el original)\n\n\n. . .\n# Estructura general\nverbo(datos, operacion)"
+    "text": "Estructura común\nTodos los verbos de dplyr funcionan de manera similar:\n\nPrimer argumento: un data frame\nArgumentos siguientes: qué hacer con el data frame\nNombres de variables: sin comillas\nResultado: un nuevo data frame (no modifica el original)\n\n\n# Estructura general\nverbo(datos, operacion)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#cargar-paquetes",
@@ -5093,70 +5093,70 @@
     "href": "materials/03-data-manipulation.html#filter---filtrar-filas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "filter() - Filtrar filas",
-    "text": "filter() - Filtrar filas\nSelecciona filas que cumplen una o más condiciones:\n# Áreas naturales de categoría \"Parque Nacional\"\nfilter(anp, categoria == \"Parque Nacional\")\n. . .\n# Áreas con superficie mayor a 100,000 hectáreas\nfilter(anp, superficie_oficial &gt; 100000)"
+    "text": "filter() - Filtrar filas\nSelecciona filas que cumplen una o más condiciones:\n# Áreas naturales de categoría \"Parque Nacional\"\nfilter(anp, categoria == \"Parque Nacional\")\n\n# Áreas con superficie mayor a 100,000 hectáreas\nfilter(anp, superficie_oficial &gt; 100000)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#operadores-de-comparación",
     "href": "materials/03-data-manipulation.html#operadores-de-comparación",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Operadores de comparación",
-    "text": "Operadores de comparación\n\n\n\nOperador\nSignificado\n\n\n\n\n&gt;\nmayor que\n\n\n&gt;=\nmayor o igual que\n\n\n&lt;\nmenor que\n\n\n&lt;=\nmenor o igual que\n\n\n==\nigual a\n\n\n!=\ndiferente de\n\n\n\n\n\n\n\n\n\n¡Cuidado!\n\n\n\nUsa == para comparar, no ="
+    "text": "Operadores de comparación\n\n\n\nOperador\nSignificado\n\n\n\n\n&gt;\nmayor que\n\n\n&gt;=\nmayor o igual que\n\n\n&lt;\nmenor que\n\n\n&lt;=\nmenor o igual que\n\n\n==\nigual a\n\n\n!=\ndiferente de\n\n\n\n\n\n\n\n\n\n¡Cuidado!\n\n\nUsa == para comparar, no ="
   },
   {
     "objectID": "materials/03-data-manipulation.html#operadores-lógicos",
     "href": "materials/03-data-manipulation.html#operadores-lógicos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Operadores lógicos",
-    "text": "Operadores lógicos\nCombinar múltiples condiciones:\n\n\n\nOperador\nSignificado\n\n\n\n\n&\nY (ambas condiciones verdaderas)\n\n\n|\nO (al menos una condición verdadera)\n\n\n!\nNO (negación)\n\n\n\n. . .\n# Parques Nacionales con más de 100,000 ha\nfilter(anp, categoria == \"Parque Nacional\" & superficie_oficial &gt; 100000)\n. . .\n# Áreas en Cusco o Loreto\nfilter(anp, ubicacion_politica == \"Cusco\" | ubicacion_politica == \"Loreto\")"
+    "text": "Operadores lógicos\nCombinar múltiples condiciones:\n\n\n\nOperador\nSignificado\n\n\n\n\n&\nY (ambas condiciones verdaderas)\n\n\n|\nO (al menos una condición verdadera)\n\n\n!\nNO (negación)\n\n\n\n\n# Parques Nacionales con más de 100,000 ha\nfilter(anp, categoria == \"Parque Nacional\" & superficie_oficial &gt; 100000)\n\n\n# Áreas en Cusco o Loreto\nfilter(anp, ubicacion_politica == \"Cusco\" | ubicacion_politica == \"Loreto\")"
   },
   {
     "objectID": "materials/03-data-manipulation.html#operador-in",
     "href": "materials/03-data-manipulation.html#operador-in",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Operador %in%",
-    "text": "Operador %in%\nPara comparar con múltiples valores:\n# Áreas en varios departamentos (forma larga)\nfilter(anp,\n       ubicacion_politica == \"Cusco\" |\n       ubicacion_politica == \"Loreto\" |\n       ubicacion_politica == \"Madre de Dios\")\n. . .\n# Forma más elegante con %in%\ndepartamentos &lt;- c(\"Cusco\", \"Loreto\", \"Madre de Dios\")\nfilter(anp, ubicacion_politica %in% departamentos)"
+    "text": "Operador %in%\nPara comparar con múltiples valores:\n# Áreas en varios departamentos (forma larga)\nfilter(anp,\n       ubicacion_politica == \"Cusco\" |\n       ubicacion_politica == \"Loreto\" |\n       ubicacion_politica == \"Madre de Dios\")\n\n# Forma más elegante con %in%\ndepartamentos &lt;- c(\"Cusco\", \"Loreto\", \"Madre de Dios\")\nfilter(anp, ubicacion_politica %in% departamentos)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#valores-faltantes-na",
     "href": "materials/03-data-manipulation.html#valores-faltantes-na",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Valores faltantes (NA)",
-    "text": "Valores faltantes (NA)\n# is.na() identifica valores faltantes\nfilter(anp, is.na(superficie_oficial))\n. . .\n# !is.na() identifica valores NO faltantes\nfilter(anp, !is.na(superficie_oficial))\n\n\n\n\n\n\nRecuerda\n\n\n\nNA representa la ausencia de un valor. No uses == NA, usa is.na()"
+    "text": "Valores faltantes (NA)\n# is.na() identifica valores faltantes\nfilter(anp, is.na(superficie_oficial))\n\n# !is.na() identifica valores NO faltantes\nfilter(anp, !is.na(superficie_oficial))\n\n\n\n\n\n\nRecuerda\n\n\nNA representa la ausencia de un valor. No uses == NA, usa is.na()"
   },
   {
     "objectID": "materials/03-data-manipulation.html#arrange---ordenar-filas",
     "href": "materials/03-data-manipulation.html#arrange---ordenar-filas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "arrange() - Ordenar filas",
-    "text": "arrange() - Ordenar filas\nOrdena filas según una o más columnas:\n# Ordenar por superficie (de menor a mayor)\narrange(anp, superficie_oficial)\n. . .\n# Ordenar de mayor a menor con desc()\narrange(anp, desc(superficie_oficial))"
+    "text": "arrange() - Ordenar filas\nOrdena filas según una o más columnas:\n# Ordenar por superficie (de menor a mayor)\narrange(anp, superficie_oficial)\n\n# Ordenar de mayor a menor con desc()\narrange(anp, desc(superficie_oficial))"
   },
   {
     "objectID": "materials/03-data-manipulation.html#ordenar-por-múltiples-columnas",
     "href": "materials/03-data-manipulation.html#ordenar-por-múltiples-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Ordenar por múltiples columnas",
-    "text": "Ordenar por múltiples columnas\n# Primero por categoría, luego por superficie\narrange(anp, categoria, desc(superficie_oficial))\n\n\n\n\n\n\nNote\n\n\n\nLos valores NA siempre se colocan al final, sin importar si usas desc() o no"
+    "text": "Ordenar por múltiples columnas\n# Primero por categoría, luego por superficie\narrange(anp, categoria, desc(superficie_oficial))\n\n\n\n\n\n\nNote\n\n\nLos valores NA siempre se colocan al final, sin importar si usas desc() o no"
   },
   {
     "objectID": "materials/03-data-manipulation.html#distinct---filas-únicas",
     "href": "materials/03-data-manipulation.html#distinct---filas-únicas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "distinct() - Filas únicas",
-    "text": "distinct() - Filas únicas\nEncuentra filas únicas (elimina duplicados):\n# Categorías únicas de áreas naturales\ndistinct(anp, categoria)\n. . .\n# Mantener todas las columnas\ndistinct(anp, categoria, .keep_all = TRUE)"
+    "text": "distinct() - Filas únicas\nEncuentra filas únicas (elimina duplicados):\n# Categorías únicas de áreas naturales\ndistinct(anp, categoria)\n\n# Mantener todas las columnas\ndistinct(anp, categoria, .keep_all = TRUE)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#distinct-vs-count",
     "href": "materials/03-data-manipulation.html#distinct-vs-count",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "distinct() vs count()",
-    "text": "distinct() vs count()\n# distinct() muestra valores únicos\ndistinct(anp, categoria)\n. . .\n# count() cuenta las ocurrencias\ncount(anp, categoria)\n. . .\n# Ordenar por frecuencia\ncount(anp, categoria, sort = TRUE)"
+    "text": "distinct() vs count()\n# distinct() muestra valores únicos\ndistinct(anp, categoria)\n\n# count() cuenta las ocurrencias\ncount(anp, categoria)\n\n\n# Ordenar por frecuencia\ncount(anp, categoria, sort = TRUE)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#mutate---crearmodificar-columnas",
     "href": "materials/03-data-manipulation.html#mutate---crearmodificar-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "mutate() - Crear/modificar columnas",
-    "text": "mutate() - Crear/modificar columnas\nCrea nuevas columnas o modifica existentes:\n# Convertir superficie de hectáreas a km²\nmutate(anp, superficie_km2 = superficie_oficial / 100)\n. . .\n# Crear múltiples columnas\nmutate(anp,\n  superficie_km2 = superficie_oficial / 100,\n  area_grande = superficie_oficial &gt; 100000\n)"
+    "text": "mutate() - Crear/modificar columnas\nCrea nuevas columnas o modifica existentes:\n# Convertir superficie de hectáreas a km²\nmutate(anp, superficie_km2 = superficie_oficial / 100)\n\n# Crear múltiples columnas\nmutate(anp,\n  superficie_km2 = superficie_oficial / 100,\n  area_grande = superficie_oficial &gt; 100000\n)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#operaciones-con-mutate",
@@ -5170,14 +5170,14 @@
     "href": "materials/03-data-manipulation.html#opciones-de-mutate",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Opciones de mutate()",
-    "text": "Opciones de mutate()\n\n\n.before - colocar nuevas columnas antes de otra columna\n.after - colocar nuevas columnas después de otra columna\n.keep - qué columnas mantener\n\n\n. . .\n# Colocar nueva columna al inicio\nmutate(anp,\n  superficie_km2 = superficie_oficial / 100,\n  .before = 1\n)\n. . .\n# Mantener solo columnas nuevas\nmutate(anp,\n  superficie_km2 = superficie_oficial / 100,\n  .keep = \"none\"\n)"
+    "text": "Opciones de mutate()\n\n.before - colocar nuevas columnas antes de otra columna\n.after - colocar nuevas columnas después de otra columna\n.keep - qué columnas mantener\n\n\n# Colocar nueva columna al inicio\nmutate(anp,\n  superficie_km2 = superficie_oficial / 100,\n  .before = 1\n)\n\n\n# Mantener solo columnas nuevas\nmutate(anp,\n  superficie_km2 = superficie_oficial / 100,\n  .keep = \"none\"\n)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#select---seleccionar-columnas",
     "href": "materials/03-data-manipulation.html#select---seleccionar-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "select() - Seleccionar columnas",
-    "text": "select() - Seleccionar columnas\nSelecciona columnas por nombre:\n# Seleccionar columnas específicas\nselect(anp, nombre, categoria, superficie_oficial)\n. . .\n# Seleccionar rango de columnas\nselect(anp, nombre:ubicacion_politica)\n. . .\n# Excluir columnas con -\nselect(anp, -fecha_promulgacion__modificacion)"
+    "text": "select() - Seleccionar columnas\nSelecciona columnas por nombre:\n# Seleccionar columnas específicas\nselect(anp, nombre, categoria, superficie_oficial)\n\n# Seleccionar rango de columnas\nselect(anp, nombre:ubicacion_politica)\n\n\n# Excluir columnas con -\nselect(anp, -fecha_promulgacion__modificacion)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#funciones-auxiliares-de-select",
@@ -5191,42 +5191,42 @@
     "href": "materials/03-data-manipulation.html#ejemplos-de-funciones-auxiliares",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Ejemplos de funciones auxiliares",
-    "text": "Ejemplos de funciones auxiliares\n# Columnas que empiezan con \"superficie\"\nselect(anp, starts_with(\"superficie\"))\n. . .\n# Columnas numéricas\nselect(anp, where(is.numeric))\n. . .\n# Reorganizar: nombre primero, luego todo lo demás\nselect(anp, nombre, everything())"
+    "text": "Ejemplos de funciones auxiliares\n# Columnas que empiezan con \"superficie\"\nselect(anp, starts_with(\"superficie\"))\n\n# Columnas numéricas\nselect(anp, where(is.numeric))\n\n\n# Reorganizar: nombre primero, luego todo lo demás\nselect(anp, nombre, everything())"
   },
   {
     "objectID": "materials/03-data-manipulation.html#rename---renombrar-columnas",
     "href": "materials/03-data-manipulation.html#rename---renombrar-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "rename() - Renombrar columnas",
-    "text": "rename() - Renombrar columnas\n# Sintaxis: nuevo_nombre = nombre_antiguo\nrename(anp,\n  area = nombre,\n  departamento = ubicacion_politica\n)\n\n\n\n\n\n\nAtajo\n\n\n\nTambién puedes renombrar con select():\nselect(anp, area = nombre, categoria)"
+    "text": "rename() - Renombrar columnas\n# Sintaxis: nuevo_nombre = nombre_antiguo\nrename(anp,\n  area = nombre,\n  departamento = ubicacion_politica\n)\n\n\n\n\n\n\nAtajo\n\n\nTambién puedes renombrar con select():\nselect(anp, area = nombre, categoria)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#relocate---reordenar-columnas",
     "href": "materials/03-data-manipulation.html#relocate---reordenar-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "relocate() - Reordenar columnas",
-    "text": "relocate() - Reordenar columnas\nCambia la posición de columnas:\n# Mover columna al inicio\nrelocate(anp, superficie_oficial)\n. . .\n# Mover después de otra columna\nrelocate(anp, superficie_oficial, .after = nombre)\n. . .\n# Mover antes de otra columna\nrelocate(anp, superficie_oficial, .before = categoria)"
+    "text": "relocate() - Reordenar columnas\nCambia la posición de columnas:\n# Mover columna al inicio\nrelocate(anp, superficie_oficial)\n\n# Mover después de otra columna\nrelocate(anp, superficie_oficial, .after = nombre)\n\n\n# Mover antes de otra columna\nrelocate(anp, superficie_oficial, .before = categoria)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#el-pipe",
     "href": "materials/03-data-manipulation.html#el-pipe",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "El pipe |>",
-    "text": "El pipe |&gt;\nEl pipe (tubería) te permite encadenar operaciones:\n\n\nLee el código de izquierda a derecha\nPasa el resultado de una función a la siguiente\nHace el código más legible\nAtajo de teclado: Ctrl + Shift + M (Windows) o Cmd + Shift + M (Mac)"
+    "text": "El pipe |&gt;\nEl pipe (tubería) te permite encadenar operaciones:\n\nLee el código de izquierda a derecha\nPasa el resultado de una función a la siguiente\nHace el código más legible\nAtajo de teclado: Ctrl + Shift + M (Windows) o Cmd + Shift + M (Mac)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#sin-pipe-vs-con-pipe",
     "href": "materials/03-data-manipulation.html#sin-pipe-vs-con-pipe",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Sin pipe vs con pipe",
-    "text": "Sin pipe vs con pipe\nSin pipe (anidado y difícil de leer):\narrange(\n  filter(\n    select(anp, nombre, categoria, superficie_oficial),\n    categoria == \"Parque Nacional\"\n  ),\n  desc(superficie_oficial)\n)\n. . .\nCon pipe (fluido y claro):\nanp |&gt;\n  select(nombre, categoria, superficie_oficial) |&gt;\n  filter(categoria == \"Parque Nacional\") |&gt;\n  arrange(desc(superficie_oficial))"
+    "text": "Sin pipe vs con pipe\nSin pipe (anidado y difícil de leer):\narrange(\n  filter(\n    select(anp, nombre, categoria, superficie_oficial),\n    categoria == \"Parque Nacional\"\n  ),\n  desc(superficie_oficial)\n)\n\nCon pipe (fluido y claro):\nanp |&gt;\n  select(nombre, categoria, superficie_oficial) |&gt;\n  filter(categoria == \"Parque Nacional\") |&gt;\n  arrange(desc(superficie_oficial))"
   },
   {
     "objectID": "materials/03-data-manipulation.html#ventajas-del-pipe",
     "href": "materials/03-data-manipulation.html#ventajas-del-pipe",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Ventajas del pipe",
-    "text": "Ventajas del pipe\n\n\nLegibilidad: Se lee como una receta paso a paso\nMenos objetos intermedios: No necesitas guardar resultados temporales\nFácil modificar: Agregar o quitar pasos es simple\nDebugging más fácil: Puedes ejecutar el código línea por línea\n\n\n. . .\n\n\n\n\n\n\nDos tipos de pipe\n\n\n\n\n|&gt; - pipe nativo de R (desde R 4.1)\n%&gt;% - pipe de magrittr (del tidyverse)\n\nAmbos funcionan igual en la mayoría de casos. Usaremos |&gt; en este curso."
+    "text": "Ventajas del pipe\n\nLegibilidad: Se lee como una receta paso a paso\nMenos objetos intermedios: No necesitas guardar resultados temporales\nFácil modificar: Agregar o quitar pasos es simple\nDebugging más fácil: Puedes ejecutar el código línea por línea\n\n\n\n\n\n\n\n\nDos tipos de pipe\n\n\n\n|&gt; - pipe nativo de R (desde R 4.1)\n%&gt;% - pipe de magrittr (del tidyverse)\n\nAmbos funcionan igual en la mayoría de casos. Usaremos |&gt; en este curso."
   },
   {
     "objectID": "materials/03-data-manipulation.html#ejemplo-completo-con-pipe",
@@ -5240,14 +5240,14 @@
     "href": "materials/03-data-manipulation.html#group_by---agrupar-datos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "group_by() - Agrupar datos",
-    "text": "group_by() - Agrupar datos\nAgrupa filas para aplicar operaciones por grupo:\nanp |&gt;\n  group_by(categoria)\n\n\n\n\n\n\nNote\n\n\n\ngroup_by() no cambia los datos visualmente, pero afecta cómo funcionan otros verbos"
+    "text": "group_by() - Agrupar datos\nAgrupa filas para aplicar operaciones por grupo:\nanp |&gt;\n  group_by(categoria)\n\n\n\n\n\n\nNote\n\n\ngroup_by() no cambia los datos visualmente, pero afecta cómo funcionan otros verbos"
   },
   {
     "objectID": "materials/03-data-manipulation.html#summarise---resumir-datos",
     "href": "materials/03-data-manipulation.html#summarise---resumir-datos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "summarise() - Resumir datos",
-    "text": "summarise() - Resumir datos\nColapsa filas en resúmenes estadísticos:\nanp |&gt;\n  group_by(categoria) |&gt;\n  summarise(\n    n_areas = n(),\n    superficie_promedio = mean(superficie_oficial, na.rm = TRUE)\n  )\n\n\nn() cuenta el número de filas en cada grupo\nPuedes usar cualquier función de resumen: mean(), median(), sd(), min(), max(), sum()\nna.rm = TRUE ignora valores faltantes"
+    "text": "summarise() - Resumir datos\nColapsa filas en resúmenes estadísticos:\nanp |&gt;\n  group_by(categoria) |&gt;\n  summarise(\n    n_areas = n(),\n    superficie_promedio = mean(superficie_oficial, na.rm = TRUE)\n  )\n\nn() cuenta el número de filas en cada grupo\nPuedes usar cualquier función de resumen: mean(), median(), sd(), min(), max(), sum()\nna.rm = TRUE ignora valores faltantes"
   },
   {
     "objectID": "materials/03-data-manipulation.html#múltiples-resúmenes",
@@ -5268,21 +5268,21 @@
     "href": "materials/03-data-manipulation.html#ejemplos-de-slice",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Ejemplos de slice",
-    "text": "Ejemplos de slice\n# El área más grande de cada categoría\nanp |&gt;\n  group_by(categoria) |&gt;\n  slice_max(superficie_oficial, n = 1)\n. . .\n# Las 3 áreas más grandes en total\nanp |&gt;\n  slice_max(superficie_oficial, n = 3)"
+    "text": "Ejemplos de slice\n# El área más grande de cada categoría\nanp |&gt;\n  group_by(categoria) |&gt;\n  slice_max(superficie_oficial, n = 1)\n\n# Las 3 áreas más grandes en total\nanp |&gt;\n  slice_max(superficie_oficial, n = 3)"
   },
   {
     "objectID": "materials/03-data-manipulation.html#múltiples-variables-de-agrupación",
     "href": "materials/03-data-manipulation.html#múltiples-variables-de-agrupación",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Múltiples variables de agrupación",
-    "text": "Múltiples variables de agrupación\n# Agrupar por categoría y departamento\nanp |&gt;\n  group_by(categoria, ubicacion_politica) |&gt;\n  summarise(\n    cantidad = n(),\n    superficie_total = sum(superficie_oficial, na.rm = TRUE)\n  )\n\n\n\n\n\n\nDesagrupar\n\n\n\nDespués de summarise(), se elimina el último nivel de agrupación. Usa ungroup() para eliminar todos los niveles."
+    "text": "Múltiples variables de agrupación\n# Agrupar por categoría y departamento\nanp |&gt;\n  group_by(categoria, ubicacion_politica) |&gt;\n  summarise(\n    cantidad = n(),\n    superficie_total = sum(superficie_oficial, na.rm = TRUE)\n  )\n\n\n\n\n\n\nDesagrupar\n\n\nDespués de summarise(), se elimina el último nivel de agrupación. Usa ungroup() para eliminar todos los niveles."
   },
   {
     "objectID": "materials/03-data-manipulation.html#el-argumento-.by",
     "href": "materials/03-data-manipulation.html#el-argumento-.by",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "El argumento .by",
-    "text": "El argumento .by\nNueva forma de agrupar (dplyr 1.1.0+):\n# Forma tradicional\nanp |&gt;\n  group_by(categoria) |&gt;\n  summarise(cantidad = n())\n. . .\n# Con .by (más conciso)\nanp |&gt;\n  summarise(\n    cantidad = n(),\n    .by = categoria\n  )\n\n\n\n\n\n\nTip\n\n\n\nCon .by no necesitas ungroup() al final"
+    "text": "El argumento .by\nNueva forma de agrupar (dplyr 1.1.0+):\n# Forma tradicional\nanp |&gt;\n  group_by(categoria) |&gt;\n  summarise(cantidad = n())\n\n# Con .by (más conciso)\nanp |&gt;\n  summarise(\n    cantidad = n(),\n    .by = categoria\n  )\n\n\n\n\n\n\nTip\n\n\nCon .by no necesitas ungroup() al final"
   },
   {
     "objectID": "materials/03-data-manipulation.html#ejercicio-1",
@@ -5317,28 +5317,28 @@
     "href": "materials/03-data-manipulation.html#resumen-de-verbos-dplyr",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Resumen de verbos dplyr",
-    "text": "Resumen de verbos dplyr\n\nOperaciones con filas:\n\nfilter() - seleccionar filas por condición\narrange() - ordenar filas\ndistinct() - encontrar filas únicas\n\nOperaciones con columnas:\n\nmutate() - crear/modificar columnas\nselect() - seleccionar columnas\nrename() - renombrar columnas\nrelocate() - reordenar columnas\n\nOperaciones agrupadas:\n\ngroup_by() - agrupar datos\nsummarise() - resumir datos\nslice_*() - seleccionar filas específicas"
+    "text": "Resumen de verbos dplyr\nOperaciones con filas:\n\nfilter() - seleccionar filas por condición\narrange() - ordenar filas\ndistinct() - encontrar filas únicas\n\nOperaciones con columnas:\n\nmutate() - crear/modificar columnas\nselect() - seleccionar columnas\nrename() - renombrar columnas\nrelocate() - reordenar columnas\n\nOperaciones agrupadas:\n\ngroup_by() - agrupar datos\nsummarise() - resumir datos\nslice_*() - seleccionar filas específicas"
   },
   {
     "objectID": "materials/03-data-manipulation.html#consejos-finales",
     "href": "materials/03-data-manipulation.html#consejos-finales",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Consejos finales",
-    "text": "Consejos finales\n\n\nUsa el pipe |&gt; para encadenar operaciones y hacer tu código más legible\nLos verbos no modifican los datos originales - siempre crean nuevos data frames\nGuarda los resultados si los necesitas después:\nanp_parques &lt;- anp |&gt; filter(categoria == \"Parque Nacional\")\nCombina verbos para análisis complejos\nUsa View() o glimpse() para inspeccionar resultados intermedios"
+    "text": "Consejos finales\n\nUsa el pipe |&gt; para encadenar operaciones y hacer tu código más legible\nLos verbos no modifican los datos originales - siempre crean nuevos data frames\nGuarda los resultados si los necesitas después:\nanp_parques &lt;- anp |&gt; filter(categoria == \"Parque Nacional\")\nCombina verbos para análisis complejos\nUsa View() o glimpse() para inspeccionar resultados intermedios"
   },
   {
     "objectID": "materials/03-data-manipulation.html#próximos-pasos",
     "href": "materials/03-data-manipulation.html#próximos-pasos",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Próximos pasos",
-    "text": "Próximos pasos\nEn las siguientes sesiones veremos:\n\n\nTidyr: reorganizar datos (pivot_longer, pivot_wider)\nStringr: manipulación de texto\nLubridate: trabajo con fechas\nggplot2: visualización de datos\nDatos espaciales: sf package"
+    "text": "Próximos pasos\nEn las siguientes sesiones veremos:\n\nTidyr: reorganizar datos (pivot_longer, pivot_wider)\nStringr: manipulación de texto\nLubridate: trabajo con fechas\nggplot2: visualización de datos\nDatos espaciales: sf package"
   },
   {
     "objectID": "materials/03-data-manipulation.html#recursos-adicionales",
     "href": "materials/03-data-manipulation.html#recursos-adicionales",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Recursos adicionales",
-    "text": "Recursos adicionales\n\n\nR for Data Science - Data transformation\ndplyr cheatsheet\nDocumentación de dplyr\nAyuda en R: ?filter, ?mutate, etc."
+    "text": "Recursos adicionales\n\nR for Data Science - Data transformation\ndplyr cheatsheet\nDocumentación de dplyr\nAyuda en R: ?filter, ?mutate, etc."
   },
   {
     "objectID": "materials/03-data-manipulation.html#gracias",
@@ -6199,21 +6199,21 @@
     "href": "materials/02-importing-data.html#introducción-a-hojas-de-cálculo",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Introducción a Hojas de Cálculo",
-    "text": "Introducción a Hojas de Cálculo\n\n\nMicrosoft Excel es ampliamente usado para organizar datos\nLos datos se almacenan en hojas (worksheets) dentro de libros (workbooks)\nExcel permite múltiples hojas en un solo archivo\nImportante: Leer el artículo “Data Organization in Spreadsheets” (Broman & Woo, 2018)"
+    "text": "Introducción a Hojas de Cálculo\n\nMicrosoft Excel es ampliamente usado para organizar datos\nLos datos se almacenan en hojas (worksheets) dentro de libros (workbooks)\nExcel permite múltiples hojas en un solo archivo\nImportante: Leer el artículo “Data Organization in Spreadsheets” (Broman & Woo, 2018)"
   },
   {
     "objectID": "materials/02-importing-data.html#paquetes-para-excel",
     "href": "materials/02-importing-data.html#paquetes-para-excel",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Paquetes para Excel",
-    "text": "Paquetes para Excel\nUsaremos dos paquetes principales:\n\nlibrary(readxl)   # Para leer archivos Excel\nlibrary(writexl)  # Para escribir archivos Excel\nlibrary(tidyverse)\n\n\n\n\n\n\n\nNote\n\n\n\nreadxl está incluido en tidyverse pero debe cargarse explícitamente"
+    "text": "Paquetes para Excel\nUsaremos dos paquetes principales:\n\nlibrary(readxl)   # Para leer archivos Excel\nlibrary(writexl)  # Para escribir archivos Excel\nlibrary(tidyverse)\n\n\n\n\n\n\n\nNote\n\n\nreadxl está incluido en tidyverse pero debe cargarse explícitamente"
   },
   {
     "objectID": "materials/02-importing-data.html#funciones-de-readxl",
     "href": "materials/02-importing-data.html#funciones-de-readxl",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Funciones de readxl",
-    "text": "Funciones de readxl\n\n\n\nFunción\nUso\n\n\n\n\nread_xls()\nLee archivos con formato .xls (Excel 97-2003)\n\n\nread_xlsx()\nLee archivos con formato .xlsx (Excel 2007+)\n\n\nread_excel()\nDetecta automáticamente el formato\n\n\n\n. . .\n\n\n\n\n\n\nTip\n\n\n\nUsa read_excel() para no preocuparte por el formato"
+    "text": "Funciones de readxl\n\n\n\nFunción\nUso\n\n\n\n\nread_xls()\nLee archivos con formato .xls (Excel 97-2003)\n\n\nread_xlsx()\nLee archivos con formato .xlsx (Excel 2007+)\n\n\nread_excel()\nDetecta automáticamente el formato\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nUsa read_excel() para no preocuparte por el formato"
   },
   {
     "objectID": "materials/02-importing-data.html#ejemplo-leer-archivo-excel",
@@ -6227,14 +6227,14 @@
     "href": "materials/02-importing-data.html#problemas-con-excel",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Problemas con Excel",
-    "text": "Problemas con Excel\nSimilar a CSV, necesitamos limpiar:\n\n\nNombres de columnas con espacios\nValores faltantes no reconocidos (\"N/A\")\nTipos de datos incorrectos\n\n\n. . .\n\nstudents &lt;- read_excel(\"data/students.xlsx\", na = c(\"\", \"N/A\"))"
+    "text": "Problemas con Excel\nSimilar a CSV, necesitamos limpiar:\n\nNombres de columnas con espacios\nValores faltantes no reconocidos (\"N/A\")\nTipos de datos incorrectos\n\n\n\nstudents &lt;- read_excel(\"data/students.xlsx\", na = c(\"\", \"N/A\"))"
   },
   {
     "objectID": "materials/02-importing-data.html#limpiar-nombres-de-columnas",
     "href": "materials/02-importing-data.html#limpiar-nombres-de-columnas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Limpiar Nombres de Columnas",
-    "text": "Limpiar Nombres de Columnas\n\nstudents &lt;- read_excel(\n  \"data/students.xlsx\",\n  col_names = c(\"student_id\", \"full_name\", \"favourite_food\",\n                \"meal_plan\", \"age\"),\n  skip = 1  # Saltar fila de encabezados originales\n)\n\n. . .\n\n\n\n\n\n\nTip\n\n\n\nO usa janitor::clean_names() después de importar"
+    "text": "Limpiar Nombres de Columnas\n\nstudents &lt;- read_excel(\n  \"data/students.xlsx\",\n  col_names = c(\"student_id\", \"full_name\", \"favourite_food\",\n                \"meal_plan\", \"age\"),\n  skip = 1  # Saltar fila de encabezados originales\n)\n\n\n\n\n\n\n\n\nTip\n\n\nO usa janitor::clean_names() después de importar"
   },
   {
     "objectID": "materials/02-importing-data.html#especificar-tipos-en-excel",
@@ -6248,56 +6248,56 @@
     "href": "materials/02-importing-data.html#trabajar-con-múltiples-hojas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Trabajar con Múltiples Hojas",
-    "text": "Trabajar con Múltiples Hojas\nVer todas las hojas de un archivo:\n\nexcel_sheets(\"data/penguins.xlsx\")\n\n[1] \"Torgersen Island\" \"Biscoe Island\"    \"Dream Island\"\n. . .\nLeer una hoja específica:\n\npenguins_torgersen &lt;- read_excel(\n  \"data/penguins.xlsx\",\n  sheet = \"Torgersen Island\",\n  na = \"NA\"\n)"
+    "text": "Trabajar con Múltiples Hojas\nVer todas las hojas de un archivo:\n\nexcel_sheets(\"data/penguins.xlsx\")\n\n[1] \"Torgersen Island\" \"Biscoe Island\"    \"Dream Island\"\n\nLeer una hoja específica:\n\npenguins_torgersen &lt;- read_excel(\n  \"data/penguins.xlsx\",\n  sheet = \"Torgersen Island\",\n  na = \"NA\"\n)"
   },
   {
     "objectID": "materials/02-importing-data.html#leer-todas-las-hojas",
     "href": "materials/02-importing-data.html#leer-todas-las-hojas",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Leer Todas las Hojas",
-    "text": "Leer Todas las Hojas\n\n# Leer cada hoja\npenguins_torgersen &lt;- read_excel(\"data/penguins.xlsx\",\n                                  sheet = \"Torgersen Island\", na = \"NA\")\npenguins_biscoe &lt;- read_excel(\"data/penguins.xlsx\",\n                               sheet = \"Biscoe Island\", na = \"NA\")\npenguins_dream &lt;- read_excel(\"data/penguins.xlsx\",\n                              sheet = \"Dream Island\", na = \"NA\")\n\n# Combinar todas\npenguins &lt;- bind_rows(penguins_torgersen, penguins_biscoe, penguins_dream)\n\n. . .\n\n\n\n\n\n\nNote\n\n\n\nEn el Capítulo 26 aprenderemos métodos más eficientes con purrr::map()"
+    "text": "Leer Todas las Hojas\n\n# Leer cada hoja\npenguins_torgersen &lt;- read_excel(\"data/penguins.xlsx\",\n                                  sheet = \"Torgersen Island\", na = \"NA\")\npenguins_biscoe &lt;- read_excel(\"data/penguins.xlsx\",\n                               sheet = \"Biscoe Island\", na = \"NA\")\npenguins_dream &lt;- read_excel(\"data/penguins.xlsx\",\n                              sheet = \"Dream Island\", na = \"NA\")\n\n# Combinar todas\npenguins &lt;- bind_rows(penguins_torgersen, penguins_biscoe, penguins_dream)\n\n\n\n\n\n\n\n\nNote\n\n\nEn el Capítulo 26 aprenderemos métodos más eficientes con purrr::map()"
   },
   {
     "objectID": "materials/02-importing-data.html#leer-parte-de-una-hoja",
     "href": "materials/02-importing-data.html#leer-parte-de-una-hoja",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Leer Parte de una Hoja",
-    "text": "Leer Parte de una Hoja\nA veces solo necesitas un rango específico:\n\n# Leer rango específico (A5:F15)\ndeaths &lt;- read_excel(\n  \"data/deaths.xlsx\",\n  range = \"A5:F15\"\n)\n\n. . .\n\n\n\n\n\n\nTip\n\n\n\nNotación de celdas en Excel: A1 = primera celda (columna A, fila 1)"
+    "text": "Leer Parte de una Hoja\nA veces solo necesitas un rango específico:\n\n# Leer rango específico (A5:F15)\ndeaths &lt;- read_excel(\n  \"data/deaths.xlsx\",\n  range = \"A5:F15\"\n)\n\n\n\n\n\n\n\n\nTip\n\n\nNotación de celdas en Excel: A1 = primera celda (columna A, fila 1)"
   },
   {
     "objectID": "materials/02-importing-data.html#tipos-de-datos-en-excel",
     "href": "materials/02-importing-data.html#tipos-de-datos-en-excel",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Tipos de Datos en Excel",
-    "text": "Tipos de Datos en Excel\nExcel almacena datos internamente diferente a como los muestra:\n\n\nBooleanos: TRUE, FALSE, NA\nNúmeros: Todos son decimales (no hay enteros)\nFechas: Almacenadas como número de días desde 1900-01-01\nTexto: Cadenas de caracteres\n\n\n. . .\n\n\n\n\n\n\nCuidado\n\n\n\nLo que ves en Excel puede no ser lo que está almacenado. Por ejemplo, “10” podría ser número o texto."
+    "text": "Tipos de Datos en Excel\nExcel almacena datos internamente diferente a como los muestra:\n\nBooleanos: TRUE, FALSE, NA\nNúmeros: Todos son decimales (no hay enteros)\nFechas: Almacenadas como número de días desde 1900-01-01\nTexto: Cadenas de caracteres\n\n\n\n\n\n\n\n\nCuidado\n\n\nLo que ves en Excel puede no ser lo que está almacenado. Por ejemplo, “10” podría ser número o texto."
   },
   {
     "objectID": "materials/02-importing-data.html#escribir-a-excel",
     "href": "materials/02-importing-data.html#escribir-a-excel",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Escribir a Excel",
-    "text": "Escribir a Excel\n\nlibrary(writexl)\n\n# Crear datos de ejemplo\nbake_sale &lt;- tibble(\n  item = factor(c(\"brownie\", \"cupcake\", \"cookie\")),\n  quantity = c(10, 5, 8)\n)\n\n# Escribir a Excel\nwrite_xlsx(bake_sale, path = \"data/bake-sale.xlsx\")\n\n. . .\n\n\n\n\n\n\nWarning\n\n\n\nAl leer de vuelta, los tipos de datos se pierden (factor → character)"
+    "text": "Escribir a Excel\n\nlibrary(writexl)\n\n# Crear datos de ejemplo\nbake_sale &lt;- tibble(\n  item = factor(c(\"brownie\", \"cupcake\", \"cookie\")),\n  quantity = c(10, 5, 8)\n)\n\n# Escribir a Excel\nwrite_xlsx(bake_sale, path = \"data/bake-sale.xlsx\")\n\n\n\n\n\n\n\n\nWarning\n\n\nAl leer de vuelta, los tipos de datos se pierden (factor → character)"
   },
   {
     "objectID": "materials/02-importing-data.html#consejos-para-hojas-de-cálculo",
     "href": "materials/02-importing-data.html#consejos-para-hojas-de-cálculo",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Consejos para Hojas de Cálculo",
-    "text": "Consejos para Hojas de Cálculo\n\n\nSiempre mira el archivo primero en Excel (hacer copia)\nProceso iterativo: importa → revisa → ajusta → reimporta\nEspecifica na explícitamente\nUsa range si hay texto extra arriba/abajo\nNo confíes en el formato visual - verifica tipos\nPara archivos complejos: considera tidyxl package"
+    "text": "Consejos para Hojas de Cálculo\n\nSiempre mira el archivo primero en Excel (hacer copia)\nProceso iterativo: importa → revisa → ajusta → reimporta\nEspecifica na explícitamente\nUsa range si hay texto extra arriba/abajo\nNo confíes en el formato visual - verifica tipos\nPara archivos complejos: considera tidyxl package"
   },
   {
     "objectID": "materials/02-importing-data.html#introducción-a-datos-espaciales",
     "href": "materials/02-importing-data.html#introducción-a-datos-espaciales",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Introducción a Datos Espaciales",
-    "text": "Introducción a Datos Espaciales\n\n\nDatos geográficos representan ubicaciones en la superficie terrestre\nDos modelos principales: vectorial y ráster\nVector: puntos, líneas, polígonos (ubicaciones discretas)\nRáster: celdas/píxeles en una cuadrícula (fenómenos continuos)"
+    "text": "Introducción a Datos Espaciales\n\nDatos geográficos representan ubicaciones en la superficie terrestre\nDos modelos principales: vectorial y ráster\nVector: puntos, líneas, polígonos (ubicaciones discretas)\nRáster: celdas/píxeles en una cuadrícula (fenómenos continuos)"
   },
   {
     "objectID": "materials/02-importing-data.html#paquete-sf-para-datos-vectoriales",
     "href": "materials/02-importing-data.html#paquete-sf-para-datos-vectoriales",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Paquete sf para Datos Vectoriales",
-    "text": "Paquete sf para Datos Vectoriales\n\nlibrary(sf)  # Simple Features for R\n\n. . .\nsf proporciona:\n\n\nClases para datos geográficos vectoriales\nInterfaz a GDAL (lectura/escritura de formatos)\nInterfaz a GEOS (operaciones geométricas)\nInterfaz a PROJ (sistemas de coordenadas)\nCompatible con tidyverse"
+    "text": "Paquete sf para Datos Vectoriales\n\nlibrary(sf)  # Simple Features for R\n\n\nsf proporciona:\n\nClases para datos geográficos vectoriales\nInterfaz a GDAL (lectura/escritura de formatos)\nInterfaz a GEOS (operaciones geométricas)\nInterfaz a PROJ (sistemas de coordenadas)\nCompatible con tidyverse"
   },
   {
     "objectID": "materials/02-importing-data.html#sistemas-de-coordenadas-crs",
@@ -6311,14 +6311,14 @@
     "href": "materials/02-importing-data.html#leer-datos-espaciales",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Leer Datos Espaciales",
-    "text": "Leer Datos Espaciales\n\n# Leer shapefile, geopackage, geojson, etc.\ndepartamentos &lt;- read_sf(\"data/DEPARTAMENTO.gpkg\")\n\n# Alternativa más verbosa\ndepartamentos &lt;- st_read(\"data/DEPARTAMENTO.gpkg\")\n\n. . .\nSimple feature collection with 25 features and 10 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -81.3 ymin: -18.3 xmax: -68.7 ymax: -0.04\nGeodetic CRS:  WGS 84"
+    "text": "Leer Datos Espaciales\n\n# Leer shapefile, geopackage, geojson, etc.\ndepartamentos &lt;- read_sf(\"data/DEPARTAMENTO.gpkg\")\n\n# Alternativa más verbosa\ndepartamentos &lt;- st_read(\"data/DEPARTAMENTO.gpkg\")\n\n\nSimple feature collection with 25 features and 10 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -81.3 ymin: -18.3 xmax: -68.7 ymax: -0.04\nGeodetic CRS:  WGS 84"
   },
   {
     "objectID": "materials/02-importing-data.html#estructura-de-objetos-sf",
     "href": "materials/02-importing-data.html#estructura-de-objetos-sf",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Estructura de Objetos sf",
-    "text": "Estructura de Objetos sf\n\nclass(departamentos)\n\n[1] \"sf\"         \"tbl_df\"     \"tbl\"        \"data.frame\"\n. . .\n\n\n\n\n\n\nsf es un data frame especial\n\n\n\n\nColumnas normales para atributos\nColumna especial geometry o geom para geometría\nFunciona con dplyr, ggplot2, etc."
+    "text": "Estructura de Objetos sf\n\nclass(departamentos)\n\n[1] \"sf\"         \"tbl_df\"     \"tbl\"        \"data.frame\"\n\n\n\n\n\n\n\nsf es un data frame especial\n\n\n\nColumnas normales para atributos\nColumna especial geometry o geom para geometría\nFunciona con dplyr, ggplot2, etc."
   },
   {
     "objectID": "materials/02-importing-data.html#explorar-datos-espaciales",
@@ -6360,7 +6360,7 @@
     "href": "materials/02-importing-data.html#formatos-espaciales-comunes",
     "title": "Introducción a la Programación con R - Tidyverse",
     "section": "Formatos Espaciales Comunes",
-    "text": "Formatos Espaciales Comunes\n\n\n\nFormato\nExtensión\nCaracterísticas\n\n\n\n\nGeoPackage\n.gpkg\n✅ Moderno, eficiente, recomendado\n\n\nShapefile\n.shp\nLegacy, múltiples archivos\n\n\nGeoJSON\n.geojson\nFormato web, legible\n\n\nKML\n.kml\nGoogle Earth\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nRecomendación: Usa GeoPackage (.gpkg) para proyectos nuevos"
+    "text": "Formatos Espaciales Comunes\n\n\n\nFormato\nExtensión\nCaracterísticas\n\n\n\n\nGeoPackage\n.gpkg\n✅ Moderno, eficiente, recomendado\n\n\nShapefile\n.shp\nLegacy, múltiples archivos\n\n\nGeoJSON\n.geojson\nFormato web, legible\n\n\nKML\n.kml\nGoogle Earth\n\n\n\n\n\n\n\n\n\nTip\n\n\nRecomendación: Usa GeoPackage (.gpkg) para proyectos nuevos"
   },
   {
     "objectID": "materials/02-importing-data.html#ejemplo-completo-workflow-espacial",
