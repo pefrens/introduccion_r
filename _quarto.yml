@@ -42,7 +42,9 @@ website:
           - text: Preparación
             href: prework.qmd
       - text: Sesiones
-        menu: 
+        menu:
+          - text: Introducción
+            href: modules/s00-bienvenida-intro-r.qmd
           - text: Fundamentos de R y RStudio
             href: modules/s01-fundamentals.qmd
           - text: Importar y Revisar Datos

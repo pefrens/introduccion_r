@@ -6,7 +6,6 @@ date: "2026-02"
 format:
   revealjs:
     theme: slides.scss
-    logo: img/logo.png
     footer: '**[Paul Efren Santos Andrade](https://paulefrensa.rbind.io)** // Introducción a R - Tidyverse'
     transition: fade
     progress: true

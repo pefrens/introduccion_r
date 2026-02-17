@@ -2,7 +2,6 @@
 title: "Introducción a la Programación con R - Tidyverse"
 ---
 
-Un Curso de Introducción por Paul Efren Santos Andrade
 
 ------------------------------------------------------------------------
 

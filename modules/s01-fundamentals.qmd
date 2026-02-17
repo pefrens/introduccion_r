@@ -5,7 +5,11 @@ date: "2026-02"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
 ---
+```{=html}
+<iframe class="slide-deck" src="../materials/01-fundamentals-intro-r.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+```
 
+<a href='../materials/01-fundamentals-intro-r.html' target="_blank">Ver diapositivas en pantalla completa</a>
 # Esquema
 
 -   Introducción a R y RStudio
