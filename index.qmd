@@ -1,80 +1,69 @@
 ---
-title: "Introducción a la Programación con R - Tidyverse"
+title: "Introduccion a la Programacion con R - Tidyverse"
 ---
 
+---
 
-------------------------------------------------------------------------
+<span class='code'>Febrero 2026</span>
 
-<span class='code'>📆 &ensp;Febrero, 2026</span>\
+---
 
-------------------------------------------------------------------------
+# Descripcion general
 
-# Descripción General del Curso
+Este curso introduce programacion en R con enfoque practico en manejo de datos tabulares y espaciales.
 
-Este curso proporciona una introducción completa a la programación con R utilizando el ecosistema Tidyverse. Aprenderás conceptos básicos de R usando el IDE RStudio, escritura de códigos legibles y reproducibles, y conceptos básicos de ciencia de datos.
+## Ruta del curso
 
-## Aprenderemos
+1. Sesion 0: Bienvenida e introduccion
+2. Sesion 1: Fundamentos de R y RStudio
+3. Sesion 2: Importar y revisar datos
+4. Sesion 3: Manipulacion con dplyr
+5. Sesion 4: Organizacion de datos con tidyr
+6. Sesion 5: Union de datos (joins)
+7. Sesion 6: Datos espaciales con sf
 
-### Fundamentos de R y Tidyverse
-* Conceptos básicos de R usando el IDE RStudio (Entorno de desarrollo integrado)
-* Escritura de códigos legibles y reproducibles
-* Conceptos básicos de ciencia de datos
-* Importación de datos desde múltiples formatos (CSV, Excel, texto)
-* Manipulación de datos con dplyr (select, filter, mutate, summarise)
-* Organización de datos con tidyr (pivot_longer, pivot_wider)
+## Que aprenderas
 
-### Datos Espaciales
-* Introducción a datos geoespaciales vectoriales
-* Lectura y escritura de formatos espaciales (shapefile, geopackage, geojson)
-* Manejo de datos espaciales con el paquete sf (Simple Features)
-* Integración de sf con tidyverse
-* Visualización de mapas con ggplot2 y geom_sf()
-* Operaciones espaciales básicas (transformaciones de CRS, cálculos de área, intersecciones)
+- Crear objetos y trabajar con estructuras basicas de R
+- Importar y validar datos desde CSV, Excel y GPKG
+- Transformar datos con `dplyr` y `tidyr`
+- Unir tablas con joins de forma segura
+- Manipular geometria y atributos con `sf`
 
-## Programas Necesarios
+# Entorno necesario
 
-Es necesario tener instalados:
+1. R (version reciente)
+2. RStudio Desktop (version reciente)
+3. Quarto (para renderizar contenidos)
 
-1. Una versión reciente de R (~4.5.2), disponible de forma gratuita en [cran.r-project.org](http://www.cran.r-project.org)
-2. Una versión reciente de RStudio IDE (~1.1.401), disponible en [posit.co/download/](https://posit.co/download/rstudio-desktop/)
-3. [Rtools (45)](https://cran.r-project.org/bin/windows/Rtools/)
-
-## Paquetes Necesarios
+# Paquetes necesarios (segun modules)
 
 ```r
-packages <- c("tidyverse", "janitor",
-              "here", "writexl", "readxl", "sf", "pdftools")
+packages <- c(
+  "tidyverse",
+  "janitor",
+  "readxl",
+  "sf"
+)
+
 install.packages(packages)
 ```
 
-## ¿Es este curso para mí?
+Nota: `readr`, `dplyr`, `tidyr`, `ggplot2` vienen incluidos en `tidyverse`.
 
-Este curso será apropiado para ti si:
+# Archivos de datos usados en las sesiones
 
-* Deseas aprender a programar en R desde cero
-* Quieres aprender a trabajar con datos de manera eficiente
-* Te interesa la ciencia de datos y el análisis reproducible
-* Necesitas herramientas para importar, limpiar y transformar datos
-* Trabajas o planeas trabajar con datos geográficos/espaciales
-* Deseas integrar análisis espacial con flujos de trabajo de tidyverse
+- `data/catalogo_planes.csv`
+- `data/catalogo_planes.xlsx`
+- `data/poblacion_peru.csv`
+- `data/DEPARTAMENTO.gpkg`
 
-## Libros de Referencia
+# Referencias recomendadas
 
-### R for Data Science
-* [Versión en inglés](https://r4ds.hadley.nz/)
-* [Versión en español](https://es.r4ds.hadley.nz/)
-
-### Geocomputation with R
-* [Versión en línea](https://r.geocompx.org/): Libro completo sobre análisis geoespacial
-
+- [R for Data Science](https://r4ds.hadley.nz/)
+- [R for Data Science (espanol)](https://es.r4ds.hadley.nz/)
+- [Geocomputation with R](https://r.geocompx.org/)
 
 # Instructor
 
-[**Paul Efren Santos Andrade**](https://github.com/PaulESantos)es un especialista en análisis de datos con R, enfocado en ciencia de datos aplicada y análisis reproducible. Tiene amplia experiencia en el uso del ecosistema Tidyverse para importación, limpieza y transformación de datos.
-
-<div align="center">
-<a href="https://paulefrensa.rbind.io"><img border="0" alt="Blog" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>&ensp;
-<a href="https://twitter.com/PaulEfrenSantos"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/PaulESantos"><img border="0" alt="GitHub" src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="35" height="35"></a>&ensp;
-</div>
-
+[**Paul Efren Santos Andrade**](https://github.com/PaulESantos)

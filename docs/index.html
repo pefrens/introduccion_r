@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introducción a la Programación con R - Tidyverse</title>
+<title>Introduccion a la Programacion con R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,9 +103,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Introducción a la Programación con R - Tidyverse">
+<meta property="og:title" content="Introduccion a la Programacion con R - Tidyverse">
 <meta property="og:description" content="Página principal del taller posit::conf(2023)">
-<meta name="twitter:title" content="Introducción a la Programación con R - Tidyverse">
+<meta name="twitter:title" content="Introduccion a la Programacion con R - Tidyverse">
 <meta name="twitter:description" content="Página principal del taller posit::conf(2023)">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary">
@@ -210,22 +210,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#descripción-general-del-curso" id="toc-descripción-general-del-curso" class="nav-link active" data-scroll-target="#descripción-general-del-curso">Descripción General del Curso</a>
+  <li><a href="#descripcion-general" id="toc-descripcion-general" class="nav-link active" data-scroll-target="#descripcion-general">Descripcion general</a>
   <ul class="collapse">
-  <li><a href="#aprenderemos" id="toc-aprenderemos" class="nav-link" data-scroll-target="#aprenderemos">Aprenderemos</a>
-  <ul class="collapse">
-  <li><a href="#fundamentos-de-r-y-tidyverse" id="toc-fundamentos-de-r-y-tidyverse" class="nav-link" data-scroll-target="#fundamentos-de-r-y-tidyverse">Fundamentos de R y Tidyverse</a></li>
-  <li><a href="#datos-espaciales" id="toc-datos-espaciales" class="nav-link" data-scroll-target="#datos-espaciales">Datos Espaciales</a></li>
+  <li><a href="#ruta-del-curso" id="toc-ruta-del-curso" class="nav-link" data-scroll-target="#ruta-del-curso">Ruta del curso</a></li>
+  <li><a href="#que-aprenderas" id="toc-que-aprenderas" class="nav-link" data-scroll-target="#que-aprenderas">Que aprenderas</a></li>
   </ul></li>
-  <li><a href="#programas-necesarios" id="toc-programas-necesarios" class="nav-link" data-scroll-target="#programas-necesarios">Programas Necesarios</a></li>
-  <li><a href="#paquetes-necesarios" id="toc-paquetes-necesarios" class="nav-link" data-scroll-target="#paquetes-necesarios">Paquetes Necesarios</a></li>
-  <li><a href="#es-este-curso-para-mí" id="toc-es-este-curso-para-mí" class="nav-link" data-scroll-target="#es-este-curso-para-mí">¿Es este curso para mí?</a></li>
-  <li><a href="#libros-de-referencia" id="toc-libros-de-referencia" class="nav-link" data-scroll-target="#libros-de-referencia">Libros de Referencia</a>
-  <ul class="collapse">
-  <li><a href="#r-for-data-science" id="toc-r-for-data-science" class="nav-link" data-scroll-target="#r-for-data-science">R for Data Science</a></li>
-  <li><a href="#geocomputation-with-r" id="toc-geocomputation-with-r" class="nav-link" data-scroll-target="#geocomputation-with-r">Geocomputation with R</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#entorno-necesario" id="toc-entorno-necesario" class="nav-link" data-scroll-target="#entorno-necesario">Entorno necesario</a></li>
+  <li><a href="#paquetes-necesarios-segun-modules" id="toc-paquetes-necesarios-segun-modules" class="nav-link" data-scroll-target="#paquetes-necesarios-segun-modules">Paquetes necesarios (segun modules)</a></li>
+  <li><a href="#archivos-de-datos-usados-en-las-sesiones" id="toc-archivos-de-datos-usados-en-las-sesiones" class="nav-link" data-scroll-target="#archivos-de-datos-usados-en-las-sesiones">Archivos de datos usados en las sesiones</a></li>
+  <li><a href="#referencias-recomendadas" id="toc-referencias-recomendadas" class="nav-link" data-scroll-target="#referencias-recomendadas">Referencias recomendadas</a></li>
   <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -235,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducción a la Programación con R - Tidyverse</h1>
+<h1 class="title">Introduccion a la Programacion con R - Tidyverse</h1>
 </div>
 
 
@@ -253,87 +246,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <hr>
-<p><span class="code">📆  Febrero, 2026</span><br>
-</p>
+<p><span class="code">Febrero 2026</span></p>
 <hr>
-<section id="descripción-general-del-curso" class="level1">
-<h1>Descripción General del Curso</h1>
-<p>Este curso proporciona una introducción completa a la programación con R utilizando el ecosistema Tidyverse. Aprenderás conceptos básicos de R usando el IDE RStudio, escritura de códigos legibles y reproducibles, y conceptos básicos de ciencia de datos.</p>
-<section id="aprenderemos" class="level2">
-<h2 class="anchored" data-anchor-id="aprenderemos">Aprenderemos</h2>
-<section id="fundamentos-de-r-y-tidyverse" class="level3">
-<h3 class="anchored" data-anchor-id="fundamentos-de-r-y-tidyverse">Fundamentos de R y Tidyverse</h3>
-<ul>
-<li>Conceptos básicos de R usando el IDE RStudio (Entorno de desarrollo integrado)</li>
-<li>Escritura de códigos legibles y reproducibles</li>
-<li>Conceptos básicos de ciencia de datos</li>
-<li>Importación de datos desde múltiples formatos (CSV, Excel, texto)</li>
-<li>Manipulación de datos con dplyr (select, filter, mutate, summarise)</li>
-<li>Organización de datos con tidyr (pivot_longer, pivot_wider)</li>
-</ul>
-</section>
-<section id="datos-espaciales" class="level3">
-<h3 class="anchored" data-anchor-id="datos-espaciales">Datos Espaciales</h3>
-<ul>
-<li>Introducción a datos geoespaciales vectoriales</li>
-<li>Lectura y escritura de formatos espaciales (shapefile, geopackage, geojson)</li>
-<li>Manejo de datos espaciales con el paquete sf (Simple Features)</li>
-<li>Integración de sf con tidyverse</li>
-<li>Visualización de mapas con ggplot2 y geom_sf()</li>
-<li>Operaciones espaciales básicas (transformaciones de CRS, cálculos de área, intersecciones)</li>
-</ul>
-</section>
-</section>
-<section id="programas-necesarios" class="level2">
-<h2 class="anchored" data-anchor-id="programas-necesarios">Programas Necesarios</h2>
-<p>Es necesario tener instalados:</p>
+<section id="descripcion-general" class="level1">
+<h1>Descripcion general</h1>
+<p>Este curso introduce programacion en R con enfoque practico en manejo de datos tabulares y espaciales.</p>
+<section id="ruta-del-curso" class="level2">
+<h2 class="anchored" data-anchor-id="ruta-del-curso">Ruta del curso</h2>
 <ol type="1">
-<li>Una versión reciente de R (~4.5.2), disponible de forma gratuita en <a href="http://www.cran.r-project.org">cran.r-project.org</a></li>
-<li>Una versión reciente de RStudio IDE (~1.1.401), disponible en <a href="https://posit.co/download/rstudio-desktop/">posit.co/download/</a></li>
-<li><a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools (45)</a></li>
+<li>Sesion 0: Bienvenida e introduccion</li>
+<li>Sesion 1: Fundamentos de R y RStudio</li>
+<li>Sesion 2: Importar y revisar datos</li>
+<li>Sesion 3: Manipulacion con dplyr</li>
+<li>Sesion 4: Organizacion de datos con tidyr</li>
+<li>Sesion 5: Union de datos (joins)</li>
+<li>Sesion 6: Datos espaciales con sf</li>
 </ol>
 </section>
-<section id="paquetes-necesarios" class="level2">
-<h2 class="anchored" data-anchor-id="paquetes-necesarios">Paquetes Necesarios</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"janitor"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">"here"</span>, <span class="st">"writexl"</span>, <span class="st">"readxl"</span>, <span class="st">"sf"</span>, <span class="st">"pdftools"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="es-este-curso-para-mí" class="level2">
-<h2 class="anchored" data-anchor-id="es-este-curso-para-mí">¿Es este curso para mí?</h2>
-<p>Este curso será apropiado para ti si:</p>
+<section id="que-aprenderas" class="level2">
+<h2 class="anchored" data-anchor-id="que-aprenderas">Que aprenderas</h2>
 <ul>
-<li>Deseas aprender a programar en R desde cero</li>
-<li>Quieres aprender a trabajar con datos de manera eficiente</li>
-<li>Te interesa la ciencia de datos y el análisis reproducible</li>
-<li>Necesitas herramientas para importar, limpiar y transformar datos</li>
-<li>Trabajas o planeas trabajar con datos geográficos/espaciales</li>
-<li>Deseas integrar análisis espacial con flujos de trabajo de tidyverse</li>
-</ul>
-</section>
-<section id="libros-de-referencia" class="level2">
-<h2 class="anchored" data-anchor-id="libros-de-referencia">Libros de Referencia</h2>
-<section id="r-for-data-science" class="level3">
-<h3 class="anchored" data-anchor-id="r-for-data-science">R for Data Science</h3>
-<ul>
-<li><a href="https://r4ds.hadley.nz/">Versión en inglés</a></li>
-<li><a href="https://es.r4ds.hadley.nz/">Versión en español</a></li>
-</ul>
-</section>
-<section id="geocomputation-with-r" class="level3">
-<h3 class="anchored" data-anchor-id="geocomputation-with-r">Geocomputation with R</h3>
-<ul>
-<li><a href="https://r.geocompx.org/">Versión en línea</a>: Libro completo sobre análisis geoespacial</li>
+<li>Crear objetos y trabajar con estructuras basicas de R</li>
+<li>Importar y validar datos desde CSV, Excel y GPKG</li>
+<li>Transformar datos con <code>dplyr</code> y <code>tidyr</code></li>
+<li>Unir tablas con joins de forma segura</li>
+<li>Manipular geometria y atributos con <code>sf</code></li>
 </ul>
 </section>
 </section>
+<section id="entorno-necesario" class="level1">
+<h1>Entorno necesario</h1>
+<ol type="1">
+<li>R (version reciente)</li>
+<li>RStudio Desktop (version reciente)</li>
+<li>Quarto (para renderizar contenidos)</li>
+</ol>
+</section>
+<section id="paquetes-necesarios-segun-modules" class="level1">
+<h1>Paquetes necesarios (segun modules)</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"readxl"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sf"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nota: <code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>ggplot2</code> vienen incluidos en <code>tidyverse</code>.</p>
+</section>
+<section id="archivos-de-datos-usados-en-las-sesiones" class="level1">
+<h1>Archivos de datos usados en las sesiones</h1>
+<ul>
+<li><code>data/catalogo_planes.csv</code></li>
+<li><code>data/catalogo_planes.xlsx</code></li>
+<li><code>data/poblacion_peru.csv</code></li>
+<li><code>data/DEPARTAMENTO.gpkg</code></li>
+</ul>
+</section>
+<section id="referencias-recomendadas" class="level1">
+<h1>Referencias recomendadas</h1>
+<ul>
+<li><a href="https://r4ds.hadley.nz/">R for Data Science</a></li>
+<li><a href="https://es.r4ds.hadley.nz/">R for Data Science (espanol)</a></li>
+<li><a href="https://r.geocompx.org/">Geocomputation with R</a></li>
+</ul>
 </section>
 <section id="instructor" class="level1">
 <h1>Instructor</h1>
-<p><a href="https://github.com/PaulESantos"><strong>Paul Efren Santos Andrade</strong></a>es un especialista en análisis de datos con R, enfocado en ciencia de datos aplicada y análisis reproducible. Tiene amplia experiencia en el uso del ecosistema Tidyverse para importación, limpieza y transformación de datos.</p>
-<div data-align="center">
-<p><a href="https://paulefrensa.rbind.io"><img border="0" alt="Blog" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>  <a href="https://twitter.com/PaulEfrenSantos"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>  <a href="https://github.com/PaulESantos"><img border="0" alt="GitHub" src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="35" height="35"></a> </p>
-</div>
+<p><a href="https://github.com/PaulESantos"><strong>Paul Efren Santos Andrade</strong></a></p>
 
 
 </section>

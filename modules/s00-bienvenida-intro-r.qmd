@@ -1,7 +1,6 @@
 ---
 title: "Bienvenida e Introduccion al curso"
 subtitle: "<span class='code'>Sesion 0</span>"
-date: "2026-02"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
 ---

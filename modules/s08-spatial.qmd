@@ -1,7 +1,6 @@
 ---
 title: "Datos espaciales con sf"
 subtitle: "<span class='code'>Sesion 6</span>"
-date: "2026-02"
 image: "images/03-colors.png"
 tbl-colwidths: [5,20,75]
 ---

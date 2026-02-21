@@ -1,7 +1,6 @@
 ---
 title: "Importar y revisar datos"
 subtitle: "<span class='code'>Sesion 2</span>"
-date: "2026-02"
 image: "images/02-text.png"
 tbl-colwidths: [5,20,75]
 ---

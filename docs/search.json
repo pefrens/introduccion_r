@@ -1703,9 +1703,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Introducción a la Programación con R - Tidyverse",
+    "title": "Introduccion a la Programacion con R - Tidyverse",
     "section": "",
-    "text": "📆  Febrero, 2026"
+    "text": "Febrero 2026"
   },
   {
     "objectID": "index.html#is-this-course-for-me",
@@ -7257,5 +7257,19 @@
     "title": "Union de datos (Joins)",
     "section": "",
     "text": "Ver diapositivas en pantalla completa\n\nEsquema\n\nClaves y relaciones entre tablas\nMutating joins\nFiltering joins\nControl de duplicados\n\n\n\nObjetivo de la sesion\nUnir tablas de forma segura, conservando la integridad de filas y columnas.\n\n\nDatos usados\n\nDatos creados en memoria con tibble()\n\n\n\nPractica guiada\nlibrary(tidyverse)\n\nventas &lt;- tibble(\n  id = c(1, 2, 3, 4),\n  cod_dep = c(\"08\", \"15\", \"04\", \"08\"),\n  monto = c(100, 150, 80, 200)\n)\n\ndeps &lt;- tibble(\n  cod_dep = c(\"08\", \"15\", \"04\"),\n  departamento = c(\"CUSCO\", \"LIMA\", \"AREQUIPA\")\n)\n# left_join\nventas |&gt; left_join(deps, by = \"cod_dep\")\n# anti_join para detectar codigos sin correspondencia\nventas |&gt; anti_join(deps, by = \"cod_dep\")\n\n\nEjercicios\n\nRepetir el join con inner_join() y comparar filas.\nIdentificar codigos huerfanos con anti_join().\nResumir monto total por departamento.\n\n\n\nResultado esperado\nElegir el tipo de join correcto para cada objetivo de analisis."
+  },
+  {
+    "objectID": "index.html#ruta-del-curso",
+    "href": "index.html#ruta-del-curso",
+    "title": "Introduccion a la Programacion con R - Tidyverse",
+    "section": "Ruta del curso",
+    "text": "Ruta del curso\n\nSesion 0: Bienvenida e introduccion\nSesion 1: Fundamentos de R y RStudio\nSesion 2: Importar y revisar datos\nSesion 3: Manipulacion con dplyr\nSesion 4: Organizacion de datos con tidyr\nSesion 5: Union de datos (joins)\nSesion 6: Datos espaciales con sf"
+  },
+  {
+    "objectID": "index.html#que-aprenderas",
+    "href": "index.html#que-aprenderas",
+    "title": "Introduccion a la Programacion con R - Tidyverse",
+    "section": "Que aprenderas",
+    "text": "Que aprenderas\n\nCrear objetos y trabajar con estructuras basicas de R\nImportar y validar datos desde CSV, Excel y GPKG\nTransformar datos con dplyr y tidyr\nUnir tablas con joins de forma segura\nManipular geometria y atributos con sf"
   }
 ]

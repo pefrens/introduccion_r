@@ -1,7 +1,6 @@
 ---
 title: "tidyr - Organizacion de datos (Tidy Data)"
 subtitle: "<span class='code'>Sesion 4</span>"
-date: "2026-02"
 image: "images/04-theming.png"
 tbl-colwidths: [5,20,75]
 ---

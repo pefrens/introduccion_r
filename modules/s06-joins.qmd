@@ -1,0 +1,63 @@
+---
+title: "Union de datos (Joins)"
+subtitle: "<span class='code'>Sesion 5</span>"
+image: "images/03-colors.png"
+tbl-colwidths: [5,20,75]
+---
+```{=html}
+<iframe class="slide-deck" src="../materials/05-joins.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+```
+
+<a href='../materials/05-joins.html' target="_blank">Ver diapositivas en pantalla completa</a>
+
+# Esquema
+
+- Claves y relaciones entre tablas
+- Mutating joins
+- Filtering joins
+- Control de duplicados
+
+# Objetivo de la sesion
+
+Unir tablas de forma segura, conservando la integridad de filas y columnas.
+
+# Datos usados
+
+- Datos creados en memoria con `tibble()`
+
+# Practica guiada
+
+```r
+library(tidyverse)
+
+ventas <- tibble(
+  id = c(1, 2, 3, 4),
+  cod_dep = c("08", "15", "04", "08"),
+  monto = c(100, 150, 80, 200)
+)
+
+deps <- tibble(
+  cod_dep = c("08", "15", "04"),
+  departamento = c("CUSCO", "LIMA", "AREQUIPA")
+)
+```
+
+```r
+# left_join
+ventas |> left_join(deps, by = "cod_dep")
+```
+
+```r
+# anti_join para detectar codigos sin correspondencia
+ventas |> anti_join(deps, by = "cod_dep")
+```
+
+# Ejercicios
+
+1. Repetir el join con `inner_join()` y comparar filas.
+2. Identificar codigos huerfanos con `anti_join()`.
+3. Resumir monto total por `departamento`.
+
+# Resultado esperado
+
+Elegir el tipo de join correcto para cada objetivo de analisis.

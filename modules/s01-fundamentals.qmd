@@ -1,7 +1,6 @@
 ---
 title: "Fundamentos de R y RStudio"
 subtitle: "<span class='code'>Sesion 1</span>"
-date: "2026-02"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
 ---
