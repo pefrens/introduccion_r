@@ -30,7 +30,8 @@ website:
         text: Descargas
         menu: 
           - text: Todos los Materiales del Curso
-            href: materials/positconf-2023-ggplot2-materials.zip
+            href: materials/data_introduccion_r.zip.zip
+            
       - icon: file-certificate
         href: license.qmd
       - icon: github
