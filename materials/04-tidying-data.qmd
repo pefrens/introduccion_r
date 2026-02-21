@@ -30,30 +30,7 @@ execute:
   fig-align: center
 ---
 
-## Esquema de la sesión {.smaller}
-
-::: incremental
-- ¿Qué son datos ordenados (tidy data)?
-- Principios de datos tidy
-- Alargar datos: `pivot_longer()`
-- Ensanchar datos: `pivot_wider()`
-- Casos especiales y problemas comunes
-- Ejercicios prácticos
-:::
-
 # Introducción {background-color="#2C3E50"}
-
-## Una cita famosa
-
-> "Las familias felices son todas iguales; cada familia infeliz es infeliz a su manera."
->
-> — Leo Tolstoy
-
-. . .
-
-> "Los conjuntos de datos ordenados son todos iguales, pero cada conjunto de datos desordenado es desordenado a su manera."
->
-> — Hadley Wickham
 
 ## ¿Por qué ordenar datos?
 
@@ -69,31 +46,35 @@ execute:
 
 ```{r}
 library(tidyverse)
+library(readxl)
 library(janitor)
+library(gapminder)
 ```
 
 El paquete **tidyr** (parte de tidyverse) proporciona herramientas para ordenar datos.
 
 # ¿Qué son datos tidy? {background-color="#2C3E50"}
 
-## Los mismos datos, 3 formas diferentes {.smaller}
+## Los mismos datos, 3 formas diferentes 
 
 **Tabla 1:**
-```
-  country      year  cases population
-  Afghanistan  1999    745   19987071
-  Afghanistan  2000   2666   20595360
-  Brazil       1999  37737  172006362
+```{r}
+table1
 ```
 
-. . .
+## Los mismos datos, 3 formas diferentes 
 
 **Tabla 2:**
+```{r}
+table2
 ```
-  country      year type           count
-  Afghanistan  1999 cases            745
-  Afghanistan  1999 population  19987071
-  Afghanistan  2000 cases           2666
+
+
+## Los mismos datos, 3 formas diferentes 
+
+**Tabla 3:**
+```{r}
+table3
 ```
 
 . . .
@@ -102,13 +83,13 @@ El paquete **tidyr** (parte de tidyverse) proporciona herramientas para ordenar 
 ¿Cuál es más fácil de usar?
 :::
 
-## Los tres principios de datos tidy
+## Los tres principios de datos **tidy**
 
 1. **Cada variable es una columna**
 2. **Cada observación es una fila**
 3. **Cada valor es una celda**
 
-## Visualización de los principios
+## Los tres principios de datos **tidy**
 
 ![](https://r4ds.hadley.nz/images/tidy-1.png){fig-align="center"}
 
@@ -131,21 +112,13 @@ El paquete **tidyr** (parte de tidyverse) proporciona herramientas para ordenar 
    - Transformar datos tidy es natural
 :::
 
-## Ejemplo: Trabajar con datos tidy {.smaller}
+## Ejemplo: Trabajar con datos tidy 
 
 ```{r}
 # Calcular tasa por 10,000 habitantes
 table1 |>
   mutate(rate = cases / population * 10000)
 ```
-
-```
-  country      year  cases population  rate
-  Afghanistan  1999    745   19987071  0.373
-  Afghanistan  2000   2666   20595360  1.29
-  Brazil       1999  37737  172006362  2.19
-```
-
 . . .
 
 ```{r}
@@ -153,12 +126,6 @@ table1 |>
 table1 |>
   group_by(year) |>
   summarize(total_cases = sum(cases))
-```
-
-```
-   year total_cases
-   1999      250740
-   2000      296920
 ```
 
 ## Visualizar datos tidy
@@ -174,7 +141,7 @@ ggplot(table1, aes(x = year, y = cases)) +
 Con datos tidy, crear visualizaciones es directo y simple
 :::
 
-# Alargar datos: pivot_longer() {background-color="#2C3E50"}
+# Formato largo | pivot_longer() {background-color="#2C3E50"}
 
 ## Problema común: Datos en nombres de columnas
 
@@ -182,7 +149,7 @@ La mayoría de datos reales están **desordenados** por dos razones:
 
 ::: incremental
 1. Los datos se organizan para facilitar **entrada**, no análisis
-2. La mayoría de personas no conocen principios de datos tidy
+2. La mayoría de personas no conocen principios de datos **tidy**
 :::
 
 . . .
@@ -195,54 +162,35 @@ La mayoría de datos reales están **desordenados** por dos razones:
 billboard
 ```
 
-```
-# A tibble: 317 × 79
-  artist       track               date.entered   wk1   wk2   wk3
-  <chr>        <chr>               <date>       <dbl> <dbl> <dbl>
-1 2 Pac        Baby Don't Cry      2000-02-26      87    82    72
-2 2Ge+her      The Hardest Part    2000-09-02      91    87    92
-3 3 Doors Down Kryptonite          2000-04-08      81    70    68
-# ... with 73 more columns: wk4, wk5, wk6, ...
-```
-
 ## Problema con billboard
 
-::: incremental
+
 - Cada observación es una **canción**
 - `artist`, `track`, `date.entered` son variables
 - Pero `wk1`, `wk2`, ... `wk76` también son columnas
 - Los **nombres de columnas** son valores de una variable (`week`)
 - Los **valores de las celdas** son otra variable (`rank`)
-:::
 
 ## Solución: pivot_longer()
 
 ```{r}
-billboard |>
-  pivot_longer(
-    cols = starts_with("wk"),
-    names_to = "week",
-    values_to = "rank"
-  )
-```
+indicadores_inei <- readxl::read_excel("data/indicadores_demograficos.xlsx", 
+          range = "A4:AA20") |> 
+  janitor::clean_names()
+indicadores_inei
 
 ```
-# A tibble: 24,092 × 5
-   artist track                   date.entered week   rank
-   <chr>  <chr>                   <date>       <chr> <dbl>
- 1 2 Pac  Baby Don't Cry          2000-02-26   wk1      87
- 2 2 Pac  Baby Don't Cry          2000-02-26   wk2      82
- 3 2 Pac  Baby Don't Cry          2000-02-26   wk3      72
-```
+
+
 
 ## Argumentos de pivot_longer()
 
 ```{r}
-billboard |>
+indicadores_inei |>
   pivot_longer(
-    cols = starts_with("wk"),      # Qué columnas pivotar
-    names_to = "week",              # Nombre de nueva columna (nombres)
-    values_to = "rank"              # Nombre de nueva columna (valores)
+    cols = amazonas:ancash,      # Qué columnas pivotar
+    names_to = "departamento",   # Nombre de nueva columna (nombres)
+    values_to = "valores"        # Nombre de nueva columna (valores)
   )
 ```
 
@@ -252,61 +200,8 @@ billboard |>
 - **`values_to`**: nombre para la nueva variable de valores
 :::
 
-## Eliminar valores faltantes
 
-```{r}
-billboard |>
-  pivot_longer(
-    cols = starts_with("wk"),
-    names_to = "week",
-    values_to = "rank",
-    values_drop_na = TRUE  # Eliminar NAs
-  )
-```
-
-```
-# A tibble: 5,307 × 5
-  artist track                   date.entered week   rank
-  <chr>  <chr>                   <date>       <chr> <dbl>
-1 2 Pac  Baby Don't Cry          2000-02-26   wk1      87
-2 2 Pac  Baby Don't Cry          2000-02-26   wk2      82
-```
-
-::: callout-note
-De 24,092 filas a 5,307 filas - muchos NAs eliminados
-:::
-
-## Convertir tipos de datos
-
-```{r}
-billboard_longer <- billboard |>
-  pivot_longer(
-    cols = starts_with("wk"),
-    names_to = "week",
-    values_to = "rank",
-    values_drop_na = TRUE
-  ) |>
-  mutate(
-    week = parse_number(week)  # "wk1" → 1
-  )
-```
-
-::: callout-tip
-`parse_number()` extrae el primer número de una cadena
-:::
-
-## Visualizar resultados
-
-```{r}
-billboard_longer |>
-  ggplot(aes(x = week, y = rank, group = track)) +
-  geom_line(alpha = 0.25) +
-  scale_y_reverse()
-```
-
-Pocas canciones permanecen en el top 100 por más de 20 semanas.
-
-## ¿Cómo funciona pivot_longer()? {.smaller}
+## ¿Cómo funciona pivot_longer()? 
 
 Ejemplo simple:
 
@@ -330,16 +225,11 @@ df |>
   )
 ```
 
-```
-  id    measurement value
-  A     bp1           100
-  A     bp2           120
-  B     bp1           140
-```
+
 
 ## Mecánica de pivot_longer()
 
-![](https://r4ds.hadley.nz/images/tidy-pivot-longer.png){fig-align="center"}
+![](img/variables.png){fig-align="center"}
 
 ::: incremental
 1. **Columnas existentes** se repiten (una vez por columna pivotada)
@@ -347,155 +237,35 @@ df |>
 3. **Valores de celdas** se desenrollan fila por fila
 :::
 
-## Múltiples variables en nombres de columnas
 
-Ejemplo: datos de tuberculosis (WHO)
-
-```{r}
-who2
-```
-
-```
-# A tibble: 7,240 × 58
-  country      year sp_m_014 sp_m_1524 sp_m_2534 ep_f_014
-  <chr>       <dbl>    <dbl>     <dbl>     <dbl>    <dbl>
-1 Afghanistan  1980       NA        NA        NA       NA
-2 Afghanistan  1981       NA        NA        NA       NA
-```
-
-Nombres de columnas: `sp_m_014`, `ep_f_4554`, `rel_m_3544`
-
-## Anatomía de los nombres
-
-Patrón: `diagnosis_gender_age`
-
-::: incremental
-- **Primera parte** (`sp`/`rel`/`ep`): método de diagnóstico
-- **Segunda parte** (`m`/`f`): género
-- **Tercera parte** (`014`/`1524`/etc.): rango de edad
-:::
-
-## Solución: names_sep
-
-```{r}
-who2 |>
-  pivot_longer(
-    cols = !(country:year),
-    names_to = c("diagnosis", "gender", "age"),
-    names_sep = "_",
-    values_to = "count"
-  )
-```
-
-```
-  country      year diagnosis gender age   count
-  Afghanistan  1980 sp        m      014      NA
-  Afghanistan  1980 sp        m      1524     NA
-  Afghanistan  1980 sp        f      014      NA
-```
-
-## Datos y variables en nombres {.smaller}
-
-Ejemplo: datos de hogares
-
-```{r}
-household
-```
-
-```
-  family dob_child1 dob_child2 name_child1 name_child2
-       1 1998-11-26 2000-01-29 Susan       Jose
-       2 1996-06-22 NA         Mark        <NA>
-```
-
-::: incremental
-- Nombres contienen **nombres de variables** (`dob`, `name`)
-- Y **valores de otra variable** (`child`: 1 o 2)
-:::
-
-## Solución: .value especial
-
-```{r}
-household |>
-  pivot_longer(
-    cols = !family,
-    names_to = c(".value", "child"),
-    names_sep = "_",
-    values_drop_na = TRUE
-  )
-```
-
-```
-  family child  dob        name
-       1 child1 1998-11-26 Susan
-       1 child2 2000-01-29 Jose
-       2 child1 1996-06-22 Mark
-```
-
-::: callout-note
-`.value` indica que la primera parte del nombre se convierte en nombre de columna
-:::
-
-# Ensanchar datos: pivot_wider() {background-color="#2C3E50"}
+#  pivot_wider() | Formato Ancho {background-color="#2C3E50"}
 
 ## Cuando necesitas pivot_wider()
 
-::: incremental
 - Opuesto a `pivot_longer()`
 - **Aumenta columnas**, **reduce filas**
 - Útil cuando una observación está dispersa en múltiples filas
 - Menos común en la práctica
-- Frecuente en datos gubernamentales
-:::
 
 ## Ejemplo: Experiencia de pacientes
 
 ```{r}
-cms_patient_experience
+gapminder |> 
+  group_by(year, continent) |> 
+  summarise(pop_promedio = mean(pop), 
+            .groups = "drop") 
 ```
 
-```
-  org_pac_id org_nm                     measure_cd   prf_rate
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_1        63
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_2        87
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_3        86
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_5        57
-```
-
-## Problema
-
-::: incremental
-- Cada **organización** es la unidad de observación
-- Pero cada organización está en **6 filas**
-- Una fila por cada medida del cuestionario
-- Queremos: **1 fila por organización**, **1 columna por medida**
-:::
-
-## Ver medidas únicas
-
-```{r}
-cms_patient_experience |>
-  distinct(measure_cd, measure_title)
-```
-
-```
-  measure_cd   measure_title
-  CAHPS_GRP_1  Getting Timely Care, Appointments...
-  CAHPS_GRP_2  How Well Providers Communicate
-  CAHPS_GRP_3  Patient's Rating of Provider
-  CAHPS_GRP_5  Health Promotion and Education
-  CAHPS_GRP_8  Courteous and Helpful Office Staff
-  CAHPS_GRP_12 Stewardship of Patient Resources
-```
 
 ## Solución: pivot_wider()
 
 ```{r}
-cms_patient_experience |>
-  pivot_wider(
-    names_from = measure_cd,
-    values_from = prf_rate
-  )
+gapminder |> 
+  group_by(year, continent) |> 
+  summarise(pop_promedio = mean(pop), 
+            .groups = "drop") |> 
+  pivot_wider(names_from = year, 
+              values_from = pop_promedio)
 ```
 
 ::: incremental
@@ -503,48 +273,6 @@ cms_patient_experience |>
 - `values_from`: columna existente que contiene los **valores**
 :::
 
-## Resultado (parcial)
-
-```{r}
-cms_patient_experience |>
-  pivot_wider(
-    names_from = measure_cd,
-    values_from = prf_rate
-  )
-```
-
-```
-  org_pac_id org_nm                   measure_title   CAHPS_GRP_1
-  0446157747 USC CARE MEDICAL GROUP   ...                      63
-  0446157747 USC CARE MEDICAL GROUP   ...                      NA
-  0446157747 USC CARE MEDICAL GROUP   ...                      NA
-```
-
-::: question
-¿Por qué todavía hay múltiples filas?
-:::
-
-## Especificar id_cols
-
-```{r}
-cms_patient_experience |>
-  pivot_wider(
-    id_cols = starts_with("org"),
-    names_from = measure_cd,
-    values_from = prf_rate
-  )
-```
-
-```
-  org_pac_id org_nm           CAHPS_GRP_1 CAHPS_GRP_2 CAHPS_GRP_3
-  0446157747 USC CARE MED...           63          87          86
-  0446162697 ASSOCIATION ...           59          85          83
-  0547164295 BEAVER MED  ...           49          NA          75
-```
-
-::: callout-tip
-`id_cols` especifica qué columnas identifican únicamente cada fila
-:::
 
 ## ¿Cómo funciona pivot_wider()?
 
@@ -571,11 +299,7 @@ df |>
   )
 ```
 
-```
-  id      bp1   bp2   bp3
-  A       100   120   105
-  B       140   115    NA
-```
+
 
 ::: callout-note
 NAs se crean cuando no hay valor correspondiente en la entrada
@@ -585,12 +309,12 @@ NAs se crean cuando no hay valor correspondiente en la entrada
 
 `pivot_wider()` sigue estos pasos:
 
-::: incremental
+
 1. Identifica qué irá en **columnas** (valores únicos de `names_from`)
 2. Identifica qué irá en **filas** (variables no usadas = `id_cols`)
 3. Crea data frame vacío combinando filas × columnas
 4. Rellena celdas con valores de `values_from`
-:::
+
 
 ## Valores duplicados
 
@@ -607,7 +331,7 @@ df <- tribble(
 )
 ```
 
-## Resultado con duplicados {.smaller}
+## Resultado con duplicados 
 
 ```{r}
 df |>
@@ -615,15 +339,6 @@ df |>
     names_from = measurement,
     values_from = value
   )
-```
-
-```
-Warning: Values from `value` are not uniquely identified;
-output will contain list-cols.
-
-  id    bp1       bp2
-  A     <dbl [2]> <dbl [1]>
-  B     <dbl [1]> <dbl [1]>
 ```
 
 ::: callout-warning
@@ -639,10 +354,7 @@ df |>
   filter(n > 1)
 ```
 
-```
-  id    measurement     n
-  A     bp1             2
-```
+
 
 ::: callout-tip
 Investiga y resuelve el problema antes de pivotar
@@ -688,12 +400,6 @@ anp_long <- anp_wide |>
 anp_long
 ```
 
-```
-  nombre              year  superficie_ha
-  Parque Cutervo      2020           8214
-  Parque Cutervo      2021           8214
-  Reserva Pacaya      2020        2080000
-```
 
 ## Ensanchar: De largo a ancho
 
@@ -706,67 +412,7 @@ anp_long |>
   )
 ```
 
-```
-  nombre              superficie_2020  superficie_2021
-  Parque Cutervo                 8214             8214
-  Reserva Pacaya              2080000          2080000
-  Parque Manu                 1716295          1716295
-```
 
-# Ejercicios Prácticos {background-color="#2C3E50"}
-
-## Ejercicio 1: Billboard básico {.smaller}
-
-::: task
-1. Toma el dataset `billboard`
-2. Usa `pivot_longer()` para crear columnas `week` y `rank`
-3. Elimina valores faltantes
-4. Convierte `week` a numérico
-5. Filtra solo canciones que llegaron al top 10
-6. Cuenta cuántas semanas cada canción estuvo en top 10
-:::
-
-## Ejercicio 2: Áreas Naturales
-
-::: task
-Tienes datos con múltiples años de superficie:
-
-1. Crea un tibble con columnas: `nombre`, `superficie_2019`, `superficie_2020`, `superficie_2021`
-2. Usa `pivot_longer()` para alargar
-3. Convierte el año a numérico
-4. Calcula el cambio de superficie entre años
-:::
-
-## Ejercicio 3: WHO tuberculosis
-
-::: task
-Con el dataset `who2`:
-
-1. Usa `pivot_longer()` con `names_sep`
-2. Separa `diagnosis`, `gender`, y `age`
-3. Calcula casos totales por país y género
-4. Usa `pivot_wider()` para crear columnas por género
-:::
-
-## Ejercicio 4: Datos de censo {.smaller}
-
-::: task
-Crea datos simulados de población por departamento:
-
-```{r}
-censo <- tribble(
-  ~departamento, ~poblacion_urbana, ~poblacion_rural,
-  "Lima",        9000000,           500000,
-  "Cusco",       400000,            800000,
-  "Loreto",      300000,            700000
-)
-```
-
-1. Alarga los datos
-2. Calcula población total por departamento
-3. Calcula porcentaje urbano/rural
-4. Ensancha para comparar departamentos
-:::
 
 # Resumen {background-color="#2C3E50"}
 
@@ -793,7 +439,7 @@ censo <- tribble(
 | `names_sep` | Separador para dividir nombres |
 | `.value` | Indicador especial para nombres variables |
 
-## Argumentos importantes {.smaller}
+## Argumentos importantes 
 
 **pivot_longer():**
 
@@ -812,40 +458,19 @@ censo <- tribble(
 - `names_prefix` - agregar prefijo
 - `values_fill` - valor para celdas faltantes
 
-## Workflow típico
-
-```{r eval=FALSE}
-# 1. Leer datos
-datos <- read_csv("datos.csv")
-
-# 2. Explorar estructura
-glimpse(datos)
-
-# 3. Identificar problema
-#    - ¿Variables en nombres de columnas? → pivot_longer()
-#    - ¿Observaciones en múltiples filas? → pivot_wider()
-
-# 4. Pivotar
-datos_tidy <- datos |>
-  pivot_longer(...) # o pivot_wider(...)
-
-# 5. Limpiar tipos y valores
-datos_clean <- datos_tidy |>
-  mutate(...)
-```
 
 ## Consejos finales
 
-::: incremental
+
 1. **Empieza simple** - usa ejemplos pequeños para entender
 2. **Visualiza** - dibuja cómo quieres que se vean los datos
 3. **Itera** - prueba, revisa, ajusta
 4. **Documenta** - comenta por qué pivoteas de cierta forma
 5. **Sé pragmático** - la forma "correcta" es la que facilita tu análisis
 6. **No tengas miedo** - des-ordenar y re-ordenar es normal
-:::
 
-## Errores comunes {.smaller}
+
+## Errores comunes
 
 | Error | Solución |
 |-------|----------|
@@ -863,26 +488,25 @@ datos_clean <- datos_tidy |>
 - [tidyr documentation](https://tidyr.tidyverse.org/)
 - [Data transformation cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
 
-## Próximos pasos
 
-En las siguientes sesiones:
 
-::: incremental
-- **Manipulación avanzada** con dplyr
-- **Unir datos** de múltiples fuentes
-- **Trabajo con texto** (stringr)
-- **Fechas y tiempos** (lubridate)
-- **Visualización** (ggplot2)
+## Contacto
+
+::: {.columns}
+::: {.column width="50%"}
+**Paul Efren Santos Andrade**
+
+📧 [Correo electrónico]
+
+🌐 [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
+
+🐦 [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
+
+💻 [github.com/PaulESantos](https://github.com/PaulESantos)
 :::
 
-# ¡Gracias! {.center background-color="#2C3E50"}
-
-::: {.centered}
-**¿Preguntas?**
-
-📧 paul.santos@example.com
-
-🌐 Materiales del curso disponibles en el repositorio
-
-### Próxima sesión: dplyr - Manipulación Avanzada de Datos
+::: {.column width="50%"}
+![](img/DSC_0140.JPG){fig-align="center" width="60%" style="border-radius: 50% / 35%; object-fit: cover;"}
 :::
+:::
+

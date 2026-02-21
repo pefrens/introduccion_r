@@ -69,13 +69,11 @@ Dos categorías principales:
 
 ```{r}
 library(tidyverse)
-library(nycflights13)
+library(sf)
+library(janitor)
+
 ```
 
-::: callout-note
-Usaremos los 5 datasets relacionados del paquete `nycflights13`:
-`flights`, `airlines`, `airports`, `planes`, `weather`
-:::
 
 # Claves (Keys) {background-color="#2C3E50"}
 
@@ -94,16 +92,17 @@ Usaremos los 5 datasets relacionados del paquete `nycflights13`:
 ::: {.columns}
 ::: {.column width="50%"}
 
-Ejemplo en `airlines`:
+Ejemplo en `departamento`:
 
 ```{r}
-airlines
+departamentos <- read_csv("data/departamento.csv")
+departamentos
 ```
 :::
 
 ::: {.column width="50%"}
 ::: callout-note
-`carrier` es la clave primaria (identifica únicamente cada aerolínea)
+`ccdd` es la clave primaria (identifica únicamente cada departamento)
 :::
 :::
 :::
@@ -113,33 +112,64 @@ airlines
 Cuando necesitas **múltiples variables** para identificar una observación:
 
 ```{r}
-weather
+provincias <- read_csv("data/provincia.csv")
+provincias
 ```
 
 
-
 ::: callout-note
-**Clave compuesta**: `origin` + `time_hour` identifican cada observación
+**Clave compuesta**: `ccdd` + `ccpp` identifican cada observación
 :::
+
+## Clave compuesta
+
+Cuando necesitas **múltiples variables** para identificar una observación:
+
+```{r}
+distritos <-  read_csv("data/distritos.csv")
+distritos
+```
+
 
 ## Clave foránea
 
 **Foreign key** = variable(s) que corresponden a una clave primaria en **otra** tabla
 
-. . .
+Ejemplos modelo UBIGEO:
 
-Ejemplos en `flights`:
-
-::: incremental
-- `flights$tailnum` → `planes$tailnum`
-- `flights$carrier` → `airlines$carrier`
-- `flights$origin` → `airports$faa`
-- `flights$dest` → `airports$faa`
-:::
+- `provincias$ccdd` → `departamentos$ccdd`
+- `distrito$ccdd` → `provincias$ccdd`
+- `distrito$ccpp` → `provincias$ccpp`
 
 ## Relaciones entre tablas
 
-![](https://r4ds.hadley.nz/diagrams/relational.png){fig-align="center"}
+```{r}
+#| echo: false
+library(DiagrammeR)
+
+grViz("
+digraph relaciones {
+
+  graph [layout = dot, rankdir = LR]
+
+  node [shape = record,
+        fontname = Helvetica]
+
+  departamentos [label = '{departamentos | ccdd (PK) \\l nombdep \\l }']
+
+  provincias [label = '{provincias | ccdd (PK, FK) \\l ccpp (PK) \\l nombprov \\l }']
+
+  distrito [label = '{distrito | ccdd (PK, FK) \\l ccpp (PK, FK) \\l ccdi (PK) \\l ubigeo \\l nombdist \\l geom \\l }']
+
+  departamentos -> provincias [label = 'ccdd']
+
+  provincias -> distrito [label = 'ccdd + ccpp']
+
+}
+")
+
+```
+
 
 ::: callout-tip
 Claves primarias y foráneas casi siempre tienen el **mismo nombre**
@@ -150,15 +180,15 @@ Claves primarias y foráneas casi siempre tienen el **mismo nombre**
 Siempre verifica que las claves sean **únicas**:
 
 ```{r}
-planes |>
-  count(tailnum) |>
+departamentos |>
+  count(ccdd) |>
   filter(n > 1)
 ```
 
 
 
 ::: callout-tip
-0 filas = Perfecto! Cada `tailnum` es único
+0 filas = Perfecto! Cada `ccdd` es único
 :::
 
 ## Verificar valores faltantes
@@ -166,11 +196,11 @@ planes |>
 Las claves no deben tener `NA`:
 
 ```{r}
-planes |>
-  filter(is.na(tailnum))
+departamentos |>
+  filter(is.na(ccdd))
 
-weather |>
-  filter(is.na(time_hour) | is.na(origin))
+provincias |>
+  filter(is.na(ccdd) | is.na(ccpp))
 ```
 
 
@@ -184,128 +214,63 @@ weather |>
 A veces es útil crear un **identificador simple**:
 
 ```{r}
-flights2 <- flights |>
+departamentos2 <- departamentos |>
   mutate(id = row_number(), .before = 1)
 
-flights2
+departamentos2
 ```
-
-
-
-::: callout-tip
-Más fácil decir "vuelo 2001" que "UA430 salió 9am 2013-01-03"
-:::
 
 # Mutating Joins {background-color="#2C3E50"}
 
-## ¿Qué son mutating joins?
+## ¿Qué son los mutating joins?
 
-::: incremental
-- **Combinan variables** de dos data frames
+- **Combinan variables** de dos data frames (tibble)
 - Primero: encuentran observaciones coincidentes por claves
 - Segundo: copian variables de una tabla a otra
 - Como `mutate()`: agregan variables a la **derecha**
-:::
-
-## Dataset simplificado
-
-Para ejemplos más claros:
-
-```{r}
-flights2 <- flights |>
-  select(year, time_hour, origin, dest, tailnum, carrier)
-
-flights2
-```
-
 
 ## left_join(): El join más común
 
 `left_join()` mantiene **todas las filas de x**:
 
 ```{r}
-flights2 |>
-  left_join(airlines)
+provincias |>
+  left_join(departamentos)
 ```
 
 
 
 ::: callout-note
-Se unió automáticamente por `carrier` (variable común)
+Se unió automáticamente por `ccdd` (variable común)
 :::
 
-## Agregar información del clima
-
-```{r}
-flights2 |>
-  left_join(weather |> select(origin, time_hour, temp, wind_speed))
-```
-
-
-## Agregar información del avión
-
-```{r}
-flights2 |>
-  left_join(planes |> select(tailnum, type, engines, seats))
-```
-
-
-
-## Valores faltantes en joins
-
-Cuando no hay coincidencia, se crean `NA`:
-
-```{r}
-flights2 |>
-  filter(tailnum == "N3ALAA") |>
-  left_join(planes |> select(tailnum, type, engines, seats))
-```
-
-
-::: callout-warning
-Este avión no está en la tabla `planes`
-:::
 
 ## Especificar claves: join_by()
 
 Por defecto, usa **todas** las variables comunes:
 
 ```{r}
-flights2 |>
-  left_join(planes)
+provincias |>
+  left_join(departamentos)
 ```
 
-::: question
-¿Problema? Ambas tablas tienen `year` pero significan cosas diferentes!
-:::
 
 ## Solución: join_by() explícito
 
 ```{r}
-flights2 |>
-  left_join(planes, join_by(tailnum))
+provincias |>
+  left_join(departamentos, join_by(ccdd))
 ```
 
-
-
-::: callout-note
-Variables con sufijos `.x` y `.y` para distinguir origen
-:::
 
 ## Claves con nombres diferentes
 
 ```{r}
-flights2 |>
-  left_join(airports, join_by(dest == faa))
-```
-
-
-
-. . .
-
-```{r}
-flights2 |>
-  left_join(airports, join_by(origin == faa))
+provincias_2 <- sample_n(provincias, 15) |> 
+  mutate(cod_dep = ccdd)
+provincias_2 |>
+  left_join(departamentos, 
+            join_by(cod_dep == ccdd))
 ```
 
 
@@ -337,22 +302,12 @@ flights2 |>
 
 ## semi_join(): Mantener coincidencias
 
-Aeropuertos que son **origen** de vuelos:
 
 ```{r}
-airports |>
-  semi_join(flights2, join_by(faa == origin))
+departamentos |>
+  semi_join(provincias_2,
+            join_by(ccdd == cod_dep))
 ```
-
-
-
-## semi_join(): Destinos
-
-```{r}
-airports |>
-  semi_join(flights2, join_by(faa == dest))
-```
-
 
 ::: callout-note
 `semi_join()` solo mantiene columnas de la **primera** tabla
@@ -360,31 +315,17 @@ airports |>
 
 ## anti_join(): Encontrar faltantes
 
-Destinos que **no están** en `airports`:
+Departamentos que **no están** en `provincias_2`:
 
 ```{r}
-flights2 |>
-  anti_join(airports, join_by(dest == faa)) |>
-  distinct(dest)
+departamentos |>
+  anti_join(provincias_2,
+            join_by(ccdd == cod_dep))
 ```
 
 
 ::: callout-tip
 Útil para encontrar valores **implícitamente faltantes**
-:::
-
-## anti_join(): Aviones faltantes
-
-```{r}
-flights2 |>
-  anti_join(planes, join_by(tailnum)) |>
-  distinct(tailnum)
-```
-
-
-
-::: question
-¿Por qué estos aviones no están en la tabla `planes`?
 :::
 
 # ¿Cómo funcionan los joins? {background-color="#2C3E50"}
@@ -557,11 +498,6 @@ Con `keep = TRUE`:
 x |> inner_join(y, join_by(key == key), keep = TRUE)
 ```
 
-```
-  key.x val_x key.y val_y
-      1 x1        1 y1
-      2 x2        2 y2
-```
 
 ::: callout-note
 En equi joins, `key.x == key.y` siempre. En non-equi joins, pueden diferir.
@@ -585,6 +521,8 @@ df |> cross_join(df)
 ## Inequality join
 
 ```{r}
+#| eval: false
+#| 
 x |> inner_join(y, join_by(key >= key), keep = TRUE)
 ```
 
@@ -598,8 +536,6 @@ df <- tibble(id = 1:4, name = c("John", "Simon", "Tracy", "Max"))
 df |> inner_join(df, join_by(id < id))
 ```
 
-
-
 ::: callout-tip
 Solo combinaciones (no permutaciones con repetición)
 :::
@@ -609,12 +545,13 @@ Solo combinaciones (no permutaciones con repetición)
 Coincidencia **más cercana** en lugar de todas:
 
 ```{r}
+#| eval: false
 x |> inner_join(y, join_by(closest(key >= key)))
 ```
 
 ![](https://r4ds.hadley.nz/diagrams/join/closest.png){fig-align="center"}
 
-## Ejemplo: Fechas de fiestas {.smaller}
+## Ejemplo: Fechas de fiestas
 
 ```{r}
 parties <- tibble(
@@ -627,6 +564,8 @@ employees <- tibble(
   birthday = ymd("2022-01-01") + (sample(365, 100, replace = TRUE) - 1)
 )
 ```
+
+## Ejemplo: Fechas de fiestas
 
 ¿Qué fiesta corresponde a cada cumpleaños?
 
@@ -682,105 +621,7 @@ parties |>
 Self-join para verificar que los periodos no se superpongan
 :::
 
-# Ejemplo Práctico: Áreas Naturales {background-color="#2C3E50"}
 
-## Datos de ejemplo
-
-```{r}
-library(readxl)
-library(janitor)
-library(sf)
-
-anp <- read_excel("data/areas_naturales_peru.xlsx") |>
-  clean_names()
-
-departamentos <- read_sf("data/DEPARTAMENTO.gpkg") |>
-  clean_names()
-```
-
-## Agregar información de departamento
-
-```{r eval=FALSE}
-# Contar áreas por ubicación
-anp_por_depto <- anp |>
-  count(ubicacion_politica, name = "n_areas")
-
-# Unir con datos espaciales
-departamentos |>
-  left_join(anp_por_depto,
-            join_by(nombdep == ubicacion_politica))
-```
-
-## Filtrar departamentos con ANPs
-
-```{r eval=FALSE}
-# Solo departamentos que tienen áreas naturales
-departamentos |>
-  semi_join(anp_por_depto,
-            join_by(nombdep == ubicacion_politica))
-```
-
-## Encontrar departamentos sin ANPs
-
-```{r eval=FALSE}
-# Departamentos SIN áreas naturales protegidas
-departamentos |>
-  anti_join(anp_por_depto,
-            join_by(nombdep == ubicacion_politica)) |>
-  select(nombdep)
-```
-
-# Ejercicios Prácticos {background-color="#2C3E50"}
-
-## Ejercicio 1: ANPs y departamentos
-
-::: task
-1. Une `anp` con información de departamentos
-2. Calcula el área total protegida por departamento
-3. ¿Qué departamento tiene más hectáreas protegidas?
-4. ¿Qué porcentaje del área del departamento está protegido?
-:::
-
-## Ejercicio 2: Filtering joins
-
-::: task
-Usando `anp` y `departamentos`:
-
-1. Usa `semi_join()` para filtrar solo departamentos con Parques Nacionales
-2. Usa `anti_join()` para encontrar departamentos sin ninguna ANP
-3. Cuenta cuántos departamentos están en cada caso
-:::
-
-## Ejercicio 3: Multiple joins {.smaller}
-
-::: task
-Crea un análisis que:
-
-1. Una `anp` con información de departamentos
-2. Calcule áreas por categoría y departamento
-3. Encuentre la categoría más común por departamento
-4. Use `pivot_wider()` para crear una tabla departamento × categoría
-:::
-
-## Ejercicio 4: Non-equi join
-
-::: task
-Crea datos de monitoreo de ANPs:
-
-```{r}
-#| eval: false
-#| 
-monitoreo <- tibble(
-  area = sample(anp$nombre, 50, replace = TRUE),
-  fecha = ymd("2023-01-01") + days(sample(365, 50)),
-  guardaparques = sample(1:10, 50, replace = TRUE)
-)
-```
-
-1. Agrupa fechas por trimestre
-2. Usa `join_by(between())` para asignar cada monitoreo a un trimestre
-3. Calcula promedio de guardaparques por trimestre
-:::
 
 # Resumen {background-color="#2C3E50"}
 
@@ -826,27 +667,6 @@ join_by(between(x, lower, upper))
 join_by(overlaps(x_lo, x_hi, y_lo, y_hi))
 ```
 
-## Workflow típico {.smaller}
-
-```{r}
-#| eval: false
-# 1. Identificar claves
-flights |> count(time_hour, carrier, flight) |> filter(n > 1)
-
-# 2. Verificar claves
-planes |> filter(is.na(tailnum))
-
-# 3. Decidir tipo de join
-# - ¿Agregar columnas? → mutating join (left_join)
-# - ¿Filtrar filas? → filtering join (semi/anti_join)
-
-# 4. Especificar claves explícitamente
-flights2 |>
-  left_join(planes, join_by(tailnum))
-
-# 5. Revisar resultado
-glimpse(resultado)
-```
 
 ## Consejos importantes
 
@@ -859,7 +679,7 @@ glimpse(resultado)
 6. **anti_join()** es perfecto para encontrar valores faltantes
 :::
 
-## Errores comunes {.smaller}
+## Errores comunes
 
 | Error | Solución |
 |-------|----------|
@@ -894,26 +714,23 @@ x |>
 - [SQL joins explained](https://www.sql-join.com/) - Visual
 - [Data transformation cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
 
-## Próximos pasos
 
-En las siguientes sesiones:
+## Contacto
 
-::: incremental
-- **Trabajo con texto** (stringr)
-- **Fechas y tiempos** (lubridate)
-- **Funciones** (escribir tus propias funciones)
-- **Iteración** (purrr)
-- **Visualización avanzada** (ggplot2)
+::: {.columns}
+::: {.column width="50%"}
+**Paul Efren Santos Andrade**
+
+📧 [Correo electrónico]
+
+🌐 [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
+
+🐦 [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
+
+💻 [github.com/PaulESantos](https://github.com/PaulESantos)
 :::
 
-# ¡Gracias! {.center background-color="#2C3E50"}
-
-::: {.centered}
-**¿Preguntas?**
-
-📧 paul.santos@example.com
-
-🌐 Materiales del curso disponibles en el repositorio
-
-### Próxima sesión: Trabajo con Texto (stringr)
+::: {.column width="50%"}
+![](img/DSC_0140.JPG){fig-align="center" width="60%" style="border-radius: 50% / 35%; object-fit: cover;"}
+:::
 :::

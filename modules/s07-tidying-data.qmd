@@ -1,699 +1,83 @@
 ---
-title: "tidyr - Organización de Datos (Tidy Data)"
-subtitle: "<span class='code'>Sesión 4</span>"
+title: "tidyr - Organizacion de datos (Tidy Data)"
+subtitle: "<span class='code'>Sesion 4</span>"
 date: "2026-02"
 image: "images/04-theming.png"
 tbl-colwidths: [5,20,75]
 ---
 
+```{=html}
+<iframe class="slide-deck" src="../materials/04-tidying-data.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+```
+
+<a href='../materials/04-tidying-data.html' target="_blank">Ver diapositivas en pantalla completa</a>
+
 # Esquema
 
--   Principios de Tidy Data
--   `pivot_longer()`: Pivotear a más largo
--   `pivot_wider()`: Pivotear a más ancho
--   Transformación de tipos de datos en pivot
--   `separate()` y `unite()`: Separar y unir columnas
--   Aplicaciones prácticas con datos reales
+- Principios de tidy data
+- `pivot_longer()` y `pivot_wider()`
+- `separate()` y `unite()`
+- Flujo de limpieza previo al analisis
 
-# Tidy Data (Datos Ordenados)
+# Objetivo de la sesion
 
-## Definición de Tidy Data
+Transformar tablas entre formato ancho y largo de forma consistente para analisis y visualizacion.
 
-> "Los conjuntos de datos ordenados son fáciles de manipular, modelar y visualizar, y tienen una estructura específica: cada variable es una columna, cada observación es una fila y cada tipo de unidad observacional es una tabla."
->
-> Hadley Wickham, Tidy Data
+# Datos usados
 
-## Principios de Tidy Data
+- Datos creados en memoria con `tibble()`
 
-Un dataset es "tidy" (ordenado) cuando cumple:
+# Practica guiada
 
-1. **Cada variable es una columna**
-2. **Cada observación es una fila**
-3. **Cada valor tiene su propia celda**
-
-## ¿Por qué Tidy Data?
-
-::: incremental
-- **Facilita el análisis y visualización**: estructura consistente
-- **Funciona mejor con tidyverse**: todos los verbos de dplyr esperan datos ordenados
-- **Simplifica la manipulación**: no necesitas pensar en la estructura
-- **Permite código más limpio**: menos transformaciones intermedias
-:::
-
-## Datos No Ordenados: Ejemplos
-
-### Ejemplo 1: Columnas contienen valores, no variables
-
-```{r}
-#| echo: true
-#| eval: false
-# Formato ancho (NO ordenado)
-pais      año_2020  año_2021  año_2022
-Peru      100       120       140
-Chile     150       160       170
-```
-
-**Problema**: Los años deberían ser valores de una variable, no nombres de columnas.
-
-## Datos No Ordenados: Ejemplos
-
-### Ejemplo 2: Múltiples variables en una columna
-
-```{r}
-#| echo: true
-#| eval: false
-# NO ordenado
-departamento    tipo_valor
-Cusco           poblacion_300000
-Lima            poblacion_9000000
-Cusco           area_71986
-```
-
-**Problema**: `tipo_valor` contiene dos variables: tipo y valor.
-
-## Datos Ordenados: El Mismo Ejemplo
-
-```{r}
-#| echo: true
-#| eval: false
-# Formato largo (ordenado)
-pais      año    poblacion
-Peru      2020   100
-Peru      2021   120
-Peru      2022   140
-Chile     2020   150
-Chile     2021   160
-Chile     2022   170
-```
-
-**Ahora sí**: Cada variable en su columna, cada observación en su fila.
-
-# pivot_longer() - Pivotear a Más Largo
-
-## ¿Cuándo usar pivot_longer()?
-
-Usa `pivot_longer()` cuando:
-
-- Los nombres de columnas son valores de una variable, no nombres de variables
-- Tienes datos en formato "ancho" que necesitas hacer "largos"
-- Quieres preparar datos para graficar con ggplot2
-
-## Ejemplo Básico: De Ancho a Largo
-
-```{r}
-#| echo: true
+```r
+library(tidyverse)
 library(tidyr)
+```
 
-# Datos en formato ancho
-data_wide <- data.frame(
-  pais = c("Peru", "Chile", "Argentina"),
-  año_2020 = c(100, 150, 200),
-  año_2021 = c(120, 160, 210),
-  año_2022 = c(140, 170, 220)
+```r
+datos_ancho <- tibble(
+  departamento = c("CUSCO", "LIMA", "AREQUIPA"),
+  pob_2022 = c(1350, 9700, 1500),
+  pob_2023 = c(1380, 9850, 1530)
 )
 
-data_wide
+datos_ancho
 ```
 
-## Aplicando pivot_longer()
-
-```{r}
-#| echo: true
-# Convertir a formato largo
-data_long <- data_wide |>
+```r
+datos_largo <- datos_ancho |>
   pivot_longer(
-    cols = starts_with("año_"),  # columnas a pivotar
-    names_to = "año",             # nombre de la nueva columna para los nombres
-    values_to = "poblacion"       # nombre de la nueva columna para los valores
-  )
-
-data_long
-```
-
-## Sintaxis de pivot_longer()
-
-```{r}
-#| echo: true
-#| eval: false
-data |>
-  pivot_longer(
-    cols = ___________________,    # Columnas a pivotar
-    names_to = _______________,    # Nombre de la nueva variable con nombres
-    values_to = ______________     # Nombre de la nueva variable con valores
-  )
-```
-
-## Seleccionando Columnas en pivot_longer()
-
-Diferentes formas de seleccionar columnas:
-
-```{r}
-#| echo: true
-#| eval: false
-# Por nombre
-cols = c(año_2020, año_2021, año_2022)
-
-# Con helper de select
-cols = starts_with("año_")
-cols = ends_with("_total")
-cols = contains("temp")
-
-# Todas excepto...
-cols = -pais
-cols = -c(pais, region)
-
-# Por posición
-cols = 2:4
-```
-
-## Problema: Tipos de Datos
-
-```{r}
-#| echo: true
-data_long
-```
-
-::: question
-¿Cuál es el tipo de la variable `año`?
-
-¿Por qué es problemático?
-
-¿Qué deberíamos hacer?
-:::
-
-## Transformar Tipos en pivot_longer()
-
-```{r}
-#| echo: true
-data_long_corrected <- data_wide |>
-  pivot_longer(
-    cols = starts_with("año_"),
-    names_to = "año",
+    cols = starts_with("pob_"),
+    names_to = "anio",
     values_to = "poblacion",
-    names_prefix = "año_",           # Remover prefijo
-    names_transform = as.numeric     # Convertir a numérico
+    names_prefix = "pob_"
   )
 
-data_long_corrected
+datos_largo
 ```
 
-## Ejemplo Real: Datos de Áreas Naturales
-
-```{r}
-#| echo: true
-#| eval: false
-library(vegan)
-data("BCI")
-
-# Ver estructura original
-head(BCI[, 1:5])
-```
-
-BCI tiene especies como columnas (formato ancho).
-
-## Pivotear BCI a Formato Largo
-
-```{r}
-#| echo: true
-#| eval: false
-# Convertir a tibble y agregar ID de parcela
-bci_long <- BCI |>
-  as_tibble(rownames = "plot_n") |>
-  pivot_longer(
-    -plot_n,                    # Todas menos plot_n
-    names_to = "especies",
-    values_to = "abundancia"
-  )
-
-bci_long
-```
-
-## Filtrar Valores Cero
-
-```{r}
-#| echo: true
-#| eval: false
-# Remover especies con abundancia cero
-bci_long_clean <- bci_long |>
-  filter(abundancia != 0)
-
-# Comparar tamaños
-nrow(bci_long)        # Con ceros
-nrow(bci_long_clean)  # Sin ceros
-```
-
-# pivot_wider() - Pivotear a Más Ancho
-
-## ¿Cuándo usar pivot_wider()?
-
-Usa `pivot_wider()` cuando:
-
-- Tienes valores en filas que deberían ser columnas
-- Necesitas crear una tabla de resumen
-- Quieres un formato más legible para presentación
-
-## De Largo a Ancho: Ejemplo Básico
-
-```{r}
-#| echo: true
-# Volver de largo a ancho
-data_wide_again <- data_long_corrected |>
+```r
+datos_largo |>
   pivot_wider(
-    names_from = año,           # Columna con nombres
-    values_from = poblacion     # Columna con valores
-  )
-
-data_wide_again
-```
-
-## Sintaxis de pivot_wider()
-
-```{r}
-#| echo: true
-#| eval: false
-data |>
-  pivot_wider(
-    names_from = _______________,    # Columna con nombres
-    values_from = ______________,    # Columna con valores
-    values_fill = _______________    # Valor para celdas vacías (opcional)
+    names_from = anio,
+    values_from = poblacion,
+    names_prefix = "pob_"
   )
 ```
 
-## Rellenar Valores Faltantes
+```r
+ids <- tibble(codigo = c("08-01-01", "15-01-01"))
 
-```{r}
-#| echo: true
-#| eval: false
-# Con valores NA por defecto
-bci_wide <- bci_long_clean |>
-  pivot_wider(
-    names_from = especies,
-    values_from = abundancia
-  )
-
-# Rellenar NA con 0
-bci_wide_filled <- bci_long_clean |>
-  pivot_wider(
-    names_from = especies,
-    values_from = abundancia,
-    values_fill = 0              # Cambiar NA por 0
-  )
+ids |>
+  separate(codigo, into = c("ccdd", "ccpp", "ccdi"), sep = "-")
 ```
 
-## Ejemplo Práctico: Tabla de Resumen
+# Ejercicios
 
-```{r}
-#| echo: true
-#| eval: false
-library(dplyr)
+1. Convertir un dataset de meses en columnas a formato largo.
+2. Regresar el resultado a formato ancho con `pivot_wider()`.
+3. Separar un identificador compuesto y volver a unirlo con `unite()`.
 
-# Crear tabla resumen de áreas por categoría y año
-anp_summary <- anp |>
-  group_by(categoria, año_creacion) |>
-  summarise(n_areas = n()) |>
-  pivot_wider(
-    names_from = año_creacion,
-    values_from = n_areas,
-    values_fill = 0
-  )
+# Resultado esperado
 
-anp_summary
-```
-
-# separate() y unite()
-
-## separate(): Separar Una Columna
-
-Divide una columna en múltiples columnas.
-
-```{r}
-#| echo: true
-# Datos con fechas combinadas
-data_fechas <- data.frame(
-  id = 1:3,
-  fecha = c("2021-01-15", "2021-02-20", "2021-03-25")
-)
-
-data_fechas
-```
-
-## Aplicando separate()
-
-```{r}
-#| echo: true
-# Separar fecha en año, mes, día
-data_separada <- data_fechas |>
-  separate(
-    fecha,
-    into = c("año", "mes", "dia"),
-    sep = "-"
-  )
-
-data_separada
-```
-
-## separate(): Sintaxis
-
-```{r}
-#| echo: true
-#| eval: false
-data |>
-  separate(
-    col = _______________,          # Columna a separar
-    into = c("col1", "col2"),       # Nombres de nuevas columnas
-    sep = "___",                    # Separador (regex)
-    convert = TRUE                  # Convertir tipos automáticamente
-  )
-```
-
-## separate_rows(): Separar y Expandir Filas
-
-```{r}
-#| echo: true
-# Datos con múltiples ubicaciones
-data_multi <- data.frame(
-  area = c("Manu", "Huascaran"),
-  departamentos = c("Cusco y Madre de Dios", "Ancash")
-)
-
-data_multi
-```
-
-## Aplicando separate_rows()
-
-```{r}
-#| echo: true
-# Separar departamentos en filas diferentes
-data_expandida <- data_multi |>
-  separate_rows(departamentos, sep = " y ")
-
-data_expandida
-```
-
-## unite(): Unir Columnas
-
-Combina múltiples columnas en una.
-
-```{r}
-#| echo: true
-# Unir año, mes, día de vuelta
-data_unida <- data_separada |>
-  unite(
-    "fecha_completa",
-    año, mes, dia,
-    sep = "-"
-  )
-
-data_unida
-```
-
-## unite(): Sintaxis
-
-```{r}
-#| echo: true
-#| eval: false
-data |>
-  unite(
-    "nueva_columna",              # Nombre de la columna resultante
-    col1, col2, col3,             # Columnas a unir
-    sep = "_",                    # Separador
-    remove = TRUE                 # ¿Eliminar columnas originales?
-  )
-```
-
-# Aplicación Práctica Completa
-
-## Caso de Estudio: Áreas Naturales del Perú
-
-Objetivos:
-
-1. Separar ubicaciones políticas múltiples
-2. Separar fechas de modificación múltiples
-3. Limpiar texto de categorías
-4. Crear un dataset ordenado y listo para análisis
-
-## Paso 1: Explorar los Datos
-
-```{r}
-#| echo: true
-#| eval: false
-library(readxl)
-library(janitor)
-
-anp <- read_excel("data/areas_naturales_peru.xlsx", skip = 1) |>
-  clean_names()
-
-# Ver estructura
-glimpse(anp)
-
-# Examinar ubicaciones problemáticas
-anp |> select(ubicacion_politica) |> head()
-```
-
-## Paso 2: Separar Ubicaciones Múltiples
-
-```{r}
-#| echo: true
-#| eval: false
-anp_tidy <- anp |>
-  separate_rows(
-    ubicacion_politica,
-    sep = " y |\\, | Y "    # Separadores múltiples
-  )
-
-# Verificar
-anp_tidy |>
-  select(nombre_area, ubicacion_politica) |>
-  filter(str_detect(nombre_area, "Manu"))
-```
-
-## Paso 3: Separar Fechas Múltiples
-
-```{r}
-#| echo: true
-#| eval: false
-anp_tidy <- anp_tidy |>
-  separate_rows(
-    fecha_promulgacion__modificacion,
-    sep = " \\/ |\\;|\\-"
-  ) |>
-  separate_rows(
-    base_legal_modificacion,
-    sep = "\\;|\\/|\\,"
-  )
-```
-
-## Paso 4: Limpiar y Transformar
-
-```{r}
-#| echo: true
-#| eval: false
-library(tm)  # Para removePunctuation, removeNumbers
-library(stringr.plus)  # Para str_extract_before/after
-
-anp_clean <- anp_tidy |>
-  mutate(
-    # Limpiar categoría
-    categoria = categoria |>
-      str_squish() |>
-      removeNumbers() |>
-      removePunctuation() |>
-      str_to_title(),
-
-    # Extraer tipo de documento
-    tipo_doc_crea = str_extract_before(base_legal_creacion, "Nº"),
-    num_doc_crea = str_extract_after(base_legal_creacion, "Nº"),
-
-    # Limpiar espacios en todas las columnas de texto
-    across(where(is.character), str_squish)
-  )
-```
-
-## Resultado Final: Dataset Ordenado
-
-```{r}
-#| echo: true
-#| eval: false
-# Verificar el resultado
-glimpse(anp_clean)
-
-# Ahora podemos hacer análisis fácilmente
-anp_clean |>
-  group_by(ubicacion_politica) |>
-  summarise(n_areas = n_distinct(nombre_area)) |>
-  arrange(desc(n_areas))
-```
-
-# Resumen: ¿Cuándo Pivotear?
-
-## Señales de que Necesitas pivot_longer()
-
-::: incremental
-- Los nombres de columnas son valores, no variables
-- Tienes datos en formato "ancho"
-- Ves patrones en nombres de columnas (año_2020, año_2021, etc.)
-- Quieres graficar con ggplot2 y necesitas una variable categórica
-- Necesitas filtrar o agrupar por lo que ahora son columnas
-:::
-
-## Señales de que Necesitas pivot_wider()
-
-::: incremental
-- Quieres crear una tabla de resumen legible
-- Necesitas comparar valores lado a lado
-- Vas a exportar a Excel para presentación
-- Tienes múltiples observaciones por fila que deberían ser columnas
-:::
-
-## Ancho vs. Largo: No es Absoluto
-
-::: important
-Los datasets no son inherentemente "anchos" o "largos". Son más anchos o más largos dependiendo de:
-
-- El análisis que quieres hacer
-- La visualización que quieres crear
-- Las operaciones que necesitas realizar
-:::
-
-# Ejercicios Prácticos
-
-## Ejercicio 1: BCI - Básico
-
-::: question
-1. Carga los datos BCI del paquete vegan
-2. Convierte a formato largo
-3. Filtra especies con abundancia mayor a 10
-4. ¿Cuántas observaciones quedan?
-5. ¿Cuál es la especie más abundante?
-:::
-
-## Ejercicio 2: Pivotear Ida y Vuelta
-
-::: question
-1. Crea un dataset simple con 3 países y 4 años (formato ancho)
-2. Pivotea a formato largo
-3. Calcula la media por país
-4. Vuelve a pivotear a formato ancho
-5. Verifica que obtienes el dataset original
-:::
-
-## Ejercicio 3: Áreas Naturales - Avanzado
-
-::: question
-1. Importa `areas_naturales_peru.xlsx`
-2. Separa ubicaciones políticas múltiples
-3. Cuenta áreas por departamento
-4. Crea una tabla ancha con categorías como columnas
-5. ¿Qué departamento tiene más Parques Nacionales?
-:::
-
-## Ejercicio 4: Datos Propios
-
-::: question
-1. Piensa en datos que uses regularmente
-2. ¿Están en formato ordenado?
-3. ¿Qué transformaciones necesitarían?
-4. Bosqueja el código necesario para ordenarlos
-:::
-
-# Consejos y Mejores Prácticas
-
-## Consejos para Pivotear
-
-::: incremental
-1. **Explora primero**: Usa `head()`, `glimpse()`, `names()` antes de pivotear
-2. **Prueba con subset**: Usa `slice(1:10)` para probar el código con pocos datos
-3. **Verifica tipos**: Usa `names_transform` para convertir tipos automáticamente
-4. **Maneja NA**: Decide si usar `values_drop_na` o `values_fill`
-5. **Nombra bien**: Usa nombres descriptivos para `names_to` y `values_to`
-:::
-
-## Errores Comunes
-
-::: incremental
-1. **Olvidar el pipe**: Recuerda usar `|>` o `%>%`
-2. **Tipo de dato incorrecto**: Las columnas pivoteadas son siempre character por defecto
-3. **Separadores complejos**: Usa regex para patrones múltiples
-4. **Valores duplicados**: `pivot_wider()` falla si hay duplicados - usa `values_fn`
-5. **Columnas sin nombre**: Asegúrate que todas las columnas tengan nombre
-:::
-
-## Debugging de Pivots
-
-```{r}
-#| echo: true
-#| eval: false
-# 1. Ver qué columnas seleccionas
-data |>
-  select(starts_with("año_")) |>
-  names()
-
-# 2. Pivotar subset pequeño
-data |>
-  slice(1:5) |>
-  pivot_longer(...)
-
-# 3. Verificar tipos
-data_pivoted |>
-  glimpse()
-
-# 4. Buscar duplicados antes de pivot_wider
-data |>
-  count(id_var, categoria_var) |>
-  filter(n > 1)
-```
-
-# Recapitulación
-
-## Conceptos Clave
-
-::: recap
-- **Tidy data** = cada variable es una columna, cada observación es una fila
-- `pivot_longer()` convierte datos anchos a largos
-- `pivot_wider()` convierte datos largos a anchos
-- `separate()` divide una columna en múltiples
-- `separate_rows()` divide y crea nuevas filas
-- `unite()` combina múltiples columnas
-- Usa `names_transform` para convertir tipos de datos
-- Usa `values_fill` para manejar valores faltantes
-:::
-
-## Flujo de Trabajo Típico
-
-```{r}
-#| echo: true
-#| eval: false
-# Flujo completo de ordenamiento
-datos_ordenados <- datos_crudos |>
-  # 1. Limpiar nombres
-  clean_names() |>
-  # 2. Pivotar si es necesario
-  pivot_longer(...) |>
-  # 3. Separar columnas complejas
-  separate_rows(...) |>
-  # 4. Limpiar y transformar
-  mutate(...) |>
-  # 5. Filtrar valores problemáticos
-  filter(!is.na(...))
-```
-
-## Recursos Adicionales
-
-- [Tidy Data paper](https://vita.had.co.nz/papers/tidy-data.pdf) - Artículo original
-- [tidyr documentation](https://tidyr.tidyverse.org/) - Documentación oficial
-- [R for Data Science - Tidy Data](https://r4ds.hadley.nz/data-tidy) - Capítulo del libro
-- [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) - Hoja de referencia
-
-## Próximos Pasos
-
-En la siguiente sesión aprenderemos sobre **datos espaciales con sf**:
-
-- Estructuras de datos espaciales
-- Lectura/escritura de formatos geoespaciales
-- Integración de sf con tidyverse
-- Visualización de mapas
-- Operaciones espaciales básicas
-
-::: {.callout-tip}
-Los principios de tidy data también aplican a datos espaciales!
-:::
+Preparar datos en formato tidy con transformaciones reproducibles.

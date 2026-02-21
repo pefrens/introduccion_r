@@ -1,6 +1,6 @@
 ---
 title: "Fundamentos de R y RStudio"
-subtitle: "<span class='code'>Sesión 1</span>"
+subtitle: "<span class='code'>Sesion 1</span>"
 date: "2026-02"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
@@ -10,160 +10,60 @@ tbl-colwidths: [5,20,75]
 ```
 
 <a href='../materials/01-fundamentals-intro-r.html' target="_blank">Ver diapositivas en pantalla completa</a>
+
 # Esquema
 
--   Introducción a R y RStudio
--   El lenguaje de programación R
--   Valores atómicos
--   Creación de objetos
--   Operadores básicos
--   Estructuras básicas de datos
--   Funciones en R
+- Tipos de datos en R
+- Objetos y asignacion
+- Vectores y data frames
+- Funciones y ayuda
 
-# Contenido
+# Objetivo de la sesion
 
-## El Lenguaje de Programación
+Escribir codigo basico en R con sintaxis correcta y leer objetos en consola de forma segura.
 
-### Valores Atómicos
+# Datos usados
 
-```r
-"cusco"
-"  Cusco"
-"16-08-2021"
-1
-1.2
-```
+- No requiere archivos de datos
 
-### Creación de Objetos
-
-El operador usado para crear objetos es `<-`
+# Practica guiada
 
 ```r
-x <- 1
-x
+# Tipos basicos
+x_num <- 10
+x_chr <- "cusco"
+x_lgl <- TRUE
 
-y <- "ser"
-y
+class(x_num)
+class(x_chr)
+class(x_lgl)
 ```
-
-### Vectores
-
-Para almacenar más de un elemento en un objeto se usa `c()`:
 
 ```r
-x <- c(1, 2, 3, 4, 5)
-x
-
-x <- c("El", "dia", "cusco", "r", "programacion")
-x
+# Vectores y funciones
+poblacion <- c(120, 340, 560, 210)
+mean(poblacion)
+sum(poblacion)
+length(poblacion)
 ```
-
-### Operadores
-
-#### Secuencia `:`
-```r
-1:6
-```
-
-#### Indexación `[]`
-```r
-letters
-letters[1:5]
-letters[2]
-letters[c(2, 4)]
-```
-
-### Operadores Lógicos
-
-| Operador | Significado |
-|:---------|:------------|
-| x < y    | menor que   |
-| x > y    | mayor que   |
-| x == y   | igual       |
-| x <= y   | menor igual |
-| x >= y   | mayor igual |
-| x != y   | diferente   |
-| x %in% y | pertenece   |
-
-### Operadores Booleanos
-
-- `&` - y
-- `|` - o
-- `!` - negación
-- `%in%` - perteneciente a un grupo
-
-# Estructuras Básicas
-
-## Vectores
 
 ```r
-x <- c(1:6)
-class(x)
+# Data frame simple
+df <- data.frame(
+  distrito = c("A", "B", "C"),
+  habitantes = c(1000, 850, 920)
+)
 
-x <- c(1.5:5.5)
-class(x)
-
-x <- c("a", "e", "i", "o", "u")
-class(x)
-
-x <- c(TRUE, TRUE, FALSE, TRUE, FALSE)
-class(x)
+str(df)
+head(df)
 ```
-
-## Matrices
-
-```r
-matrix(1:10, ncol = 5)
-matrix(letters[1:15], nrow = 3)
-```
-
-## Dataframes y Tibbles
-
-Los dataframes son estructuras bidimensionales que pueden contener diferentes tipos de datos en cada columna.
 
 # Ejercicios
 
-# Ejercicios Prácticos
+1. Crear un vector numerico de 5 elementos y calcular media y maximo.
+2. Crear un data frame con 3 columnas y 4 filas.
+3. Usar `?mean` y probar el argumento `na.rm`.
 
-## Ejercicio 1: Vectores y Operaciones {.smaller}
+# Resultado esperado
 
-::: task
-1. Crea un vector con los números del 1 al 10
-2. Calcula la media del vector
-3. Crea un vector con nombres de 3 ciudades peruanas
-4. Verifica si "Lima" está en tu vector de ciudades
-:::
-
-## Ejercicio 2: Data Frames {.smaller}
-
-::: task
-1. Examina el data frame `mtcars` (viene incluido en R)
-2. ¿Cuántas filas y columnas tiene?
-3. ¿Cuáles son los nombres de las variables?
-4. Calcula la media de la variable `mpg`
-:::
-
-## Ejercicio 3: Importar Datos {.smaller}
-
-::: task
-1. Instala y carga el paquete `readxl`
-2. Intenta leer un archivo de datos (si tienes uno disponible)
-3. Usa `head()` y `glimpse()` para explorarlo
-4. Limpia los nombres de variables con `janitor::clean_names()`
-:::
-
-# Resumen de la Sesión
-
-## Lo que Aprendimos Hoy
-
-::: incremental
--   ✓ R y RStudio: diferencias y uso
--   ✓ Valores atómicos y tipos de datos
--   ✓ Creación de objetos con `<-`
--   ✓ Estructuras de datos: vectores, matrices, data frames, listas
--   ✓ Funciones y su sintaxis
--   ✓ Paquetes: instalación y carga
--   ✓ El operador pipe `|>`
--   ✓ Conceptos de reproducibilidad
--   ✓ Git/GitHub para control de versiones
-:::
+Poder crear objetos, inspeccionarlos y usar funciones basicas sin errores de sintaxis.

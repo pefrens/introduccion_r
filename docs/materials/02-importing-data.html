@@ -211,24 +211,16 @@
 </div>
 
 </section>
-<section>
-<section id="repaso-de-la-sesión-anterior" class="title-slide slide level1 center">
-<h1>Repaso de la Sesión Anterior</h1>
-
-</section>
 <section id="pregunta-rápida" class="slide level2">
 <h2>Pregunta Rápida</h2>
 <div class="question">
 <p>¿Cuál es la diferencia entre instalar y cargar un paquete?</p>
 </div>
-<div class="fragment">
 <ul>
 <li class="fragment"><strong>Instalar</strong>: <code>install.packages("tidyverse")</code> - Una vez por sistema</li>
 <li class="fragment"><strong>Cargar</strong>: <code>library(tidyverse)</code> - Una vez por sesión</li>
-<li class="fragment"><strong>Analogía</strong>: Comprar ingredientes vs.&nbsp;sacarlos de la despensa</li>
 </ul>
-</div>
-</section></section>
+</section>
 <section>
 <section id="objetivos-de-hoy" class="title-slide slide level1 center">
 <h1>Objetivos de Hoy</h1>
@@ -246,44 +238,8 @@
 <li class="fragment">Guardar datos procesados</li>
 </ul>
 </section></section>
-<section>
 <section id="lectura-de-datos-desde-archivos" class="title-slide slide level1 center">
 <h1>Lectura de Datos desde Archivos</h1>
-
-</section>
-<section id="introducción" class="slide level2">
-<h2>Introducción</h2>
-<ul>
-<li class="fragment">Trabajar con datos de paquetes R es útil para aprender</li>
-<li class="fragment">Pero eventualmente querrás usar tus propios datos</li>
-<li class="fragment">Nos enfocaremos en <strong>archivos de texto rectangulares</strong></li>
-<li class="fragment">El formato más común: <strong>CSV</strong> (Comma-Separated Values)</li>
-</ul>
-</section>
-<section id="qué-es-un-archivo-csv" class="slide level2">
-<h2>¿Qué es un Archivo CSV?</h2>
-<p>Un archivo de texto donde:</p>
-<ul>
-<li>Cada línea es una fila</li>
-<li>Los valores están separados por comas</li>
-<li>La primera línea generalmente contiene los nombres de columnas</li>
-</ul>
-<pre><code>Student ID,Full Name,favourite.food,mealPlan,AGE
-1,Sunil Huffmann,Strawberry yoghurt,Lunch only,4
-2,Barclay Lynn,French fries,Lunch only,5
-3,Jayendra Lyne,N/A,Breakfast and lunch,7</code></pre>
-</section>
-<section id="anatomía-de-un-csv" class="slide level2">
-<h2>Anatomía de un CSV</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Archivo de texto:</strong></p>
-<pre><code>pais,año,poblacion
-Peru,2020,32971846
-Peru,2021,33359416
-Chile,2020,19116209
-Chile,2021,19212362</code></pre>
-</div><div class="column fragment" style="width:50%;">
 <p><strong>Como tabla:</strong></p>
 <table class="caption-top">
 <thead>
@@ -291,6 +247,7 @@ Chile,2021,19212362</code></pre>
 <th>pais</th>
 <th>año</th>
 <th>poblacion</th>
+<th>…</th>
 </tr>
 </thead>
 <tbody>
@@ -298,26 +255,36 @@ Chile,2021,19212362</code></pre>
 <td>Peru</td>
 <td>2020</td>
 <td>32971846</td>
+<td>…</td>
 </tr>
 <tr class="even">
 <td>Peru</td>
 <td>2021</td>
 <td>33359416</td>
+<td>…</td>
 </tr>
 <tr class="odd">
 <td>Chile</td>
 <td>2020</td>
 <td>19116209</td>
+<td>…</td>
 </tr>
 <tr class="even">
 <td>Chile</td>
 <td>2021</td>
 <td>19212362</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
 </tr>
 </tbody>
 </table>
-</div></div>
-</section></section>
+</section>
+
 <section>
 <section id="usando-read_csv" class="title-slide slide level1 center">
 <h1>Usando read_csv()</h1>
@@ -327,18 +294,18 @@ Chile,2021,19212362</code></pre>
 <h2>Configuración</h2>
 <p>Primero, cargar el paquete tidyverse:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>El paquete <strong>readr</strong> (parte de tidyverse) proporciona funciones para leer datos.</p>
 </section>
 <section id="leer-un-archivo-csv" class="slide level2">
 <h2>Leer un Archivo CSV</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Sintaxis básica</span></span>
-<span id="cb4-2"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ruta/al/archivo.csv"</span>)</span>
-<span id="cb4-3"><a></a></span>
-<span id="cb4-4"><a></a><span class="co"># Ejemplo con datos de estudiantes</span></span>
-<span id="cb4-5"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/students.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Sintaxis básica</span></span>
+<span id="cb2-2"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>)</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a><span class="co"># Ejemplo con datos de estudiantes</span></span>
+<span id="cb2-5"><a></a>ciudades_mundo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ciudades_mundo.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><code>read_csv()</code> imprime información útil:</p>
@@ -351,14 +318,6 @@ Chile,2021,19212362</code></pre>
 </section>
 <section id="mensaje-de-read_csv" class="slide level2 smaller">
 <h2>Mensaje de read_csv()</h2>
-<pre><code>Rows: 6 Columns: 5
-── Column specification ─────────────────────────────────
-Delimiter: ","
-chr (4): Full Name, favourite.food, mealPlan, AGE
-dbl (1): Student ID
-
-ℹ Use `spec()` to retrieve the full column specification
-ℹ Specify column types or set `show_col_types = FALSE`</code></pre>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -368,7 +327,7 @@ dbl (1): Student ID
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Este mensaje es <strong>importante</strong> y útil. Te dice cómo interpretó readr tu archivo.</p>
+<p>Este mensaje es <strong>importante</strong> y útil. Te dice cómo <code>readr</code> interpretó tu archivo.</p>
 </div>
 </div>
 </div>
@@ -377,11 +336,11 @@ dbl (1): Student ID
 <h2>Rutas de Archivos</h2>
 <p>Dos formas de especificar la ubicación del archivo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># 1. Ruta relativa (dentro de tu proyecto)</span></span>
-<span id="cb6-2"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/students.csv"</span>)</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a><span class="co"># 2. URL directa</span></span>
-<span id="cb6-5"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://pos.it/r4ds-students-csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># 1. Ruta relativa (dentro de tu proyecto)</span></span>
+<span id="cb3-2"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>)</span>
+<span id="cb3-3"><a></a></span>
+<span id="cb3-4"><a></a><span class="co"># 2. Ruta directa</span></span>
+<span id="cb3-5"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"D:/User/curso/catalogo_planes.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -406,27 +365,19 @@ dbl (1): Student ID
 <h2>Primer Vistazo a los Datos</h2>
 <p>Después de importar, siempre revisa los datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>students</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>planes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code># A tibble: 6 × 5
-  `Student ID` `Full Name`      favourite.food     mealPlan            AGE
-         &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;
-1            1 Sunil Huffmann   Strawberry yoghurt Lunch only          4
-2            2 Barclay Lynn     French fries       Lunch only          5
-3            3 Jayendra Lyne    N/A                Breakfast and lunch 7
-4            4 Leon Rossini     Anchovies          Lunch only          &lt;NA&gt;
-5            5 Chidiegwu Dunkel Pizza              Breakfast and lunch five
-6            6 Güvenç Attila    Ice cream          Lunch only          6</code></pre>
 </section>
 <section id="problemas-comunes-valores-faltantes" class="slide level2">
 <h2>Problemas Comunes: Valores Faltantes</h2>
 <div class="question">
-<p>¿Ves algún problema en los datos de estudiantes?</p>
+<p>¿Ves algún problema en los datos de ciudades?</p>
 </div>
 <div class="fragment">
 <ul>
-<li>Fila 3: <code>favourite.food</code> tiene <code>"N/A"</code> (texto) en lugar de <code>NA</code> (valor faltante)</li>
-<li>Fila 5: <code>AGE</code> tiene <code>"five"</code> (texto) en lugar de <code>5</code> (número)</li>
+<li>Fila 3: <code>Population</code> tiene <code>"N/A"</code> (texto) en lugar de <code>NA</code> (valor faltante)</li>
+<li>Fila 5: <code>Population</code> tiene <code>"un millón"</code> (texto) en lugar de <code>1000000</code> (número)</li>
+<li>Fila 6: <code>Population</code> tiene cadena vacía <code>""</code></li>
 </ul>
 </div>
 </section>
@@ -434,28 +385,30 @@ dbl (1): Student ID
 <h2>Solución: Argumento <code>na</code></h2>
 <p>Especifica qué cadenas deben interpretarse como valores faltantes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb9-2"><a></a>  <span class="st">"data/students.csv"</span>,</span>
-<span id="cb9-3"><a></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)  <span class="co"># Reconocer "N/A" y "" como NA</span></span>
-<span id="cb9-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>ciudades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb5-2"><a></a>  <span class="st">"data/ciudades.csv"</span>,</span>
+<span id="cb5-3"><a></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)  <span class="co"># Reconocer "N/A" y "" como NA</span></span>
+<span id="cb5-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>Ahora <code>favourite.food</code> tiene un verdadero <code>NA</code>:</p>
-<pre><code>3            3 Jayendra Lyne    &lt;NA&gt;               Breakfast and lunch 7</code></pre>
+<p>Ahora <code>Population</code> tiene verdaderos <code>NA</code>:</p>
+<pre><code>3  3 Andorra la Vella Andorra     &lt;NA&gt;     Parish
+6  6 Luanda           Angola      &lt;NA&gt;     Province</code></pre>
 </div>
 </section>
 <section id="problemas-comunes-nombres-de-columnas" class="slide level2 smaller">
 <h2>Problemas Comunes: Nombres de Columnas</h2>
 <p>Los nombres de columnas tienen espacios:</p>
 <ul>
-<li><code>Student ID</code></li>
-<li><code>Full Name</code></li>
+<li><code>City ID</code></li>
+<li><code>City Name</code></li>
+<li><code>Region Type</code></li>
 </ul>
 <div class="fragment">
 <p>En R, estos son <strong>nombres no sintácticos</strong> y necesitan backticks:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>students<span class="sc">$</span><span class="st">`</span><span class="at">Student ID</span><span class="st">`</span>  <span class="co"># Necesita backticks</span></span>
-<span id="cb11-2"><a></a>students<span class="sc">$</span>Student ID    <span class="co"># ❌ Error!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>ciudades<span class="sc">$</span><span class="st">`</span><span class="at">City ID</span><span class="st">`</span>   <span class="co"># Necesita backticks</span></span>
+<span id="cb7-2"><a></a>ciudades<span class="sc">$</span>City ID     <span class="co"># ❌ Error!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -463,27 +416,27 @@ dbl (1): Student ID
 <h2>Solución 1: rename()</h2>
 <p>Renombrar manualmente con <code>rename()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>students <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a></a>  <span class="fu">rename</span>(</span>
-<span id="cb12-3"><a></a>    <span class="at">student_id =</span> <span class="st">`</span><span class="at">Student ID</span><span class="st">`</span>,</span>
-<span id="cb12-4"><a></a>    <span class="at">full_name =</span> <span class="st">`</span><span class="at">Full Name</span><span class="st">`</span></span>
-<span id="cb12-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>ciudades <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">rename</span>(</span>
+<span id="cb8-3"><a></a>    <span class="at">city_id =</span> <span class="st">`</span><span class="at">City ID</span><span class="st">`</span>,</span>
+<span id="cb8-4"><a></a>    <span class="at">city_name =</span> <span class="st">`</span><span class="at">City Name</span><span class="st">`</span>,</span>
+<span id="cb8-5"><a></a>    <span class="at">region_type =</span> <span class="st">`</span><span class="at">Region Type</span><span class="st">`</span></span>
+<span id="cb8-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="solución-2-janitorclean_names" class="slide level2 smaller">
 <h2>Solución 2: janitor::clean_names()</h2>
 <p>La forma más fácil y recomendada:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb13-2"><a></a></span>
-<span id="cb13-3"><a></a>students <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb9-2"><a></a>ciudades <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code># A tibble: 6 × 5
-  student_id full_name        favourite_food     meal_plan           age
-       &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;
-1          1 Sunil Huffmann   Strawberry yoghurt Lunch only          4
-2          2 Barclay Lynn     French fries       Lunch only          5</code></pre>
+<pre><code># A tibble: 8 × 5
+  city_id city_name         country               population region_type
+    &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;      
+1       1 Dubai             United Arab Emirates  3500000    Emirate    
+2       2 Kabul             Afghanistan           4200000    Province   </code></pre>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -500,70 +453,63 @@ dbl (1): Student ID
 </section>
 <section id="problemas-comunes-tipos-de-datos" class="slide level2">
 <h2>Problemas Comunes: Tipos de Datos</h2>
-<p>La columna <code>AGE</code> es character (<code>&lt;chr&gt;</code>) pero debería ser numérica:</p>
+<p>La columna <code>population</code> es character (<code>&lt;chr&gt;</code>) pero debería ser numérica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>students <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ciudades <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>$ age           &lt;chr&gt; "4", "5", "7", NA, "five", "6"</code></pre>
+<pre><code>$ population    &lt;chr&gt; "3500000", "4200000", NA, "500000", "un millón", NA, "22000", "1200"</code></pre>
 <div class="question">
-<p>¿Por qué <code>AGE</code> es character?</p>
+<p>¿Por qué <code>population</code> es character?</p>
 </div>
 <div class="fragment">
-<p>Porque tiene <code>"five"</code> (texto) mezclado con números.</p>
+<p>Porque tiene <code>"un millón"</code> (texto) mezclado con números.</p>
 </div>
 </section>
 <section id="solución-limpiar-y-convertir" class="slide level2 smaller">
 <h2>Solución: Limpiar y Convertir</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>students <span class="ot">&lt;-</span> students <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-4"><a></a>    <span class="at">age =</span> <span class="fu">parse_number</span>(<span class="fu">if_else</span>(age <span class="sc">==</span> <span class="st">"five"</span>, <span class="st">"5"</span>, age))</span>
-<span id="cb17-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>ciudades <span class="ot">&lt;-</span> ciudades <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-4"><a></a>    <span class="at">population =</span> <span class="fu">parse_number</span>(<span class="fu">if_else</span>(population <span class="sc">==</span> <span class="st">"un millón"</span>, <span class="st">"1000000"</span>, population))</span>
+<span id="cb13-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>Qué hace este código:</p>
 <ol type="1">
-<li><code>if_else()</code>: Si <code>age</code> es <code>"five"</code>, cámbialo a <code>"5"</code>, si no déjalo igual</li>
+<li><code>if_else()</code>: Si <code>population</code> es <code>"un millón"</code>, cámbialo a <code>"1000000"</code>, si no déjalo igual</li>
 <li><code>parse_number()</code>: Convierte texto a número</li>
 </ol>
 </div>
 </section>
 <section id="variables-categóricas-factores" class="slide level2">
 <h2>Variables Categóricas: Factores</h2>
-<p><code>meal_plan</code> debería ser un <strong>factor</strong> (variable categórica):</p>
+<p><code>region_type</code> debería ser un <strong>factor</strong> (variable categórica):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>students <span class="ot">&lt;-</span> students <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb18-4"><a></a>    <span class="at">meal_plan =</span> <span class="fu">factor</span>(meal_plan)</span>
-<span id="cb18-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>ciudades <span class="ot">&lt;-</span> ciudades <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-4"><a></a>    <span class="at">region_type =</span> <span class="fu">factor</span>(region_type)</span>
+<span id="cb14-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>Ahora <code>meal_plan</code> es <code>&lt;fct&gt;</code> en lugar de <code>&lt;chr&gt;</code>:</p>
-<pre><code>$ meal_plan     &lt;fct&gt; Lunch only, Lunch only, Breakfast and lunch</code></pre>
+<p>Ahora <code>region_type</code> es <code>&lt;fct&gt;</code> en lugar de <code>&lt;chr&gt;</code>:</p>
+<pre><code>$ region_type   &lt;fct&gt; Emirate, Province, Parish, County, Capital</code></pre>
 </div>
 </section>
 <section id="pipeline-completo-de-limpieza" class="slide level2 smaller">
 <h2>Pipeline Completo de Limpieza</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/students.csv"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-4"><a></a>    <span class="at">meal_plan =</span> <span class="fu">factor</span>(meal_plan),</span>
-<span id="cb20-5"><a></a>    <span class="at">age =</span> <span class="fu">parse_number</span>(<span class="fu">if_else</span>(age <span class="sc">==</span> <span class="st">"five"</span>, <span class="st">"5"</span>, age))</span>
-<span id="cb20-6"><a></a>  )</span>
-<span id="cb20-7"><a></a></span>
-<span id="cb20-8"><a></a>students</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>ciudades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ciudades.csv"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-4"><a></a>    <span class="at">region_type =</span> <span class="fu">factor</span>(region_type),</span>
+<span id="cb16-5"><a></a>    <span class="at">population =</span> <span class="fu">parse_number</span>(<span class="fu">if_else</span>(population <span class="sc">==</span> <span class="st">"un millón"</span>, <span class="st">"1000000"</span>, population))</span>
+<span id="cb16-6"><a></a>  )</span>
+<span id="cb16-7"><a></a>ciudades</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code># A tibble: 6 × 5
-  student_id full_name        favourite_food     meal_plan             age
-       &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;fct&gt;               &lt;dbl&gt;
-1          1 Sunil Huffmann   Strawberry yoghurt Lunch only              4
-2          2 Barclay Lynn     French fries       Lunch only              5
-3          3 Jayendra Lyne    &lt;NA&gt;               Breakfast and lunch     7</code></pre>
 </section></section>
 <section>
 <section id="otros-argumentos-de-read_csv" class="title-slide slide level1 center">
@@ -574,11 +520,11 @@ dbl (1): Student ID
 <h2>Leer Texto Directamente</h2>
 <p>Útil para ejemplos y pruebas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb22-2"><a></a>  <span class="st">"a,b,c</span></span>
-<span id="cb22-3"><a></a><span class="st">   1,2,3</span></span>
-<span id="cb22-4"><a></a><span class="st">   4,5,6"</span></span>
-<span id="cb22-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">read_csv</span>(</span>
+<span id="cb17-2"><a></a>  <span class="st">"a,b,c</span></span>
+<span id="cb17-3"><a></a><span class="st">   1,2,3</span></span>
+<span id="cb17-4"><a></a><span class="st">   4,5,6"</span></span>
+<span id="cb17-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
       a     b     c
@@ -592,13 +538,13 @@ dbl (1): Student ID
 <h2>Saltar Líneas: skip</h2>
 <p>Algunas archivos tienen metadatos al inicio:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb24-2"><a></a>  <span class="st">"La primera línea de metadata</span></span>
-<span id="cb24-3"><a></a><span class="st">   La segunda línea de metadata</span></span>
-<span id="cb24-4"><a></a><span class="st">   x,y,z</span></span>
-<span id="cb24-5"><a></a><span class="st">   1,2,3"</span>,</span>
-<span id="cb24-6"><a></a>  <span class="at">skip =</span> <span class="dv">2</span>  <span class="co"># Saltar primeras 2 líneas</span></span>
-<span id="cb24-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">read_csv</span>(</span>
+<span id="cb19-2"><a></a>  <span class="st">"La primera línea de metadata</span></span>
+<span id="cb19-3"><a></a><span class="st">   La segunda línea de metadata</span></span>
+<span id="cb19-4"><a></a><span class="st">   x,y,z</span></span>
+<span id="cb19-5"><a></a><span class="st">   1,2,3"</span>,</span>
+<span id="cb19-6"><a></a>  <span class="at">skip =</span> <span class="dv">2</span>  <span class="co"># Saltar primeras 2 líneas</span></span>
+<span id="cb19-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
       x     y     z
@@ -610,12 +556,12 @@ dbl (1): Student ID
 <section id="saltar-comentarios-comment" class="slide level2">
 <h2>Saltar Comentarios: comment</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb26-2"><a></a>  <span class="st">"# Un comentario que quiero saltar</span></span>
-<span id="cb26-3"><a></a><span class="st">   x,y,z</span></span>
-<span id="cb26-4"><a></a><span class="st">   1,2,3"</span>,</span>
-<span id="cb26-5"><a></a>  <span class="at">comment =</span> <span class="st">"#"</span>  <span class="co"># Saltar líneas que empiezan con #</span></span>
-<span id="cb26-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">read_csv</span>(</span>
+<span id="cb21-2"><a></a>  <span class="st">"# Un comentario que quiero saltar</span></span>
+<span id="cb21-3"><a></a><span class="st">   x,y,z</span></span>
+<span id="cb21-4"><a></a><span class="st">   1,2,3"</span>,</span>
+<span id="cb21-5"><a></a>  <span class="at">comment =</span> <span class="st">"#"</span>  <span class="co"># Saltar líneas que empiezan con #</span></span>
+<span id="cb21-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
       x     y     z
@@ -628,11 +574,11 @@ dbl (1): Student ID
 <h2>Sin Nombres de Columnas: col_names</h2>
 <p>Si tu archivo no tiene encabezados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb28-2"><a></a>  <span class="st">"1,2,3</span></span>
-<span id="cb28-3"><a></a><span class="st">   4,5,6"</span>,</span>
-<span id="cb28-4"><a></a>  <span class="at">col_names =</span> <span class="cn">FALSE</span>  <span class="co"># No usar primera fila como nombres</span></span>
-<span id="cb28-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">read_csv</span>(</span>
+<span id="cb23-2"><a></a>  <span class="st">"1,2,3</span></span>
+<span id="cb23-3"><a></a><span class="st">   4,5,6"</span>,</span>
+<span id="cb23-4"><a></a>  <span class="at">col_names =</span> <span class="cn">FALSE</span>  <span class="co"># No usar primera fila como nombres</span></span>
+<span id="cb23-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
      X1    X2    X3
@@ -645,11 +591,11 @@ dbl (1): Student ID
 <section id="proporcionar-nombres-de-columnas" class="slide level2">
 <h2>Proporcionar Nombres de Columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb30-2"><a></a>  <span class="st">"1,2,3</span></span>
-<span id="cb30-3"><a></a><span class="st">   4,5,6"</span>,</span>
-<span id="cb30-4"><a></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span>)  <span class="co"># Especificar nombres</span></span>
-<span id="cb30-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">read_csv</span>(</span>
+<span id="cb25-2"><a></a>  <span class="st">"1,2,3</span></span>
+<span id="cb25-3"><a></a><span class="st">   4,5,6"</span>,</span>
+<span id="cb25-4"><a></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span>)  <span class="co"># Especificar nombres</span></span>
+<span id="cb25-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
       x     y     z
@@ -666,7 +612,7 @@ dbl (1): Student ID
 </section>
 <section id="familia-de-funciones-read_" class="slide level2">
 <h2>Familia de Funciones read_*()</h2>
-<p>readr proporciona funciones para diferentes formatos:</p>
+<p><code>readr</code> proporciona funciones para diferentes formatos:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -691,14 +637,6 @@ dbl (1): Student ID
 <td><code>read_delim()</code></td>
 <td>Cualquier delimitador</td>
 </tr>
-<tr class="odd">
-<td><code>read_fwf()</code></td>
-<td>Archivos de ancho fijo</td>
-</tr>
-<tr class="even">
-<td><code>read_table()</code></td>
-<td>Archivos separados por espacios</td>
-</tr>
 </tbody>
 </table>
 </section></section>
@@ -713,16 +651,16 @@ dbl (1): Student ID
 <li class="fragment">Microsoft Excel es ampliamente usado para organizar datos</li>
 <li class="fragment">Los datos se almacenan en <strong>hojas</strong> (worksheets) dentro de <strong>libros</strong> (workbooks)</li>
 <li class="fragment">Excel permite múltiples hojas en un solo archivo</li>
-<li class="fragment"><strong>Importante</strong>: Leer el artículo “Data Organization in Spreadsheets” (Broman &amp; Woo, 2018)</li>
+<li class="fragment"><strong>Importante</strong>: Leer el artículo <a href="https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989">Data Organization in Spreadsheets (Broman &amp; Woo, 2018)</a></li>
 </ul>
 </section>
 <section id="paquetes-para-excel" class="slide level2">
 <h2>Paquetes para Excel</h2>
 <p>Usaremos dos paquetes principales:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">library</span>(readxl)   <span class="co"># Para leer archivos Excel</span></span>
-<span id="cb32-2"><a></a><span class="fu">library</span>(writexl)  <span class="co"># Para escribir archivos Excel</span></span>
-<span id="cb32-3"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">library</span>(readxl)   <span class="co"># Para leer archivos Excel</span></span>
+<span id="cb27-2"><a></a><span class="fu">library</span>(writexl)  <span class="co"># Para escribir archivos Excel</span></span>
+<span id="cb27-3"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -781,54 +719,25 @@ dbl (1): Student ID
 <section id="ejemplo-leer-archivo-excel" class="slide level2">
 <h2>Ejemplo: Leer Archivo Excel</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb33-2"><a></a></span>
-<span id="cb33-3"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/students.xlsx"</span>)</span>
-<span id="cb33-4"><a></a>students</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code># A tibble: 6 × 5
-  `Student ID` `Full Name`      favourite.food     mealPlan            AGE
-         &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;
-1            1 Sunil Huffmann   Strawberry yoghurt Lunch only          4
-2            2 Barclay Lynn     French fries       Lunch only          5</code></pre>
-</section>
-<section id="problemas-con-excel" class="slide level2">
-<h2>Problemas con Excel</h2>
-<p>Similar a CSV, necesitamos limpiar:</p>
-<ol type="1">
-<li class="fragment">Nombres de columnas con espacios</li>
-<li class="fragment">Valores faltantes no reconocidos (<code>"N/A"</code>)</li>
-<li class="fragment">Tipos de datos incorrectos</li>
-</ol>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/students.xlsx"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"N/A"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section id="limpiar-nombres-de-columnas" class="slide level2">
-<h2>Limpiar Nombres de Columnas</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb36-2"><a></a>  <span class="st">"data/students.xlsx"</span>,</span>
-<span id="cb36-3"><a></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"student_id"</span>, <span class="st">"full_name"</span>, <span class="st">"favourite_food"</span>,</span>
-<span id="cb36-4"><a></a>                <span class="st">"meal_plan"</span>, <span class="st">"age"</span>),</span>
-<span id="cb36-5"><a></a>  <span class="at">skip =</span> <span class="dv">1</span>  <span class="co"># Saltar fila de encabezados originales</span></span>
-<span id="cb36-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>O usa <code>janitor::clean_names()</code> después de importar</p>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb28-2"><a></a></span>
+<span id="cb28-3"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/catalogo_planes.xlsx"</span>)</span>
+<span id="cb28-4"><a></a>planes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 113 × 7
+   UBIGEO DEPARTAMENTO PROVINCIA ÁMBITO              `TIPO DE PLAN` ESTADO O.M. 
+    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;          &lt;chr&gt;  &lt;lgl&gt;
+ 1   2006 PIURA        SULLANA   SULLANA             PAT            Aprob… NA   
+ 2   2006 PIURA        SULLANA   Sullana             PDU            Aprob… NA   
+ 3   2001 PIURA        PIURA     Tambo Grande        PDU            Aprob… NA   
+ 4   1506 LIMA         HUARAL    Chancay             PAT            Termi… NA   
+ 5   2001 PIURA        PIURA     Cura Mori-El Tallán PDU            Aprob… NA   
+ 6   1401 LAMBAYEQUE   CHICLAYO  Cayaltí-Saña        PDU            Aprob… NA   
+ 7   2001 PIURA        PIURA     Las Lomas           PDU            Aprob… NA   
+ 8   2008 PIURA        SECHURA   Sechura             PDU            Aprob… NA   
+ 9   2004 PIURA        MORROPON  La Matanza          PDU            Aprob… NA   
+10   2004 PIURA        MORROPON  Morropon            PDU            Aprob… NA   
+# ℹ 103 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -836,10 +745,12 @@ dbl (1): Student ID
 <h2>Especificar Tipos en Excel</h2>
 <p>Excel usa diferentes tipos que R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb37-2"><a></a>  <span class="st">"data/students.xlsx"</span>,</span>
-<span id="cb37-3"><a></a>  <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"numeric"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>)</span>
-<span id="cb37-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb30-2"><a></a>  <span class="st">"data/catalogo_planes.xlsx"</span>,</span>
+<span id="cb30-3"><a></a>   <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"numeric"</span>, </span>
+<span id="cb30-4"><a></a>                 <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>,</span>
+<span id="cb30-5"><a></a>                 <span class="st">"logical"</span>)</span>
+<span id="cb30-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Opciones para <code>col_types</code>:</p>
 <ul>
@@ -856,47 +767,88 @@ dbl (1): Student ID
 <h2>Trabajar con Múltiples Hojas</h2>
 <p>Ver todas las hojas de un archivo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">excel_sheets</span>(<span class="st">"data/penguins.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">excel_sheets</span>(<span class="st">"data/indicadoresCPV2017.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Poblacion" "Vivienda"  "Hogar"    </code></pre>
 </div>
-<pre><code>[1] "Torgersen Island" "Biscoe Island"    "Dream Island"</code></pre>
+</div>
 <div class="fragment">
 <p>Leer una hoja específica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>penguins_torgersen <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb40-2"><a></a>  <span class="st">"data/penguins.xlsx"</span>,</span>
-<span id="cb40-3"><a></a>  <span class="at">sheet =</span> <span class="st">"Torgersen Island"</span>,</span>
-<span id="cb40-4"><a></a>  <span class="at">na =</span> <span class="st">"NA"</span></span>
-<span id="cb40-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>indicadores_inei <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb33-2"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb33-3"><a></a>  <span class="at">sheet =</span> <span class="st">"Poblacion"</span></span>
+<span id="cb33-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="leer-todas-las-hojas" class="slide level2 smaller">
 <h2>Leer Todas las Hojas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="co"># Leer cada hoja</span></span>
-<span id="cb41-2"><a></a>penguins_torgersen <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/penguins.xlsx"</span>,</span>
-<span id="cb41-3"><a></a>                                  <span class="at">sheet =</span> <span class="st">"Torgersen Island"</span>, <span class="at">na =</span> <span class="st">"NA"</span>)</span>
-<span id="cb41-4"><a></a>penguins_biscoe <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/penguins.xlsx"</span>,</span>
-<span id="cb41-5"><a></a>                               <span class="at">sheet =</span> <span class="st">"Biscoe Island"</span>, <span class="at">na =</span> <span class="st">"NA"</span>)</span>
-<span id="cb41-6"><a></a>penguins_dream <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/penguins.xlsx"</span>,</span>
-<span id="cb41-7"><a></a>                              <span class="at">sheet =</span> <span class="st">"Dream Island"</span>, <span class="at">na =</span> <span class="st">"NA"</span>)</span>
-<span id="cb41-8"><a></a></span>
-<span id="cb41-9"><a></a><span class="co"># Combinar todas</span></span>
-<span id="cb41-10"><a></a>penguins <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(penguins_torgersen, penguins_biscoe, penguins_dream)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="co"># Leer cada hoja</span></span>
+<span id="cb34-2"><a></a>indicadores_poblacion <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb34-3"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb34-4"><a></a>  <span class="at">sheet =</span> <span class="st">"Poblacion"</span></span>
+<span id="cb34-5"><a></a>)</span>
+<span id="cb34-6"><a></a></span>
+<span id="cb34-7"><a></a>indicadores_vivienda <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb34-8"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb34-9"><a></a>  <span class="at">sheet =</span> <span class="st">"Vivienda"</span></span>
+<span id="cb34-10"><a></a>)</span>
+<span id="cb34-11"><a></a></span>
+<span id="cb34-12"><a></a>indicadores_hogar <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb34-13"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb34-14"><a></a>  <span class="at">sheet =</span> <span class="st">"Hogar"</span></span>
+<span id="cb34-15"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</section></section>
+<section>
+<section id="combinar-objetos" class="title-slide slide level1 center">
+<h1>Combinar objetos</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co">#| echo: true</span></span>
+<span id="cb35-2"><a></a><span class="co">#| eval: true</span></span>
+<span id="cb35-3"><a></a>huarocondo <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,<span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb35-4"><a></a>anta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/reporte_centro_poblado_ANTA.xlsx"</span>, </span>
+<span id="cb35-5"><a></a>                   <span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb35-6"><a></a></span>
+<span id="cb35-7"><a></a><span class="fu">bind_rows</span>(huarocondo, </span>
+<span id="cb35-8"><a></a>          anta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 3
+   `VARIABLE / INDICADOR`                           Absoluto `%`              
+   &lt;chr&gt;                                            &lt;chr&gt;    &lt;chr&gt;            
+ 1 Población total 2017                             2468     -                
+ 2 Población en Edad de trabajar (14 y más años)    1947     78.90000000000001
+ 3 Población total en edad electoral (18 a 70 años) 1570     63.6             
+ 4 Población total 2017 masculina                   1220     49.4             
+ 5 Población total 2017 femenina                    1247     50.5             
+ 6 Relación de masculinidad (h/m)                   97.8348  -                
+ 7 Población urbana                                 2468     100              
+ 8 Población rural                                  -        -                
+ 9 Población de 0 a 14 años                         566      22.9             
+10 Población de 15 a 29 años                        643      26.1             
+# ℹ 48 more rows</code></pre>
 </div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>En el Capítulo 26 aprenderemos métodos más eficientes con <code>purrr::map()</code></p>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">bind_rows</span>(</span>
+<span id="cb37-2"><a></a>  <span class="fu">lst</span>(huarocondo, anta),</span>
+<span id="cb37-3"><a></a>  <span class="at">.id =</span> <span class="st">"distrito"</span></span>
+<span id="cb37-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 4
+   distrito   `VARIABLE / INDICADOR`                           Absoluto `%`     
+   &lt;chr&gt;      &lt;chr&gt;                                            &lt;chr&gt;    &lt;chr&gt;   
+ 1 huarocondo Población total 2017                             2468     -       
+ 2 huarocondo Población en Edad de trabajar (14 y más años)    1947     78.9000…
+ 3 huarocondo Población total en edad electoral (18 a 70 años) 1570     63.6    
+ 4 huarocondo Población total 2017 masculina                   1220     49.4    
+ 5 huarocondo Población total 2017 femenina                    1247     50.5    
+ 6 huarocondo Relación de masculinidad (h/m)                   97.8348  -       
+ 7 huarocondo Población urbana                                 2468     100     
+ 8 huarocondo Población rural                                  -        -       
+ 9 huarocondo Población de 0 a 14 años                         566      22.9    
+10 huarocondo Población de 15 a 29 años                        643      26.1    
+# ℹ 48 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -904,26 +856,11 @@ dbl (1): Student ID
 <h2>Leer Parte de una Hoja</h2>
 <p>A veces solo necesitas un rango específico:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Leer rango específico (A5:F15)</span></span>
-<span id="cb42-2"><a></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb42-3"><a></a>  <span class="st">"data/deaths.xlsx"</span>,</span>
-<span id="cb42-4"><a></a>  <span class="at">range =</span> <span class="st">"A5:F15"</span></span>
-<span id="cb42-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Notación de celdas en Excel</strong>: A1 = primera celda (columna A, fila 1)</p>
-</div>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># Leer rango específico (A6:C31)</span></span>
+<span id="cb39-2"><a></a>huarocondo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb39-3"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,</span>
+<span id="cb39-4"><a></a>  <span class="at">range =</span> <span class="st">"A6:C31"</span></span>
+<span id="cb39-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tipos-de-datos-en-excel" class="slide level2 smaller">
@@ -954,16 +891,16 @@ dbl (1): Student ID
 <section id="escribir-a-excel" class="slide level2">
 <h2>Escribir a Excel</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">library</span>(writexl)</span>
-<span id="cb43-2"><a></a></span>
-<span id="cb43-3"><a></a><span class="co"># Crear datos de ejemplo</span></span>
-<span id="cb43-4"><a></a>bake_sale <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb43-5"><a></a>  <span class="at">item =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"brownie"</span>, <span class="st">"cupcake"</span>, <span class="st">"cookie"</span>)),</span>
-<span id="cb43-6"><a></a>  <span class="at">quantity =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">8</span>)</span>
-<span id="cb43-7"><a></a>)</span>
-<span id="cb43-8"><a></a></span>
-<span id="cb43-9"><a></a><span class="co"># Escribir a Excel</span></span>
-<span id="cb43-10"><a></a><span class="fu">write_xlsx</span>(bake_sale, <span class="at">path =</span> <span class="st">"data/bake-sale.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(writexl)</span>
+<span id="cb40-2"><a></a></span>
+<span id="cb40-3"><a></a><span class="co"># Crear datos de ejemplo</span></span>
+<span id="cb40-4"><a></a>bake_sale <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb40-5"><a></a>  <span class="at">item =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"brownie"</span>, <span class="st">"cupcake"</span>, <span class="st">"cookie"</span>)),</span>
+<span id="cb40-6"><a></a>  <span class="at">quantity =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">8</span>)</span>
+<span id="cb40-7"><a></a>)</span>
+<span id="cb40-8"><a></a></span>
+<span id="cb40-9"><a></a><span class="co"># Escribir a Excel</span></span>
+<span id="cb40-10"><a></a><span class="fu">write_xlsx</span>(bake_sale, <span class="at">path =</span> <span class="st">"data/bake-sale.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -981,42 +918,48 @@ dbl (1): Student ID
 </div>
 </div>
 </section>
-<section id="ejemplo-práctico-áreas-naturales" class="slide level2 smaller">
-<h2>Ejemplo Práctico: Áreas Naturales</h2>
+<section id="ejemplo-práctico" class="slide level2 smaller">
+<h2>Ejemplo Práctico</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb44-2"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb44-3"><a></a></span>
-<span id="cb44-4"><a></a><span class="co"># Leer y limpiar en un pipeline</span></span>
-<span id="cb44-5"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"N/A"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb44-6"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb44-7"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb44-8"><a></a>    <span class="at">categoria =</span> <span class="fu">str_squish</span>(categoria),</span>
-<span id="cb44-9"><a></a>    <span class="at">superficie_oficial =</span> <span class="fu">as.numeric</span>(superficie_oficial)</span>
-<span id="cb44-10"><a></a>  )</span>
-<span id="cb44-11"><a></a></span>
-<span id="cb44-12"><a></a><span class="fu">glimpse</span>(anp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb41-2"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb41-3"><a></a></span>
+<span id="cb41-4"><a></a><span class="co"># Leer y limpiar en un pipeline</span></span>
+<span id="cb41-5"><a></a>huarocondo_clean <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb41-6"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,</span>
+<span id="cb41-7"><a></a>  <span class="at">range =</span> <span class="st">"A6:C31"</span></span>
+<span id="cb41-8"><a></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb41-9"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb41-10"><a></a>huarocondo_clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 3
+   variable_indicador                               absoluto percent          
+   &lt;chr&gt;                                            &lt;chr&gt;    &lt;chr&gt;            
+ 1 Población total 2017                             2468     -                
+ 2 Población en Edad de trabajar (14 y más años)    1947     78.90000000000001
+ 3 Población total en edad electoral (18 a 70 años) 1570     63.6             
+ 4 Población total 2017 masculina                   1220     49.4             
+ 5 Población total 2017 femenina                    1247     50.5             
+ 6 Relación de masculinidad (h/m)                   97.8348  -                
+ 7 Población urbana                                 2468     100              
+ 8 Población rural                                  -        -                
+ 9 Población de 0 a 14 años                         566      22.9             
+10 Población de 15 a 29 años                        643      26.1             
+# ℹ 15 more rows</code></pre>
 </div>
-<pre><code>Rows: 76
-Columns: 8
-$ nombre                              &lt;chr&gt; "Parque Nacional Cutervo", …
-$ categoria                           &lt;chr&gt; "Parque Nacional", …
-$ superficie_oficial                  &lt;dbl&gt; 8214.23, 334000.00, …
-$ ubicacion_politica                  &lt;chr&gt; "Cajamarca", "Loreto", …</code></pre>
+</div>
 </section>
 <section id="consejos-para-hojas-de-cálculo" class="slide level2">
 <h2>Consejos para Hojas de Cálculo</h2>
 <ol type="1">
-<li class="fragment"><strong>Siempre mira el archivo primero</strong> en Excel (hacer copia)</li>
+<li class="fragment"><strong>Siempre mira el archivo primero</strong> en Excel (</li>
 <li class="fragment"><strong>Proceso iterativo</strong>: importa → revisa → ajusta → reimporta</li>
-<li class="fragment"><strong>Especifica <code>na</code></strong> explícitamente</li>
 <li class="fragment"><strong>Usa <code>range</code></strong> si hay texto extra arriba/abajo</li>
 <li class="fragment"><strong>No confíes en el formato visual</strong> - verifica tipos</li>
-<li class="fragment"><strong>Para archivos complejos</strong>: considera tidyxl package</li>
 </ol>
 </section></section>
 <section>
-<section id="importar-datos-espaciales" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<section id="importar-datos-espaciales" class="title-slide slide level1 center" data-background-color="#C2D8D0">
 <h1>Importar Datos Espaciales</h1>
 
 </section>
@@ -1032,7 +975,7 @@ $ ubicacion_politica                  &lt;chr&gt; "Cajamarca", "Loreto", …</co
 <section id="paquete-sf-para-datos-vectoriales" class="slide level2">
 <h2>Paquete sf para Datos Vectoriales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">library</span>(sf)  <span class="co"># Simple Features for R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">library</span>(sf)  <span class="co"># Simple Features for R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><code>sf</code> proporciona:</p>
@@ -1069,26 +1012,31 @@ $ ubicacion_politica                  &lt;chr&gt; "Cajamarca", "Loreto", …</co
 <section id="leer-datos-espaciales" class="slide level2">
 <h2>Leer Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="co"># Leer shapefile, geopackage, geojson, etc.</span></span>
-<span id="cb47-2"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
-<span id="cb47-3"><a></a></span>
-<span id="cb47-4"><a></a><span class="co"># Alternativa más verbosa</span></span>
-<span id="cb47-5"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<pre><code>Simple feature collection with 25 features and 10 fields
-Geometry type: MULTIPOLYGON
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb44-2"><a></a><span class="co"># Leer shapefile, geopackage, geojson, etc.</span></span>
+<span id="cb44-3"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb44-4"><a></a></span>
+<span id="cb44-5"><a></a><span class="co"># Alternativa más verbosa</span></span>
+<span id="cb44-6"><a></a>dist_cusco <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/distritos_cusco.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `distritos_cusco' from data source 
+  `D:\introduccion_r\materials\data\distritos_cusco.shp' using driver `ESRI Shapefile'
+Simple feature collection with 116 features and 12 fields
+Geometry type: POLYGON
 Dimension:     XY
-Bounding box:  xmin: -81.3 ymin: -18.3 xmax: -68.7 ymax: -0.04
+Bounding box:  xmin: -73.974 ymin: -15.45829 xmax: -70.34507 ymax: -11.21229
 Geodetic CRS:  WGS 84</code></pre>
+</div>
 </div>
 </section>
 <section id="estructura-de-objetos-sf" class="slide level2">
 <h2>Estructura de Objetos sf</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">class</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">class</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "sf"         "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1112,74 +1060,148 @@ Geodetic CRS:  WGS 84</code></pre>
 <section id="explorar-datos-espaciales" class="slide level2 smaller">
 <h2>Explorar Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># Ver estructura</span></span>
-<span id="cb51-2"><a></a><span class="fu">glimpse</span>(departamentos)</span>
-<span id="cb51-3"><a></a></span>
-<span id="cb51-4"><a></a><span class="co"># Ver primeras filas</span></span>
-<span id="cb51-5"><a></a><span class="fu">head</span>(departamentos)</span>
-<span id="cb51-6"><a></a></span>
-<span id="cb51-7"><a></a><span class="co"># Obtener CRS</span></span>
-<span id="cb51-8"><a></a><span class="fu">st_crs</span>(departamentos)</span>
-<span id="cb51-9"><a></a></span>
-<span id="cb51-10"><a></a><span class="co"># Calcular área</span></span>
-<span id="cb51-11"><a></a>departamentos <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb51-12"><a></a>  <span class="fu">mutate</span>(<span class="at">area_km2 =</span> <span class="fu">st_area</span>(geometry) <span class="sc">|&gt;</span></span>
-<span id="cb51-13"><a></a>           units<span class="sc">::</span><span class="fu">set_units</span>(km<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="co"># Ver estructura</span></span>
+<span id="cb48-2"><a></a><span class="fu">glimpse</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 25
+Columns: 7
+$ objectid &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+$ ccdd     &lt;chr&gt; "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "…
+$ nombdep  &lt;chr&gt; "AMAZONAS", "ANCASH", "APURIMAC", "AREQUIPA", "AYACUCHO", "CA…
+$ fuente   &lt;chr&gt; "V Censo Nacional Economico", "V Censo Nacional Economico", "…
+$ periodo  &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ fec_reg  &lt;dttm&gt; 2022-07-13 17:13:57, 2022-07-13 17:13:57, 2022-07-13 17:13:5…
+$ geom     &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-77.81399 -..., MULTIPOLYGON (((…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># Ver primeras filas</span></span>
+<span id="cb50-2"><a></a><span class="fu">head</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.45857 ymin: -17.28501 xmax: -70.80408 ymax: -2.986125
+Geodetic CRS:  WGS 84
+# A tibble: 6 × 7
+  objectid ccdd  nombdep   fuente                    periodo fec_reg            
+     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;                       &lt;int&gt; &lt;dttm&gt;             
+1        1 01    AMAZONAS  V Censo Nacional Economi…       1 2022-07-13 17:13:57
+2        2 02    ANCASH    V Censo Nacional Economi…       1 2022-07-13 17:13:57
+3        3 03    APURIMAC  V Censo Nacional Economi…       1 2022-07-13 17:13:57
+4        4 04    AREQUIPA  V Censo Nacional Economi…       1 2022-07-13 17:13:57
+5        5 05    AYACUCHO  V Censo Nacional Economi…       1 2022-07-13 17:13:57
+6        6 06    CAJAMARCA V Censo Nacional Economi…       1 2022-07-13 17:13:57
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="co"># Obtener CRS</span></span>
+<span id="cb52-2"><a></a><span class="fu">st_crs</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: WGS 84 
+  wkt:
+GEOGCRS["WGS 84",
+    ENSEMBLE["World Geodetic System 1984 ensemble",
+        MEMBER["World Geodetic System 1984 (Transit)"],
+        MEMBER["World Geodetic System 1984 (G730)"],
+        MEMBER["World Geodetic System 1984 (G873)"],
+        MEMBER["World Geodetic System 1984 (G1150)"],
+        MEMBER["World Geodetic System 1984 (G1674)"],
+        MEMBER["World Geodetic System 1984 (G1762)"],
+        MEMBER["World Geodetic System 1984 (G2139)"],
+        MEMBER["World Geodetic System 1984 (G2296)"],
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]],
+        ENSEMBLEACCURACY[2.0]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    USAGE[
+        SCOPE["Horizontal component of 3D system."],
+        AREA["World."],
+        BBOX[-90,-180,90,180]],
+    ID["EPSG",4326]]</code></pre>
+</div>
 </div>
 </section>
 <section id="visualizar-datos-espaciales" class="slide level2">
 <h2>Visualizar Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="co"># Mapa básico con plot()</span></span>
-<span id="cb52-2"><a></a><span class="fu">plot</span>(departamentos[<span class="st">"NOMBDEP"</span>])</span>
-<span id="cb52-3"><a></a></span>
-<span id="cb52-4"><a></a><span class="co"># Con ggplot2</span></span>
-<span id="cb52-5"><a></a><span class="fu">ggplot</span>(departamentos) <span class="sc">+</span></span>
-<span id="cb52-6"><a></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> NOMBDEP)) <span class="sc">+</span></span>
-<span id="cb52-7"><a></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="co"># Mapa básico con plot()</span></span>
+<span id="cb54-2"><a></a><span class="fu">plot</span>(departamentos[<span class="st">"nombdep"</span>])</span>
+<span id="cb54-3"><a></a></span>
+<span id="cb54-4"><a></a><span class="co"># Con ggplot2</span></span>
+<span id="cb54-5"><a></a><span class="fu">ggplot</span>(departamentos) <span class="sc">+</span></span>
+<span id="cb54-6"><a></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> nombdep)) <span class="sc">+</span></span>
+<span id="cb54-7"><a></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="operaciones-espaciales-básicas" class="slide level2 smaller">
 <h2>Operaciones Espaciales Básicas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># Filtrar (funciona como data frame normal)</span></span>
-<span id="cb53-2"><a></a>lima <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb53-3"><a></a>  <span class="fu">filter</span>(NOMBDEP <span class="sc">==</span> <span class="st">"LIMA"</span>)</span>
-<span id="cb53-4"><a></a></span>
-<span id="cb53-5"><a></a><span class="co"># Transformar CRS (proyectar)</span></span>
-<span id="cb53-6"><a></a>departamentos_utm <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb53-7"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># UTM Zone 18S</span></span>
-<span id="cb53-8"><a></a></span>
-<span id="cb53-9"><a></a><span class="co"># Centroides</span></span>
-<span id="cb53-10"><a></a>centroides <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(departamentos)</span>
-<span id="cb53-11"><a></a></span>
-<span id="cb53-12"><a></a><span class="co"># Buffer (zona de influencia)</span></span>
-<span id="cb53-13"><a></a>buffer_lima <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(lima, <span class="at">dist =</span> <span class="dv">50000</span>)  <span class="co"># 50 km</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb55-2"><a></a><span class="co"># Transformar CRS (proyectar)</span></span>
+<span id="cb55-3"><a></a> departamentos <span class="sc">|&gt;</span></span>
+<span id="cb55-4"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># UTM Zone 18S</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -203260.8 ymin: 7964769 xmax: 1190991 ymax: 9995733
+Projected CRS: WGS 84 / UTM zone 18S
+# A tibble: 25 × 7
+   objectid ccdd  nombdep      fuente                periodo fec_reg            
+ *    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;                   &lt;int&gt; &lt;dttm&gt;             
+ 1        1 01    AMAZONAS     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 2        2 02    ANCASH       V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 3        3 03    APURIMAC     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 4        4 04    AREQUIPA     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 5        5 05    AYACUCHO     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 6        6 06    CAJAMARCA    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 7        7 07    CALLAO       V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 8        8 08    CUSCO        V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 9        9 09    HUANCAVELICA V Censo Nacional Eco…       1 2022-07-13 17:13:57
+10       10 10    HUANUCO      V Censo Nacional Eco…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [m]&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="co"># Centroides</span></span>
+<span id="cb57-2"><a></a><span class="fu">st_centroid</span>(departamentos) <span class="sc">|&gt;</span>  </span>
+<span id="cb57-3"><a></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 7
+   objectid ccdd  nombdep      fuente                periodo fec_reg            
+      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;                   &lt;int&gt; &lt;dttm&gt;             
+ 1        1 01    AMAZONAS     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 2        2 02    ANCASH       V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 3        3 03    APURIMAC     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 4        4 04    AREQUIPA     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 5        5 05    AYACUCHO     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 6        6 06    CAJAMARCA    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 7        7 07    CALLAO       V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 8        8 08    CUSCO        V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 9        9 09    HUANCAVELICA V Censo Nacional Eco…       1 2022-07-13 17:13:57
+10       10 10    HUANUCO      V Censo Nacional Eco…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;POINT [°]&gt;</code></pre>
+</div>
 </div>
 </section>
 <section id="escribir-datos-espaciales" class="slide level2">
 <h2>Escribir Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="co"># Guardar como GeoPackage (recomendado)</span></span>
-<span id="cb54-2"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos_procesado.gpkg"</span>)</span>
-<span id="cb54-3"><a></a></span>
-<span id="cb54-4"><a></a><span class="co"># Guardar como shapefile</span></span>
-<span id="cb54-5"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.shp"</span>)</span>
-<span id="cb54-6"><a></a></span>
-<span id="cb54-7"><a></a><span class="co"># Guardar como GeoJSON</span></span>
-<span id="cb54-8"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="integración-con-tidyverse" class="slide level2">
-<h2>Integración con tidyverse</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="co"># sf funciona perfectamente con dplyr</span></span>
-<span id="cb55-2"><a></a>departamentos_resumen <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb55-3"><a></a>  <span class="fu">mutate</span>(<span class="at">area_km2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geometry) <span class="sc">/</span> <span class="fl">1e6</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb55-4"><a></a>  <span class="fu">select</span>(NOMBDEP, CAPITAL, area_km2) <span class="sc">|&gt;</span></span>
-<span id="cb55-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(area_km2))</span>
-<span id="cb55-6"><a></a></span>
-<span id="cb55-7"><a></a><span class="co"># La columna geometry es "sticky" - se mantiene automáticamente</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="co"># Guardar como GeoPackage (recomendado)</span></span>
+<span id="cb59-2"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos_procesado.gpkg"</span>)</span>
+<span id="cb59-3"><a></a></span>
+<span id="cb59-4"><a></a><span class="co"># Guardar como shapefile</span></span>
+<span id="cb59-5"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.shp"</span>)</span>
+<span id="cb59-6"><a></a></span>
+<span id="cb59-7"><a></a><span class="co"># Guardar como GeoJSON</span></span>
+<span id="cb59-8"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="formatos-espaciales-comunes" class="slide level2">
@@ -1215,224 +1237,23 @@ Geodetic CRS:  WGS 84</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Recomendación</strong>: Usa GeoPackage (<code>.gpkg</code>) para proyectos nuevos</p>
-</div>
-</div>
-</div>
 </section>
 <section id="ejemplo-completo-workflow-espacial" class="slide level2 smaller">
 <h2>Ejemplo Completo: Workflow Espacial</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb56-2"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb56-3"><a></a></span>
-<span id="cb56-4"><a></a><span class="co"># 1. Leer datos espaciales</span></span>
-<span id="cb56-5"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
-<span id="cb56-6"><a></a></span>
-<span id="cb56-7"><a></a><span class="co"># 2. Limpiar y transformar</span></span>
-<span id="cb56-8"><a></a>departamentos_clean <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb56-9"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb56-10"><a></a>  <span class="fu">select</span>(<span class="at">nombre =</span> nombdep, capital, <span class="at">region =</span> nombdistri) <span class="sc">|&gt;</span></span>
-<span id="cb56-11"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># Proyectar a UTM</span></span>
-<span id="cb56-12"><a></a></span>
-<span id="cb56-13"><a></a><span class="co"># 3. Calcular métricas espaciales</span></span>
-<span id="cb56-14"><a></a>departamentos_metrics <span class="ot">&lt;-</span> departamentos_clean <span class="sc">|&gt;</span></span>
-<span id="cb56-15"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb56-16"><a></a>    <span class="at">area_km2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geometry) <span class="sc">/</span> <span class="fl">1e6</span>),</span>
-<span id="cb56-17"><a></a>    <span class="at">perimetro_km =</span> <span class="fu">as.numeric</span>(<span class="fu">st_length</span>(<span class="fu">st_cast</span>(geometry, <span class="st">"MULTILINESTRING"</span>)) <span class="sc">/</span> <span class="dv">1000</span>)</span>
-<span id="cb56-18"><a></a>  )</span>
-<span id="cb56-19"><a></a></span>
-<span id="cb56-20"><a></a><span class="co"># 4. Guardar resultado</span></span>
-<span id="cb56-21"><a></a><span class="fu">write_sf</span>(departamentos_metrics, <span class="st">"output/departamentos_procesado.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="controlando-tipos-de-columnas" class="title-slide slide level1 center">
-<h1>Controlando Tipos de Columnas</h1>
-
-</section>
-<section id="adivinanza-de-tipos" class="slide level2">
-<h2>Adivinanza de Tipos</h2>
-<p>readr intenta adivinar el tipo de cada columna:</p>
-<ol type="1">
-<li class="fragment">¿Solo <code>TRUE</code>/<code>FALSE</code>? → <strong>lógico</strong></li>
-<li class="fragment">¿Solo números? → <strong>numérico</strong></li>
-<li class="fragment">¿Cumple estándar ISO8601? → <strong>fecha/fecha-hora</strong></li>
-<li class="fragment">Si no → <strong>character</strong></li>
-</ol>
-<div class="fragment">
-<p>readr revisa las primeras <strong>1,000 filas</strong> para decidir.</p>
-</div>
-</section>
-<section id="ejemplo-de-adivinanza" class="slide level2">
-<h2>Ejemplo de Adivinanza</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb57-2"><a></a>  <span class="st">"logical,numeric,date,string</span></span>
-<span id="cb57-3"><a></a><span class="st">   TRUE,1,2021-01-15,abc</span></span>
-<span id="cb57-4"><a></a><span class="st">   false,4.5,2021-02-15,def</span></span>
-<span id="cb57-5"><a></a><span class="st">   T,Inf,2021-02-16,ghi"</span></span>
-<span id="cb57-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  logical numeric date       string
-  &lt;lgl&gt;     &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; 
-1 TRUE        1   2021-01-15 abc   
-2 FALSE       4.5 2021-02-15 def   
-3 TRUE      Inf   2021-02-16 ghi   </code></pre>
-</div>
-</div>
-</section>
-<section id="cuando-falla-la-adivinanza" class="slide level2 smaller">
-<h2>Cuando Falla la Adivinanza</h2>
-<p>Problema común: valores inesperados causan que la columna sea character:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>simple_csv <span class="ot">&lt;-</span> <span class="st">"</span></span>
-<span id="cb59-2"><a></a><span class="st">  x</span></span>
-<span id="cb59-3"><a></a><span class="st">  10</span></span>
-<span id="cb59-4"><a></a><span class="st">  .</span></span>
-<span id="cb59-5"><a></a><span class="st">  20</span></span>
-<span id="cb59-6"><a></a><span class="st">  30"</span></span>
-<span id="cb59-7"><a></a></span>
-<span id="cb59-8"><a></a><span class="fu">read_csv</span>(simple_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 1
-  x    
-  &lt;chr&gt;
-1 10   
-2 .    
-3 20   
-4 30   </code></pre>
-</div>
-</div>
-<p><code>x</code> es character porque tiene un <code>.</code> (punto).</p>
-</section>
-<section id="solución-especificar-tipo" class="slide level2 smaller">
-<h2>Solución: Especificar Tipo</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb61-2"><a></a>  simple_csv,</span>
-<span id="cb61-3"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">col_double</span>())</span>
-<span id="cb61-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>readr reporta un problema. Usa <code>problems()</code> para ver detalles:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="fu">problems</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code># A tibble: 1 × 5
-    row   col expected actual file
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;
-1     3     1 a double .      /tmp/...</code></pre>
-</div>
-</section>
-<section id="solución-final-especificar-na" class="slide level2">
-<h2>Solución Final: Especificar NA</h2>
-<p>El problema es que <code>.</code> representa valores faltantes:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a><span class="fu">read_csv</span>(simple_csv, <span class="at">na =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 1
-      x
-  &lt;dbl&gt;
-1    10
-2    NA
-3    20
-4    30</code></pre>
-</div>
-</div>
-<p>Ahora <code>x</code> es numérico y <code>.</code> se convierte en <code>NA</code>.</p>
-</section>
-<section id="tipos-de-columna-disponibles" class="slide level2 smaller">
-<h2>Tipos de Columna Disponibles</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Función</th>
-<th>Tipo</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>col_logical()</code></td>
-<td>Valores lógicos (TRUE/FALSE)</td>
-</tr>
-<tr class="even">
-<td><code>col_double()</code></td>
-<td>Números reales</td>
-</tr>
-<tr class="odd">
-<td><code>col_integer()</code></td>
-<td>Números enteros</td>
-</tr>
-<tr class="even">
-<td><code>col_character()</code></td>
-<td>Texto/cadenas</td>
-</tr>
-<tr class="odd">
-<td><code>col_factor()</code></td>
-<td>Factores (variables categóricas)</td>
-</tr>
-<tr class="even">
-<td><code>col_date()</code></td>
-<td>Fechas</td>
-</tr>
-<tr class="odd">
-<td><code>col_datetime()</code></td>
-<td>Fecha-hora</td>
-</tr>
-<tr class="even">
-<td><code>col_number()</code></td>
-<td>Números con formato (ej. monedas)</td>
-</tr>
-<tr class="odd">
-<td><code>col_skip()</code></td>
-<td>Saltar columna</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="ejemplo-especificar-tipos" class="slide level2">
-<h2>Ejemplo: Especificar Tipos</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>another_csv <span class="ot">&lt;-</span> <span class="st">"</span></span>
-<span id="cb66-2"><a></a><span class="st">x,y,z</span></span>
-<span id="cb66-3"><a></a><span class="st">1,2,3"</span></span>
-<span id="cb66-4"><a></a></span>
-<span id="cb66-5"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb66-6"><a></a>  another_csv,</span>
-<span id="cb66-7"><a></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())</span>
-<span id="cb66-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  x     y     z    
-  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 1     2     3    </code></pre>
-</div>
-</div>
-</section>
-<section id="solo-leer-columnas-específicas" class="slide level2">
-<h2>Solo Leer Columnas Específicas</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a><span class="fu">read_csv</span>(</span>
-<span id="cb68-2"><a></a>  another_csv,</span>
-<span id="cb68-3"><a></a>  <span class="at">col_types =</span> <span class="fu">cols_only</span>(<span class="at">x =</span> <span class="fu">col_character</span>())</span>
-<span id="cb68-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  x    
-  &lt;chr&gt;
-1 1    </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb60-2"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb60-3"><a></a></span>
+<span id="cb60-4"><a></a><span class="co"># 1. Leer datos espaciales</span></span>
+<span id="cb60-5"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb60-6"><a></a></span>
+<span id="cb60-7"><a></a><span class="co"># 2. Limpiar y transformar</span></span>
+<span id="cb60-8"><a></a>departamentos_clean <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
+<span id="cb60-9"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb60-10"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># Proyectar a UTM</span></span>
+<span id="cb60-11"><a></a></span>
+<span id="cb60-12"><a></a><span class="co"># 3. Guardar resultado</span></span>
+<span id="cb60-13"><a></a><span class="fu">write_sf</span>(departamentos_metrics, <span class="st">"output/departamentos_procesado.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -1444,39 +1265,72 @@ Geodetic CRS:  WGS 84</code></pre>
 <h2>Leer Varios Archivos a la Vez</h2>
 <p>A veces los datos están divididos en múltiples archivos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a>sales_files <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb70-2"><a></a>  <span class="st">"data/01-sales.csv"</span>,</span>
-<span id="cb70-3"><a></a>  <span class="st">"data/02-sales.csv"</span>,</span>
-<span id="cb70-4"><a></a>  <span class="st">"data/03-sales.csv"</span></span>
-<span id="cb70-5"><a></a>)</span>
-<span id="cb70-6"><a></a></span>
-<span id="cb70-7"><a></a>sales <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(sales_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>indicadores_files <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb61-2"><a></a>  <span class="st">"data/reporte_centro_poblado_ANTA.csv"</span>,</span>
+<span id="cb61-3"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.csv"</span></span>
+<span id="cb61-4"><a></a>)</span>
+<span id="cb61-5"><a></a> <span class="fu">read_csv</span>(indicadores_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 4
+   file                                 `VARIABLE / INDICADOR`    Absoluto `%`  
+   &lt;chr&gt;                                &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;
+ 1 data/reporte_centro_poblado_ANTA.csv Población total 2017      10647    -    
+ 2 data/reporte_centro_poblado_ANTA.csv Población en Edad de tra… 7695     72.3 
+ 3 data/reporte_centro_poblado_ANTA.csv Población total en edad … 6511     61.2 
+ 4 data/reporte_centro_poblado_ANTA.csv Población total 2017 mas… 5161     48.5 
+ 5 data/reporte_centro_poblado_ANTA.csv Población total 2017 fem… 5486     51.5 
+ 6 data/reporte_centro_poblado_ANTA.csv Relación de masculinidad… 94.07583 -    
+ 7 data/reporte_centro_poblado_ANTA.csv Población urbana          10647    100  
+ 8 data/reporte_centro_poblado_ANTA.csv Población rural           -        -    
+ 9 data/reporte_centro_poblado_ANTA.csv Población de 0 a 14 años  3169     29.8 
+10 data/reporte_centro_poblado_ANTA.csv Población de 15 a 29 años 3002     28.2 
+# ℹ 40 more rows</code></pre>
+</div>
 </div>
 <p>El argumento <code>id</code> añade una columna identificando el archivo de origen.</p>
 </section>
 <section id="resultado" class="slide level2">
 <h2>Resultado</h2>
-<pre><code># A tibble: 19 × 6
-  file              month    year brand  item     n
-  &lt;chr&gt;             &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 data/01-sales.csv January  2019     1  1234     3
-2 data/01-sales.csv January  2019     1  8721     9
-3 data/02-sales.csv February 2019     2  3333     1</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>indicadores <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(indicadores_files, <span class="at">id =</span> <span class="st">"file"</span>)</span>
+<span id="cb63-2"><a></a>indicadores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 4
+   file                                 `VARIABLE / INDICADOR`    Absoluto `%`  
+   &lt;chr&gt;                                &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;
+ 1 data/reporte_centro_poblado_ANTA.csv Población total 2017      10647    -    
+ 2 data/reporte_centro_poblado_ANTA.csv Población en Edad de tra… 7695     72.3 
+ 3 data/reporte_centro_poblado_ANTA.csv Población total en edad … 6511     61.2 
+ 4 data/reporte_centro_poblado_ANTA.csv Población total 2017 mas… 5161     48.5 
+ 5 data/reporte_centro_poblado_ANTA.csv Población total 2017 fem… 5486     51.5 
+ 6 data/reporte_centro_poblado_ANTA.csv Relación de masculinidad… 94.07583 -    
+ 7 data/reporte_centro_poblado_ANTA.csv Población urbana          10647    100  
+ 8 data/reporte_centro_poblado_ANTA.csv Población rural           -        -    
+ 9 data/reporte_centro_poblado_ANTA.csv Población de 0 a 14 años  3169     29.8 
+10 data/reporte_centro_poblado_ANTA.csv Población de 15 a 29 años 3002     28.2 
+# ℹ 40 more rows</code></pre>
+</div>
+</div>
 </section>
 <section id="encontrar-archivos-automáticamente" class="slide level2">
 <h2>Encontrar Archivos Automáticamente</h2>
 <p>Usa <code>list.files()</code> para buscar archivos por patrón:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a><span class="co"># Encontrar todos los CSV que contienen "sales"</span></span>
-<span id="cb72-2"><a></a>sales_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb72-3"><a></a>  <span class="st">"data"</span>,</span>
-<span id="cb72-4"><a></a>  <span class="at">pattern =</span> <span class="st">"sales</span><span class="sc">\\</span><span class="st">.csv$"</span>,</span>
-<span id="cb72-5"><a></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb72-6"><a></a>)</span>
-<span id="cb72-7"><a></a></span>
-<span id="cb72-8"><a></a>sales_files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="co"># Encontrar todos los CSV que contienen "sales"</span></span>
+<span id="cb65-2"><a></a>reporte_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb65-3"><a></a>  <span class="st">"data"</span>,</span>
+<span id="cb65-4"><a></a>  <span class="at">pattern =</span> <span class="st">"^reporte"</span>,</span>
+<span id="cb65-5"><a></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb65-6"><a></a>)</span>
+<span id="cb65-7"><a></a></span>
+<span id="cb65-8"><a></a>reporte_files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data/reporte_centro_poblado_ANTA.csv"       
+[2] "data/reporte_centro_poblado_ANTA.xlsx"      
+[3] "data/reporte_centro_poblado_HUAROCONDO.csv" 
+[4] "data/reporte_centro_poblado_HUAROCONDO.xlsx"</code></pre>
 </div>
-<pre><code>[1] "data/01-sales.csv" "data/02-sales.csv" "data/03-sales.csv"</code></pre>
+</div>
 </section></section>
 <section>
 <section id="guardar-datos" class="title-slide slide level1 center">
@@ -1486,73 +1340,23 @@ Geodetic CRS:  WGS 84</code></pre>
 <section id="escribir-a-csv" class="slide level2">
 <h2>Escribir a CSV</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a><span class="co"># Guardar data frame como CSV</span></span>
-<span id="cb74-2"><a></a><span class="fu">write_csv</span>(students, <span class="st">"students-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p><strong>Problema</strong>: Se pierden los tipos de datos (factores, etc.)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a><span class="co"># meal_plan era factor, ahora es character</span></span>
-<span id="cb75-2"><a></a>students_leido <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"students-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section id="solución-1-rds-formato-r" class="slide level2">
-<h2>Solución 1: RDS (Formato R)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a><span class="co"># Guardar en formato R</span></span>
-<span id="cb76-2"><a></a><span class="fu">write_rds</span>(students, <span class="st">"students.rds"</span>)</span>
-<span id="cb76-3"><a></a></span>
-<span id="cb76-4"><a></a><span class="co"># Leer - mantiene todos los tipos</span></span>
-<span id="cb76-5"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"students.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>RDS preserva <strong>exactamente</strong> el objeto R, incluyendo tipos de datos.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="solución-2-parquet-recomendado" class="slide level2">
-<h2>Solución 2: Parquet (Recomendado)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a><span class="fu">library</span>(arrow)</span>
-<span id="cb77-2"><a></a></span>
-<span id="cb77-3"><a></a><span class="co"># Guardar en formato Parquet</span></span>
-<span id="cb77-4"><a></a><span class="fu">write_parquet</span>(students, <span class="st">"students.parquet"</span>)</span>
-<span id="cb77-5"><a></a></span>
-<span id="cb77-6"><a></a><span class="co"># Leer</span></span>
-<span id="cb77-7"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(<span class="st">"students.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Parquet es <strong>más rápido</strong> que RDS y <strong>compatible</strong> con otros lenguajes.</p>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="co"># Guardar data frame como CSV</span></span>
+<span id="cb67-2"><a></a>indicadores <span class="sc">|&gt;</span> </span>
+<span id="cb67-3"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb67-4"><a></a>  <span class="fu">write_csv</span>(<span class="st">"indicadores-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparación-de-formatos" class="slide level2">
 <h2>Comparación de Formatos</h2>
-<table class="caption-top" style="width:100%;">
+<h3 id="formatos-tabulares">Formatos Tabulares</h3>
+<table class="caption-top">
 <colgroup>
-<col style="width: 13%">
-<col style="width: 16%">
-<col style="width: 28%">
-<col style="width: 41%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 21%">
+<col style="width: 31%">
+<col style="width: 17%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1560,6 +1364,8 @@ Geodetic CRS:  WGS 84</code></pre>
 <th>Velocidad</th>
 <th>Tipos preservados</th>
 <th>Compatible otros lenguajes</th>
+<th>Tamaño archivo</th>
+<th>Notas</th>
 </tr>
 </thead>
 <tbody>
@@ -1568,66 +1374,93 @@ Geodetic CRS:  WGS 84</code></pre>
 <td>Media</td>
 <td>❌ No</td>
 <td>✅ Sí</td>
+<td>Grande</td>
+<td>Texto plano, universal</td>
 </tr>
 <tr class="even">
+<td>Excel</td>
+<td>Media-Lenta</td>
+<td>⚠️ Parcial</td>
+<td>✅ Sí</td>
+<td>Medio</td>
+<td>Problemas con fechas/precisión</td>
+</tr>
+<tr class="odd">
 <td>RDS</td>
 <td>Rápida</td>
 <td>✅ Sí</td>
 <td>❌ No (solo R)</td>
+<td>Pequeño</td>
+<td>Comprimido, R nativo</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Parquet</td>
 <td>Muy rápida</td>
 <td>✅ Sí</td>
 <td>✅ Sí (Python, etc.)</td>
+<td>Muy pequeño</td>
+<td>Columnar, Big Data</td>
 </tr>
 </tbody>
 </table>
-</section></section>
-<section>
-<section id="entrada-manual-de-datos" class="title-slide slide level1 center">
-<h1>Entrada Manual de Datos</h1>
-
 </section>
-<section id="tibble-por-columnas" class="slide level2">
-<h2>tibble(): Por Columnas</h2>
-<p>Crear data frames pequeños manualmente:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a><span class="fu">tibble</span>(</span>
-<span id="cb78-2"><a></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>),</span>
-<span id="cb78-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"h"</span>, <span class="st">"m"</span>, <span class="st">"g"</span>),</span>
-<span id="cb78-4"><a></a>  <span class="at">z =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.83</span>, <span class="fl">0.60</span>)</span>
-<span id="cb78-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-      x y         z
-  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 h      0.08
-2     2 m      0.83
-3     5 g      0.6 </code></pre>
-</div>
-</div>
-</section>
-<section id="tribble-por-filas" class="slide level2">
-<h2>tribble(): Por Filas</h2>
-<p>Más legible para entrada manual:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a><span class="fu">tribble</span>(</span>
-<span id="cb80-2"><a></a>  <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>z,</span>
-<span id="cb80-3"><a></a>  <span class="co">#--|--|----</span></span>
-<span id="cb80-4"><a></a>  <span class="dv">1</span>,  <span class="st">"h"</span>, <span class="fl">0.08</span>,</span>
-<span id="cb80-5"><a></a>  <span class="dv">2</span>,  <span class="st">"m"</span>, <span class="fl">0.83</span>,</span>
-<span id="cb80-6"><a></a>  <span class="dv">5</span>,  <span class="st">"g"</span>, <span class="fl">0.60</span></span>
-<span id="cb80-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-      x y         z
-  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 h      0.08
-2     2 m      0.83
-3     5 g      0.6 </code></pre>
-</div>
-</div>
+<section id="comparación-de-formatos-1" class="slide level2">
+<h2>Comparación de Formatos</h2>
+<h3 id="formatos-espaciales">Formatos Espaciales</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 21%">
+<col style="width: 32%">
+<col style="width: 11%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Formato</th>
+<th>Velocidad</th>
+<th>Tipos preservados</th>
+<th>Compatible otros lenguajes</th>
+<th>Archivos</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Shapefile</td>
+<td>Media</td>
+<td>❌ No</td>
+<td>✅ Sí</td>
+<td>Múltiples (4+)</td>
+<td>Límite 10 chars columnas, no DateTime</td>
+</tr>
+<tr class="even">
+<td>GeoPackage</td>
+<td>Rápida</td>
+<td>✅ Sí</td>
+<td>✅ Sí</td>
+<td>1 único</td>
+<td>Moderno, basado en SQLite</td>
+</tr>
+<tr class="odd">
+<td>GeoJSON</td>
+<td>Media</td>
+<td>⚠️ Parcial</td>
+<td>✅ Sí</td>
+<td>1 único</td>
+<td>Texto plano, grande</td>
+</tr>
+<tr class="even">
+<td>GeoParquet</td>
+<td>Muy rápida</td>
+<td>✅ Sí</td>
+<td>✅ Sí (Python, etc.)</td>
+<td>1 único</td>
+<td>Experimental, muy eficiente</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1637,72 +1470,14 @@ Geodetic CRS:  WGS 84</code></pre>
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p><code>~</code> indica nombres de columnas. Las comas separan valores.</p>
+<p><strong>Recomendaciones:</strong></p>
+<ul>
+<li><strong>Tabular</strong>: Usa Parquet para datos grandes, RDS para uso interno en R</li>
+<li><strong>Espacial</strong>: Usa GeoPackage (reemplaza Shapefile), evita Shapefile para nuevos proyectos</li>
+<li><strong>Excel</strong>: Solo para compartir con usuarios no técnicos</li>
+</ul>
 </div>
 </div>
-</div>
-</section></section>
-<section>
-<section id="ejercicios-prácticos" class="title-slide slide level1 center">
-<h1>Ejercicios Prácticos</h1>
-
-</section>
-<section id="ejercicio-1-importar-csv" class="slide level2">
-<h2>Ejercicio 1: Importar CSV</h2>
-<div class="task">
-<ol type="1">
-<li>Importa <code>catalogo_planes.csv</code> con <code>read_csv()</code></li>
-<li>Examina los tipos de datos con <code>glimpse()</code></li>
-<li>¿Hay columnas con tipo incorrecto?</li>
-<li>Corrige los tipos usando <code>mutate()</code> y funciones parse</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-2-excel---hojas-múltiples" class="slide level2">
-<h2>Ejercicio 2: Excel - Hojas Múltiples</h2>
-<div class="task">
-<ol type="1">
-<li>Importa <code>areas_naturales_peru.xlsx</code> con <code>read_excel()</code></li>
-<li>Usa <code>clean_names()</code> para limpiar nombres</li>
-<li>Especifica valores NA apropiados</li>
-<li>Convierte <code>categoria</code> a factor</li>
-<li>Calcula estadísticas por categoría</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-3-datos-espaciales" class="slide level2">
-<h2>Ejercicio 3: Datos Espaciales</h2>
-<div class="task">
-<ol type="1">
-<li>Lee el archivo <code>DEPARTAMENTO.gpkg</code> con <code>read_sf()</code></li>
-<li>Examina el CRS con <code>st_crs()</code></li>
-<li>Calcula el área de cada departamento en km²</li>
-<li>Encuentra el departamento más grande</li>
-<li>Crea un mapa simple con <code>plot()</code></li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-4-múltiples-archivos" class="slide level2">
-<h2>Ejercicio 4: Múltiples Archivos</h2>
-<div class="task">
-<ol type="1">
-<li>Crea 3 pequeños CSV con datos similares</li>
-<li>Guárdalos con nombres <code>data_01.csv</code>, <code>data_02.csv</code>, <code>data_03.csv</code></li>
-<li>Usa <code>list.files()</code> para encontrarlos</li>
-<li>Léelos todos con un solo <code>read_csv()</code> usando el argumento <code>id</code></li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-5-workflow-completo" class="slide level2">
-<h2>Ejercicio 5: Workflow Completo</h2>
-<div class="task">
-<ol type="1">
-<li>Lee <code>areas_naturales_peru.xlsx</code> y <code>DEPARTAMENTO.gpkg</code></li>
-<li>Limpia ambos datasets (nombres, tipos, NA)</li>
-<li>Cuenta cuántas áreas naturales hay por departamento</li>
-<li>Guarda el resultado en formato Parquet</li>
-<li>Crea un mapa mostrando número de áreas por departamento</li>
-</ol>
 </div>
 </section></section>
 <section>
@@ -1723,86 +1498,6 @@ Geodetic CRS:  WGS 84</code></pre>
 <li class="fragment">✓ Guardar datos en diferentes formatos</li>
 <li class="fragment">✓ Entender sistemas de coordenadas (CRS)</li>
 </ul>
-</section>
-<section id="funciones-clave" class="slide level2">
-<h2>Funciones Clave</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Función</th>
-<th>Propósito</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>read_csv()</code></td>
-<td>Leer archivos CSV</td>
-</tr>
-<tr class="even">
-<td><code>read_excel()</code></td>
-<td>Leer archivos Excel</td>
-</tr>
-<tr class="odd">
-<td><code>read_sf()</code></td>
-<td>Leer datos espaciales</td>
-</tr>
-<tr class="even">
-<td><code>clean_names()</code></td>
-<td>Limpiar nombres de columnas</td>
-</tr>
-<tr class="odd">
-<td><code>glimpse()</code></td>
-<td>Ver estructura de datos</td>
-</tr>
-<tr class="even">
-<td><code>parse_number()</code></td>
-<td>Convertir texto a número</td>
-</tr>
-<tr class="odd">
-<td><code>st_crs()</code></td>
-<td>Ver/establecer CRS</td>
-</tr>
-<tr class="even">
-<td><code>write_csv()</code></td>
-<td>Guardar como CSV</td>
-</tr>
-<tr class="odd">
-<td><code>write_rds()</code></td>
-<td>Guardar como RDS</td>
-</tr>
-<tr class="even">
-<td><code>write_parquet()</code></td>
-<td>Guardar como Parquet</td>
-</tr>
-<tr class="odd">
-<td><code>write_sf()</code></td>
-<td>Guardar datos espaciales</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="flujo-de-trabajo-típico" class="slide level2">
-<h2>Flujo de Trabajo Típico</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a></a><span class="co"># 1. Importar</span></span>
-<span id="cb82-2"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ruta/archivo.csv"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>))</span>
-<span id="cb82-3"><a></a></span>
-<span id="cb82-4"><a></a><span class="co"># 2. Limpiar nombres</span></span>
-<span id="cb82-5"><a></a>datos <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span>
-<span id="cb82-6"><a></a></span>
-<span id="cb82-7"><a></a><span class="co"># 3. Revisar</span></span>
-<span id="cb82-8"><a></a><span class="fu">glimpse</span>(datos)</span>
-<span id="cb82-9"><a></a></span>
-<span id="cb82-10"><a></a><span class="co"># 4. Corregir tipos</span></span>
-<span id="cb82-11"><a></a>datos <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span></span>
-<span id="cb82-12"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb82-13"><a></a>    <span class="at">categoria =</span> <span class="fu">factor</span>(categoria),</span>
-<span id="cb82-14"><a></a>    <span class="at">edad =</span> <span class="fu">parse_number</span>(edad)</span>
-<span id="cb82-15"><a></a>  )</span>
-<span id="cb82-16"><a></a></span>
-<span id="cb82-17"><a></a><span class="co"># 5. Guardar limpio</span></span>
-<span id="cb82-18"><a></a><span class="fu">write_rds</span>(datos, <span class="st">"datos_limpios.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="buenas-prácticas" class="slide level2">
 <h2>Buenas Prácticas</h2>
@@ -1852,16 +1547,6 @@ Geodetic CRS:  WGS 84</code></pre>
 </tbody>
 </table>
 </section>
-<section id="próximos-pasos" class="slide level2">
-<h2>Próximos Pasos</h2>
-<p><strong>Para la próxima sesión:</strong></p>
-<ul>
-<li class="fragment">Practica importando diferentes tipos de archivos</li>
-<li class="fragment">Explora tus propios datos</li>
-<li class="fragment">Familiarízate con <code>dplyr</code> para manipulación de datos</li>
-<li class="fragment">Lee el capítulo sobre transformación de datos en R4DS</li>
-</ul>
-</section>
 <section id="recursos-adicionales" class="slide level2 smaller">
 <h2>Recursos Adicionales</h2>
 <p><strong>Importación de datos:</strong></p>
@@ -1904,15 +1589,11 @@ Geodetic CRS:  WGS 84</code></pre>
 </figure>
 </div>
 </div></div>
-<div class="fragment">
-<h3 id="nos-vemos-en-la-próxima-sesión-dplyr---manipulación-de-datos">Nos vemos en la próxima sesión: dplyr - Manipulación de Datos</h3>
 
 
-</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="img/logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://paulefrensa.rbind.io">Paul Efren Santos Andrade</a> // Introducción a R - Tidyverse</p>
 </div>

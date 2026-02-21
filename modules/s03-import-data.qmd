@@ -1,177 +1,66 @@
 ---
-title: "Importar y Revisar Datos"
-subtitle: "<span class='code'>Sesión 2</span>"
+title: "Importar y revisar datos"
+subtitle: "<span class='code'>Sesion 2</span>"
 date: "2026-02"
 image: "images/02-text.png"
 tbl-colwidths: [5,20,75]
 ---
+```{=html}
+<iframe class="slide-deck" src="../materials/02-importing-data.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+```
+
+<a href='../materials/02-importing-data.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
 # Esquema
 
--   Importar datos desde diferentes formatos
--   Revisar la estructura de los datos
--   Limpiar nombres de variables
--   Visualizar tipos de datos
--   Introducción al pipe `|>`
+- Importar CSV, Excel y geopackage
+- Revisar estructura y tipos
+- Limpiar nombres de columnas
+- Flujo de importacion reproducible
 
-# Importar Datos
+# Objetivo de la sesion
 
-## Formatos de archivo
+Construir un flujo de importacion limpio y verificable para datos tabulares y espaciales.
 
-### CSV con readr
+# Datos usados
+
+- `data/catalogo_planes.csv`
+- `data/catalogo_planes.xlsx`
+- `data/DEPARTAMENTO.gpkg`
+
+# Practica guiada
 
 ```r
 library(readr)
-planes <- read_csv("data/catalogo_planes.csv")
-```
-
-### Excel con readxl
-
-```r
 library(readxl)
-planes <- read_excel("data/catalogo_planes.xlsx")
-planes <- read_xlsx("data/catalogo_planes.xlsx")
-```
-
-### Archivos de texto
-
-```r
-library(data.table)
-planes <- fread("data/catalogo_planes.txt")
-
-# o con readr
-planes <- read_delim("data/catalogo_planes.txt")
-```
-
-### Datos espaciales con sf
-
-```r
+library(janitor)
+library(dplyr)
 library(sf)
+```
+
+```r
+planes_csv <- read_csv("data/catalogo_planes.csv") |>
+  clean_names()
+
+planes_xlsx <- read_excel("data/catalogo_planes.xlsx") |>
+  clean_names()
+
 departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 ```
 
-# Revisión de Datos
-
-## Variables y Estructura
-
-### Nombres de variables
-
 ```r
-names(planes)
+glimpse(planes_csv)
+glimpse(planes_xlsx)
+st_crs(departamentos)
 ```
 
-### Estructura del dataframe
+# Ejercicios
 
-```r
-str(planes)
-glimpse(planes)  # tidyverse
-```
+1. Comparar `planes_csv` y `planes_xlsx` en numero de filas y columnas.
+2. Estandarizar tipos de 2 columnas con `mutate()`.
+3. Calcular area en km2 para `departamentos`.
+4. Guardar `planes_csv` limpio como `csv`.
 
-## Limpieza de Nombres
+# Resultado esperado
 
-### Usando janitor
-
-```r
-library(janitor)
-planes_clean <- clean_names(planes)
-```
-
-Evita:
-- Caracteres especiales
-- Mayúsculas
-- Espacios entre palabras
-
-
-# Pipe
-
-## `|>` o `%>%`
-
-```r
-planes |>
-  head()
-
-planes |>
-  clean_names() |>
-  head()
-```
-
-Shortcut: `Ctrl + Shift + M`
-
-# Ejercicios Prácticos
-
-## Ejercicio 1: Importar CSV
-
-::: task
-1.  Importa `catalogo_planes.csv` con `read_csv()`
-2.  Examina los tipos de datos con `glimpse()`
-3.  ¿Hay columnas con tipo incorrecto?
-4.  Corrige los tipos usando `mutate()` y funciones parse
-:::
-
-## Ejercicio 2: Excel - Hojas Múltiples
-
-::: task
-1.  Importa `areas_naturales_peru.xlsx` con `read_excel()`
-2.  Usa `clean_names()` para limpiar nombres
-3.  Especifica valores NA apropiados
-4.  Convierte `categoria` a factor
-5.  Calcula estadísticas por categoría
-:::
-
-## Ejercicio 3: Datos Espaciales
-
-::: task
-1.  Lee el archivo `DEPARTAMENTO.gpkg` con `read_sf()`
-2.  Examina el CRS con `st_crs()`
-3.  Calcula el área de cada departamento en km²
-4.  Encuentra el departamento más grande
-5.  Crea un mapa simple con `plot()`
-:::
-
-## Ejercicio 4: Múltiples Archivos
-
-::: task
-1.  Crea 3 pequeños CSV con datos similares
-2.  Guárdalos con nombres `data_01.csv`, `data_02.csv`, `data_03.csv`
-3.  Usa `list.files()` para encontrarlos
-4.  Léelos todos con un solo `read_csv()` usando el argumento `id`
-:::
-
-## Ejercicio 5: Workflow Completo
-
-::: task
-1.  Lee `areas_naturales_peru.xlsx` y `DEPARTAMENTO.gpkg`
-2.  Limpia ambos datasets (nombres, tipos, NA)
-3.  Cuenta cuántas áreas naturales hay por departamento
-4.  Guarda el resultado en formato Parquet
-5.  Crea un mapa mostrando número de áreas por departamento
-:::
-
-
-## Funciones Clave
-
-| Función                 | Propósito                           |
-|-------------------------|-------------------------------------|
-| `read_csv()`            | Leer archivos CSV                   |
-| `read_excel()`          | Leer archivos Excel                 |
-| `read_sf()`             | Leer datos espaciales               |
-| `clean_names()`         | Limpiar nombres de columnas         |
-| `glimpse()`             | Ver estructura de datos             |
-| `parse_number()`        | Convertir texto a número            |
-| `st_crs()`              | Ver/establecer CRS                  |
-| `write_csv()`           | Guardar como CSV                    |
-| `write_rds()`           | Guardar como RDS                    |
-| `write_parquet()`       | Guardar como Parquet                |
-| `write_sf()`            | Guardar datos espaciales            |
-
-
-# Recapitulación
-
-::: recap
-- `read_csv()`, `read_excel()`, y `read_sf()` importan diferentes formatos
-- `names()`, `str()`, y `glimpse()` ayudan a examinar datos
-- `clean_names()` estandariza nombres de variables
-- `vis_dat()` visualiza tipos de datos
-- El pipe `|>` encadena operaciones de forma legible
-- `colnames()` y `set_names()` renombran variables
-:::
+Tener objetos listos para analisis, con nombres limpios y tipos revisados.

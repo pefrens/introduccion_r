@@ -5,7 +5,6 @@ author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight
 format:
   revealjs:
     theme: slides.scss
-    logo: img/logo.png
     footer: '[Paul Efren Santos Andrade](https://paulefrensa.rbind.io) // Introducción a R - Tidyverse'
     transition: fade
     progress: true
@@ -439,7 +438,7 @@ Usa `read_excel()` para no preocuparte por el formato
 ## Ejemplo: Leer Archivo Excel
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 library(readxl)
 
@@ -455,11 +454,13 @@ planes
 Excel usa diferentes tipos que R:
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 planes <- read_excel(
   "data/catalogo_planes.xlsx",
-  col_types = c("numeric", "text", "text", "text", "text", "logical")
+   col_types = c("numeric", 
+                 "text", "text", "text", "text", "text",
+                 "logical")
 )
 ```
 
@@ -680,6 +681,7 @@ Dos tipos principales:
 ```{r}
 #| eval: true
 #| echo: true
+library(sf)
 # Leer shapefile, geopackage, geojson, etc.
 departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 
@@ -805,7 +807,7 @@ write_sf(departamentos_metrics, "output/departamentos_procesado.gpkg")
 A veces los datos están divididos en múltiples archivos:
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 indicadores_files <- c(
   "data/reporte_centro_poblado_ANTA.csv",

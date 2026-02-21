@@ -211,18 +211,6 @@
 </div>
 
 </section>
-<section id="esquema-de-la-sesión" class="slide level2 smaller">
-<h2>Esquema de la sesión</h2>
-<ul>
-<li class="fragment">Introducción a dplyr</li>
-<li class="fragment">Operaciones con filas: <code>filter()</code>, <code>arrange()</code>, <code>distinct()</code></li>
-<li class="fragment">Operaciones con columnas: <code>mutate()</code>, <code>select()</code>, <code>rename()</code>, <code>relocate()</code></li>
-<li class="fragment">El operador pipe <code>|&gt;</code></li>
-<li class="fragment">Agrupar datos: <code>group_by()</code> y <code>summarise()</code></li>
-<li class="fragment">Funciones <code>slice_*</code></li>
-<li class="fragment">Ejercicios prácticos</li>
-</ul>
-</section>
 <section>
 <section id="introducción-a-dplyr" class="title-slide slide level1 center" data-background-color="#2C3E50">
 <h1>Introducción a dplyr</h1>
@@ -231,13 +219,13 @@
 <section id="qué-es-dplyr" class="slide level2">
 <h2>¿Qué es dplyr?</h2>
 <ul>
-<li class="fragment">Paquete del tidyverse para <strong>manipulación de datos</strong></li>
+<li class="fragment">Paquete de tidyverse para la <strong>manipulación de datos</strong></li>
 <li class="fragment">Proporciona verbos (funciones) para operaciones comunes</li>
 <li class="fragment">Diseñado para ser intuitivo y consistente</li>
-<li class="fragment">Funciona con tibbles y data frames</li>
+<li class="fragment">Funciona con tibbles, data frames y sf (Simple Features)</li>
 </ul>
 </section>
-<section id="los-verbos-de-dplyr" class="slide level2 smaller">
+<section id="los-verbos-de-dplyr" class="slide level2">
 <h2>Los verbos de dplyr</h2>
 <table class="caption-top">
 <thead>
@@ -278,7 +266,7 @@
 </tbody>
 </table>
 </section>
-<section id="estructura-común" class="slide level2 smaller">
+<section id="estructura-común" class="slide level2">
 <h2>Estructura común</h2>
 <p>Todos los verbos de dplyr funcionan de manera similar:</p>
 <ol type="1">
@@ -294,11 +282,34 @@
 </section>
 <section id="cargar-paquetes" class="slide level2">
 <h2>Cargar paquetes</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb2-3"><a></a></span>
-<span id="cb2-4"><a></a><span class="co"># Cargar datos de áreas naturales</span></span>
-<span id="cb2-5"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.0     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb4-2"><a></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'janitor'
+
+The following objects are masked from 'package:stats':
+
+    chisq.test, fisher.test</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Cargar datos de los planes urbanos</span></span>
+<span id="cb6-2"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/catalogo_planes.xlsx"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section id="operaciones-con-filas" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -308,14 +319,61 @@
 <section id="filter---filtrar-filas" class="slide level2">
 <h2><code>filter()</code> - Filtrar filas</h2>
 <p>Selecciona filas que cumplen una o más condiciones:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># Áreas naturales de categoría "Parque Nacional"</span></span>
-<span id="cb3-2"><a></a><span class="fu">filter</span>(anp, categoria <span class="sc">==</span> <span class="st">"Parque Nacional"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Áreas con superficie mayor a 100,000 hectáreas</span></span>
-<span id="cb4-2"><a></a><span class="fu">filter</span>(anp, superficie_oficial <span class="sc">&gt;</span> <span class="dv">100000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Planes Urbanos</span></span>
+<span id="cb7-2"><a></a><span class="fu">filter</span>(planes,</span>
+<span id="cb7-3"><a></a>       departamento <span class="sc">==</span> <span class="st">"TUMBES"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  ubigeo departamento provincia             ambito     tipo_de_plan estado o_m  
+   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;  &lt;lgl&gt;
+1   2401 TUMBES       TUMBES                TUMBES     PAT          Aprob… NA   
+2   2402 TUMBES       CONTRALMIRANTE VILLAR Cancas-Pu… PDU          Aprob… NA   
+3   2401 TUMBES       TUMBES                San Pedro… PDU          Aprob… NA   
+4   2401 TUMBES       TUMBES                Caleta la… PDU          Aprob… NA   
+5   2402 TUMBES       CONTRALMIRANTE VILLAR CONTRALMI… PAT          Aprob… NA   
+6   2401 TUMBES       TUMBES                Tumbes-Pu… PDU          Aprob… NA   </code></pre>
+</div>
 </div>
 </section>
-<section id="operadores-de-comparación" class="slide level2 smaller">
+<section id="filter---filtrar-filas-1" class="slide level2">
+<h2><code>filter()</code> - Filtrar filas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.13.1, GDAL 3.11.4, PROJ 9.7.0; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>distrito <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DISTRITO.gpkg"</span>)</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a>distrito <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a></a>  <span class="fu">filter</span>( ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="co"># Cusco </span></span>
+<span id="cb11-5"><a></a>                      <span class="st">"04"</span>) <span class="co"># Arequipa</span></span>
+<span id="cb11-6"><a></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 225 features and 12 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -75.07333 ymin: -17.28501 xmax: -70.34507 ymax: -11.21229
+Geodetic CRS:  WGS 84
+# A tibble: 225 × 13
+   objectid ccdd  ccpp  ccdi  ubigeo nombdist       fuente periodo ccdd_c ccpp_c
+ *    &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; 
+ 1      338 04    01    03    040103 CAYMA          V Cen…       1 040    02    
+ 2      339 04    01    04    040104 CERRO COLORADO V Cen…       1 040    02    
+ 3      340 04    01    05    040105 CHARACATO      V Cen…       1 040    03    
+ 4      343 04    01    08    040108 LA JOYA        V Cen…       1 040    04    
+ 5      354 04    01    19    040119 SAN JUAN DE T… V Cen…       1 040    02    
+ 6      355 04    01    20    040120 SANTA ISABEL … V Cen…       1 040    04    
+ 7      356 04    01    21    040121 SANTA RITA DE… V Cen…       1 040    04    
+ 8      424 04    06    05    040605 IRAY           V Cen…       1 040    05    
+ 9      425 04    06    06    040606 RIO GRANDE     V Cen…       1 040    05    
+10      426 04    06    07    040607 SALAMANCA      V Cen…       1 040    05    
+# ℹ 215 more rows
+# ℹ 3 more variables: ccdi_c &lt;chr&gt;, fec_reg &lt;dttm&gt;, geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="operadores-de-comparación" class="slide level2">
 <h2>Operadores de comparación</h2>
 <table class="caption-top">
 <thead>
@@ -365,7 +423,7 @@
 </div>
 </div>
 </section>
-<section id="operadores-lógicos" class="slide level2 smaller">
+<section id="operadores-lógicos" class="slide level2">
 <h2>Operadores lógicos</h2>
 <p>Combinar múltiples condiciones:</p>
 <table class="caption-top">
@@ -390,36 +448,115 @@
 </tr>
 </tbody>
 </table>
-<div class="fragment">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Parques Nacionales con más de 100,000 ha</span></span>
-<span id="cb5-2"><a></a><span class="fu">filter</span>(anp, categoria <span class="sc">==</span> <span class="st">"Parque Nacional"</span> <span class="sc">&amp;</span> superficie_oficial <span class="sc">&gt;</span> <span class="dv">100000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Áreas en Cusco o Loreto</span></span>
-<span id="cb6-2"><a></a><span class="fu">filter</span>(anp, ubicacion_politica <span class="sc">==</span> <span class="st">"Cusco"</span> <span class="sc">|</span> ubicacion_politica <span class="sc">==</span> <span class="st">"Loreto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="operador-in" class="slide level2 smaller">
+<section id="operador-in" class="slide level2">
 <h2>Operador <code>%in%</code></h2>
 <p>Para comparar con múltiples valores:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Áreas en varios departamentos (forma larga)</span></span>
-<span id="cb7-2"><a></a><span class="fu">filter</span>(anp,</span>
-<span id="cb7-3"><a></a>       ubicacion_politica <span class="sc">==</span> <span class="st">"Cusco"</span> <span class="sc">|</span></span>
-<span id="cb7-4"><a></a>       ubicacion_politica <span class="sc">==</span> <span class="st">"Loreto"</span> <span class="sc">|</span></span>
-<span id="cb7-5"><a></a>       ubicacion_politica <span class="sc">==</span> <span class="st">"Madre de Dios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Forma más elegante con %in%</span></span>
-<span id="cb8-2"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Cusco"</span>, <span class="st">"Loreto"</span>, <span class="st">"Madre de Dios"</span>)</span>
-<span id="cb8-3"><a></a><span class="fu">filter</span>(anp, ubicacion_politica <span class="sc">%in%</span> departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="co"># Áreas en varios departamentos (forma larga)</span></span>
+<span id="cb13-2"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb13-3"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a></a><span class="fu">filter</span>(ccdd <span class="sc">==</span> <span class="st">"08"</span> <span class="sc">|</span> <span class="co"># CUSCO</span></span>
+<span id="cb13-5"><a></a>       ccdd <span class="sc">==</span> <span class="st">"05"</span> <span class="sc">|</span> <span class="co"># AYACUCHO</span></span>
+<span id="cb13-6"><a></a>       ccdd <span class="sc">==</span> <span class="st">"04"</span>)  <span class="co"># AREQUIPA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 3 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -75.13983 ymin: -17.28501 xmax: -70.34507 ymax: -11.21229
+Geodetic CRS:  WGS 84
+# A tibble: 3 × 7
+  objectid ccdd  nombdep  fuente                     periodo fec_reg            
+*    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                        &lt;int&gt; &lt;dttm&gt;             
+1        4 04    AREQUIPA V Censo Nacional Economico       1 2022-07-13 17:13:57
+2        5 05    AYACUCHO V Censo Nacional Economico       1 2022-07-13 17:13:57
+3        8 08    CUSCO    V Censo Nacional Economico       1 2022-07-13 17:13:57
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="operador-in-1" class="slide level2">
+<h2>Operador <code>%in%</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Forma más elegante con %in%</span></span>
+<span id="cb15-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a></a><span class="fu">filter</span>( ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"05"</span>, <span class="st">"04"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 3 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -75.13983 ymin: -17.28501 xmax: -70.34507 ymax: -11.21229
+Geodetic CRS:  WGS 84
+# A tibble: 3 × 7
+  objectid ccdd  nombdep  fuente                     periodo fec_reg            
+*    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                        &lt;int&gt; &lt;dttm&gt;             
+1        4 04    AREQUIPA V Censo Nacional Economico       1 2022-07-13 17:13:57
+2        5 05    AYACUCHO V Censo Nacional Economico       1 2022-07-13 17:13:57
+3        8 08    CUSCO    V Censo Nacional Economico       1 2022-07-13 17:13:57
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
 </div>
 </section>
 <section id="valores-faltantes-na" class="slide level2">
 <h2>Valores faltantes (NA)</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># is.na() identifica valores faltantes</span></span>
-<span id="cb9-2"><a></a><span class="fu">filter</span>(anp, <span class="fu">is.na</span>(superficie_oficial))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># !is.na() identifica valores NO faltantes</span></span>
-<span id="cb10-2"><a></a><span class="fu">filter</span>(anp, <span class="sc">!</span><span class="fu">is.na</span>(superficie_oficial))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb17-2"><a></a>indicadores_anta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb17-3"><a></a>                               <span class="at">skip =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb17-5"><a></a><span class="co"># is.na() identifica valores faltantes</span></span>
+<span id="cb17-6"><a></a>indicadores_anta <span class="sc">|&gt;</span> </span>
+<span id="cb17-7"><a></a><span class="fu">filter</span>(<span class="fu">is.na</span>(percent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   variable_indicador                                           absoluto percent
+   &lt;chr&gt;                                                        &lt;chr&gt;    &lt;chr&gt;  
+ 1 Población total                                              55       &lt;NA&gt;   
+ 2 Sexo                                                         &lt;NA&gt;     &lt;NA&gt;   
+ 3 Grupo de edad quinquenal                                     53       &lt;NA&gt;   
+ 4 Afiliada  a algún seguro de salud                            54       &lt;NA&gt;   
+ 5 Con alguna dificultad o limitación permanente para           58       &lt;NA&gt;   
+ 6 Idioma o lengua materna con el que aprendió a hablar en su … 50       &lt;NA&gt;   
+ 7 Nivel educativo alcanzado                                    48       &lt;NA&gt;   
+ 8 Asistencia a una institución educativa, colegio, instituto … 50       &lt;NA&gt;   
+ 9 Sabe leer y escribir                                         37       &lt;NA&gt;   
+10 Sabe leer y escribir (Hombre)                                18       &lt;NA&gt;   
+11 Sabe leer y escribir (Mujer)                                 19       &lt;NA&gt;   
+12 Estado civil o conyugal                                      38       &lt;NA&gt;   
+13 Por sus costumbres y antepasados se siente o considera       38       &lt;NA&gt;   
+14 Religión que profesa                                         38       &lt;NA&gt;   
+15 Población en edad de trabajar                                38       &lt;NA&gt;   
+16 Razón por la que no dio su número de DNI                     6        &lt;NA&gt;   
+17 &lt;NA&gt;                                                         &lt;NA&gt;     &lt;NA&gt;   
+18 &lt;NA&gt;                                                         &lt;NA&gt;     &lt;NA&gt;   
+19 Censos Nacionales 2017. XII de Población y VII de Vivienda   &lt;NA&gt;     &lt;NA&gt;   
+20 *Población total: es la población censada más la omitida     &lt;NA&gt;     &lt;NA&gt;   </code></pre>
+</div>
+</div>
+</section>
+<section id="valores-faltantes-na-1" class="slide level2">
+<h2>Valores faltantes (NA)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># !is.na() identifica valores NO faltantes</span></span>
+<span id="cb19-2"><a></a>indicadores_anta <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a></a><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(percent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 98 × 3
+   variable_indicador     absoluto percent          
+   &lt;chr&gt;                  &lt;chr&gt;    &lt;chr&gt;            
+ 1 Manzanas seleccionadas 1        -                
+ 2 Hombre                 24       44.6             
+ 3 Mujer                  30       55.4             
+ 4 Menos de 1             1        1.9              
+ 5 De 1 a 4               6        11.6             
+ 6 De 5 a 9               7        13.4             
+ 7 10 a 14                3        5.7              
+ 8 15 a 19                4        7.6              
+ 9 De 20 a 24             5        9.699999999999999
+10 De 25 a 29             8        13.6             
+# ℹ 88 more rows</code></pre>
+</div>
+</div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -433,22 +570,82 @@
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="arrange---ordenar-filas" class="slide level2">
 <h2><code>arrange()</code> - Ordenar filas</h2>
 <p>Ordena filas según una o más columnas:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="co"># Ordenar por superficie (de menor a mayor)</span></span>
-<span id="cb11-2"><a></a><span class="fu">arrange</span>(anp, superficie_oficial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># Ordenar de mayor a menor con desc()</span></span>
-<span id="cb12-2"><a></a><span class="fu">arrange</span>(anp, <span class="fu">desc</span>(superficie_oficial))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># Ordenar por población (de menor a mayor)</span></span>
+<span id="cb21-2"><a></a><span class="co"># ?population - data de tidyr</span></span>
+<span id="cb21-3"><a></a>population <span class="sc">|&gt;</span> </span>
+<span id="cb21-4"><a></a><span class="fu">arrange</span>(population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,060 × 3
+   country  year population
+   &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Tokelau  2009       1129
+ 2 Tokelau  2008       1130
+ 3 Tokelau  2010       1135
+ 4 Tokelau  2007       1141
+ 5 Tokelau  2011       1148
+ 6 Tokelau  2006       1167
+ 7 Tokelau  2012       1169
+ 8 Tokelau  2013       1195
+ 9 Tokelau  2005       1210
+10 Tokelau  2004       1272
+# ℹ 4,050 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="arrange---ordenar-filas-1" class="slide level2">
+<h2><code>arrange()</code> - Ordenar filas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># Ordenar de mayor a menor con desc()</span></span>
+<span id="cb23-2"><a></a>population <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a></a><span class="fu">arrange</span>(<span class="fu">desc</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,060 × 3
+   country  year population
+   &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+ 1 China    2013 1385566537
+ 2 China    2012 1377064907
+ 3 China    2011 1368440300
+ 4 China    2010 1359821465
+ 5 China    2009 1351247555
+ 6 China    2008 1342732604
+ 7 China    2007 1334343509
+ 8 China    2006 1326146433
+ 9 China    2005 1318176835
+10 China    2004 1310414386
+# ℹ 4,050 more rows</code></pre>
+</div>
 </div>
 </section>
 <section id="ordenar-por-múltiples-columnas" class="slide level2">
 <h2>Ordenar por múltiples columnas</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="co"># Primero por categoría, luego por superficie</span></span>
-<span id="cb13-2"><a></a><span class="fu">arrange</span>(anp, categoria, <span class="fu">desc</span>(superficie_oficial))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb25-2"><a></a><span class="co"># Primero por expectativa de vida, luego por poblacion</span></span>
+<span id="cb25-3"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a></a><span class="fu">arrange</span>(lifeExp, </span>
+<span id="cb25-5"><a></a>        <span class="fu">desc</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 6
+   country      continent  year lifeExp     pop gdpPercap
+   &lt;fct&gt;        &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+ 1 Rwanda       Africa     1992    23.6 7290203      737.
+ 2 Afghanistan  Asia       1952    28.8 8425333      779.
+ 3 Gambia       Africa     1952    30    284320      485.
+ 4 Angola       Africa     1952    30.0 4232095     3521.
+ 5 Sierra Leone Africa     1952    30.3 2143249      880.
+ 6 Afghanistan  Asia       1957    30.3 9240934      821.
+ 7 Cambodia     Asia       1977    31.2 6978607      525.
+ 8 Mozambique   Africa     1952    31.3 6446316      469.
+ 9 Sierra Leone Africa     1957    31.6 2295678     1004.
+10 Burkina Faso Africa     1952    32.0 4469979      543.
+# ℹ 1,694 more rows</code></pre>
+</div>
+</div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -466,24 +663,75 @@
 <section id="distinct---filas-únicas" class="slide level2">
 <h2><code>distinct()</code> - Filas únicas</h2>
 <p>Encuentra filas únicas (elimina duplicados):</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="co"># Categorías únicas de áreas naturales</span></span>
-<span id="cb14-2"><a></a><span class="fu">distinct</span>(anp, categoria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Mantener todas las columnas</span></span>
-<span id="cb15-2"><a></a><span class="fu">distinct</span>(anp, categoria, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Categorías únicas de áreas naturales</span></span>
+<span id="cb27-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a></a><span class="fu">distinct</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 1
+   nombdep     
+   &lt;chr&gt;       
+ 1 AMAZONAS    
+ 2 ANCASH      
+ 3 APURIMAC    
+ 4 AREQUIPA    
+ 5 AYACUCHO    
+ 6 CAJAMARCA   
+ 7 CALLAO      
+ 8 CUSCO       
+ 9 HUANCAVELICA
+10 HUANUCO     
+# ℹ 15 more rows</code></pre>
+</div>
 </div>
 </section>
-<section id="distinct-vs-count" class="slide level2 smaller">
+<section id="distinct-vs-count" class="slide level2">
 <h2><code>distinct()</code> vs <code>count()</code></h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="co"># distinct() muestra valores únicos</span></span>
-<span id="cb16-2"><a></a><span class="fu">distinct</span>(anp, categoria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="co"># count() cuenta las ocurrencias</span></span>
-<span id="cb17-2"><a></a><span class="fu">count</span>(anp, categoria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="co"># distinct() muestra valores únicos</span></span>
+<span id="cb29-2"><a></a>planes <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a></a><span class="fu">distinct</span>(estado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 1
+  estado    
+  &lt;chr&gt;     
+1 Aprobado  
+2 Terminado 
+3 En proceso
+4 &lt;NA&gt;      </code></pre>
 </div>
-<div class="fragment">
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="co"># Ordenar por frecuencia</span></span>
-<span id="cb18-2"><a></a><span class="fu">count</span>(anp, categoria, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="co"># count() cuenta las ocurrencias</span></span>
+<span id="cb31-2"><a></a>planes <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a></a>  <span class="fu">count</span>(estado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  estado         n
+  &lt;chr&gt;      &lt;int&gt;
+1 Aprobado      98
+2 En proceso     3
+3 Terminado     11
+4 &lt;NA&gt;           1</code></pre>
+</div>
+</div>
+</div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># Ordenar por frecuencia</span></span>
+<span id="cb33-2"><a></a>planes <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a></a><span class="fu">count</span>(estado, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  estado         n
+  &lt;chr&gt;      &lt;int&gt;
+1 Aprobado      98
+2 Terminado     11
+3 En proceso     3
+4 &lt;NA&gt;           1</code></pre>
+</div>
 </div>
 </section></section>
 <section>
@@ -494,65 +742,223 @@
 <section id="mutate---crearmodificar-columnas" class="slide level2">
 <h2><code>mutate()</code> - Crear/modificar columnas</h2>
 <p>Crea nuevas columnas o modifica existentes:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># Convertir superficie de hectáreas a km²</span></span>
-<span id="cb19-2"><a></a><span class="fu">mutate</span>(anp, <span class="at">superficie_km2 =</span> superficie_oficial <span class="sc">/</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="co"># Crear múltiples columnas</span></span>
-<span id="cb20-2"><a></a><span class="fu">mutate</span>(anp,</span>
-<span id="cb20-3"><a></a>  <span class="at">superficie_km2 =</span> superficie_oficial <span class="sc">/</span> <span class="dv">100</span>,</span>
-<span id="cb20-4"><a></a>  <span class="at">area_grande =</span> superficie_oficial <span class="sc">&gt;</span> <span class="dv">100000</span></span>
-<span id="cb20-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Convertir superficie de hectáreas a km²</span></span>
+<span id="cb35-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a></a><span class="fu">mutate</span>( <span class="at">superficie_m2 =</span> <span class="fu">st_area</span>(departamentos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 7 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 8
+   objectid ccdd  nombdep      fuente                periodo fec_reg            
+ *    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;                   &lt;int&gt; &lt;dttm&gt;             
+ 1        1 01    AMAZONAS     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 2        2 02    ANCASH       V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 3        3 03    APURIMAC     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 4        4 04    AREQUIPA     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 5        5 05    AYACUCHO     V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 6        6 06    CAJAMARCA    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 7        7 07    CALLAO       V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 8        8 08    CUSCO        V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 9        9 09    HUANCAVELICA V Censo Nacional Eco…       1 2022-07-13 17:13:57
+10       10 10    HUANUCO      V Censo Nacional Eco…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 2 more variables: geom &lt;MULTIPOLYGON [°]&gt;, superficie_m2 [m^2]</code></pre>
+</div>
 </div>
 </section>
-<section id="operaciones-con-mutate" class="slide level2 smaller">
+<section id="mutate---crearmodificar-columnas-1" class="slide level2">
+<h2><code>mutate()</code> - Crear/modificar columnas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="co"># Crear múltiples columnas</span></span>
+<span id="cb37-2"><a></a>pob_peru <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/poblacion_peru.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 24 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (3): anio, hombres, mujeres
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a></a>   <span class="fu">mutate</span>(</span>
+<span id="cb39-3"><a></a>    <span class="at">total =</span> hombres <span class="sc">+</span> mujeres,</span>
+<span id="cb39-4"><a></a>    <span class="at">pct_hombres =</span> (hombres <span class="sc">/</span> total) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb39-5"><a></a>    <span class="at">pct_mujeres =</span> (mujeres <span class="sc">/</span> total) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb39-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 6
+    anio hombres mujeres  total pct_hombres pct_mujeres
+   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1  2025  17028.  17328. 34356.        49.6        50.4
+ 2  2024  16975.  17061. 34036         49.9        50.1
+ 3  2023  16727   16999. 33726.        49.6        50.4
+ 4  2022  16570.  16827  33397.        49.6        50.4
+ 5  2021  16396.  16644. 33039.        49.6        50.4
+ 6  2020  16183.  16387. 32570.        49.7        50.3
+ 7  2019  16149.  16224. 32374.        49.9        50.1
+ 8  2018  16105   16077. 32182.        50.0        50.0
+ 9  2017  15929.  15887. 31816         50.1        49.9
+10  2016  15773.  15715. 31488.        50.1        49.9
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="operaciones-con-mutate" class="slide level2">
 <h2>Operaciones con <code>mutate()</code></h2>
 <p>Puedes usar operadores aritméticos:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mutate</span>(anp,</span>
-<span id="cb21-2"><a></a>  <span class="co"># Operaciones aritméticas</span></span>
-<span id="cb21-3"><a></a>  <span class="at">superficie_acres =</span> superficie_oficial <span class="sc">*</span> <span class="fl">2.47105</span>,</span>
-<span id="cb21-4"><a></a>  <span class="co"># Operaciones lógicas</span></span>
-<span id="cb21-5"><a></a>  <span class="at">es_parque =</span> <span class="fu">str_detect</span>(categoria, <span class="st">"Parque"</span>),</span>
-<span id="cb21-6"><a></a>  <span class="co"># Funciones</span></span>
-<span id="cb21-7"><a></a>  <span class="at">nombre_mayus =</span> <span class="fu">str_to_upper</span>(nombre)</span>
-<span id="cb21-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb41-3"><a></a>    <span class="co"># Operaciones aritméticas</span></span>
+<span id="cb41-4"><a></a>   <span class="at">pob_total =</span> hombres <span class="sc">+</span> mujeres,</span>
+<span id="cb41-5"><a></a>    <span class="co"># Operaciones lógicas</span></span>
+<span id="cb41-6"><a></a>    <span class="at">sexo_dominante =</span> <span class="fu">if_else</span>( mujeres <span class="sc">&gt;</span> hombres, <span class="st">"Mayoría Mujeres"</span>, <span class="st">"Mayoría Hombres"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 5
+    anio hombres mujeres pob_total sexo_dominante 
+   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;          
+ 1  2025  17028.  17328.    34356. Mayoría Mujeres
+ 2  2024  16975.  17061.    34036  Mayoría Mujeres
+ 3  2023  16727   16999.    33726. Mayoría Mujeres
+ 4  2022  16570.  16827     33397. Mayoría Mujeres
+ 5  2021  16396.  16644.    33039. Mayoría Mujeres
+ 6  2020  16183.  16387.    32570. Mayoría Mujeres
+ 7  2019  16149.  16224.    32374. Mayoría Mujeres
+ 8  2018  16105   16077.    32182. Mayoría Hombres
+ 9  2017  15929.  15887.    31816  Mayoría Hombres
+10  2016  15773.  15715.    31488. Mayoría Hombres
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
 </section>
-<section id="opciones-de-mutate" class="slide level2 smaller">
+<section id="opciones-de-mutate" class="slide level2">
 <h2>Opciones de <code>mutate()</code></h2>
 <ul>
-<li class="fragment"><code>.before</code> - colocar nuevas columnas antes de otra columna</li>
-<li class="fragment"><code>.after</code> - colocar nuevas columnas después de otra columna</li>
-<li class="fragment"><code>.keep</code> - qué columnas mantener</li>
+<li><code>.before</code> - colocar nuevas columnas antes de otra columna</li>
+<li><code>.after</code> - colocar nuevas columnas después de otra columna</li>
+<li><code>.keep</code> - qué columnas mantener</li>
 </ul>
-<div class="fragment">
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="co"># Colocar nueva columna al inicio</span></span>
-<span id="cb22-2"><a></a><span class="fu">mutate</span>(anp,</span>
-<span id="cb22-3"><a></a>  <span class="at">superficie_km2 =</span> superficie_oficial <span class="sc">/</span> <span class="dv">100</span>,</span>
-<span id="cb22-4"><a></a>  <span class="at">.before =</span> <span class="dv">1</span></span>
-<span id="cb22-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># Colocar nueva columna al inicio</span></span>
+<span id="cb43-2"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a></a><span class="fu">mutate</span>( <span class="at">pob_total =</span> hombres <span class="sc">+</span> mujeres,</span>
+<span id="cb43-4"><a></a>        <span class="at">.before =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 4
+   pob_total  anio hombres mujeres
+       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1    34356.  2025  17028.  17328.
+ 2    34036   2024  16975.  17061.
+ 3    33726.  2023  16727   16999.
+ 4    33397.  2022  16570.  16827 
+ 5    33039.  2021  16396.  16644.
+ 6    32570.  2020  16183.  16387.
+ 7    32374.  2019  16149.  16224.
+ 8    32182.  2018  16105   16077.
+ 9    31816   2017  15929.  15887.
+10    31488.  2016  15773.  15715.
+# ℹ 14 more rows</code></pre>
 </div>
-<div class="fragment">
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># Mantener solo columnas nuevas</span></span>
-<span id="cb23-2"><a></a><span class="fu">mutate</span>(anp,</span>
-<span id="cb23-3"><a></a>  <span class="at">superficie_km2 =</span> superficie_oficial <span class="sc">/</span> <span class="dv">100</span>,</span>
-<span id="cb23-4"><a></a>  <span class="at">.keep =</span> <span class="st">"none"</span></span>
-<span id="cb23-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="select---seleccionar-columnas" class="slide level2">
 <h2><code>select()</code> - Seleccionar columnas</h2>
 <p>Selecciona columnas por nombre:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="co"># Seleccionar columnas específicas</span></span>
-<span id="cb24-2"><a></a><span class="fu">select</span>(anp, nombre, categoria, superficie_oficial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="co"># Seleccionar rango de columnas</span></span>
-<span id="cb25-2"><a></a><span class="fu">select</span>(anp, nombre<span class="sc">:</span>ubicacion_politica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb45-2"><a></a></span>
+<span id="cb45-3"><a></a><span class="co"># Seleccionar columnas específicas</span></span>
+<span id="cb45-4"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb45-5"><a></a>  <span class="fu">select</span>(ccdd, nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 3
+   ccdd  nombdep                                                            geom
+   &lt;chr&gt; &lt;chr&gt;                                                &lt;MULTIPOLYGON [°]&gt;
+ 1 01    AMAZONAS     (((-77.81399 -2.992779, -77.81332 -2.990943, -77.81211 -2…
+ 2 02    ANCASH       (((-77.64697 -8.05086, -77.64716 -8.05028, -77.64735 -8.0…
+ 3 03    APURIMAC     (((-73.74655 -13.17442, -73.74744 -13.17352, -73.74744 -1…
+ 4 04    AREQUIPA     (((-71.98109 -14.64062, -71.98142 -14.63941, -71.9815 -14…
+ 5 05    AYACUCHO     (((-74.34843 -12.17503, -74.3484 -12.17502, -74.34714 -12…
+ 6 06    CAJAMARCA    (((-78.70034 -4.627693, -78.70165 -4.626257, -78.70315 -4…
+ 7 07    CALLAO       (((-77.13504 -11.8182, -77.13522 -11.81819, -77.13527 -11…
+ 8 08    CUSCO        (((-72.9728 -11.25189, -72.97361 -11.25161, -72.97422 -11…
+ 9 09    HUANCAVELICA (((-74.57118 -11.9871, -74.5711 -11.98616, -74.57112 -11.…
+10 10    HUANUCO      (((-75.992 -8.321078, -75.99257 -8.32073, -75.99412 -8.31…
+# ℹ 15 more rows</code></pre>
 </div>
-<div class="fragment">
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="co"># Excluir columnas con -</span></span>
-<span id="cb26-2"><a></a><span class="fu">select</span>(anp, <span class="sc">-</span>fecha_promulgacion__modificacion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="funciones-auxiliares-de-select" class="slide level2 smaller">
+<section id="select---seleccionar-columnas-1" class="slide level2">
+<h2><code>select()</code> - Seleccionar columnas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>distrito <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DISTRITO.gpkg"</span>)</span>
+<span id="cb47-2"><a></a><span class="co"># Seleccionar rango de columnas</span></span>
+<span id="cb47-3"><a></a>distrito <span class="sc">|&gt;</span> </span>
+<span id="cb47-4"><a></a><span class="fu">select</span>(ccdd<span class="sc">:</span>ccdi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 1890 features and 3 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 1,890 × 4
+   ccdd  ccpp  ccdi                                                         geom
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                                          &lt;MULTIPOLYGON [°]&gt;
+ 1 09    02    03    (((-74.65993 -12.75712, -74.65999 -12.75645, -74.66033 -12…
+ 2 01    01    01    (((-77.8858 -6.1778, -77.88844 -6.177492, -77.88954 -6.177…
+ 3 01    01    06    (((-77.86211 -6.868805, -77.86311 -6.868375, -77.86538 -6.…
+ 4 01    03    01    (((-77.84223 -5.82379, -77.84235 -5.82357, -77.84292 -5.82…
+ 5 01    05    03    (((-77.99757 -6.51978, -77.99846 -6.519061, -78 -6.519812,…
+ 6 01    01    10    (((-77.74017 -6.64825, -77.7403 -6.647456, -77.74329 -6.65…
+ 7 05    03    04    (((-74.60843 -13.69537, -74.60998 -13.69534, -74.61162 -13…
+ 8 01    01    19    (((-77.87434 -6.30649, -77.87556 -6.30633, -77.87591 -6.30…
+ 9 05    05    07    (((-73.72504 -12.63673, -73.72555 -12.63665, -73.72693 -12…
+10 05    05    08    (((-73.99072 -12.83775, -73.99221 -12.83758, -73.99445 -12…
+# ℹ 1,880 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="select---seleccionar-columnas-2" class="slide level2">
+<h2><code>select()</code> - Seleccionar columnas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="co"># Excluir columnas con -</span></span>
+<span id="cb49-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb49-3"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 5 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 6
+   objectid ccdd  fuente   periodo fec_reg                                  geom
+      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      &lt;int&gt; &lt;dttm&gt;                     &lt;MULTIPOLYGON [°]&gt;
+ 1        1 01    V Censo…       1 2022-07-13 17:13:57 (((-77.81399 -2.992779, …
+ 2        2 02    V Censo…       1 2022-07-13 17:13:57 (((-77.64697 -8.05086, -…
+ 3        3 03    V Censo…       1 2022-07-13 17:13:57 (((-73.74655 -13.17442, …
+ 4        4 04    V Censo…       1 2022-07-13 17:13:57 (((-71.98109 -14.64062, …
+ 5        5 05    V Censo…       1 2022-07-13 17:13:57 (((-74.34843 -12.17503, …
+ 6        6 06    V Censo…       1 2022-07-13 17:13:57 (((-78.70034 -4.627693, …
+ 7        7 07    V Censo…       1 2022-07-13 17:13:57 (((-77.13504 -11.8182, -…
+ 8        8 08    V Censo…       1 2022-07-13 17:13:57 (((-72.9728 -11.25189, -…
+ 9        9 09    V Censo…       1 2022-07-13 17:13:57 (((-74.57118 -11.9871, -…
+10       10 10    V Censo…       1 2022-07-13 17:13:57 (((-75.992 -8.321078, -7…
+# ℹ 15 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="funciones-auxiliares-de-select" class="slide level2">
 <h2>Funciones auxiliares de <code>select()</code></h2>
 <table class="caption-top">
 <thead>
@@ -591,51 +997,237 @@
 </section>
 <section id="ejemplos-de-funciones-auxiliares" class="slide level2">
 <h2>Ejemplos de funciones auxiliares</h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Columnas que empiezan con "superficie"</span></span>
-<span id="cb27-2"><a></a><span class="fu">select</span>(anp, <span class="fu">starts_with</span>(<span class="st">"superficie"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="co"># Columnas numéricas</span></span>
-<span id="cb28-2"><a></a><span class="fu">select</span>(anp, <span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># Columnas que empiezan con "superficie"</span></span>
+<span id="cb51-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb51-3"><a></a><span class="fu">select</span>( <span class="fu">starts_with</span>(<span class="st">"cc"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 1 field
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 2
+   ccdd                                                                     geom
+   &lt;chr&gt;                                                      &lt;MULTIPOLYGON [°]&gt;
+ 1 01    (((-77.81399 -2.992779, -77.81332 -2.990943, -77.81211 -2.989615, -77.…
+ 2 02    (((-77.64697 -8.05086, -77.64716 -8.05028, -77.64735 -8.04984, -77.647…
+ 3 03    (((-73.74655 -13.17442, -73.74744 -13.17352, -73.74744 -13.17352, -73.…
+ 4 04    (((-71.98109 -14.64062, -71.98142 -14.63941, -71.9815 -14.6387, -71.98…
+ 5 05    (((-74.34843 -12.17503, -74.3484 -12.17502, -74.34714 -12.17439, -74.3…
+ 6 06    (((-78.70034 -4.627693, -78.70165 -4.626257, -78.70315 -4.625604, -78.…
+ 7 07    (((-77.13504 -11.8182, -77.13522 -11.81819, -77.13527 -11.81783, -77.1…
+ 8 08    (((-72.9728 -11.25189, -72.97361 -11.25161, -72.97422 -11.25068, -72.9…
+ 9 09    (((-74.57118 -11.9871, -74.5711 -11.98616, -74.57112 -11.98561, -74.57…
+10 10    (((-75.992 -8.321078, -75.99257 -8.32073, -75.99412 -8.319234, -75.994…
+# ℹ 15 more rows</code></pre>
 </div>
-<div class="fragment">
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="co"># Reorganizar: nombre primero, luego todo lo demás</span></span>
-<span id="cb29-2"><a></a><span class="fu">select</span>(anp, nombre, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejemplos-de-funciones-auxiliares-1" class="slide level2">
+<h2>Ejemplos de funciones auxiliares</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># Columnas numéricas</span></span>
+<span id="cb53-2"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb53-3"><a></a><span class="fu">select</span>( <span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 4
+    year lifeExp      pop gdpPercap
+   &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1  1952    28.8  8425333      779.
+ 2  1957    30.3  9240934      821.
+ 3  1962    32.0 10267083      853.
+ 4  1967    34.0 11537966      836.
+ 5  1972    36.1 13079460      740.
+ 6  1977    38.4 14880372      786.
+ 7  1982    39.9 12881816      978.
+ 8  1987    40.8 13867957      852.
+ 9  1992    41.7 16317921      649.
+10  1997    41.8 22227415      635.
+# ℹ 1,694 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplos-de-funciones-auxiliares-2" class="slide level2">
+<h2>Ejemplos de funciones auxiliares</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="co"># Reorganizar: nombre primero, luego todo lo demás</span></span>
+<span id="cb55-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb55-3"><a></a><span class="fu">select</span>(nombdep, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 7
+   nombdep      objectid ccdd  fuente                periodo fec_reg            
+   &lt;chr&gt;           &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                   &lt;int&gt; &lt;dttm&gt;             
+ 1 AMAZONAS            1 01    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 2 ANCASH              2 02    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 3 APURIMAC            3 03    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 4 AREQUIPA            4 04    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 5 AYACUCHO            5 05    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 6 CAJAMARCA           6 06    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 7 CALLAO              7 07    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 8 CUSCO               8 08    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 9 HUANCAVELICA        9 09    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+10 HUANUCO            10 10    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
 </div>
 </section>
 <section id="rename---renombrar-columnas" class="slide level2">
 <h2><code>rename()</code> - Renombrar columnas</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="co"># Sintaxis: nuevo_nombre = nombre_antiguo</span></span>
-<span id="cb30-2"><a></a><span class="fu">rename</span>(anp,</span>
-<span id="cb30-3"><a></a>  <span class="at">area =</span> nombre,</span>
-<span id="cb30-4"><a></a>  <span class="at">departamento =</span> ubicacion_politica</span>
-<span id="cb30-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="co"># Sintaxis: nuevo_nombre = nombre_antiguo</span></span>
+<span id="cb57-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb57-3"><a></a><span class="fu">rename</span>(<span class="at">departamento =</span> nombdep,</span>
+<span id="cb57-4"><a></a>       <span class="at">cod_dep =</span> ccdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 7
+   objectid cod_dep departamento fuente              periodo fec_reg            
+      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;                 &lt;int&gt; &lt;dttm&gt;             
+ 1        1 01      AMAZONAS     V Censo Nacional E…       1 2022-07-13 17:13:57
+ 2        2 02      ANCASH       V Censo Nacional E…       1 2022-07-13 17:13:57
+ 3        3 03      APURIMAC     V Censo Nacional E…       1 2022-07-13 17:13:57
+ 4        4 04      AREQUIPA     V Censo Nacional E…       1 2022-07-13 17:13:57
+ 5        5 05      AYACUCHO     V Censo Nacional E…       1 2022-07-13 17:13:57
+ 6        6 06      CAJAMARCA    V Censo Nacional E…       1 2022-07-13 17:13:57
+ 7        7 07      CALLAO       V Censo Nacional E…       1 2022-07-13 17:13:57
+ 8        8 08      CUSCO        V Censo Nacional E…       1 2022-07-13 17:13:57
+ 9        9 09      HUANCAVELICA V Censo Nacional E…       1 2022-07-13 17:13:57
+10       10 10      HUANUCO      V Censo Nacional E…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
 </div>
-<p><strong>Atajo</strong></p>
 </div>
-<div class="callout-content">
+</section>
+<section id="rename---renombrar-columnas-1" class="slide level2">
+<h2><code>rename()</code> - Renombrar columnas</h2>
 <p>También puedes renombrar con <code>select()</code>:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">select</span>(anp, <span class="at">area =</span> nombre, categoria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb59-2"><a></a><span class="fu">select</span>( <span class="at">departamento =</span> nombdep,</span>
+<span id="cb59-3"><a></a>        <span class="at">cod_dep =</span> ccdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 3
+   departamento cod_dep                                                     geom
+   &lt;chr&gt;        &lt;chr&gt;                                         &lt;MULTIPOLYGON [°]&gt;
+ 1 AMAZONAS     01      (((-77.81399 -2.992779, -77.81332 -2.990943, -77.81211 …
+ 2 ANCASH       02      (((-77.64697 -8.05086, -77.64716 -8.05028, -77.64735 -8…
+ 3 APURIMAC     03      (((-73.74655 -13.17442, -73.74744 -13.17352, -73.74744 …
+ 4 AREQUIPA     04      (((-71.98109 -14.64062, -71.98142 -14.63941, -71.9815 -…
+ 5 AYACUCHO     05      (((-74.34843 -12.17503, -74.3484 -12.17502, -74.34714 -…
+ 6 CAJAMARCA    06      (((-78.70034 -4.627693, -78.70165 -4.626257, -78.70315 …
+ 7 CALLAO       07      (((-77.13504 -11.8182, -77.13522 -11.81819, -77.13527 -…
+ 8 CUSCO        08      (((-72.9728 -11.25189, -72.97361 -11.25161, -72.97422 -…
+ 9 HUANCAVELICA 09      (((-74.57118 -11.9871, -74.5711 -11.98616, -74.57112 -1…
+10 HUANUCO      10      (((-75.992 -8.321078, -75.99257 -8.32073, -75.99412 -8.…
+# ℹ 15 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="relocate---reordenar-columnas" class="slide level2">
 <h2><code>relocate()</code> - Reordenar columnas</h2>
 <p>Cambia la posición de columnas:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="co"># Mover columna al inicio</span></span>
-<span id="cb32-2"><a></a><span class="fu">relocate</span>(anp, superficie_oficial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># Mover después de otra columna</span></span>
-<span id="cb33-2"><a></a><span class="fu">relocate</span>(anp, superficie_oficial, <span class="at">.after =</span> nombre)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="co"># Mover columna al inicio</span></span>
+<span id="cb61-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb61-3"><a></a><span class="fu">relocate</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 7
+   nombdep      objectid ccdd  fuente                periodo fec_reg            
+   &lt;chr&gt;           &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                   &lt;int&gt; &lt;dttm&gt;             
+ 1 AMAZONAS            1 01    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 2 ANCASH              2 02    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 3 APURIMAC            3 03    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 4 AREQUIPA            4 04    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 5 AYACUCHO            5 05    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 6 CAJAMARCA           6 06    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 7 CALLAO              7 07    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 8 CUSCO               8 08    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 9 HUANCAVELICA        9 09    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+10 HUANUCO            10 10    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
 </div>
-<div class="fragment">
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="co"># Mover antes de otra columna</span></span>
-<span id="cb34-2"><a></a><span class="fu">relocate</span>(anp, superficie_oficial, <span class="at">.before =</span> categoria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="relocate---reordenar-columnas-1" class="slide level2">
+<h2><code>relocate()</code> - Reordenar columnas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="co"># Mover después de otra columna</span></span>
+<span id="cb63-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb63-3"><a></a><span class="fu">relocate</span>(ccdd, <span class="at">.after =</span> nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 7
+   objectid nombdep      ccdd  fuente                periodo fec_reg            
+      &lt;int&gt; &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;                   &lt;int&gt; &lt;dttm&gt;             
+ 1        1 AMAZONAS     01    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 2        2 ANCASH       02    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 3        3 APURIMAC     03    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 4        4 AREQUIPA     04    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 5        5 AYACUCHO     05    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 6        6 CAJAMARCA    06    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 7        7 CALLAO       07    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 8        8 CUSCO        08    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+ 9        9 HUANCAVELICA 09    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+10       10 HUANUCO      10    V Censo Nacional Eco…       1 2022-07-13 17:13:57
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="relocate---reordenar-columnas-2" class="slide level2">
+<h2><code>relocate()</code> - Reordenar columnas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="co"># Mover antes de otra columna</span></span>
+<span id="cb65-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb65-3"><a></a><span class="fu">relocate</span>(fuente, <span class="at">.before =</span> geom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+Geodetic CRS:  WGS 84
+# A tibble: 25 × 7
+   objectid ccdd  nombdep      periodo fec_reg             fuente               
+      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;          &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;                
+ 1        1 01    AMAZONAS           1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 2        2 02    ANCASH             1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 3        3 03    APURIMAC           1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 4        4 04    AREQUIPA           1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 5        5 05    AYACUCHO           1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 6        6 06    CAJAMARCA          1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 7        7 07    CALLAO             1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 8        8 08    CUSCO              1 2022-07-13 17:13:57 V Censo Nacional Eco…
+ 9        9 09    HUANCAVELICA       1 2022-07-13 17:13:57 V Censo Nacional Eco…
+10       10 10    HUANUCO            1 2022-07-13 17:13:57 V Censo Nacional Eco…
+# ℹ 15 more rows
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
 </div>
 </section></section>
 <section>
@@ -643,7 +1235,7 @@
 <h1>El operador pipe</h1>
 
 </section>
-<section id="el-pipe" class="slide level2 smaller">
+<section id="el-pipe" class="slide level2">
 <h2>El pipe <code>|&gt;</code></h2>
 <p>El <strong>pipe</strong> (tubería) te permite encadenar operaciones:</p>
 <ul>
@@ -653,33 +1245,77 @@
 <li class="fragment">Atajo de teclado: <strong>Ctrl + Shift + M</strong> (Windows) o <strong>Cmd + Shift + M</strong> (Mac)</li>
 </ul>
 </section>
-<section id="sin-pipe-vs-con-pipe" class="slide level2 smaller">
+<section id="sin-pipe-vs-con-pipe" class="slide level2">
 <h2>Sin pipe vs con pipe</h2>
 <p><strong>Sin pipe</strong> (anidado y difícil de leer):</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">arrange</span>(</span>
-<span id="cb35-2"><a></a>  <span class="fu">filter</span>(</span>
-<span id="cb35-3"><a></a>    <span class="fu">select</span>(anp, nombre, categoria, superficie_oficial),</span>
-<span id="cb35-4"><a></a>    categoria <span class="sc">==</span> <span class="st">"Parque Nacional"</span></span>
-<span id="cb35-5"><a></a>  ),</span>
-<span id="cb35-6"><a></a>  <span class="fu">desc</span>(superficie_oficial)</span>
-<span id="cb35-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<p><strong>Con pipe</strong> (fluido y claro):</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a></a>  <span class="fu">select</span>(nombre, categoria, superficie_oficial) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a></a>  <span class="fu">filter</span>(categoria <span class="sc">==</span> <span class="st">"Parque Nacional"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(superficie_oficial))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="fu">arrange</span>(</span>
+<span id="cb67-2"><a></a>  <span class="fu">filter</span>(</span>
+<span id="cb67-3"><a></a>    <span class="fu">select</span>(distrito, nombdist, ccdd, ccdi), ccdd <span class="sc">==</span> <span class="st">"08"</span>),</span>
+<span id="cb67-4"><a></a>  <span class="fu">desc</span>(<span class="fu">as.numeric</span>(ccdi))</span>
+<span id="cb67-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 116 features and 3 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -73.974 ymin: -15.45829 xmax: -70.34507 ymax: -11.21229
+Geodetic CRS:  WGS 84
+# A tibble: 116 × 4
+   nombdist         ccdd  ccdi                                              geom
+   &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;                               &lt;MULTIPOLYGON [°]&gt;
+ 1 UNION ASHANINKA  08    18    (((-73.79562 -12.26228, -73.79565 -12.26203, -7…
+ 2 MANITEA          08    17    (((-73.54421 -12.6579, -73.54364 -12.65739, -73…
+ 3 CIELO PUNCO      08    16    (((-73.51659 -12.73756, -73.51724 -12.73535, -7…
+ 4 KUMPIRUSHIATO    08    15    (((-73.22644 -12.36002, -73.22691 -12.35968, -7…
+ 5 MEGANTONI        08    14    (((-72.9728 -11.25189, -72.97361 -11.25161, -72…
+ 6 VILLA KINTIARINA 08    13    (((-73.51148 -12.81937, -73.51189 -12.8193, -73…
+ 7 QUIQUIJANA       08    12    (((-71.51821 -13.69929, -71.51934 -13.69926, -7…
+ 8 VILLA VIRGEN     08    12    (((-73.37081 -12.95754, -73.37128 -12.957, -73.…
+ 9 INKAWASI         08    11    (((-73.44847 -13.12207, -73.45224 -13.12153, -7…
+10 OROPESA          08    11    (((-71.8038 -13.50837, -71.80463 -13.50826, -71…
+# ℹ 106 more rows</code></pre>
+</div>
 </div>
 </section>
-<section id="ventajas-del-pipe" class="slide level2 smaller">
+<section id="sin-pipe-vs-con-pipe-1" class="slide level2">
+<h2>Sin pipe vs con pipe</h2>
+<p><strong>Con pipe</strong> (fluido y claro):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>distrito <span class="sc">|&gt;</span></span>
+<span id="cb69-2"><a></a>  <span class="fu">select</span>(nombdist, ccdd, ccdi) <span class="sc">|&gt;</span></span>
+<span id="cb69-3"><a></a>  <span class="fu">filter</span>(ccdd <span class="sc">==</span> <span class="st">"08"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">as.numeric</span>(ccdi)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 116 features and 3 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -73.974 ymin: -15.45829 xmax: -70.34507 ymax: -11.21229
+Geodetic CRS:  WGS 84
+# A tibble: 116 × 4
+   nombdist         ccdd  ccdi                                              geom
+   &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;                               &lt;MULTIPOLYGON [°]&gt;
+ 1 UNION ASHANINKA  08    18    (((-73.79562 -12.26228, -73.79565 -12.26203, -7…
+ 2 MANITEA          08    17    (((-73.54421 -12.6579, -73.54364 -12.65739, -73…
+ 3 CIELO PUNCO      08    16    (((-73.51659 -12.73756, -73.51724 -12.73535, -7…
+ 4 KUMPIRUSHIATO    08    15    (((-73.22644 -12.36002, -73.22691 -12.35968, -7…
+ 5 MEGANTONI        08    14    (((-72.9728 -11.25189, -72.97361 -11.25161, -72…
+ 6 VILLA KINTIARINA 08    13    (((-73.51148 -12.81937, -73.51189 -12.8193, -73…
+ 7 QUIQUIJANA       08    12    (((-71.51821 -13.69929, -71.51934 -13.69926, -7…
+ 8 VILLA VIRGEN     08    12    (((-73.37081 -12.95754, -73.37128 -12.957, -73.…
+ 9 INKAWASI         08    11    (((-73.44847 -13.12207, -73.45224 -13.12153, -7…
+10 OROPESA          08    11    (((-71.8038 -13.50837, -71.80463 -13.50826, -71…
+# ℹ 106 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="ventajas-del-pipe" class="slide level2">
 <h2>Ventajas del pipe</h2>
 <ol type="1">
-<li class="fragment"><strong>Legibilidad</strong>: Se lee como una receta paso a paso</li>
-<li class="fragment"><strong>Menos objetos intermedios</strong>: No necesitas guardar resultados temporales</li>
-<li class="fragment"><strong>Fácil modificar</strong>: Agregar o quitar pasos es simple</li>
-<li class="fragment"><strong>Debugging más fácil</strong>: Puedes ejecutar el código línea por línea</li>
+<li><strong>Legibilidad</strong>: Se lee como una receta paso a paso</li>
+<li><strong>Menos objetos intermedios</strong>: No necesitas guardar resultados temporales</li>
+<li><strong>Fácil modificar</strong>: Agregar o quitar pasos es simple</li>
+<li><strong>Debugging más fácil</strong>: Puedes ejecutar el código línea por línea</li>
 </ol>
-<div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -697,19 +1333,15 @@
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="ejemplo-completo-con-pipe" class="slide level2">
 <h2>Ejemplo completo con pipe</h2>
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a></a>  <span class="co"># Seleccionar columnas relevantes</span></span>
-<span id="cb37-3"><a></a>  <span class="fu">select</span>(nombre, categoria, superficie_oficial, ubicacion_politica) <span class="sc">|&gt;</span></span>
-<span id="cb37-4"><a></a>  <span class="co"># Filtrar Parques Nacionales</span></span>
-<span id="cb37-5"><a></a>  <span class="fu">filter</span>(categoria <span class="sc">==</span> <span class="st">"Parque Nacional"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb37-6"><a></a>  <span class="co"># Crear nueva columna</span></span>
-<span id="cb37-7"><a></a>  <span class="fu">mutate</span>(<span class="at">superficie_km2 =</span> superficie_oficial <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb37-8"><a></a>  <span class="co"># Ordenar por superficie</span></span>
-<span id="cb37-9"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(superficie_km2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb71-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb71-3"><a></a>    <span class="at">area_km2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geom)) <span class="sc">/</span> <span class="fl">1e6</span>  <span class="co"># Convertir m² a km²</span></span>
+<span id="cb71-4"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb71-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(area_km2)) <span class="sc">|&gt;</span></span>
+<span id="cb71-6"><a></a>  <span class="fu">select</span>(nombdep, area_km2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="operaciones-agrupadas" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -719,8 +1351,27 @@
 <section id="group_by---agrupar-datos" class="slide level2">
 <h2><code>group_by()</code> - Agrupar datos</h2>
 <p>Agrupa filas para aplicar operaciones por grupo:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a></a>  <span class="fu">group_by</span>(categoria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a></a>  <span class="fu">group_by</span>(departamento)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 113 × 7
+# Groups:   departamento [20]
+   ubigeo departamento provincia ambito              tipo_de_plan estado   o_m  
+    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;        &lt;chr&gt;    &lt;lgl&gt;
+ 1   2006 PIURA        SULLANA   SULLANA             PAT          Aprobado NA   
+ 2   2006 PIURA        SULLANA   Sullana             PDU          Aprobado NA   
+ 3   2001 PIURA        PIURA     Tambo Grande        PDU          Aprobado NA   
+ 4   1506 LIMA         HUARAL    Chancay             PAT          Termina… NA   
+ 5   2001 PIURA        PIURA     Cura Mori-El Tallán PDU          Aprobado NA   
+ 6   1401 LAMBAYEQUE   CHICLAYO  Cayaltí-Saña        PDU          Aprobado NA   
+ 7   2001 PIURA        PIURA     Las Lomas           PDU          Aprobado NA   
+ 8   2008 PIURA        SECHURA   Sechura             PDU          Aprobado NA   
+ 9   2004 PIURA        MORROPON  La Matanza          PDU          Aprobado NA   
+10   2004 PIURA        MORROPON  Morropon            PDU          Aprobado NA   
+# ℹ 103 more rows</code></pre>
+</div>
+</div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -735,34 +1386,66 @@
 </div>
 </div>
 </section>
-<section id="summarise---resumir-datos" class="slide level2 smaller">
+<section id="summarise---resumir-datos" class="slide level2">
 <h2><code>summarise()</code> - Resumir datos</h2>
 <p>Colapsa filas en resúmenes estadísticos:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb39-2"><a></a>  <span class="fu">group_by</span>(categoria) <span class="sc">|&gt;</span></span>
-<span id="cb39-3"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb39-4"><a></a>    <span class="at">n_areas =</span> <span class="fu">n</span>(),</span>
-<span id="cb39-5"><a></a>    <span class="at">superficie_promedio =</span> <span class="fu">mean</span>(superficie_oficial, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb74-2"><a></a>  <span class="fu">group_by</span>(departamento) <span class="sc">|&gt;</span></span>
+<span id="cb74-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb74-4"><a></a>    <span class="at">n_planes =</span> <span class="fu">n</span>(),</span>
+<span id="cb74-5"><a></a>    <span class="at">n_tipos =</span> <span class="fu">n_distinct</span>(tipo_de_plan)</span>
+<span id="cb74-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   departamento                  n_planes n_tipos
+   &lt;chr&gt;                            &lt;int&gt;   &lt;int&gt;
+ 1 AMAZONAS                             5       3
+ 2 ANCASH                               8       2
+ 3 APURIMAC                             4       2
+ 4 AREQUIPA                             2       2
+ 5 AYACUCHO                             3       3
+ 6 CAJAMARCA                            2       2
+ 7 CALLAO (Prov. Constitucional)        1       1
+ 8 CUSCO                                7       2
+ 9 HUÁNUCO                              3       2
+10 ICA                                  2       2
+11 JUNIN (*)                            1       1
+12 LA LIBERTAD                         19       3
+13 LAMBAYEQUE                          14       3
+14 LIMA                                 8       3
+15 MOQUEGUA                             1       1
+16 PASCO                                2       2
+17 PIURA                               19       3
+18 PUNO                                 2       2
+19 SAN MARTIN                           4       1
+20 TUMBES                               6       2</code></pre>
+</div>
+</div>
 <ul>
 <li class="fragment"><code>n()</code> cuenta el número de filas en cada grupo</li>
+<li class="fragment"><code>n_distinct()</code> cuenta el número de casos unicos dentro de un grupo</li>
 <li class="fragment">Puedes usar cualquier función de resumen: <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>min()</code>, <code>max()</code>, <code>sum()</code></li>
 <li class="fragment"><code>na.rm = TRUE</code> ignora valores faltantes</li>
 </ul>
 </section>
 <section id="múltiples-resúmenes" class="slide level2">
 <h2>Múltiples resúmenes</h2>
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a></a>  <span class="fu">group_by</span>(categoria) <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb40-4"><a></a>    <span class="at">cantidad =</span> <span class="fu">n</span>(),</span>
-<span id="cb40-5"><a></a>    <span class="at">sup_total =</span> <span class="fu">sum</span>(superficie_oficial, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb40-6"><a></a>    <span class="at">sup_promedio =</span> <span class="fu">mean</span>(superficie_oficial, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb40-7"><a></a>    <span class="at">sup_min =</span> <span class="fu">min</span>(superficie_oficial, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb40-8"><a></a>    <span class="at">sup_max =</span> <span class="fu">max</span>(superficie_oficial, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb40-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb76-2"><a></a>  <span class="fu">group_by</span>(departamento) <span class="sc">|&gt;</span></span>
+<span id="cb76-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb76-4"><a></a>    <span class="co"># Conteos</span></span>
+<span id="cb76-5"><a></a>    <span class="at">total_planes        =</span> <span class="fu">n</span>(),</span>
+<span id="cb76-6"><a></a>    <span class="at">total_aprobados     =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"Aprobado"</span>,    <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb76-7"><a></a>    <span class="at">total_terminados    =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"Terminado"</span>,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb76-8"><a></a>    <span class="at">total_en_proceso    =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"En proceso"</span>,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb76-9"><a></a>    <span class="at">no_detarminado      =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(estado)),</span>
+<span id="cb76-10"><a></a>    <span class="co"># Proporciones</span></span>
+<span id="cb76-11"><a></a>    <span class="at">pct_aprobados       =</span> <span class="fu">round</span>(total_aprobados <span class="sc">/</span> total_planes <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb76-12"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb76-13"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_planes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="funciones-de-slice" class="slide level2 smaller">
+<section id="funciones-de-slice" class="slide level2">
 <h2>Funciones de slice</h2>
 <p>Seleccionan filas específicas dentro de grupos:</p>
 <table class="caption-top">
@@ -798,25 +1481,71 @@
 </section>
 <section id="ejemplos-de-slice" class="slide level2">
 <h2>Ejemplos de slice</h2>
-<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="co"># El área más grande de cada categoría</span></span>
-<span id="cb41-2"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb41-3"><a></a>  <span class="fu">group_by</span>(categoria) <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a></a>  <span class="fu">slice_max</span>(superficie_oficial, <span class="at">n =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Las 3 áreas más grandes en total</span></span>
-<span id="cb42-2"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a></a>  <span class="fu">slice_max</span>(superficie_oficial, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a><span class="co"># El área más grande de cada categoría</span></span>
+<span id="cb77-2"><a></a>gapminder <span class="sc">|&gt;</span></span>
+<span id="cb77-3"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span></span>
+<span id="cb77-4"><a></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+# Groups:   continent [5]
+  country       continent  year lifeExp        pop gdpPercap
+  &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;
+1 Nigeria       Africa     2007    46.9  135031164     2014.
+2 United States Americas   2007    78.2  301139947    42952.
+3 China         Asia       2007    73.0 1318683096     4959.
+4 Germany       Europe     2007    79.4   82400996    32170.
+5 Australia     Oceania    2007    81.2   20434176    34435.</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplos-de-slice-1" class="slide level2">
+<h2>Ejemplos de slice</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a><span class="co"># Los 6 paises más poblados en 2002 </span></span>
+<span id="cb79-2"><a></a>gapminder <span class="sc">|&gt;</span></span>
+<span id="cb79-3"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb79-4"><a></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  country       continent  year lifeExp        pop gdpPercap
+  &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;
+1 China         Asia       2002    72.0 1280400000     3119.
+2 India         Asia       2002    62.9 1034172547     1747.
+3 United States Americas   2002    77.3  287675526    39097.
+4 Indonesia     Asia       2002    68.6  211060000     2874.
+5 Brazil        Americas   2002    71.0  179914212     8131.
+6 Pakistan      Asia       2002    63.6  153403524     2093.</code></pre>
+</div>
 </div>
 </section>
 <section id="múltiples-variables-de-agrupación" class="slide level2">
 <h2>Múltiples variables de agrupación</h2>
-<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># Agrupar por categoría y departamento</span></span>
-<span id="cb43-2"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb43-3"><a></a>  <span class="fu">group_by</span>(categoria, ubicacion_politica) <span class="sc">|&gt;</span></span>
-<span id="cb43-4"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb43-5"><a></a>    <span class="at">cantidad =</span> <span class="fu">n</span>(),</span>
-<span id="cb43-6"><a></a>    <span class="at">superficie_total =</span> <span class="fu">sum</span>(superficie_oficial, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb43-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a><span class="co"># Agrupar por continente y ciudad</span></span>
+<span id="cb81-2"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb81-3"><a></a>  <span class="fu">group_by</span>(continent, country) <span class="sc">|&gt;</span> </span>
+<span id="cb81-4"><a></a>  <span class="fu">summarise</span>(<span class="at">mean_lifeexp =</span> <span class="fu">mean</span>(lifeExp),</span>
+<span id="cb81-5"><a></a>            <span class="at">min_lifeexp =</span> <span class="fu">min</span>(lifeExp), </span>
+<span id="cb81-6"><a></a>            <span class="at">max_lifeexp =</span> <span class="fu">max</span>(lifeExp),</span>
+<span id="cb81-7"><a></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 142 × 5
+   continent country                  mean_lifeexp min_lifeexp max_lifeexp
+   &lt;fct&gt;     &lt;fct&gt;                           &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Africa    Algeria                          59.0        43.1        72.3
+ 2 Africa    Angola                           37.9        30.0        42.7
+ 3 Africa    Benin                            48.8        38.2        56.7
+ 4 Africa    Botswana                         54.6        46.6        63.6
+ 5 Africa    Burkina Faso                     44.7        32.0        52.3
+ 6 Africa    Burundi                          44.8        39.0        49.6
+ 7 Africa    Cameroon                         48.1        38.5        55.0
+ 8 Africa    Central African Republic         43.9        35.5        50.5
+ 9 Africa    Chad                             46.8        38.1        51.7
+10 Africa    Comoros                          52.4        40.7        65.2
+# ℹ 132 more rows</code></pre>
+</div>
+</div>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -826,145 +1555,12 @@
 <p><strong>Desagrupar</strong></p>
 </div>
 <div class="callout-content">
-<p>Después de <code>summarise()</code>, se elimina el último nivel de agrupación. Usa <code>ungroup()</code> para eliminar todos los niveles.</p>
+<p>Después de <code>summarise()</code>, se elimina el último nivel de agrupación. Usa <code>ungroup()</code> o el argumento <code>.groups = "drop"</code> para eliminar todos los niveles.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="el-argumento-.by" class="slide level2 smaller">
-<h2>El argumento <code>.by</code></h2>
-<p>Nueva forma de agrupar (dplyr 1.1.0+):</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="co"># Forma tradicional</span></span>
-<span id="cb44-2"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb44-3"><a></a>  <span class="fu">group_by</span>(categoria) <span class="sc">|&gt;</span></span>
-<span id="cb44-4"><a></a>  <span class="fu">summarise</span>(<span class="at">cantidad =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
-<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="co"># Con .by (más conciso)</span></span>
-<span id="cb45-2"><a></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb45-3"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb45-4"><a></a>    <span class="at">cantidad =</span> <span class="fu">n</span>(),</span>
-<span id="cb45-5"><a></a>    <span class="at">.by =</span> categoria</span>
-<span id="cb45-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Con <code>.by</code> no necesitas <code>ungroup()</code> al final</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section id="ejercicios-prácticos" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Ejercicios prácticos</h1>
-
-</section>
-<section id="ejercicio-1" class="slide level2 smaller">
-<h2>Ejercicio 1</h2>
-<div class="question">
-<p>Con los datos de áreas naturales protegidas:</p>
-<ol type="1">
-<li>Filtra las áreas con superficie mayor a 50,000 hectáreas</li>
-<li>Selecciona las columnas: nombre, categoría, superficie_oficial</li>
-<li>Ordena por superficie de mayor a menor</li>
-<li>¿Cuál es el área más grande?</li>
-</ol>
-<p>Usa el pipe <code>|&gt;</code> para encadenar las operaciones.</p>
-</div>
-</section>
-<section id="ejercicio-2" class="slide level2 smaller">
-<h2>Ejercicio 2</h2>
-<div class="question">
-<p>Responde las siguientes preguntas usando <code>group_by()</code> y <code>summarise()</code>:</p>
-<ol type="1">
-<li>¿Cuántas áreas naturales hay por categoría?</li>
-<li>¿Cuál es la superficie total protegida por categoría?</li>
-<li>¿Cuál categoría tiene la mayor superficie promedio?</li>
-</ol>
-<p>Pista: Usa <code>arrange(desc(...))</code> al final para ordenar los resultados.</p>
-</div>
-</section>
-<section id="ejercicio-3" class="slide level2 smaller">
-<h2>Ejercicio 3</h2>
-<div class="question">
-<p>Crea un nuevo data frame que:</p>
-<ol type="1">
-<li>Contenga solo Parques Nacionales y Reservas Nacionales</li>
-<li>Agregue una columna que clasifique las áreas como “Grande” (&gt;100,000 ha) o “Mediana” (≤100,000 ha)</li>
-<li>Cuente cuántas áreas hay de cada tamaño en cada categoría</li>
-</ol>
-<p>Pista: Usa <code>if_else()</code> dentro de <code>mutate()</code>:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">mutate</span>(tamaño <span class="ot">=</span> <span class="fu">if_else</span>(superficie_oficial <span class="sc">&gt;</span> <span class="dv">100000</span>, <span class="st">"Grande"</span>, <span class="st">"Mediana"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ejercicio-4" class="slide level2 smaller">
-<h2>Ejercicio 4</h2>
-<div class="question">
-<p>Para cada departamento (ubicacion_politica):</p>
-<ol type="1">
-<li>Encuentra el área natural más grande</li>
-<li>Muestra solo: departamento, nombre del área, superficie</li>
-<li>Ordena por superficie de mayor a menor</li>
-</ol>
-<p>Pista: Usa <code>slice_max()</code> después de agrupar.</p>
-</div>
-</section></section>
-<section>
-<section id="recapitulación" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Recapitulación</h1>
-
-</section>
-<section id="resumen-de-verbos-dplyr" class="slide level2 smaller">
-<h2>Resumen de verbos dplyr</h2>
-<p><strong>Operaciones con filas:</strong></p>
-<ul>
-<li class="fragment"><code>filter()</code> - seleccionar filas por condición</li>
-<li class="fragment"><code>arrange()</code> - ordenar filas</li>
-<li class="fragment"><code>distinct()</code> - encontrar filas únicas</li>
-</ul>
-<p><strong>Operaciones con columnas:</strong></p>
-<ul>
-<li class="fragment"><code>mutate()</code> - crear/modificar columnas</li>
-<li class="fragment"><code>select()</code> - seleccionar columnas</li>
-<li class="fragment"><code>rename()</code> - renombrar columnas</li>
-<li class="fragment"><code>relocate()</code> - reordenar columnas</li>
-</ul>
-<p><strong>Operaciones agrupadas:</strong></p>
-<ul>
-<li class="fragment"><code>group_by()</code> - agrupar datos</li>
-<li class="fragment"><code>summarise()</code> - resumir datos</li>
-<li class="fragment"><code>slice_*()</code> - seleccionar filas específicas</li>
-</ul>
-</section>
-<section id="consejos-finales" class="slide level2 smaller">
-<h2>Consejos finales</h2>
-<ol type="1">
-<li class="fragment"><p><strong>Usa el pipe <code>|&gt;</code></strong> para encadenar operaciones y hacer tu código más legible</p></li>
-<li class="fragment"><p><strong>Los verbos no modifican los datos originales</strong> - siempre crean nuevos data frames</p></li>
-<li class="fragment"><p><strong>Guarda los resultados</strong> si los necesitas después:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>anp_parques <span class="ot">&lt;-</span> anp <span class="sc">|&gt;</span> <span class="fu">filter</span>(categoria <span class="sc">==</span> <span class="st">"Parque Nacional"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li class="fragment"><p><strong>Combina verbos</strong> para análisis complejos</p></li>
-<li class="fragment"><p><strong>Usa <code>View()</code> o <code>glimpse()</code></strong> para inspeccionar resultados intermedios</p></li>
-</ol>
-</section>
-<section id="próximos-pasos" class="slide level2 smaller">
-<h2>Próximos pasos</h2>
-<p>En las siguientes sesiones veremos:</p>
-<ul>
-<li class="fragment"><strong>Tidyr</strong>: reorganizar datos (pivot_longer, pivot_wider)</li>
-<li class="fragment"><strong>Stringr</strong>: manipulación de texto</li>
-<li class="fragment"><strong>Lubridate</strong>: trabajo con fechas</li>
-<li class="fragment"><strong>ggplot2</strong>: visualización de datos</li>
-<li class="fragment"><strong>Datos espaciales</strong>: sf package</li>
-</ul>
-</section>
-<section id="recursos-adicionales" class="slide level2 smaller">
+<section id="recursos-adicionales" class="slide level2">
 <h2>Recursos adicionales</h2>
 <ul>
 <li class="fragment"><a href="https://r4ds.hadley.nz/data-transform">R for Data Science - Data transformation</a></li>
@@ -973,13 +1569,22 @@
 <li class="fragment">Ayuda en R: <code>?filter</code>, <code>?mutate</code>, etc.</li>
 </ul>
 </section>
-<section id="gracias" class="slide level2 center">
-<h2>¡Gracias!</h2>
-<div class="centered">
-<p><strong>¿Preguntas?</strong></p>
-<p>📧 paul.santos@example.com</p>
-<p>🌐 Materiales del curso disponibles en el repositorio</p>
+<section id="contacto" class="slide level2">
+<h2>Contacto</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Paul Efren Santos Andrade</strong></p>
+<p>📧 [Correo electrónico]</p>
+<p>🌐 <a href="https://paulefrensa.rbind.io">paulefrensa.rbind.io</a></p>
+<p>🐦 <a href="https://twitter.com/PaulEfrenSantos"><span class="citation" data-cites="PaulEfrenSantos">@PaulEfrenSantos</span></a></p>
+<p>💻 <a href="https://github.com/PaulESantos">github.com/PaulESantos</a></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/DSC_0140.JPG" class="quarto-figure quarto-figure-center" style="border-radius: 50% / 35%; object-fit: cover;;width:60.0%"></p>
+</figure>
 </div>
+</div></div>
 
 
 </section></section>
@@ -1198,82 +1803,6 @@
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

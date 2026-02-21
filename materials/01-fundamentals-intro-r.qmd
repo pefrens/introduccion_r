@@ -106,7 +106,7 @@ letters[1:5]
 letters[c(2, 4, 6)]
 ```
 
-## Operadores Lógicos {.smaller}
+## Operadores Lógicos
 
 | Operador   | Significado  | Ejemplo        |
 |------------|--------------|----------------|
@@ -122,6 +122,7 @@ letters[c(2, 4, 6)]
 
 ```{r}
 #| echo: true
+#| eval: false
 # Comparaciones
 5 < 10
 10 > 5
@@ -315,48 +316,48 @@ rep("R", times = 3)
 ## Primer Vistazo a los datos
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 # Ver primeras filas
 head(iris)
+```
 
+## Primer Vistazo a los datos
+
+```{r}
+#| eval: true
+#| echo: true
 # Ver estructura
 str(iris)
 glimpse(iris)  # tidyverse
+```
+
+## Primer Vistazo a los datos
+
+```{r}
+#| eval: true
+#| echo: true
 
 # Ver nombres de variables
 names(mtcars)
 ```
-```{r include=FALSE, echo=FALSE}
+
+## Primer Vistazo a los datos
+
+```{r}
+#| echo: true
+#| include: false
+library(sf)
 nc = st_read(system.file("shape/nc.shp", package="sf"))
 ```
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 head(nc)
 names(nc)
 ```
 
-## Ejemplo Práctico {.smaller}
-
-```{r}
-#| eval: false
-#| echo: true
-library(tidyverse)
-library(readxl)
-library(janitor)
-
-# Importar datos
-planes <- read_excel("data/catalogo_planes.xlsx")
-
-# Limpiar nombres
-planes_clean <- planes |> 
-  clean_names()
-
-# Ver estructura
-glimpse(planes_clean)
-```
 
 # El Operador Pipe
 
@@ -367,6 +368,7 @@ El operador `pipe` permite encadenar operaciones:
 ```{r}
 #| eval: false
 #| echo: true
+library(janitor)
 # Sin pipe
 datos_limpios <- clean_names(datos)
 datos_filtrados <- filter(datos_limpios, condicion)
@@ -383,20 +385,30 @@ datos_final <- datos |>
 :::
 
 ## Pipe: Ejemplo
+```{r}
+#| echo: false
+
+library(janitor)
+planes <- readr::read_csv("data/catalogo_planes.csv")
+```
+
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 # Ver primeras filas después de limpiar nombres
 planes |>
-  clean_names() |>
-  head()
+  clean_names()
+```
 
+
+## Pipe: Ejemplo
+
+```{r}
 # Encadenar múltiples operaciones
 planes |>
   clean_names() |>
-  select(ubigeo, ambito, estado) |>
-  head()
+  distinct()
 ```
 
 

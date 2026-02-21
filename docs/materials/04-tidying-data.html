@@ -211,34 +211,10 @@
 </div>
 
 </section>
-<section id="esquema-de-la-sesión" class="slide level2 smaller">
-<h2>Esquema de la sesión</h2>
-<ul>
-<li class="fragment">¿Qué son datos ordenados (tidy data)?</li>
-<li class="fragment">Principios de datos tidy</li>
-<li class="fragment">Alargar datos: <code>pivot_longer()</code></li>
-<li class="fragment">Ensanchar datos: <code>pivot_wider()</code></li>
-<li class="fragment">Casos especiales y problemas comunes</li>
-<li class="fragment">Ejercicios prácticos</li>
-</ul>
-</section>
 <section>
 <section id="introducción" class="title-slide slide level1 center" data-background-color="#2C3E50">
 <h1>Introducción</h1>
 
-</section>
-<section id="una-cita-famosa" class="slide level2">
-<h2>Una cita famosa</h2>
-<blockquote>
-<p>“Las familias felices son todas iguales; cada familia infeliz es infeliz a su manera.”</p>
-<p>— Leo Tolstoy</p>
-</blockquote>
-<div class="fragment">
-<blockquote>
-<p>“Los conjuntos de datos ordenados son todos iguales, pero cada conjunto de datos desordenado es desordenado a su manera.”</p>
-<p>— Hadley Wickham</p>
-</blockquote>
-</div>
 </section>
 <section id="por-qué-ordenar-datos" class="slide level2">
 <h2>¿Por qué ordenar datos?</h2>
@@ -254,7 +230,9 @@
 <h2>Cargar paquetes</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-4"><a></a><span class="fu">library</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>El paquete <strong>tidyr</strong> (parte de tidyverse) proporciona herramientas para ordenar datos.</p>
 </section></section>
@@ -263,19 +241,64 @@
 <h1>¿Qué son datos tidy?</h1>
 
 </section>
-<section id="los-mismos-datos-3-formas-diferentes" class="slide level2 smaller">
+<section id="los-mismos-datos-3-formas-diferentes" class="slide level2">
 <h2>Los mismos datos, 3 formas diferentes</h2>
 <p><strong>Tabla 1:</strong></p>
-<pre><code>  country      year  cases population
-  Afghanistan  1999    745   19987071
-  Afghanistan  2000   2666   20595360
-  Brazil       1999  37737  172006362</code></pre>
-<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>table1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+</div>
+</div>
+</section>
+<section id="los-mismos-datos-3-formas-diferentes-1" class="slide level2">
+<h2>Los mismos datos, 3 formas diferentes</h2>
 <p><strong>Tabla 2:</strong></p>
-<pre><code>  country      year type           count
-  Afghanistan  1999 cases            745
-  Afghanistan  1999 population  19987071
-  Afghanistan  2000 cases           2666</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   country      year type            count
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+ 1 Afghanistan  1999 cases             745
+ 2 Afghanistan  1999 population   19987071
+ 3 Afghanistan  2000 cases            2666
+ 4 Afghanistan  2000 population   20595360
+ 5 Brazil       1999 cases           37737
+ 6 Brazil       1999 population  172006362
+ 7 Brazil       2000 cases           80488
+ 8 Brazil       2000 population  174504898
+ 9 China        1999 cases          212258
+10 China        1999 population 1272915272
+11 China        2000 cases          213766
+12 China        2000 population 1280428583</code></pre>
+</div>
+</div>
+</section>
+<section id="los-mismos-datos-3-formas-diferentes-2" class="slide level2">
+<h2>Los mismos datos, 3 formas diferentes</h2>
+<p><strong>Tabla 3:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country      year rate             
+  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;            
+1 Afghanistan  1999 745/19987071     
+2 Afghanistan  2000 2666/20595360    
+3 Brazil       1999 37737/172006362  
+4 Brazil       2000 80488/174504898  
+5 China        1999 212258/1272915272
+6 China        2000 213766/1280428583</code></pre>
+</div>
 </div>
 <div class="fragment">
 <div class="question">
@@ -284,15 +307,15 @@
 </div>
 </section>
 <section id="los-tres-principios-de-datos-tidy" class="slide level2">
-<h2>Los tres principios de datos tidy</h2>
+<h2>Los tres principios de datos <strong>tidy</strong></h2>
 <ol type="1">
 <li><strong>Cada variable es una columna</strong></li>
 <li><strong>Cada observación es una fila</strong></li>
 <li><strong>Cada valor es una celda</strong></li>
 </ol>
 </section>
-<section id="visualización-de-los-principios" class="slide level2">
-<h2>Visualización de los principios</h2>
+<section id="los-tres-principios-de-datos-tidy-1" class="slide level2">
+<h2>Los tres principios de datos <strong>tidy</strong></h2>
 
 <img data-src="https://r4ds.hadley.nz/images/tidy-1.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
 <li class="fragment">Variables → Columnas</li>
@@ -316,12 +339,12 @@
 </ul></li>
 </ol>
 </section>
-<section id="ejemplo-trabajar-con-datos-tidy" class="slide level2 smaller">
+<section id="ejemplo-trabajar-con-datos-tidy" class="slide level2">
 <h2>Ejemplo: Trabajar con datos tidy</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Calcular tasa por 10,000 habitantes</span></span>
-<span id="cb4-2"><a></a>table1 <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> cases <span class="sc">/</span> population <span class="sc">*</span> <span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Calcular tasa por 10,000 habitantes</span></span>
+<span id="cb8-2"><a></a>table1 <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> cases <span class="sc">/</span> population <span class="sc">*</span> <span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   country      year  cases population  rate
@@ -334,16 +357,12 @@
 6 China        2000 213766 1280428583 1.67 </code></pre>
 </div>
 </div>
-<pre><code>  country      year  cases population  rate
-  Afghanistan  1999    745   19987071  0.373
-  Afghanistan  2000   2666   20595360  1.29
-  Brazil       1999  37737  172006362  2.19</code></pre>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Casos totales por año</span></span>
-<span id="cb7-2"><a></a>table1 <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a></a>  <span class="fu">summarize</span>(<span class="at">total_cases =</span> <span class="fu">sum</span>(cases))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># Casos totales por año</span></span>
+<span id="cb10-2"><a></a>table1 <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a></a>  <span class="fu">summarize</span>(<span class="at">total_cases =</span> <span class="fu">sum</span>(cases))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
    year total_cases
@@ -352,21 +371,18 @@
 2  2000      296920</code></pre>
 </div>
 </div>
-<pre><code>   year total_cases
-   1999      250740
-   2000      296920</code></pre>
 </div>
 </section>
 <section id="visualizar-datos-tidy" class="slide level2">
 <h2>Visualizar datos tidy</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(table1, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> cases)) <span class="sc">+</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> country), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> country, <span class="at">shape =</span> country)) <span class="sc">+</span></span>
-<span id="cb10-4"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">ggplot</span>(table1, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> cases)) <span class="sc">+</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> country), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> country, <span class="at">shape =</span> country)) <span class="sc">+</span></span>
+<span id="cb12-4"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-tidying-data_files/figure-revealjs/unnamed-chunk-4-1.png" width="2000" class="r-stretch"><div class="callout callout-tip callout-titled callout-style-default">
+<img data-src="04-tidying-data_files/figure-revealjs/unnamed-chunk-7-1.png" width="2000" class="r-stretch"><div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
@@ -381,8 +397,8 @@
 </div>
 </section></section>
 <section>
-<section id="alargar-datos-pivot_longer" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Alargar datos: pivot_longer()</h1>
+<section id="formato-largo-pivot_longer" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Formato largo | pivot_longer()</h1>
 
 </section>
 <section id="problema-común-datos-en-nombres-de-columnas" class="slide level2">
@@ -390,7 +406,7 @@
 <p>La mayoría de datos reales están <strong>desordenados</strong> por dos razones:</p>
 <ol type="1">
 <li class="fragment">Los datos se organizan para facilitar <strong>entrada</strong>, no análisis</li>
-<li class="fragment">La mayoría de personas no conocen principios de datos tidy</li>
+<li class="fragment">La mayoría de personas no conocen principios de datos <strong>tidy</strong></li>
 </ol>
 <div class="fragment">
 <p><strong>Solución</strong>: <code>pivot_longer()</code> y <code>pivot_wider()</code></p>
@@ -399,7 +415,7 @@
 <section id="ejemplo-billboard" class="slide level2">
 <h2>Ejemplo: Billboard</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>billboard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>billboard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 317 × 79
    artist     track date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8
@@ -423,81 +439,77 @@
 #   wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
-<pre><code># A tibble: 317 × 79
-  artist       track               date.entered   wk1   wk2   wk3
-  &lt;chr&gt;        &lt;chr&gt;               &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 2 Pac        Baby Don't Cry      2000-02-26      87    82    72
-2 2Ge+her      The Hardest Part    2000-09-02      91    87    92
-3 3 Doors Down Kryptonite          2000-04-08      81    70    68
-# ... with 73 more columns: wk4, wk5, wk6, ...</code></pre>
 </section>
 <section id="problema-con-billboard" class="slide level2">
 <h2>Problema con billboard</h2>
 <ul>
-<li class="fragment">Cada observación es una <strong>canción</strong></li>
-<li class="fragment"><code>artist</code>, <code>track</code>, <code>date.entered</code> son variables</li>
-<li class="fragment">Pero <code>wk1</code>, <code>wk2</code>, … <code>wk76</code> también son columnas</li>
-<li class="fragment">Los <strong>nombres de columnas</strong> son valores de una variable (<code>week</code>)</li>
-<li class="fragment">Los <strong>valores de las celdas</strong> son otra variable (<code>rank</code>)</li>
+<li>Cada observación es una <strong>canción</strong></li>
+<li><code>artist</code>, <code>track</code>, <code>date.entered</code> son variables</li>
+<li>Pero <code>wk1</code>, <code>wk2</code>, … <code>wk76</code> también son columnas</li>
+<li>Los <strong>nombres de columnas</strong> son valores de una variable (<code>week</code>)</li>
+<li>Los <strong>valores de las celdas</strong> son otra variable (<code>rank</code>)</li>
 </ul>
 </section>
 <section id="solución-pivot_longer" class="slide level2">
 <h2>Solución: pivot_longer()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>billboard <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb14-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>),</span>
-<span id="cb14-4"><a></a>    <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
-<span id="cb14-5"><a></a>    <span class="at">values_to =</span> <span class="st">"rank"</span></span>
-<span id="cb14-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>indicadores_inei <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/indicadores_demograficos.xlsx"</span>, </span>
+<span id="cb15-2"><a></a>          <span class="at">range =</span> <span class="st">"A4:AA20"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb15-4"><a></a>indicadores_inei</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 24,092 × 5
-   artist track                   date.entered week   rank
-   &lt;chr&gt;  &lt;chr&gt;                   &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk1      87
- 2 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk2      82
- 3 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk3      72
- 4 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk4      77
- 5 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk5      87
- 6 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk6      94
- 7 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk7      99
- 8 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk8      NA
- 9 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk9      NA
-10 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk10     NA
-# ℹ 24,082 more rows</code></pre>
+<pre><code># A tibble: 16 × 27
+   tipo     indicadores_demograf…¹ amazonas apurimac arequipa ayacucho cajamarca
+   &lt;chr&gt;    &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Fecundi… Nacimientos anuales: B   8653     7423    23965    12152     25235  
+ 2 Fecundi… Tasa bruta de natalid…     20.2     17.7     14.2     18.3      17.6
+ 3 Fecundi… Tasa global de fecund…      2.4      2.1      1.6      2.1       2  
+ 4 Fecundi… Tasa bruta de reprodu…      1.2      1        0.8      1         1  
+ 5 Mortali… Muertes anuales: D       2265     2612    10655     4129      8028  
+ 6 Mortali… Tasa bruta de mortali…      5.3      6.2      6.3      6.2       5.6
+ 7 Esperan… Ambos sexos                NA       75.3     79.7     75.1      76.6
+ 8 Esperan… Hombres                    72.9     72.5     77.1     72.5      74.1
+ 9 Esperan… Mujeres                    78.3     78.3     82.5     77.7      79.3
+10 Mortali… Tasa de mortalidad in…     13.8     15.5     11.3     13.8      14.7
+11 Crecimi… Crecimiento anual: B-D   6388     4811    13310     8023     17207  
+12 Crecimi… Tasa de crecimiento n…     14.9     11.5      7.9     12.1      12  
+13 Migraci… Migración neta anual:…  -2073    -1514     6193    -2237    -11790  
+14 Migraci… Tasa de migración net…     -5.1     -4        3       -3.7      -8.5
+15 Crecimi… Crecimiento anual: B-…   4315     3297    19503     5786      5417  
+16 Crecimi… Tasa de crecimiento t…      9.8      7.5     10.9      8.4       3.5
+# ℹ abbreviated name: ¹​indicadores_demograficos
+# ℹ 20 more variables: cusco &lt;dbl&gt;, huancavelica &lt;dbl&gt;, huanuco &lt;dbl&gt;,
+#   ica &lt;dbl&gt;, junin &lt;dbl&gt;, la_libertad &lt;dbl&gt;, lambayeque &lt;dbl&gt;, lima &lt;dbl&gt;,
+#   loreto &lt;dbl&gt;, madre_de_dios &lt;dbl&gt;, moquegua &lt;dbl&gt;, pasco &lt;dbl&gt;,
+#   piura &lt;dbl&gt;, prov_const_del_callao &lt;dbl&gt;, puno &lt;dbl&gt;, san_martin &lt;dbl&gt;,
+#   tacna &lt;dbl&gt;, tumbes &lt;dbl&gt;, ucayali &lt;dbl&gt;, ancash &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<pre><code># A tibble: 24,092 × 5
-   artist track                   date.entered week   rank
-   &lt;chr&gt;  &lt;chr&gt;                   &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1 2 Pac  Baby Don't Cry          2000-02-26   wk1      87
- 2 2 Pac  Baby Don't Cry          2000-02-26   wk2      82
- 3 2 Pac  Baby Don't Cry          2000-02-26   wk3      72</code></pre>
 </section>
 <section id="argumentos-de-pivot_longer" class="slide level2">
 <h2>Argumentos de pivot_longer()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>billboard <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>indicadores_inei <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb17-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>),      <span class="co"># Qué columnas pivotar</span></span>
-<span id="cb17-4"><a></a>    <span class="at">names_to =</span> <span class="st">"week"</span>,              <span class="co"># Nombre de nueva columna (nombres)</span></span>
-<span id="cb17-5"><a></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>              <span class="co"># Nombre de nueva columna (valores)</span></span>
+<span id="cb17-3"><a></a>    <span class="at">cols =</span> amazonas<span class="sc">:</span>ancash,      <span class="co"># Qué columnas pivotar</span></span>
+<span id="cb17-4"><a></a>    <span class="at">names_to =</span> <span class="st">"departamento"</span>,   <span class="co"># Nombre de nueva columna (nombres)</span></span>
+<span id="cb17-5"><a></a>    <span class="at">values_to =</span> <span class="st">"valores"</span>        <span class="co"># Nombre de nueva columna (valores)</span></span>
 <span id="cb17-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 24,092 × 5
-   artist track                   date.entered week   rank
-   &lt;chr&gt;  &lt;chr&gt;                   &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk1      87
- 2 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk2      82
- 3 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk3      72
- 4 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk4      77
- 5 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk5      87
- 6 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk6      94
- 7 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk7      99
- 8 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk8      NA
- 9 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk9      NA
-10 2 Pac  Baby Don't Cry (Keep... 2000-02-26   wk10     NA
-# ℹ 24,082 more rows</code></pre>
+<pre><code># A tibble: 400 × 4
+   tipo       indicadores_demograficos departamento valores
+   &lt;chr&gt;      &lt;chr&gt;                    &lt;chr&gt;          &lt;dbl&gt;
+ 1 Fecundidad Nacimientos anuales: B   amazonas        8653
+ 2 Fecundidad Nacimientos anuales: B   apurimac        7423
+ 3 Fecundidad Nacimientos anuales: B   arequipa       23965
+ 4 Fecundidad Nacimientos anuales: B   ayacucho       12152
+ 5 Fecundidad Nacimientos anuales: B   cajamarca      25235
+ 6 Fecundidad Nacimientos anuales: B   cusco          23873
+ 7 Fecundidad Nacimientos anuales: B   huancavelica    6257
+ 8 Fecundidad Nacimientos anuales: B   huanuco        13755
+ 9 Fecundidad Nacimientos anuales: B   ica            19790
+10 Fecundidad Nacimientos anuales: B   junin          23641
+# ℹ 390 more rows</code></pre>
 </div>
 </div>
 <ul>
@@ -506,110 +518,25 @@
 <li class="fragment"><strong><code>values_to</code></strong>: nombre para la nueva variable de valores</li>
 </ul>
 </section>
-<section id="eliminar-valores-faltantes" class="slide level2">
-<h2>Eliminar valores faltantes</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>billboard <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb19-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>),</span>
-<span id="cb19-4"><a></a>    <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
-<span id="cb19-5"><a></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
-<span id="cb19-6"><a></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>  <span class="co"># Eliminar NAs</span></span>
-<span id="cb19-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5,307 × 5
-   artist  track                   date.entered week   rank
-   &lt;chr&gt;   &lt;chr&gt;                   &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk1      87
- 2 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk2      82
- 3 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk3      72
- 4 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk4      77
- 5 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk5      87
- 6 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk6      94
- 7 2 Pac   Baby Don't Cry (Keep... 2000-02-26   wk7      99
- 8 2Ge+her The Hardest Part Of ... 2000-09-02   wk1      91
- 9 2Ge+her The Hardest Part Of ... 2000-09-02   wk2      87
-10 2Ge+her The Hardest Part Of ... 2000-09-02   wk3      92
-# ℹ 5,297 more rows</code></pre>
-</div>
-</div>
-<pre><code># A tibble: 5,307 × 5
-  artist track                   date.entered week   rank
-  &lt;chr&gt;  &lt;chr&gt;                   &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
-1 2 Pac  Baby Don't Cry          2000-02-26   wk1      87
-2 2 Pac  Baby Don't Cry          2000-02-26   wk2      82</code></pre>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>De 24,092 filas a 5,307 filas - muchos NAs eliminados</p>
-</div>
-</div>
-</div>
-</section>
-<section id="convertir-tipos-de-datos" class="slide level2">
-<h2>Convertir tipos de datos</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>billboard_longer <span class="ot">&lt;-</span> billboard <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb22-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>),</span>
-<span id="cb22-4"><a></a>    <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
-<span id="cb22-5"><a></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
-<span id="cb22-6"><a></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
-<span id="cb22-7"><a></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb22-8"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb22-9"><a></a>    <span class="at">week =</span> <span class="fu">parse_number</span>(week)  <span class="co"># "wk1" → 1</span></span>
-<span id="cb22-10"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p><code>parse_number()</code> extrae el primer número de una cadena</p>
-</div>
-</div>
-</div>
-</section>
-<section id="visualizar-resultados" class="slide level2">
-<h2>Visualizar resultados</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>billboard_longer <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track)) <span class="sc">+</span></span>
-<span id="cb23-3"><a></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb23-4"><a></a>  <span class="fu">scale_y_reverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="04-tidying-data_files/figure-revealjs/unnamed-chunk-10-1.png" width="2000" class="r-stretch"><p>Pocas canciones permanecen en el top 100 por más de 20 semanas.</p>
-</section>
-<section id="cómo-funciona-pivot_longer" class="slide level2 smaller">
+<section id="cómo-funciona-pivot_longer" class="slide level2">
 <h2>¿Cómo funciona pivot_longer()?</h2>
 <p>Ejemplo simple:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb24-2"><a></a>  <span class="sc">~</span>id,  <span class="sc">~</span>bp1, <span class="sc">~</span>bp2,</span>
-<span id="cb24-3"><a></a>   <span class="st">"A"</span>,  <span class="dv">100</span>,  <span class="dv">120</span>,</span>
-<span id="cb24-4"><a></a>   <span class="st">"B"</span>,  <span class="dv">140</span>,  <span class="dv">115</span>,</span>
-<span id="cb24-5"><a></a>   <span class="st">"C"</span>,  <span class="dv">120</span>,  <span class="dv">125</span></span>
-<span id="cb24-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb19-2"><a></a>  <span class="sc">~</span>id,  <span class="sc">~</span>bp1, <span class="sc">~</span>bp2,</span>
+<span id="cb19-3"><a></a>   <span class="st">"A"</span>,  <span class="dv">100</span>,  <span class="dv">120</span>,</span>
+<span id="cb19-4"><a></a>   <span class="st">"B"</span>,  <span class="dv">140</span>,  <span class="dv">115</span>,</span>
+<span id="cb19-5"><a></a>   <span class="st">"C"</span>,  <span class="dv">120</span>,  <span class="dv">125</span></span>
+<span id="cb19-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>df <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb25-3"><a></a>    <span class="at">cols =</span> bp1<span class="sc">:</span>bp2,</span>
-<span id="cb25-4"><a></a>    <span class="at">names_to =</span> <span class="st">"measurement"</span>,</span>
-<span id="cb25-5"><a></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb25-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>df <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb20-3"><a></a>    <span class="at">cols =</span> bp1<span class="sc">:</span>bp2,</span>
+<span id="cb20-4"><a></a>    <span class="at">names_to =</span> <span class="st">"measurement"</span>,</span>
+<span id="cb20-5"><a></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb20-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   id    measurement value
@@ -622,264 +549,75 @@
 6 C     bp2           125</code></pre>
 </div>
 </div>
-<pre><code>  id    measurement value
-  A     bp1           100
-  A     bp2           120
-  B     bp1           140</code></pre>
 </div>
 </section>
 <section id="mecánica-de-pivot_longer" class="slide level2">
 <h2>Mecánica de pivot_longer()</h2>
 
-<img data-src="https://r4ds.hadley.nz/images/tidy-pivot-longer.png" class="quarto-figure quarto-figure-center r-stretch"><ol type="1">
+<img data-src="img/variables.png" class="quarto-figure quarto-figure-center r-stretch"><ol type="1">
 <li class="fragment"><strong>Columnas existentes</strong> se repiten (una vez por columna pivotada)</li>
 <li class="fragment"><strong>Nombres de columnas</strong> se convierten en valores</li>
 <li class="fragment"><strong>Valores de celdas</strong> se desenrollan fila por fila</li>
 </ol>
-</section>
-<section id="múltiples-variables-en-nombres-de-columnas" class="slide level2">
-<h2>Múltiples variables en nombres de columnas</h2>
-<p>Ejemplo: datos de tuberculosis (WHO)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7,240 × 58
-   country      year sp_m_014 sp_m_1524 sp_m_2534 sp_m_3544 sp_m_4554 sp_m_5564
-   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 Afghanistan  1980       NA        NA        NA        NA        NA        NA
- 2 Afghanistan  1981       NA        NA        NA        NA        NA        NA
- 3 Afghanistan  1982       NA        NA        NA        NA        NA        NA
- 4 Afghanistan  1983       NA        NA        NA        NA        NA        NA
- 5 Afghanistan  1984       NA        NA        NA        NA        NA        NA
- 6 Afghanistan  1985       NA        NA        NA        NA        NA        NA
- 7 Afghanistan  1986       NA        NA        NA        NA        NA        NA
- 8 Afghanistan  1987       NA        NA        NA        NA        NA        NA
- 9 Afghanistan  1988       NA        NA        NA        NA        NA        NA
-10 Afghanistan  1989       NA        NA        NA        NA        NA        NA
-# ℹ 7,230 more rows
-# ℹ 50 more variables: sp_m_65 &lt;dbl&gt;, sp_f_014 &lt;dbl&gt;, sp_f_1524 &lt;dbl&gt;,
-#   sp_f_2534 &lt;dbl&gt;, sp_f_3544 &lt;dbl&gt;, sp_f_4554 &lt;dbl&gt;, sp_f_5564 &lt;dbl&gt;,
-#   sp_f_65 &lt;dbl&gt;, sn_m_014 &lt;dbl&gt;, sn_m_1524 &lt;dbl&gt;, sn_m_2534 &lt;dbl&gt;,
-#   sn_m_3544 &lt;dbl&gt;, sn_m_4554 &lt;dbl&gt;, sn_m_5564 &lt;dbl&gt;, sn_m_65 &lt;dbl&gt;,
-#   sn_f_014 &lt;dbl&gt;, sn_f_1524 &lt;dbl&gt;, sn_f_2534 &lt;dbl&gt;, sn_f_3544 &lt;dbl&gt;,
-#   sn_f_4554 &lt;dbl&gt;, sn_f_5564 &lt;dbl&gt;, sn_f_65 &lt;dbl&gt;, ep_m_014 &lt;dbl&gt;, …</code></pre>
-</div>
-</div>
-<pre><code># A tibble: 7,240 × 58
-  country      year sp_m_014 sp_m_1524 sp_m_2534 ep_f_014
-  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 Afghanistan  1980       NA        NA        NA       NA
-2 Afghanistan  1981       NA        NA        NA       NA</code></pre>
-<p>Nombres de columnas: <code>sp_m_014</code>, <code>ep_f_4554</code>, <code>rel_m_3544</code></p>
-</section>
-<section id="anatomía-de-los-nombres" class="slide level2">
-<h2>Anatomía de los nombres</h2>
-<p>Patrón: <code>diagnosis_gender_age</code></p>
-<ul>
-<li class="fragment"><strong>Primera parte</strong> (<code>sp</code>/<code>rel</code>/<code>ep</code>): método de diagnóstico</li>
-<li class="fragment"><strong>Segunda parte</strong> (<code>m</code>/<code>f</code>): género</li>
-<li class="fragment"><strong>Tercera parte</strong> (<code>014</code>/<code>1524</code>/etc.): rango de edad</li>
-</ul>
-</section>
-<section id="solución-names_sep" class="slide level2">
-<h2>Solución: names_sep</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>who2 <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb31-3"><a></a>    <span class="at">cols =</span> <span class="sc">!</span>(country<span class="sc">:</span>year),</span>
-<span id="cb31-4"><a></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>),</span>
-<span id="cb31-5"><a></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb31-6"><a></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
-<span id="cb31-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 405,440 × 6
-   country      year diagnosis gender age   count
-   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
- 1 Afghanistan  1980 sp        m      014      NA
- 2 Afghanistan  1980 sp        m      1524     NA
- 3 Afghanistan  1980 sp        m      2534     NA
- 4 Afghanistan  1980 sp        m      3544     NA
- 5 Afghanistan  1980 sp        m      4554     NA
- 6 Afghanistan  1980 sp        m      5564     NA
- 7 Afghanistan  1980 sp        m      65       NA
- 8 Afghanistan  1980 sp        f      014      NA
- 9 Afghanistan  1980 sp        f      1524     NA
-10 Afghanistan  1980 sp        f      2534     NA
-# ℹ 405,430 more rows</code></pre>
-</div>
-</div>
-<pre><code>  country      year diagnosis gender age   count
-  Afghanistan  1980 sp        m      014      NA
-  Afghanistan  1980 sp        m      1524     NA
-  Afghanistan  1980 sp        f      014      NA</code></pre>
-</section>
-<section id="datos-y-variables-en-nombres" class="slide level2 smaller">
-<h2>Datos y variables en nombres</h2>
-<p>Ejemplo: datos de hogares</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>household</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
-  family dob_child1 dob_child2 name_child1 name_child2
-   &lt;int&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;       &lt;chr&gt;      
-1      1 1998-11-26 2000-01-29 Susan       Jose       
-2      2 1996-06-22 NA         Mark        &lt;NA&gt;       
-3      3 2002-07-11 2004-04-05 Sam         Seth       
-4      4 2004-10-10 2009-08-27 Craig       Khai       
-5      5 2000-12-05 2005-02-28 Parker      Gracie     </code></pre>
-</div>
-</div>
-<pre><code>  family dob_child1 dob_child2 name_child1 name_child2
-       1 1998-11-26 2000-01-29 Susan       Jose
-       2 1996-06-22 NA         Mark        &lt;NA&gt;</code></pre>
-<ul>
-<li class="fragment">Nombres contienen <strong>nombres de variables</strong> (<code>dob</code>, <code>name</code>)</li>
-<li class="fragment">Y <strong>valores de otra variable</strong> (<code>child</code>: 1 o 2)</li>
-</ul>
-</section>
-<section id="solución-.value-especial" class="slide level2">
-<h2>Solución: .value especial</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>household <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb37-3"><a></a>    <span class="at">cols =</span> <span class="sc">!</span>family,</span>
-<span id="cb37-4"><a></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"child"</span>),</span>
-<span id="cb37-5"><a></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb37-6"><a></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
-<span id="cb37-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 4
-  family child  dob        name  
-   &lt;int&gt; &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt; 
-1      1 child1 1998-11-26 Susan 
-2      1 child2 2000-01-29 Jose  
-3      2 child1 1996-06-22 Mark  
-4      3 child1 2002-07-11 Sam   
-5      3 child2 2004-04-05 Seth  
-6      4 child1 2004-10-10 Craig 
-7      4 child2 2009-08-27 Khai  
-8      5 child1 2000-12-05 Parker
-9      5 child2 2005-02-28 Gracie</code></pre>
-</div>
-</div>
-<pre><code>  family child  dob        name
-       1 child1 1998-11-26 Susan
-       1 child2 2000-01-29 Jose
-       2 child1 1996-06-22 Mark</code></pre>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p><code>.value</code> indica que la primera parte del nombre se convierte en nombre de columna</p>
-</div>
-</div>
-</div>
 </section></section>
 <section>
-<section id="ensanchar-datos-pivot_wider" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Ensanchar datos: pivot_wider()</h1>
+<section id="pivot_wider-formato-ancho" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>pivot_wider() | Formato Ancho</h1>
 
 </section>
 <section id="cuando-necesitas-pivot_wider" class="slide level2">
 <h2>Cuando necesitas pivot_wider()</h2>
 <ul>
-<li class="fragment">Opuesto a <code>pivot_longer()</code></li>
-<li class="fragment"><strong>Aumenta columnas</strong>, <strong>reduce filas</strong></li>
-<li class="fragment">Útil cuando una observación está dispersa en múltiples filas</li>
-<li class="fragment">Menos común en la práctica</li>
-<li class="fragment">Frecuente en datos gubernamentales</li>
+<li>Opuesto a <code>pivot_longer()</code></li>
+<li><strong>Aumenta columnas</strong>, <strong>reduce filas</strong></li>
+<li>Útil cuando una observación está dispersa en múltiples filas</li>
+<li>Menos común en la práctica</li>
 </ul>
 </section>
 <section id="ejemplo-experiencia-de-pacientes" class="slide level2">
 <h2>Ejemplo: Experiencia de pacientes</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>cms_patient_experience</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a></a>  <span class="fu">group_by</span>(year, continent) <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a></a>  <span class="fu">summarise</span>(<span class="at">pop_promedio =</span> <span class="fu">mean</span>(pop), </span>
+<span id="cb22-4"><a></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 500 × 5
-   org_pac_id org_nm                           measure_cd measure_title prf_rate
-   &lt;chr&gt;      &lt;chr&gt;                            &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;
- 1 0446157747 USC CARE MEDICAL GROUP INC       CAHPS_GRP… CAHPS for MI…       63
- 2 0446157747 USC CARE MEDICAL GROUP INC       CAHPS_GRP… CAHPS for MI…       87
- 3 0446157747 USC CARE MEDICAL GROUP INC       CAHPS_GRP… CAHPS for MI…       86
- 4 0446157747 USC CARE MEDICAL GROUP INC       CAHPS_GRP… CAHPS for MI…       57
- 5 0446157747 USC CARE MEDICAL GROUP INC       CAHPS_GRP… CAHPS for MI…       85
- 6 0446157747 USC CARE MEDICAL GROUP INC       CAHPS_GRP… CAHPS for MI…       24
- 7 0446162697 ASSOCIATION OF UNIVERSITY PHYSI… CAHPS_GRP… CAHPS for MI…       59
- 8 0446162697 ASSOCIATION OF UNIVERSITY PHYSI… CAHPS_GRP… CAHPS for MI…       85
- 9 0446162697 ASSOCIATION OF UNIVERSITY PHYSI… CAHPS_GRP… CAHPS for MI…       83
-10 0446162697 ASSOCIATION OF UNIVERSITY PHYSI… CAHPS_GRP… CAHPS for MI…       63
-# ℹ 490 more rows</code></pre>
+<pre><code># A tibble: 60 × 3
+    year continent pop_promedio
+   &lt;int&gt; &lt;fct&gt;            &lt;dbl&gt;
+ 1  1952 Africa        4570010.
+ 2  1952 Americas     13806098.
+ 3  1952 Asia         42283556.
+ 4  1952 Europe       13937362.
+ 5  1952 Oceania       5343003 
+ 6  1957 Africa        5093033.
+ 7  1957 Americas     15478157.
+ 8  1957 Asia         47356988.
+ 9  1957 Europe       14596345.
+10  1957 Oceania       5970988 
+# ℹ 50 more rows</code></pre>
 </div>
 </div>
-<pre><code>  org_pac_id org_nm                     measure_cd   prf_rate
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_1        63
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_2        87
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_3        86
-  0446157747 USC CARE MEDICAL GROUP INC CAHPS_GRP_5        57</code></pre>
-</section>
-<section id="problema" class="slide level2">
-<h2>Problema</h2>
-<ul>
-<li class="fragment">Cada <strong>organización</strong> es la unidad de observación</li>
-<li class="fragment">Pero cada organización está en <strong>6 filas</strong></li>
-<li class="fragment">Una fila por cada medida del cuestionario</li>
-<li class="fragment">Queremos: <strong>1 fila por organización</strong>, <strong>1 columna por medida</strong></li>
-</ul>
-</section>
-<section id="ver-medidas-únicas" class="slide level2">
-<h2>Ver medidas únicas</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>cms_patient_experience <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a></a>  <span class="fu">distinct</span>(measure_cd, measure_title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  measure_cd   measure_title                                                    
-  &lt;chr&gt;        &lt;chr&gt;                                                            
-1 CAHPS_GRP_1  CAHPS for MIPS SSM: Getting Timely Care, Appointments, and Infor…
-2 CAHPS_GRP_2  CAHPS for MIPS SSM: How Well Providers Communicate               
-3 CAHPS_GRP_3  CAHPS for MIPS SSM: Patient's Rating of Provider                 
-4 CAHPS_GRP_5  CAHPS for MIPS SSM: Health Promotion and Education               
-5 CAHPS_GRP_8  CAHPS for MIPS SSM: Courteous and Helpful Office Staff           
-6 CAHPS_GRP_12 CAHPS for MIPS SSM: Stewardship of Patient Resources             </code></pre>
-</div>
-</div>
-<pre><code>  measure_cd   measure_title
-  CAHPS_GRP_1  Getting Timely Care, Appointments...
-  CAHPS_GRP_2  How Well Providers Communicate
-  CAHPS_GRP_3  Patient's Rating of Provider
-  CAHPS_GRP_5  Health Promotion and Education
-  CAHPS_GRP_8  Courteous and Helpful Office Staff
-  CAHPS_GRP_12 Stewardship of Patient Resources</code></pre>
 </section>
 <section id="solución-pivot_wider" class="slide level2">
 <h2>Solución: pivot_wider()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>cms_patient_experience <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb46-3"><a></a>    <span class="at">names_from =</span> measure_cd,</span>
-<span id="cb46-4"><a></a>    <span class="at">values_from =</span> prf_rate</span>
-<span id="cb46-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a></a>  <span class="fu">group_by</span>(year, continent) <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a></a>  <span class="fu">summarise</span>(<span class="at">pop_promedio =</span> <span class="fu">mean</span>(pop), </span>
+<span id="cb24-4"><a></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-5"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, </span>
+<span id="cb24-6"><a></a>              <span class="at">values_from =</span> pop_promedio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 500 × 9
-   org_pac_id org_nm           measure_title CAHPS_GRP_1 CAHPS_GRP_2 CAHPS_GRP_3
-   &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
- 1 0446157747 USC CARE MEDICA… CAHPS for MI…          63          NA          NA
- 2 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          87          NA
- 3 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          86
- 4 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          NA
- 5 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          NA
- 6 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          NA
- 7 0446162697 ASSOCIATION OF … CAHPS for MI…          59          NA          NA
- 8 0446162697 ASSOCIATION OF … CAHPS for MI…          NA          85          NA
- 9 0446162697 ASSOCIATION OF … CAHPS for MI…          NA          NA          83
-10 0446162697 ASSOCIATION OF … CAHPS for MI…          NA          NA          NA
-# ℹ 490 more rows
-# ℹ 3 more variables: CAHPS_GRP_5 &lt;dbl&gt;, CAHPS_GRP_8 &lt;dbl&gt;, CAHPS_GRP_12 &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 5 × 13
+  continent    `1952`    `1957` `1962` `1967` `1972` `1977` `1982` `1987` `1992`
+  &lt;fct&gt;         &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Africa     4570010.  5093033. 5.70e6 6.45e6 7.31e6 8.33e6 9.60e6 1.11e7 1.27e7
+2 Americas  13806098. 15478157. 1.73e7 1.92e7 2.12e7 2.31e7 2.52e7 2.73e7 2.96e7
+3 Asia      42283556. 47356988. 5.14e7 5.77e7 6.52e7 7.23e7 7.91e7 8.70e7 9.49e7
+4 Europe    13937362. 14596345. 1.53e7 1.60e7 1.67e7 1.72e7 1.77e7 1.81e7 1.86e7
+5 Oceania    5343003   5970988  6.64e6 7.30e6 8.05e6 8.62e6 9.20e6 9.79e6 1.05e7
+# ℹ 3 more variables: `1997` &lt;dbl&gt;, `2002` &lt;dbl&gt;, `2007` &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <ul>
@@ -887,107 +625,28 @@
 <li class="fragment"><code>values_from</code>: columna existente que contiene los <strong>valores</strong></li>
 </ul>
 </section>
-<section id="resultado-parcial" class="slide level2">
-<h2>Resultado (parcial)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>cms_patient_experience <span class="sc">|&gt;</span></span>
-<span id="cb48-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb48-3"><a></a>    <span class="at">names_from =</span> measure_cd,</span>
-<span id="cb48-4"><a></a>    <span class="at">values_from =</span> prf_rate</span>
-<span id="cb48-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 500 × 9
-   org_pac_id org_nm           measure_title CAHPS_GRP_1 CAHPS_GRP_2 CAHPS_GRP_3
-   &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
- 1 0446157747 USC CARE MEDICA… CAHPS for MI…          63          NA          NA
- 2 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          87          NA
- 3 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          86
- 4 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          NA
- 5 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          NA
- 6 0446157747 USC CARE MEDICA… CAHPS for MI…          NA          NA          NA
- 7 0446162697 ASSOCIATION OF … CAHPS for MI…          59          NA          NA
- 8 0446162697 ASSOCIATION OF … CAHPS for MI…          NA          85          NA
- 9 0446162697 ASSOCIATION OF … CAHPS for MI…          NA          NA          83
-10 0446162697 ASSOCIATION OF … CAHPS for MI…          NA          NA          NA
-# ℹ 490 more rows
-# ℹ 3 more variables: CAHPS_GRP_5 &lt;dbl&gt;, CAHPS_GRP_8 &lt;dbl&gt;, CAHPS_GRP_12 &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<pre><code>  org_pac_id org_nm                   measure_title   CAHPS_GRP_1
-  0446157747 USC CARE MEDICAL GROUP   ...                      63
-  0446157747 USC CARE MEDICAL GROUP   ...                      NA
-  0446157747 USC CARE MEDICAL GROUP   ...                      NA</code></pre>
-<div class="question">
-<p>¿Por qué todavía hay múltiples filas?</p>
-</div>
-</section>
-<section id="especificar-id_cols" class="slide level2">
-<h2>Especificar id_cols</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>cms_patient_experience <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb51-3"><a></a>    <span class="at">id_cols =</span> <span class="fu">starts_with</span>(<span class="st">"org"</span>),</span>
-<span id="cb51-4"><a></a>    <span class="at">names_from =</span> measure_cd,</span>
-<span id="cb51-5"><a></a>    <span class="at">values_from =</span> prf_rate</span>
-<span id="cb51-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 95 × 8
-   org_pac_id org_nm CAHPS_GRP_1 CAHPS_GRP_2 CAHPS_GRP_3 CAHPS_GRP_5 CAHPS_GRP_8
-   &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
- 1 0446157747 USC C…          63          87          86          57          85
- 2 0446162697 ASSOC…          59          85          83          63          88
- 3 0547164295 BEAVE…          49          NA          75          44          73
- 4 0749333730 CAPE …          67          84          85          65          82
- 5 0840104360 ALLIA…          66          87          87          64          87
- 6 0840109864 REX H…          73          87          84          67          91
- 7 0840513552 SCL H…          58          83          76          58          78
- 8 0941545784 GRITM…          46          86          81          54          NA
- 9 1052612785 COMMU…          65          84          80          58          87
-10 1254237779 OUR L…          61          NA          NA          65          NA
-# ℹ 85 more rows
-# ℹ 1 more variable: CAHPS_GRP_12 &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<pre><code>  org_pac_id org_nm           CAHPS_GRP_1 CAHPS_GRP_2 CAHPS_GRP_3
-  0446157747 USC CARE MED...           63          87          86
-  0446162697 ASSOCIATION ...           59          85          83
-  0547164295 BEAVER MED  ...           49          NA          75</code></pre>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p><code>id_cols</code> especifica qué columnas identifican únicamente cada fila</p>
-</div>
-</div>
-</div>
-</section>
 <section id="cómo-funciona-pivot_wider" class="slide level2">
 <h2>¿Cómo funciona pivot_wider()?</h2>
 <p>Ejemplo simple:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb54-2"><a></a>  <span class="sc">~</span>id, <span class="sc">~</span>measurement, <span class="sc">~</span>value,</span>
-<span id="cb54-3"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp1"</span>,    <span class="dv">100</span>,</span>
-<span id="cb54-4"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp1"</span>,    <span class="dv">140</span>,</span>
-<span id="cb54-5"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp2"</span>,    <span class="dv">115</span>,</span>
-<span id="cb54-6"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp2"</span>,    <span class="dv">120</span>,</span>
-<span id="cb54-7"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp3"</span>,    <span class="dv">105</span></span>
-<span id="cb54-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb26-2"><a></a>  <span class="sc">~</span>id, <span class="sc">~</span>measurement, <span class="sc">~</span>value,</span>
+<span id="cb26-3"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp1"</span>,    <span class="dv">100</span>,</span>
+<span id="cb26-4"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp1"</span>,    <span class="dv">140</span>,</span>
+<span id="cb26-5"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp2"</span>,    <span class="dv">115</span>,</span>
+<span id="cb26-6"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp2"</span>,    <span class="dv">120</span>,</span>
+<span id="cb26-7"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp3"</span>,    <span class="dv">105</span></span>
+<span id="cb26-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="aplicar-pivot_wider" class="slide level2">
 <h2>Aplicar pivot_wider()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>df <span class="sc">|&gt;</span></span>
-<span id="cb55-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb55-3"><a></a>    <span class="at">names_from =</span> measurement,</span>
-<span id="cb55-4"><a></a>    <span class="at">values_from =</span> value</span>
-<span id="cb55-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>df <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb27-3"><a></a>    <span class="at">names_from =</span> measurement,</span>
+<span id="cb27-4"><a></a>    <span class="at">values_from =</span> value</span>
+<span id="cb27-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   id      bp1   bp2   bp3
@@ -996,9 +655,6 @@
 2 B       140   115    NA</code></pre>
 </div>
 </div>
-<pre><code>  id      bp1   bp2   bp3
-  A       100   120   105
-  B       140   115    NA</code></pre>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1017,34 +673,34 @@
 <h2>Mecánica de pivot_wider()</h2>
 <p><code>pivot_wider()</code> sigue estos pasos:</p>
 <ol type="1">
-<li class="fragment">Identifica qué irá en <strong>columnas</strong> (valores únicos de <code>names_from</code>)</li>
-<li class="fragment">Identifica qué irá en <strong>filas</strong> (variables no usadas = <code>id_cols</code>)</li>
-<li class="fragment">Crea data frame vacío combinando filas × columnas</li>
-<li class="fragment">Rellena celdas con valores de <code>values_from</code></li>
+<li>Identifica qué irá en <strong>columnas</strong> (valores únicos de <code>names_from</code>)</li>
+<li>Identifica qué irá en <strong>filas</strong> (variables no usadas = <code>id_cols</code>)</li>
+<li>Crea data frame vacío combinando filas × columnas</li>
+<li>Rellena celdas con valores de <code>values_from</code></li>
 </ol>
 </section>
 <section id="valores-duplicados" class="slide level2">
 <h2>Valores duplicados</h2>
 <p>¿Qué pasa si hay múltiples filas para la misma combinación?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb58-2"><a></a>  <span class="sc">~</span>id, <span class="sc">~</span>measurement, <span class="sc">~</span>value,</span>
-<span id="cb58-3"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp1"</span>,    <span class="dv">100</span>,</span>
-<span id="cb58-4"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp1"</span>,    <span class="dv">102</span>,  <span class="co"># Duplicado!</span></span>
-<span id="cb58-5"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp2"</span>,    <span class="dv">120</span>,</span>
-<span id="cb58-6"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp1"</span>,    <span class="dv">140</span>,</span>
-<span id="cb58-7"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp2"</span>,    <span class="dv">115</span></span>
-<span id="cb58-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb29-2"><a></a>  <span class="sc">~</span>id, <span class="sc">~</span>measurement, <span class="sc">~</span>value,</span>
+<span id="cb29-3"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp1"</span>,    <span class="dv">100</span>,</span>
+<span id="cb29-4"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp1"</span>,    <span class="dv">102</span>,  <span class="co"># Duplicado!</span></span>
+<span id="cb29-5"><a></a>  <span class="st">"A"</span>,        <span class="st">"bp2"</span>,    <span class="dv">120</span>,</span>
+<span id="cb29-6"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp1"</span>,    <span class="dv">140</span>,</span>
+<span id="cb29-7"><a></a>  <span class="st">"B"</span>,        <span class="st">"bp2"</span>,    <span class="dv">115</span></span>
+<span id="cb29-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="resultado-con-duplicados" class="slide level2 smaller">
+<section id="resultado-con-duplicados" class="slide level2">
 <h2>Resultado con duplicados</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>df <span class="sc">|&gt;</span></span>
-<span id="cb59-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb59-3"><a></a>    <span class="at">names_from =</span> measurement,</span>
-<span id="cb59-4"><a></a>    <span class="at">values_from =</span> value</span>
-<span id="cb59-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>df <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb30-3"><a></a>    <span class="at">names_from =</span> measurement,</span>
+<span id="cb30-4"><a></a>    <span class="at">values_from =</span> value</span>
+<span id="cb30-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   id    bp1       bp2      
@@ -1053,12 +709,6 @@
 2 B     &lt;dbl [1]&gt; &lt;dbl [1]&gt;</code></pre>
 </div>
 </div>
-<pre><code>Warning: Values from `value` are not uniquely identified;
-output will contain list-cols.
-
-  id    bp1       bp2
-  A     &lt;dbl [2]&gt; &lt;dbl [1]&gt;
-  B     &lt;dbl [1]&gt; &lt;dbl [1]&gt;</code></pre>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1076,10 +726,10 @@ output will contain list-cols.
 <section id="encontrar-duplicados" class="slide level2">
 <h2>Encontrar duplicados</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a>df <span class="sc">|&gt;</span></span>
-<span id="cb62-2"><a></a>  <span class="fu">group_by</span>(id, measurement) <span class="sc">|&gt;</span></span>
-<span id="cb62-3"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb62-4"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>df <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a></a>  <span class="fu">group_by</span>(id, measurement) <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-4"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   id    measurement     n
@@ -1087,8 +737,6 @@ output will contain list-cols.
 1 A     bp1             2</code></pre>
 </div>
 </div>
-<pre><code>  id    measurement     n
-  A     bp1             2</code></pre>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1111,12 +759,12 @@ output will contain list-cols.
 <section id="datos-de-ejemplo" class="slide level2">
 <h2>Datos de ejemplo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb65-2"><a></a></span>
-<span id="cb65-3"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb65-4"><a></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb65-5"><a></a></span>
-<span id="cb65-6"><a></a><span class="fu">glimpse</span>(anp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb34-2"><a></a></span>
+<span id="cb34-3"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-4"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb34-5"><a></a></span>
+<span id="cb34-6"><a></a><span class="fu">glimpse</span>(anp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 268
 Columns: 9
@@ -1136,26 +784,26 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
 <h2>Alargar: Múltiples columnas de superficie</h2>
 <p>Supongamos que tenemos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>anp_wide <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb67-2"><a></a>  <span class="sc">~</span>nombre,              <span class="sc">~</span>superficie_2020, <span class="sc">~</span>superficie_2021,</span>
-<span id="cb67-3"><a></a>  <span class="st">"Parque Cutervo"</span>,     <span class="dv">8214</span>,             <span class="dv">8214</span>,</span>
-<span id="cb67-4"><a></a>  <span class="st">"Reserva Pacaya"</span>,     <span class="dv">2080000</span>,          <span class="dv">2080000</span>,</span>
-<span id="cb67-5"><a></a>  <span class="st">"Parque Manu"</span>,        <span class="dv">1716295</span>,          <span class="dv">1716295</span></span>
-<span id="cb67-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>anp_wide <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb36-2"><a></a>  <span class="sc">~</span>nombre,              <span class="sc">~</span>superficie_2020, <span class="sc">~</span>superficie_2021,</span>
+<span id="cb36-3"><a></a>  <span class="st">"Parque Cutervo"</span>,     <span class="dv">8214</span>,             <span class="dv">8214</span>,</span>
+<span id="cb36-4"><a></a>  <span class="st">"Reserva Pacaya"</span>,     <span class="dv">2080000</span>,          <span class="dv">2080000</span>,</span>
+<span id="cb36-5"><a></a>  <span class="st">"Parque Manu"</span>,        <span class="dv">1716295</span>,          <span class="dv">1716295</span></span>
+<span id="cb36-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="solución" class="slide level2">
 <h2>Solución</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>anp_long <span class="ot">&lt;-</span> anp_wide <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb68-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"superficie"</span>),</span>
-<span id="cb68-4"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb68-5"><a></a>    <span class="at">names_prefix =</span> <span class="st">"superficie_"</span>,</span>
-<span id="cb68-6"><a></a>    <span class="at">values_to =</span> <span class="st">"superficie_ha"</span></span>
-<span id="cb68-7"><a></a>  )</span>
-<span id="cb68-8"><a></a></span>
-<span id="cb68-9"><a></a>anp_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>anp_long <span class="ot">&lt;-</span> anp_wide <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb37-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"superficie"</span>),</span>
+<span id="cb37-4"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb37-5"><a></a>    <span class="at">names_prefix =</span> <span class="st">"superficie_"</span>,</span>
+<span id="cb37-6"><a></a>    <span class="at">values_to =</span> <span class="st">"superficie_ha"</span></span>
+<span id="cb37-7"><a></a>  )</span>
+<span id="cb37-8"><a></a></span>
+<span id="cb37-9"><a></a>anp_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   nombre         year  superficie_ha
@@ -1168,20 +816,16 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
 6 Parque Manu    2021        1716295</code></pre>
 </div>
 </div>
-<pre><code>  nombre              year  superficie_ha
-  Parque Cutervo      2020           8214
-  Parque Cutervo      2021           8214
-  Reserva Pacaya      2020        2080000</code></pre>
 </section>
 <section id="ensanchar-de-largo-a-ancho" class="slide level2">
 <h2>Ensanchar: De largo a ancho</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>anp_long <span class="sc">|&gt;</span></span>
-<span id="cb71-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb71-3"><a></a>    <span class="at">names_from =</span> year,</span>
-<span id="cb71-4"><a></a>    <span class="at">names_prefix =</span> <span class="st">"superficie_"</span>,</span>
-<span id="cb71-5"><a></a>    <span class="at">values_from =</span> superficie_ha</span>
-<span id="cb71-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>anp_long <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb39-3"><a></a>    <span class="at">names_from =</span> year,</span>
+<span id="cb39-4"><a></a>    <span class="at">names_prefix =</span> <span class="st">"superficie_"</span>,</span>
+<span id="cb39-5"><a></a>    <span class="at">values_from =</span> superficie_ha</span>
+<span id="cb39-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   nombre         superficie_2020 superficie_2021
@@ -1190,72 +834,6 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
 2 Reserva Pacaya         2080000         2080000
 3 Parque Manu            1716295         1716295</code></pre>
 </div>
-</div>
-<pre><code>  nombre              superficie_2020  superficie_2021
-  Parque Cutervo                 8214             8214
-  Reserva Pacaya              2080000          2080000
-  Parque Manu                 1716295          1716295</code></pre>
-</section></section>
-<section>
-<section id="ejercicios-prácticos" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Ejercicios Prácticos</h1>
-
-</section>
-<section id="ejercicio-1-billboard-básico" class="slide level2 smaller">
-<h2>Ejercicio 1: Billboard básico</h2>
-<div class="task">
-<ol type="1">
-<li>Toma el dataset <code>billboard</code></li>
-<li>Usa <code>pivot_longer()</code> para crear columnas <code>week</code> y <code>rank</code></li>
-<li>Elimina valores faltantes</li>
-<li>Convierte <code>week</code> a numérico</li>
-<li>Filtra solo canciones que llegaron al top 10</li>
-<li>Cuenta cuántas semanas cada canción estuvo en top 10</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-2-áreas-naturales" class="slide level2">
-<h2>Ejercicio 2: Áreas Naturales</h2>
-<div class="task">
-<p>Tienes datos con múltiples años de superficie:</p>
-<ol type="1">
-<li>Crea un tibble con columnas: <code>nombre</code>, <code>superficie_2019</code>, <code>superficie_2020</code>, <code>superficie_2021</code></li>
-<li>Usa <code>pivot_longer()</code> para alargar</li>
-<li>Convierte el año a numérico</li>
-<li>Calcula el cambio de superficie entre años</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-3-who-tuberculosis" class="slide level2">
-<h2>Ejercicio 3: WHO tuberculosis</h2>
-<div class="task">
-<p>Con el dataset <code>who2</code>:</p>
-<ol type="1">
-<li>Usa <code>pivot_longer()</code> con <code>names_sep</code></li>
-<li>Separa <code>diagnosis</code>, <code>gender</code>, y <code>age</code></li>
-<li>Calcula casos totales por país y género</li>
-<li>Usa <code>pivot_wider()</code> para crear columnas por género</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-4-datos-de-censo" class="slide level2 smaller">
-<h2>Ejercicio 4: Datos de censo</h2>
-<div class="task">
-<p>Crea datos simulados de población por departamento:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a>censo <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb74-2"><a></a>  <span class="sc">~</span>departamento, <span class="sc">~</span>poblacion_urbana, <span class="sc">~</span>poblacion_rural,</span>
-<span id="cb74-3"><a></a>  <span class="st">"Lima"</span>,        <span class="dv">9000000</span>,           <span class="dv">500000</span>,</span>
-<span id="cb74-4"><a></a>  <span class="st">"Cusco"</span>,       <span class="dv">400000</span>,            <span class="dv">800000</span>,</span>
-<span id="cb74-5"><a></a>  <span class="st">"Loreto"</span>,      <span class="dv">300000</span>,            <span class="dv">700000</span></span>
-<span id="cb74-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol type="1">
-<li>Alarga los datos</li>
-<li>Calcula población total por departamento</li>
-<li>Calcula porcentaje urbano/rural</li>
-<li>Ensancha para comparar departamentos</li>
-</ol>
 </div>
 </section></section>
 <section>
@@ -1318,7 +896,7 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
 </tbody>
 </table>
 </section>
-<section id="argumentos-importantes" class="slide level2 smaller">
+<section id="argumentos-importantes" class="slide level2">
 <h2>Argumentos importantes</h2>
 <p><strong>pivot_longer():</strong></p>
 <ul>
@@ -1338,40 +916,18 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
 <li><code>values_fill</code> - valor para celdas faltantes</li>
 </ul>
 </section>
-<section id="workflow-típico" class="slide level2">
-<h2>Workflow típico</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a><span class="co"># 1. Leer datos</span></span>
-<span id="cb75-2"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datos.csv"</span>)</span>
-<span id="cb75-3"><a></a></span>
-<span id="cb75-4"><a></a><span class="co"># 2. Explorar estructura</span></span>
-<span id="cb75-5"><a></a><span class="fu">glimpse</span>(datos)</span>
-<span id="cb75-6"><a></a></span>
-<span id="cb75-7"><a></a><span class="co"># 3. Identificar problema</span></span>
-<span id="cb75-8"><a></a><span class="co">#    - ¿Variables en nombres de columnas? → pivot_longer()</span></span>
-<span id="cb75-9"><a></a><span class="co">#    - ¿Observaciones en múltiples filas? → pivot_wider()</span></span>
-<span id="cb75-10"><a></a></span>
-<span id="cb75-11"><a></a><span class="co"># 4. Pivotar</span></span>
-<span id="cb75-12"><a></a>datos_tidy <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span></span>
-<span id="cb75-13"><a></a>  <span class="fu">pivot_longer</span>(...) <span class="co"># o pivot_wider(...)</span></span>
-<span id="cb75-14"><a></a></span>
-<span id="cb75-15"><a></a><span class="co"># 5. Limpiar tipos y valores</span></span>
-<span id="cb75-16"><a></a>datos_clean <span class="ot">&lt;-</span> datos_tidy <span class="sc">|&gt;</span></span>
-<span id="cb75-17"><a></a>  <span class="fu">mutate</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 <section id="consejos-finales" class="slide level2">
 <h2>Consejos finales</h2>
 <ol type="1">
-<li class="fragment"><strong>Empieza simple</strong> - usa ejemplos pequeños para entender</li>
-<li class="fragment"><strong>Visualiza</strong> - dibuja cómo quieres que se vean los datos</li>
-<li class="fragment"><strong>Itera</strong> - prueba, revisa, ajusta</li>
-<li class="fragment"><strong>Documenta</strong> - comenta por qué pivoteas de cierta forma</li>
-<li class="fragment"><strong>Sé pragmático</strong> - la forma “correcta” es la que facilita tu análisis</li>
-<li class="fragment"><strong>No tengas miedo</strong> - des-ordenar y re-ordenar es normal</li>
+<li><strong>Empieza simple</strong> - usa ejemplos pequeños para entender</li>
+<li><strong>Visualiza</strong> - dibuja cómo quieres que se vean los datos</li>
+<li><strong>Itera</strong> - prueba, revisa, ajusta</li>
+<li><strong>Documenta</strong> - comenta por qué pivoteas de cierta forma</li>
+<li><strong>Sé pragmático</strong> - la forma “correcta” es la que facilita tu análisis</li>
+<li><strong>No tengas miedo</strong> - des-ordenar y re-ordenar es normal</li>
 </ol>
 </section>
-<section id="errores-comunes" class="slide level2 smaller">
+<section id="errores-comunes" class="slide level2">
 <h2>Errores comunes</h2>
 <table class="caption-top">
 <colgroup>
@@ -1418,30 +974,25 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
 <li><a href="https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf">Data transformation cheatsheet</a></li>
 </ul>
 </section>
-<section id="próximos-pasos" class="slide level2">
-<h2>Próximos pasos</h2>
-<p>En las siguientes sesiones:</p>
-<ul>
-<li class="fragment"><strong>Manipulación avanzada</strong> con dplyr</li>
-<li class="fragment"><strong>Unir datos</strong> de múltiples fuentes</li>
-<li class="fragment"><strong>Trabajo con texto</strong> (stringr)</li>
-<li class="fragment"><strong>Fechas y tiempos</strong> (lubridate)</li>
-<li class="fragment"><strong>Visualización</strong> (ggplot2)</li>
-</ul>
-</section></section>
-<section>
-<section id="gracias" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>¡Gracias!</h1>
-
-</section>
-<div class="centered">
-<p><strong>¿Preguntas?</strong></p>
-<p>📧 paul.santos@example.com</p>
-<p>🌐 Materiales del curso disponibles en el repositorio</p>
-<h3 id="próxima-sesión-dplyr---manipulación-avanzada-de-datos">Próxima sesión: dplyr - Manipulación Avanzada de Datos</h3>
+<section id="contacto" class="slide level2">
+<h2>Contacto</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Paul Efren Santos Andrade</strong></p>
+<p>📧 [Correo electrónico]</p>
+<p>🌐 <a href="https://paulefrensa.rbind.io">paulefrensa.rbind.io</a></p>
+<p>🐦 <a href="https://twitter.com/PaulEfrenSantos"><span class="citation" data-cites="PaulEfrenSantos">@PaulEfrenSantos</span></a></p>
+<p>💻 <a href="https://github.com/PaulESantos">github.com/PaulESantos</a></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/DSC_0140.JPG" class="quarto-figure quarto-figure-center" style="border-radius: 50% / 35%; object-fit: cover;;width:60.0%"></p>
+</figure>
 </div>
+</div></div>
 
-</section>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

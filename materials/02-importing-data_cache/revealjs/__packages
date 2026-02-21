@@ -8,3 +8,6 @@ dplyr
 stringr
 forcats
 lubridate
+readxl
+janitor
+sf

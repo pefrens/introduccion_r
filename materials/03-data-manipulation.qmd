@@ -41,7 +41,7 @@ execute:
 - Funciona con tibbles, data frames y sf (Simple Features)
 :::
 
-## Los verbos de dplyr {.smaller}
+## Los verbos de dplyr 
 
 | Verbo | Acción |
 |-------|--------|
@@ -53,7 +53,7 @@ execute:
 | `summarise()` | Resume datos (colapsa filas) |
 | `group_by()` | Agrupa datos para operaciones |
 
-## Estructura común {.smaller}
+## Estructura común 
 
 Todos los verbos de dplyr funcionan de manera similar:
 
@@ -78,7 +78,7 @@ verbo(datos, operacion)
 library(tidyverse)
 library(readxl)
 library(janitor)
-# Cargar datos de áreas naturales
+# Cargar datos de los planes urbanos
 planes <- read_excel("data/catalogo_planes.xlsx") |> 
   clean_names()
 ```
@@ -110,7 +110,7 @@ distrito |>
 ```
 
 
-## Operadores de comparación {.smaller}
+## Operadores de comparación
 
 | Operador | Significado |
 |----------|-------------|
@@ -126,7 +126,7 @@ distrito |>
 Usa `==` para comparar, no `=`
 :::
 
-## Operadores lógicos {.smaller}
+## Operadores lógicos
 
 Combinar múltiples condiciones:
 
@@ -137,19 +137,20 @@ Combinar múltiples condiciones:
 | `!` | NO (negación) |
 
 
-## Operador `%in%` {.smaller}
+## Operador `%in%`
 
 Para comparar con múltiples valores:
 
 ```{r}
 # Áreas en varios departamentos (forma larga)
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 departamentos |> 
 filter(ccdd == "08" | # CUSCO
        ccdd == "05" | # AYACUCHO
        ccdd == "04")  # AREQUIPA
 ```
 
-. . .
+## Operador `%in%` 
 
 ```{r}
 # Forma más elegante con %in%
@@ -160,14 +161,16 @@ filter( ccdd %in% c("08", "05", "04"))
 ## Valores faltantes (NA)
 
 ```{r}
-indicadores_anta <- read_csv("data/reporte_centro_poblado_ANTA.csv") |> 
+library(readxl)
+indicadores_anta <- read_excel("data/indicadoresCPV2017.xlsx",
+                               skip = 1) |> 
   clean_names()
 # is.na() identifica valores faltantes
 indicadores_anta |> 
 filter(is.na(percent))
 ```
 
-. . .
+## Valores faltantes (NA)
 
 ```{r}
 # !is.na() identifica valores NO faltantes
@@ -186,12 +189,12 @@ Ordena filas según una o más columnas:
 
 ```{r}
 # Ordenar por población (de menor a mayor)
-# ?population
+# ?population - data de tidyr
 population |> 
 arrange(population)
 ```
 
-. . .
+## `arrange()` - Ordenar filas
 
 ```{r}
 # Ordenar de mayor a menor con desc()
@@ -224,23 +227,28 @@ distinct(nombdep)
 ```
 
 
-## `distinct()` vs `count()` {.smaller}
+## `distinct()` vs `count()`
+
+::: {.columns}
+::: {.column width="50%"}
 
 ```{r}
 # distinct() muestra valores únicos
 planes |> 
 distinct(estado)
 ```
+:::
 
-. . .
+::: {.column width="50%"}
 
 ```{r}
 # count() cuenta las ocurrencias
 planes |> 
   count(estado)
 ```
+:::
+:::
 
-. . .
 
 ```{r}
 # Ordenar por frecuencia
@@ -260,11 +268,11 @@ departamentos |>
 mutate( superficie_m2 = st_area(departamentos))
 ```
 
-. . .
+## `mutate()` - Crear/modificar columnas
 
 ```{r}
 #| echo: true
-#| eval: false
+#| eval: true
 # Crear múltiples columnas
 pob_peru <- read_csv("data/poblacion_peru.csv") |> 
   clean_names()
@@ -276,7 +284,7 @@ pob_peru |>
   )
 ```
 
-## Operaciones con `mutate()` {.smaller}
+## Operaciones con `mutate()`
 
 Puedes usar operadores aritméticos:
 
@@ -286,42 +294,21 @@ pob_peru |>
     # Operaciones aritméticas
    pob_total = hombres + mujeres,
     # Operaciones lógicas
-    sexo_dominante = if_else(
-      mujeres > hombres,
-      "Mayoría Mujeres", 
-      "Mayoría Hombres"
-    )
-  )
+    sexo_dominante = if_else( mujeres > hombres, "Mayoría Mujeres", "Mayoría Hombres"))
 ```
 
-## Opciones de `mutate()` {.smaller}
+## Opciones de `mutate()` 
 
-::: incremental
 - `.before` - colocar nuevas columnas antes de otra columna
 - `.after` - colocar nuevas columnas después de otra columna
 - `.keep` - qué columnas mantener
-:::
 
-. . .
 
 ```{r}
 # Colocar nueva columna al inicio
 pob_peru |> 
-mutate(
-  pob_total = hombres + mujeres,
-  .before = 1
-)
-```
-
-. . .
-
-```{r}
-# Mantener solo columnas nuevas
-pob_peru |> 
-    mutate(
-        pob_total = hombres + mujeres,
-        .keep  = "none"
-    )
+mutate( pob_total = hombres + mujeres,
+        .before = 1)
 ```
 
 ## `select()` - Seleccionar columnas
@@ -329,20 +316,23 @@ pob_peru |>
 Selecciona columnas por nombre:
 
 ```{r}
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+
 # Seleccionar columnas específicas
 departamentos |> 
   select(ccdd, nombdep)
 ```
 
-. . .
+## `select()` - Seleccionar columnas
 
 ```{r}
+distrito <- read_sf("data/DISTRITO.gpkg")
 # Seleccionar rango de columnas
 distrito |> 
 select(ccdd:ccdi)
 ```
 
-. . .
+## `select()` - Seleccionar columnas
 
 ```{r}
 # Excluir columnas con -
@@ -350,7 +340,7 @@ departamentos |>
   select(-nombdep)
 ```
 
-## Funciones auxiliares de `select()` {.smaller}
+## Funciones auxiliares de `select()`
 
 | Función | Uso |
 |---------|-----|
@@ -369,7 +359,7 @@ departamentos |>
 select( starts_with("cc"))
 ```
 
-. . .
+## Ejemplos de funciones auxiliares
 
 ```{r}
 # Columnas numéricas
@@ -377,7 +367,7 @@ gapminder |>
 select( where(is.numeric))
 ```
 
-. . .
+## Ejemplos de funciones auxiliares
 
 ```{r}
 # Reorganizar: nombre primero, luego todo lo demás
@@ -390,51 +380,47 @@ select(nombdep, everything())
 ```{r}
 # Sintaxis: nuevo_nombre = nombre_antiguo
 departamentos |> 
-rename(
-  departamento = nombdep,
-  cod_dep = ccdd
-)
+rename(departamento = nombdep,
+       cod_dep = ccdd)
 ```
+## `rename()` - Renombrar columnas
 
-::: callout-tip
-## Atajo
 También puedes renombrar con `select()`:
-```r
+```{r}
 departamentos |> 
 select( departamento = nombdep,
-  cod_dep = ccdd)
+        cod_dep = ccdd)
 ```
-:::
 
 ## `relocate()` - Reordenar columnas
 
 Cambia la posición de columnas:
 
-```r
+```{r}
 # Mover columna al inicio
 departamentos |> 
 relocate(nombdep)
 ```
 
-. . .
+## `relocate()` - Reordenar columnas
 
-```r
+```{r}
 # Mover después de otra columna
 departamentos |> 
 relocate(ccdd, .after = nombdep)
 ```
 
-. . .
+## `relocate()` - Reordenar columnas
 
-```r
+```{r}
 # Mover antes de otra columna
 departamentos |> 
-relocate(fuente, .before = geometry)
+relocate(fuente, .before = geom)
 ```
 
 # El operador pipe {background-color="#2C3E50"}
 
-## El pipe `|>` {.smaller}
+## El pipe `|>` 
 
 El **pipe** (tubería) te permite encadenar operaciones:
 
@@ -445,41 +431,36 @@ El **pipe** (tubería) te permite encadenar operaciones:
 - Atajo de teclado: **Ctrl + Shift + M** (Windows) o **Cmd + Shift + M** (Mac)
 :::
 
-## Sin pipe vs con pipe {.smaller}
+## Sin pipe vs con pipe
 
 **Sin pipe** (anidado y difícil de leer):
 
-```r
+```{r}
 arrange(
   filter(
-    select(distrito, nombdist, ccdd, ccdi),
-    ccdd == "08"
-  ),
+    select(distrito, nombdist, ccdd, ccdi), ccdd == "08"),
   desc(as.numeric(ccdi))
 )
 ```
 
-. . .
+## Sin pipe vs con pipe
 
 **Con pipe** (fluido y claro):
 
-```r
+```{r}
 distrito |>
   select(nombdist, ccdd, ccdi) |>
   filter(ccdd == "08") |>
   arrange(desc(as.numeric(ccdi)))
 ```
 
-## Ventajas del pipe {.smaller}
+## Ventajas del pipe 
 
-::: incremental
 1. **Legibilidad**: Se lee como una receta paso a paso
 2. **Menos objetos intermedios**: No necesitas guardar resultados temporales
 3. **Fácil modificar**: Agregar o quitar pasos es simple
 4. **Debugging más fácil**: Puedes ejecutar el código línea por línea
-:::
 
-. . .
 
 ::: callout-note
 ## Dos tipos de pipe
@@ -506,7 +487,7 @@ departamentos |>
 
 Agrupa filas para aplicar operaciones por grupo:
 
-```r
+```{r}
 planes |>
   group_by(departamento)
 ```
@@ -515,7 +496,7 @@ planes |>
 `group_by()` no cambia los datos visualmente, pero afecta cómo funcionan otros verbos
 :::
 
-## `summarise()` - Resumir datos {.smaller}
+## `summarise()` - Resumir datos 
 
 Colapsa filas en resúmenes estadísticos:
 
@@ -553,7 +534,7 @@ planes |>
   arrange(desc(total_planes))
 ```
 
-## Funciones de slice {.smaller}
+## Funciones de slice 
 
 Seleccionan filas específicas dentro de grupos:
 
@@ -574,7 +555,7 @@ gapminder |>
   slice_max(pop, n = 1)
 ```
 
-. . .
+## Ejemplos de slice
 
 ```{r}
 # Los 6 paises más poblados en 2002 
@@ -585,152 +566,24 @@ gapminder |>
 
 ## Múltiples variables de agrupación
 
-```r
-# Agrupar por categoría y departamento
-anp |>
-  group_by(categoria, ubicacion_politica) |>
-  summarise(
-    cantidad = n(),
-    superficie_total = sum(superficie_oficial, na.rm = TRUE)
-  )
+```{r}
+# Agrupar por continente y ciudad
+gapminder |> 
+  group_by(continent, country) |> 
+  summarise(mean_lifeexp = mean(lifeExp),
+            min_lifeexp = min(lifeExp), 
+            max_lifeexp = max(lifeExp),
+            .groups = "drop")
 ```
 
 ::: callout-warning
 ## Desagrupar
-Después de `summarise()`, se elimina el último nivel de agrupación. Usa `ungroup()` para eliminar todos los niveles.
+Después de `summarise()`, se elimina el último nivel de agrupación. Usa `ungroup()` o el argumento `.groups = "drop"` para eliminar todos los niveles.
 :::
 
-## El argumento `.by` {.smaller}
 
-Nueva forma de agrupar (dplyr 1.1.0+):
 
-```r
-# Forma tradicional
-anp |>
-  group_by(categoria) |>
-  summarise(cantidad = n())
-```
-
-. . .
-
-```r
-# Con .by (más conciso)
-anp |>
-  summarise(
-    cantidad = n(),
-    .by = categoria
-  )
-```
-
-::: callout-tip
-Con `.by` no necesitas `ungroup()` al final
-:::
-
-# Ejercicios prácticos {background-color="#2C3E50"}
-
-## Ejercicio 1 {.smaller}
-
-::: question
-Con los datos de áreas naturales protegidas:
-
-1. Filtra las áreas con superficie mayor a 50,000 hectáreas
-2. Selecciona las columnas: nombre, categoría, superficie_oficial
-3. Ordena por superficie de mayor a menor
-4. ¿Cuál es el área más grande?
-
-Usa el pipe `|>` para encadenar las operaciones.
-:::
-
-## Ejercicio 2 {.smaller}
-
-::: question
-Responde las siguientes preguntas usando `group_by()` y `summarise()`:
-
-1. ¿Cuántas áreas naturales hay por categoría?
-2. ¿Cuál es la superficie total protegida por categoría?
-3. ¿Cuál categoría tiene la mayor superficie promedio?
-
-Pista: Usa `arrange(desc(...))` al final para ordenar los resultados.
-:::
-
-## Ejercicio 3 {.smaller}
-
-::: question
-Crea un nuevo data frame que:
-
-1. Contenga solo Parques Nacionales y Reservas Nacionales
-2. Agregue una columna que clasifique las áreas como "Grande" (>100,000 ha) o "Mediana" (≤100,000 ha)
-3. Cuente cuántas áreas hay de cada tamaño en cada categoría
-
-Pista: Usa `if_else()` dentro de `mutate()`:
-```r
-mutate(tamaño = if_else(superficie_oficial > 100000, "Grande", "Mediana"))
-```
-:::
-
-## Ejercicio 4 {.smaller}
-
-::: question
-Para cada departamento (ubicacion_politica):
-
-1. Encuentra el área natural más grande
-2. Muestra solo: departamento, nombre del área, superficie
-3. Ordena por superficie de mayor a menor
-
-Pista: Usa `slice_max()` después de agrupar.
-:::
-
-# Recapitulación {background-color="#2C3E50"}
-
-## Resumen de verbos dplyr {.smaller}
-
-::: {.incremental}
-**Operaciones con filas:**
-
-- `filter()` - seleccionar filas por condición
-- `arrange()` - ordenar filas
-- `distinct()` - encontrar filas únicas
-
-**Operaciones con columnas:**
-
-- `mutate()` - crear/modificar columnas
-- `select()` - seleccionar columnas
-- `rename()` - renombrar columnas
-- `relocate()` - reordenar columnas
-
-**Operaciones agrupadas:**
-
-- `group_by()` - agrupar datos
-- `summarise()` - resumir datos
-- `slice_*()` - seleccionar filas específicas
-:::
-
-## Consejos finales {.smaller}
-
-::: incremental
-1. **Usa el pipe `|>`** para encadenar operaciones y hacer tu código más legible
-2. **Los verbos no modifican los datos originales** - siempre crean nuevos data frames
-3. **Guarda los resultados** si los necesitas después:
-   ```r
-   anp_parques <- anp |> filter(categoria == "Parque Nacional")
-   ```
-4. **Combina verbos** para análisis complejos
-5. **Usa `View()` o `glimpse()`** para inspeccionar resultados intermedios
-:::
-
-## Próximos pasos {.smaller}
-
-En las siguientes sesiones veremos:
-
-::: incremental
-- **Tidyr**: reorganizar datos (pivot_longer, pivot_wider)
-- **Stringr**: manipulación de texto
-- **Lubridate**: trabajo con fechas
-- **ggplot2**: visualización de datos
-- **Datos espaciales**: sf package
-:::
-
-## Recursos adicionales {.smaller}
+## Recursos adicionales 
 
 ::: incremental
 - [R for Data Science - Data transformation](https://r4ds.hadley.nz/data-transform)
@@ -739,12 +592,23 @@ En las siguientes sesiones veremos:
 - Ayuda en R: `?filter`, `?mutate`, etc.
 :::
 
-## ¡Gracias! {.center}
+## Contacto
 
-::: {.centered}
-**¿Preguntas?**
+::: {.columns}
+::: {.column width="50%"}
+**Paul Efren Santos Andrade**
 
-📧 paul.santos@example.com
+📧 [Correo electrónico]
 
-🌐 Materiales del curso disponibles en el repositorio
+🌐 [paulefrensa.rbind.io](https://paulefrensa.rbind.io)
+
+🐦 [@PaulEfrenSantos](https://twitter.com/PaulEfrenSantos)
+
+💻 [github.com/PaulESantos](https://github.com/PaulESantos)
 :::
+
+::: {.column width="50%"}
+![](img/DSC_0140.JPG){fig-align="center" width="60%" style="border-radius: 50% / 35%; object-fit: cover;"}
+:::
+:::
+

@@ -187,6 +187,16 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+  <script src="../site_libs/viz-1.8.2/viz.js"></script>
+
+  <link href="../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+
+  <script src="../site_libs/grViz-binding-1.0.11/grViz.js"></script>
+
 <meta property="og:title" content="Introducción a la Programación con R - Tidyverse">
 <meta property="og:description" content="Sesión 5: Unión de Datos (Joins)">
 <meta name="twitter:title" content="Introducción a la Programación con R - Tidyverse">
@@ -255,20 +265,8 @@
 <h2>Paquetes necesarios</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(nycflights13)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>Usaremos los 5 datasets relacionados del paquete <code>nycflights13</code>: <code>flights</code>, <code>airlines</code>, <code>airports</code>, <code>planes</code>, <code>weather</code></p>
-</div>
-</div>
+<span id="cb1-2"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -292,29 +290,25 @@
 <p><strong>Primary key</strong> = variable(s) que identifican <strong>únicamente</strong> cada observación</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Ejemplo en <code>airlines</code>:</p>
+<p>Ejemplo en <code>departamento</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>airlines</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/departamento.csv"</span>)</span>
+<span id="cb2-2"><a></a>departamentos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 16 × 2
-   carrier name                       
-   &lt;chr&gt;   &lt;chr&gt;                      
- 1 9E      Endeavor Air Inc.          
- 2 AA      American Airlines Inc.     
- 3 AS      Alaska Airlines Inc.       
- 4 B6      JetBlue Airways            
- 5 DL      Delta Air Lines Inc.       
- 6 EV      ExpressJet Airlines Inc.   
- 7 F9      Frontier Airlines Inc.     
- 8 FL      AirTran Airways Corporation
- 9 HA      Hawaiian Airlines Inc.     
-10 MQ      Envoy Air                  
-11 OO      SkyWest Airlines Inc.      
-12 UA      United Air Lines Inc.      
-13 US      US Airways Inc.            
-14 VX      Virgin America             
-15 WN      Southwest Airlines Co.     
-16 YV      Mesa Airlines Inc.         </code></pre>
+<pre><code># A tibble: 25 × 2
+   ccdd  nombdep     
+   &lt;chr&gt; &lt;chr&gt;       
+ 1 01    AMAZONAS    
+ 2 02    ANCASH      
+ 3 03    APURIMAC    
+ 4 04    AREQUIPA    
+ 5 05    AYACUCHO    
+ 6 06    CAJAMARCA   
+ 7 07    CALLAO      
+ 8 08    CUSCO       
+ 9 09    HUANCAVELICA
+10 10    HUANUCO     
+# ℹ 15 more rows</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -327,7 +321,7 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p><code>carrier</code> es la clave primaria (identifica únicamente cada aerolínea)</p>
+<p><code>ccdd</code> es la clave primaria (identifica únicamente cada departamento)</p>
 </div>
 </div>
 </div>
@@ -337,24 +331,23 @@
 <h2>Clave compuesta</h2>
 <p>Cuando necesitas <strong>múltiples variables</strong> para identificar una observación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>provincias <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/provincia.csv"</span>)</span>
+<span id="cb4-2"><a></a>provincias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26,115 × 15
-   origin  year month   day  hour  temp  dewp humid wind_dir wind_speed
-   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
- 1 EWR     2013     1     1     1  39.0  26.1  59.4      270      10.4 
- 2 EWR     2013     1     1     2  39.0  27.0  61.6      250       8.06
- 3 EWR     2013     1     1     3  39.0  28.0  64.4      240      11.5 
- 4 EWR     2013     1     1     4  39.9  28.0  62.2      250      12.7 
- 5 EWR     2013     1     1     5  39.0  28.0  64.4      260      12.7 
- 6 EWR     2013     1     1     6  37.9  28.0  67.2      240      11.5 
- 7 EWR     2013     1     1     7  39.0  28.0  64.4      240      15.0 
- 8 EWR     2013     1     1     8  39.9  28.0  62.2      250      10.4 
- 9 EWR     2013     1     1     9  39.9  28.0  62.2      260      15.0 
-10 EWR     2013     1     1    10  41    28.0  59.6      260      13.8 
-# ℹ 26,105 more rows
-# ℹ 5 more variables: wind_gust &lt;dbl&gt;, precip &lt;dbl&gt;, pressure &lt;dbl&gt;,
-#   visib &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code># A tibble: 196 × 3
+   ccdd  ccpp  nombprov            
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;               
+ 1 01    01    CHACHAPOYAS         
+ 2 01    02    BAGUA               
+ 3 01    03    BONGARA             
+ 4 01    04    CONDORCANQUI        
+ 5 01    05    LUYA                
+ 6 01    06    RODRIGUEZ DE MENDOZA
+ 7 01    07    UTCUBAMBA           
+ 8 02    01    HUARAZ              
+ 9 02    02    AIJA                
+10 02    03    ANTONIO RAYMONDI    
+# ℹ 186 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -366,28 +359,55 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>Clave compuesta</strong>: <code>origin</code> + <code>time_hour</code> identifican cada observación</p>
+<p><strong>Clave compuesta</strong>: <code>ccdd</code> + <code>ccpp</code> identifican cada observación</p>
 </div>
+</div>
+</div>
+</section>
+<section id="clave-compuesta-1" class="slide level2">
+<h2>Clave compuesta</h2>
+<p>Cuando necesitas <strong>múltiples variables</strong> para identificar una observación:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>distritos <span class="ot">&lt;-</span>  <span class="fu">read_csv</span>(<span class="st">"data/distritos.csv"</span>)</span>
+<span id="cb6-2"><a></a>distritos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,890 × 12
+   objectid ccdd  ccpp  ccdi  ubigeo nombdist       fuente periodo ccdd_c ccpp_c
+      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+ 1      840 09    02    03    090203 ANTA           V Cen…       1 090    01    
+ 2        1 01    01    01    010101 CHACHAPOYAS    V Cen…       1 010    01    
+ 3        6 01    01    06    010106 CHUQUIBAMBA    V Cen…       1 010    01    
+ 4       28 01    03    01    010301 JUMBILLA       V Cen…       1 010    01    
+ 5       45 01    05    03    010503 COCABAMBA      V Cen…       1 010    01    
+ 6       10 01    01    10    010110 LEIMEBAMBA     V Cen…       1 010    01    
+ 7      470 05    03    04    050304 SANTIAGO DE L… V Cen…       1 050    01    
+ 8       19 01    01    19    010119 SAN ISIDRO DE… V Cen…       1 010    01    
+ 9      490 05    05    07    050507 SANTA ROSA     V Cen…       1 050    02    
+10      491 05    05    08    050508 TAMBO          V Cen…       1 050    02    
+# ℹ 1,880 more rows
+# ℹ 2 more variables: ccdi_c &lt;chr&gt;, fec_reg &lt;dttm&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="clave-foránea" class="slide level2">
 <h2>Clave foránea</h2>
 <p><strong>Foreign key</strong> = variable(s) que corresponden a una clave primaria en <strong>otra</strong> tabla</p>
-<div class="fragment">
-<p>Ejemplos en <code>flights</code>:</p>
+<p>Ejemplos modelo UBIGEO:</p>
 <ul>
-<li class="fragment"><code>flights$tailnum</code> → <code>planes$tailnum</code></li>
-<li class="fragment"><code>flights$carrier</code> → <code>airlines$carrier</code></li>
-<li class="fragment"><code>flights$origin</code> → <code>airports$faa</code></li>
-<li class="fragment"><code>flights$dest</code> → <code>airports$faa</code></li>
+<li><code>provincias$ccdd</code> → <code>departamentos$ccdd</code></li>
+<li><code>distrito$ccdd</code> → <code>provincias$ccdd</code></li>
+<li><code>distrito$ccpp</code> → <code>provincias$ccpp</code></li>
 </ul>
-</div>
 </section>
 <section id="relaciones-entre-tablas" class="slide level2">
 <h2>Relaciones entre tablas</h2>
-
-<img data-src="https://r4ds.hadley.nz/diagrams/relational.png" class="quarto-figure quarto-figure-center r-stretch"><div class="callout callout-tip callout-titled callout-style-default">
+<div class="cell">
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-fbf5b417c71dc2e99731" style="width:2000px;height:1200px;"></div>
+<script type="application/json" data-for="htmlwidget-fbf5b417c71dc2e99731">{"x":{"diagram":"\ndigraph relaciones {\n\n  graph [layout = dot, rankdir = LR]\n\n  node [shape = record,\n        fontname = Helvetica]\n\n  departamentos [label = \"{departamentos | ccdd (PK) \\l nombdep \\l }\"]\n\n  provincias [label = \"{provincias | ccdd (PK, FK) \\l ccpp (PK) \\l nombprov \\l }\"]\n\n  distrito [label = \"{distrito | ccdd (PK, FK) \\l ccpp (PK, FK) \\l ccdi (PK) \\l ubigeo \\l nombdist \\l geom \\l }\"]\n\n  departamentos -> provincias [label = \"ccdd\"]\n\n  provincias -> distrito [label = \"ccdd + ccpp\"]\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
@@ -405,12 +425,12 @@
 <h2>Verificar claves primarias</h2>
 <p>Siempre verifica que las claves sean <strong>únicas</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a></a>  <span class="fu">count</span>(tailnum) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">count</span>(ccdd) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 2
-# ℹ 2 variables: tailnum &lt;chr&gt;, n &lt;int&gt;</code></pre>
+# ℹ 2 variables: ccdd &lt;chr&gt;, n &lt;int&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -422,7 +442,7 @@
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>0 filas = Perfecto! Cada <code>tailnum</code> es único</p>
+<p>0 filas = Perfecto! Cada <code>ccdd</code> es único</p>
 </div>
 </div>
 </div>
@@ -431,21 +451,17 @@
 <h2>Verificar valores faltantes</h2>
 <p>Las claves no deben tener <code>NA</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tailnum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ccdd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 9
-# ℹ 9 variables: tailnum &lt;chr&gt;, year &lt;int&gt;, type &lt;chr&gt;, manufacturer &lt;chr&gt;,
-#   model &lt;chr&gt;, engines &lt;int&gt;, seats &lt;int&gt;, speed &lt;int&gt;, engine &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 0 × 2
+# ℹ 2 variables: ccdd &lt;chr&gt;, nombdep &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>weather <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(time_hour) <span class="sc">|</span> <span class="fu">is.na</span>(origin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>provincias <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(ccdd) <span class="sc">|</span> <span class="fu">is.na</span>(ccpp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 15
-# ℹ 15 variables: origin &lt;chr&gt;, year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;, hour &lt;int&gt;,
-#   temp &lt;dbl&gt;, dewp &lt;dbl&gt;, humid &lt;dbl&gt;, wind_dir &lt;dbl&gt;, wind_speed &lt;dbl&gt;,
-#   wind_gust &lt;dbl&gt;, precip &lt;dbl&gt;, pressure &lt;dbl&gt;, visib &lt;dbl&gt;,
-#   time_hour &lt;dttm&gt;</code></pre>
+<pre><code># A tibble: 0 × 3
+# ℹ 3 variables: ccdd &lt;chr&gt;, ccpp &lt;chr&gt;, nombprov &lt;chr&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -466,41 +482,25 @@
 <h2>Claves sustitutas (Surrogate keys)</h2>
 <p>A veces es útil crear un <strong>identificador simple</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> <span class="dv">1</span>)</span>
-<span id="cb12-3"><a></a></span>
-<span id="cb12-4"><a></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>departamentos2 <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> <span class="dv">1</span>)</span>
+<span id="cb14-3"><a></a></span>
+<span id="cb14-4"><a></a>departamentos2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 20
-      id  year month   day dep_time sched_dep_time dep_delay arr_time
-   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
- 1     1  2013     1     1      517            515         2      830
- 2     2  2013     1     1      533            529         4      850
- 3     3  2013     1     1      542            540         2      923
- 4     4  2013     1     1      544            545        -1     1004
- 5     5  2013     1     1      554            600        -6      812
- 6     6  2013     1     1      554            558        -4      740
- 7     7  2013     1     1      555            600        -5      913
- 8     8  2013     1     1      557            600        -3      709
- 9     9  2013     1     1      557            600        -3      838
-10    10  2013     1     1      558            600        -2      753
-# ℹ 336,766 more rows
-# ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
-#   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
-#   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-</div>
-</div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Más fácil decir “vuelo 2001” que “UA430 salió 9am 2013-01-03”</p>
-</div>
+<pre><code># A tibble: 25 × 3
+      id ccdd  nombdep     
+   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;       
+ 1     1 01    AMAZONAS    
+ 2     2 02    ANCASH      
+ 3     3 03    APURIMAC    
+ 4     4 04    AREQUIPA    
+ 5     5 05    AYACUCHO    
+ 6     6 06    CAJAMARCA   
+ 7     7 07    CALLAO      
+ 8     8 08    CUSCO       
+ 9     9 09    HUANCAVELICA
+10    10 10    HUANUCO     
+# ℹ 15 more rows</code></pre>
 </div>
 </div>
 </section></section>
@@ -509,62 +509,36 @@
 <h1>Mutating Joins</h1>
 
 </section>
-<section id="qué-son-mutating-joins" class="slide level2">
-<h2>¿Qué son mutating joins?</h2>
+<section id="qué-son-los-mutating-joins" class="slide level2">
+<h2>¿Qué son los mutating joins?</h2>
 <ul>
-<li class="fragment"><strong>Combinan variables</strong> de dos data frames</li>
-<li class="fragment">Primero: encuentran observaciones coincidentes por claves</li>
-<li class="fragment">Segundo: copian variables de una tabla a otra</li>
-<li class="fragment">Como <code>mutate()</code>: agregan variables a la <strong>derecha</strong></li>
+<li><strong>Combinan variables</strong> de dos data frames (tibble)</li>
+<li>Primero: encuentran observaciones coincidentes por claves</li>
+<li>Segundo: copian variables de una tabla a otra</li>
+<li>Como <code>mutate()</code>: agregan variables a la <strong>derecha</strong></li>
 </ul>
-</section>
-<section id="dataset-simplificado" class="slide level2">
-<h2>Dataset simplificado</h2>
-<p>Para ejemplos más claros:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">select</span>(year, time_hour, origin, dest, tailnum, carrier)</span>
-<span id="cb14-3"><a></a></span>
-<span id="cb14-4"><a></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 6
-    year time_hour           origin dest  tailnum carrier
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA     
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA     
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA     
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6     
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL     
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA     
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6     
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV     
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6     
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA     
-# ℹ 336,766 more rows</code></pre>
-</div>
-</div>
 </section>
 <section id="left_join-el-join-más-común" class="slide level2">
 <h2>left_join(): El join más común</h2>
 <p><code>left_join()</code> mantiene <strong>todas las filas de x</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a></a>  <span class="fu">left_join</span>(airlines)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>provincias <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a></a>  <span class="fu">left_join</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 7
-    year time_hour           origin dest  tailnum carrier name                  
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;                 
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA      United Air Lines Inc. 
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA      United Air Lines Inc. 
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA      American Airlines Inc.
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6      JetBlue Airways       
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL      Delta Air Lines Inc.  
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      United Air Lines Inc. 
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6      JetBlue Airways       
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV      ExpressJet Airlines I…
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6      JetBlue Airways       
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      American Airlines Inc.
-# ℹ 336,766 more rows</code></pre>
+<pre><code># A tibble: 196 × 4
+   ccdd  ccpp  nombprov             nombdep 
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;   
+ 1 01    01    CHACHAPOYAS          AMAZONAS
+ 2 01    02    BAGUA                AMAZONAS
+ 3 01    03    BONGARA              AMAZONAS
+ 4 01    04    CONDORCANQUI         AMAZONAS
+ 5 01    05    LUYA                 AMAZONAS
+ 6 01    06    RODRIGUEZ DE MENDOZA AMAZONAS
+ 7 01    07    UTCUBAMBA            AMAZONAS
+ 8 02    01    HUARAZ               ANCASH  
+ 9 02    02    AIJA                 ANCASH  
+10 02    03    ANTONIO RAYMONDI     ANCASH  
+# ℹ 186 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -576,91 +550,7 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Se unió automáticamente por <code>carrier</code> (variable común)</p>
-</div>
-</div>
-</div>
-</section>
-<section id="agregar-información-del-clima" class="slide level2">
-<h2>Agregar información del clima</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">left_join</span>(weather <span class="sc">|&gt;</span> <span class="fu">select</span>(origin, time_hour, temp, wind_speed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 8
-    year time_hour           origin dest  tailnum carrier  temp wind_speed
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA       39.0       12.7
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA       39.9       15.0
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA       39.0       15.0
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6       39.0       15.0
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL       39.9       16.1
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA       39.0       12.7
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6       37.9       11.5
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV       39.9       16.1
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6       37.9       13.8
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA       39.9       16.1
-# ℹ 336,766 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="agregar-información-del-avión" class="slide level2">
-<h2>Agregar información del avión</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">left_join</span>(planes <span class="sc">|&gt;</span> <span class="fu">select</span>(tailnum, type, engines, seats))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 9
-    year time_hour           origin dest  tailnum carrier type     engines seats
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;int&gt;
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA      Fixed w…       2   149
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA      Fixed w…       2   149
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA      Fixed w…       2   178
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6      Fixed w…       2   200
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL      Fixed w…       2   178
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      Fixed w…       2   191
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6      Fixed w…       2   200
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV      Fixed w…       2    55
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6      Fixed w…       2   200
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;          NA    NA
-# ℹ 336,766 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="valores-faltantes-en-joins" class="slide level2">
-<h2>Valores faltantes en joins</h2>
-<p>Cuando no hay coincidencia, se crean <code>NA</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a></a>  <span class="fu">filter</span>(tailnum <span class="sc">==</span> <span class="st">"N3ALAA"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a></a>  <span class="fu">left_join</span>(planes <span class="sc">|&gt;</span> <span class="fu">select</span>(tailnum, type, engines, seats))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 63 × 9
-    year time_hour           origin dest  tailnum carrier type  engines seats
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
- 1  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 2  2013 2013-01-02 18:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 3  2013 2013-01-03 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 4  2013 2013-01-07 19:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 5  2013 2013-01-08 17:00:00 JFK    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 6  2013 2013-01-16 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 7  2013 2013-01-20 18:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 8  2013 2013-01-22 17:00:00 JFK    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA
- 9  2013 2013-10-11 06:00:00 EWR    MIA   N3ALAA  AA      &lt;NA&gt;       NA    NA
-10  2013 2013-10-14 08:00:00 JFK    BOS   N3ALAA  AA      &lt;NA&gt;       NA    NA
-# ℹ 53 more rows</code></pre>
-</div>
-</div>
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>Este avión no está en la tabla <code>planes</code></p>
+<p>Se unió automáticamente por <code>ccdd</code> (variable común)</p>
 </div>
 </div>
 </div>
@@ -669,113 +559,76 @@
 <h2>Especificar claves: join_by()</h2>
 <p>Por defecto, usa <strong>todas</strong> las variables comunes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a></a>  <span class="fu">left_join</span>(planes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>provincias <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">left_join</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 13
-    year time_hour           origin dest  tailnum carrier type  manufacturer
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;       
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA      &lt;NA&gt;  &lt;NA&gt;        
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA      &lt;NA&gt;  &lt;NA&gt;        
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA      &lt;NA&gt;  &lt;NA&gt;        
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6      &lt;NA&gt;  &lt;NA&gt;        
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL      &lt;NA&gt;  &lt;NA&gt;        
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      &lt;NA&gt;  &lt;NA&gt;        
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6      &lt;NA&gt;  &lt;NA&gt;        
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV      &lt;NA&gt;  &lt;NA&gt;        
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6      &lt;NA&gt;  &lt;NA&gt;        
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;  &lt;NA&gt;        
-# ℹ 336,766 more rows
-# ℹ 5 more variables: model &lt;chr&gt;, engines &lt;int&gt;, seats &lt;int&gt;, speed &lt;int&gt;,
-#   engine &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 196 × 4
+   ccdd  ccpp  nombprov             nombdep 
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;   
+ 1 01    01    CHACHAPOYAS          AMAZONAS
+ 2 01    02    BAGUA                AMAZONAS
+ 3 01    03    BONGARA              AMAZONAS
+ 4 01    04    CONDORCANQUI         AMAZONAS
+ 5 01    05    LUYA                 AMAZONAS
+ 6 01    06    RODRIGUEZ DE MENDOZA AMAZONAS
+ 7 01    07    UTCUBAMBA            AMAZONAS
+ 8 02    01    HUARAZ               ANCASH  
+ 9 02    02    AIJA                 ANCASH  
+10 02    03    ANTONIO RAYMONDI     ANCASH  
+# ℹ 186 more rows</code></pre>
 </div>
-</div>
-<div class="question">
-<p>¿Problema? Ambas tablas tienen <code>year</code> pero significan cosas diferentes!</p>
 </div>
 </section>
 <section id="solución-join_by-explícito" class="slide level2">
 <h2>Solución: join_by() explícito</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a></a>  <span class="fu">left_join</span>(planes, <span class="fu">join_by</span>(tailnum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>provincias <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">left_join</span>(departamentos, <span class="fu">join_by</span>(ccdd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 14
-   year.x time_hour           origin dest  tailnum carrier year.y type          
-    &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;         
- 1   2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA        1999 Fixed wing mu…
- 2   2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA        1998 Fixed wing mu…
- 3   2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA        1990 Fixed wing mu…
- 4   2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6        2012 Fixed wing mu…
- 5   2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL        1991 Fixed wing mu…
- 6   2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA        2012 Fixed wing mu…
- 7   2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6        2000 Fixed wing mu…
- 8   2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV        1998 Fixed wing mu…
- 9   2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6        2004 Fixed wing mu…
-10   2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA          NA &lt;NA&gt;          
-# ℹ 336,766 more rows
-# ℹ 6 more variables: manufacturer &lt;chr&gt;, model &lt;chr&gt;, engines &lt;int&gt;,
-#   seats &lt;int&gt;, speed &lt;int&gt;, engine &lt;chr&gt;</code></pre>
-</div>
-</div>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>Variables con sufijos <code>.x</code> y <code>.y</code> para distinguir origen</p>
-</div>
+<pre><code># A tibble: 196 × 4
+   ccdd  ccpp  nombprov             nombdep 
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;   
+ 1 01    01    CHACHAPOYAS          AMAZONAS
+ 2 01    02    BAGUA                AMAZONAS
+ 3 01    03    BONGARA              AMAZONAS
+ 4 01    04    CONDORCANQUI         AMAZONAS
+ 5 01    05    LUYA                 AMAZONAS
+ 6 01    06    RODRIGUEZ DE MENDOZA AMAZONAS
+ 7 01    07    UTCUBAMBA            AMAZONAS
+ 8 02    01    HUARAZ               ANCASH  
+ 9 02    02    AIJA                 ANCASH  
+10 02    03    ANTONIO RAYMONDI     ANCASH  
+# ℹ 186 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="claves-con-nombres-diferentes" class="slide level2">
 <h2>Claves con nombres diferentes</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a></a>  <span class="fu">left_join</span>(airports, <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>provincias_2 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(provincias, <span class="dv">15</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a></a>  <span class="fu">mutate</span>(<span class="at">cod_dep =</span> ccdd)</span>
+<span id="cb22-3"><a></a>provincias_2 <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a></a>  <span class="fu">left_join</span>(departamentos, </span>
+<span id="cb22-5"><a></a>            <span class="fu">join_by</span>(cod_dep <span class="sc">==</span> ccdd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 13
-    year time_hour           origin dest  tailnum carrier name         lat   lon
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA      George Bu…  30.0 -95.3
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA      George Bu…  30.0 -95.3
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA      Miami Intl  25.8 -80.3
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6      &lt;NA&gt;        NA    NA  
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL      Hartsfiel…  33.6 -84.4
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      Chicago O…  42.0 -87.9
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6      Fort Laud…  26.1 -80.2
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV      Washingto…  38.9 -77.5
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6      Orlando I…  28.4 -81.3
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      Chicago O…  42.0 -87.9
-# ℹ 336,766 more rows
-# ℹ 4 more variables: alt &lt;dbl&gt;, tz &lt;dbl&gt;, dst &lt;chr&gt;, tzone &lt;chr&gt;</code></pre>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a></a>  <span class="fu">left_join</span>(airports, <span class="fu">join_by</span>(origin <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 13
-    year time_hour           origin dest  tailnum carrier name         lat   lon
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA      Newark Li…  40.7 -74.2
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA      La Guardia  40.8 -73.9
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA      John F Ke…  40.6 -73.8
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6      John F Ke…  40.6 -73.8
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL      La Guardia  40.8 -73.9
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      Newark Li…  40.7 -74.2
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6      Newark Li…  40.7 -74.2
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV      La Guardia  40.8 -73.9
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6      John F Ke…  40.6 -73.8
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      La Guardia  40.8 -73.9
-# ℹ 336,766 more rows
-# ℹ 4 more variables: alt &lt;dbl&gt;, tz &lt;dbl&gt;, dst &lt;chr&gt;, tzone &lt;chr&gt;</code></pre>
-</div>
+<pre><code># A tibble: 15 × 5
+   ccdd  ccpp  nombprov       cod_dep nombdep    
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;      
+ 1 02    08    CASMA          02      ANCASH     
+ 2 21    03    CARABAYA       21      PUNO       
+ 3 20    02    AYABACA        20      PIURA      
+ 4 15    10    YAUYOS         15      LIMA       
+ 5 11    03    NASCA          11      ICA        
+ 6 05    10    VICTOR FAJARDO 05      AYACUCHO   
+ 7 13    04    CHEPEN         13      LA LIBERTAD
+ 8 01    04    CONDORCANQUI   01      AMAZONAS   
+ 9 05    09    SUCRE          05      AYACUCHO   
+10 15    02    BARRANCA       15      LIMA       
+11 22    05    LAMAS          22      SAN MARTIN 
+12 20    06    SULLANA        20      PIURA      
+13 12    02    CONCEPCION     12      JUNIN      
+14 01    01    CHACHAPOYAS    01      AMAZONAS   
+15 11    01    ICA            11      ICA        </code></pre>
 </div>
 </div>
 </section>
@@ -840,40 +693,24 @@
 </section>
 <section id="semi_join-mantener-coincidencias" class="slide level2">
 <h2>semi_join(): Mantener coincidencias</h2>
-<p>Aeropuertos que son <strong>origen</strong> de vuelos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>airports <span class="sc">|&gt;</span></span>
-<span id="cb32-2"><a></a>  <span class="fu">semi_join</span>(flights2, <span class="fu">join_by</span>(faa <span class="sc">==</span> origin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a></a>  <span class="fu">semi_join</span>(provincias_2,</span>
+<span id="cb24-3"><a></a>            <span class="fu">join_by</span>(ccdd <span class="sc">==</span> cod_dep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 8
-  faa   name                  lat   lon   alt    tz dst   tzone           
-  &lt;chr&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;           
-1 EWR   Newark Liberty Intl  40.7 -74.2    18    -5 A     America/New_York
-2 JFK   John F Kennedy Intl  40.6 -73.8    13    -5 A     America/New_York
-3 LGA   La Guardia           40.8 -73.9    22    -5 A     America/New_York</code></pre>
-</div>
-</div>
-</section>
-<section id="semi_join-destinos" class="slide level2">
-<h2>semi_join(): Destinos</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>airports <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a></a>  <span class="fu">semi_join</span>(flights2, <span class="fu">join_by</span>(faa <span class="sc">==</span> dest))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 101 × 8
-   faa   name                                lat    lon   alt    tz dst   tzone 
-   &lt;chr&gt; &lt;chr&gt;                             &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 ABQ   Albuquerque International Sunport  35.0 -107.   5355    -7 A     Ameri…
- 2 ACK   Nantucket Mem                      41.3  -70.1    48    -5 A     Ameri…
- 3 ALB   Albany Intl                        42.7  -73.8   285    -5 A     Ameri…
- 4 ANC   Ted Stevens Anchorage Intl         61.2 -150.    152    -9 A     Ameri…
- 5 ATL   Hartsfield Jackson Atlanta Intl    33.6  -84.4  1026    -5 A     Ameri…
- 6 AUS   Austin Bergstrom Intl              30.2  -97.7   542    -6 A     Ameri…
- 7 AVL   Asheville Regional Airport         35.4  -82.5  2165    -5 A     Ameri…
- 8 BDL   Bradley Intl                       41.9  -72.7   173    -5 A     Ameri…
- 9 BGR   Bangor Intl                        44.8  -68.8   192    -5 A     Ameri…
-10 BHM   Birmingham Intl                    33.6  -86.8   644    -6 A     Ameri…
-# ℹ 91 more rows</code></pre>
+<pre><code># A tibble: 10 × 2
+   ccdd  nombdep    
+   &lt;chr&gt; &lt;chr&gt;      
+ 1 01    AMAZONAS   
+ 2 02    ANCASH     
+ 3 05    AYACUCHO   
+ 4 11    ICA        
+ 5 12    JUNIN      
+ 6 13    LA LIBERTAD
+ 7 15    LIMA       
+ 8 20    PIURA      
+ 9 21    PUNO       
+10 22    SAN MARTIN </code></pre>
 </div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -892,19 +729,30 @@
 </section>
 <section id="anti_join-encontrar-faltantes" class="slide level2">
 <h2>anti_join(): Encontrar faltantes</h2>
-<p>Destinos que <strong>no están</strong> en <code>airports</code>:</p>
+<p>Departamentos que <strong>no están</strong> en <code>provincias_2</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a></a>  <span class="fu">anti_join</span>(airports, <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a></a>  <span class="fu">distinct</span>(dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a></a>  <span class="fu">anti_join</span>(provincias_2,</span>
+<span id="cb26-3"><a></a>            <span class="fu">join_by</span>(ccdd <span class="sc">==</span> cod_dep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 1
-  dest 
-  &lt;chr&gt;
-1 BQN  
-2 SJU  
-3 STT  
-4 PSE  </code></pre>
+<pre><code># A tibble: 15 × 2
+   ccdd  nombdep      
+   &lt;chr&gt; &lt;chr&gt;        
+ 1 03    APURIMAC     
+ 2 04    AREQUIPA     
+ 3 06    CAJAMARCA    
+ 4 07    CALLAO       
+ 5 08    CUSCO        
+ 6 09    HUANCAVELICA 
+ 7 10    HUANUCO      
+ 8 14    LAMBAYEQUE   
+ 9 16    LORETO       
+10 17    MADRE DE DIOS
+11 18    MOQUEGUA     
+12 19    PASCO        
+13 23    TACNA        
+14 24    TUMBES       
+15 25    UCAYALI      </code></pre>
 </div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -920,33 +768,6 @@
 </div>
 </div>
 </div>
-</section>
-<section id="anti_join-aviones-faltantes" class="slide level2">
-<h2>anti_join(): Aviones faltantes</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a></a>  <span class="fu">anti_join</span>(planes, <span class="fu">join_by</span>(tailnum)) <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a></a>  <span class="fu">distinct</span>(tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 722 × 1
-   tailnum
-   &lt;chr&gt;  
- 1 N3ALAA 
- 2 N3DUAA 
- 3 N542MQ 
- 4 N730MQ 
- 5 N9EAMQ 
- 6 N532UA 
- 7 N3EMAA 
- 8 N518MQ 
- 9 N3BAAA 
-10 N3CYAA 
-# ℹ 712 more rows</code></pre>
-</div>
-</div>
-<div class="question">
-<p>¿Por qué estos aviones no están en la tabla <code>planes</code>?</p>
-</div>
 </section></section>
 <section>
 <section id="cómo-funcionan-los-joins" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -957,19 +778,19 @@
 <h2>Tablas de ejemplo</h2>
 <p>Tablas simples para entender la mecánica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb40-2"><a></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
-<span id="cb40-3"><a></a>     <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
-<span id="cb40-4"><a></a>     <span class="dv">2</span>, <span class="st">"x2"</span>,</span>
-<span id="cb40-5"><a></a>     <span class="dv">3</span>, <span class="st">"x3"</span></span>
-<span id="cb40-6"><a></a>)</span>
-<span id="cb40-7"><a></a></span>
-<span id="cb40-8"><a></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb40-9"><a></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
-<span id="cb40-10"><a></a>     <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
-<span id="cb40-11"><a></a>     <span class="dv">2</span>, <span class="st">"y2"</span>,</span>
-<span id="cb40-12"><a></a>     <span class="dv">4</span>, <span class="st">"y3"</span></span>
-<span id="cb40-13"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb28-2"><a></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
+<span id="cb28-3"><a></a>     <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
+<span id="cb28-4"><a></a>     <span class="dv">2</span>, <span class="st">"x2"</span>,</span>
+<span id="cb28-5"><a></a>     <span class="dv">3</span>, <span class="st">"x3"</span></span>
+<span id="cb28-6"><a></a>)</span>
+<span id="cb28-7"><a></a></span>
+<span id="cb28-8"><a></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb28-9"><a></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
+<span id="cb28-10"><a></a>     <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
+<span id="cb28-11"><a></a>     <span class="dv">2</span>, <span class="st">"y2"</span>,</span>
+<span id="cb28-12"><a></a>     <span class="dv">4</span>, <span class="st">"y3"</span></span>
+<span id="cb28-13"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="visualización-de-potenciales-coincidencias" class="slide level2">
@@ -985,7 +806,7 @@
 <h2>inner_join()</h2>
 
 <img data-src="https://r4ds.hadley.nz/diagrams/join/inner.png" class="quarto-figure quarto-figure-center r-stretch"><div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
     key val_x val_y
@@ -1012,7 +833,7 @@
 <h2>left_join()</h2>
 
 <img data-src="https://r4ds.hadley.nz/diagrams/join/left.png" class="quarto-figure quarto-figure-center r-stretch"><div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">left_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">left_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
     key val_x val_y
@@ -1040,7 +861,7 @@
 <h2>right_join()</h2>
 
 <img data-src="https://r4ds.hadley.nz/diagrams/join/right.png" class="quarto-figure quarto-figure-center r-stretch"><div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">right_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">right_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
     key val_x val_y
@@ -1068,7 +889,7 @@
 <h2>full_join()</h2>
 
 <img data-src="https://r4ds.hadley.nz/diagrams/join/full.png" class="quarto-figure quarto-figure-center r-stretch"><div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">full_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">full_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
     key val_x val_y
@@ -1114,12 +935,12 @@
 <h2>Coincidencias múltiples</h2>
 <p>¿Qué pasa si una fila coincide con <strong>múltiples</strong> filas?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>df1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>))</span>
-<span id="cb49-2"><a></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>df1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>))</span>
+<span id="cb37-2"><a></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>df1 <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>df1 <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
     key val_x val_y
@@ -1155,8 +976,8 @@
 <div class="fragment">
 <p>Si es intencional:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>df1 <span class="sc">|&gt;</span></span>
-<span id="cb52-2"><a></a>  <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(key), <span class="at">relationship =</span> <span class="st">"many-to-many"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a></a>  <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(key), <span class="at">relationship =</span> <span class="st">"many-to-many"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
     key val_x val_y
@@ -1226,7 +1047,7 @@
 <h2>Mostrar ambas claves</h2>
 <p>Con <code>keep = TRUE</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(key <span class="sc">==</span> key), <span class="at">keep =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(key <span class="sc">==</span> key), <span class="at">keep =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   key.x val_x key.y val_y
@@ -1235,9 +1056,6 @@
 2     2 x2        2 y2   </code></pre>
 </div>
 </div>
-<pre><code>  key.x val_x key.y val_y
-      1 x1        1 y1
-      2 x2        2 y2</code></pre>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1256,8 +1074,8 @@
 <h2>Cross join</h2>
 <p><strong>Todas</strong> las combinaciones posibles:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Simon"</span>, <span class="st">"Tracy"</span>, <span class="st">"Max"</span>))</span>
-<span id="cb57-2"><a></a>df <span class="sc">|&gt;</span> <span class="fu">cross_join</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Simon"</span>, <span class="st">"Tracy"</span>, <span class="st">"Max"</span>))</span>
+<span id="cb44-2"><a></a>df <span class="sc">|&gt;</span> <span class="fu">cross_join</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 2
    name.x name.y
@@ -1297,26 +1115,16 @@
 <section id="inequality-join" class="slide level2">
 <h2>Inequality join</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(key <span class="sc">&gt;=</span> key), <span class="at">keep =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 4
-  key.x val_x key.y val_y
-  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1 x1        1 y1   
-2     2 x2        1 y1   
-3     2 x2        2 y2   
-4     3 x3        1 y1   
-5     3 x3        2 y2   </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(key <span class="sc">&gt;=</span> key), <span class="at">keep =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="https://r4ds.hadley.nz/diagrams/join/gte.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="generar-combinaciones" class="slide level2">
 <h2>Generar combinaciones</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Simon"</span>, <span class="st">"Tracy"</span>, <span class="st">"Max"</span>))</span>
-<span id="cb61-2"><a></a></span>
-<span id="cb61-3"><a></a>df <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(df, <span class="fu">join_by</span>(id <span class="sc">&lt;</span> id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Simon"</span>, <span class="st">"Tracy"</span>, <span class="st">"Max"</span>))</span>
+<span id="cb47-2"><a></a></span>
+<span id="cb47-3"><a></a>df <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(df, <span class="fu">join_by</span>(id <span class="sc">&lt;</span> id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
    id.x name.x  id.y name.y
@@ -1347,49 +1155,44 @@
 <h2>Rolling join</h2>
 <p>Coincidencia <strong>más cercana</strong> en lugar de todas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(<span class="fu">closest</span>(key <span class="sc">&gt;=</span> key)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  key.x val_x key.y val_y
-  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1 x1        1 y1   
-2     2 x2        2 y2   
-3     3 x3        2 y2   </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>x <span class="sc">|&gt;</span> <span class="fu">inner_join</span>(y, <span class="fu">join_by</span>(<span class="fu">closest</span>(key <span class="sc">&gt;=</span> key)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="https://r4ds.hadley.nz/diagrams/join/closest.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="ejemplo-fechas-de-fiestas" class="slide level2 smaller">
+<section id="ejemplo-fechas-de-fiestas" class="slide level2">
 <h2>Ejemplo: Fechas de fiestas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>parties <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb65-2"><a></a>  <span class="at">q =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb65-3"><a></a>  <span class="at">party =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-01-10"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span>))</span>
-<span id="cb65-4"><a></a>)</span>
-<span id="cb65-5"><a></a></span>
-<span id="cb65-6"><a></a>employees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb65-7"><a></a>  <span class="at">name =</span> <span class="fu">sample</span>(babynames<span class="sc">::</span>babynames<span class="sc">$</span>name, <span class="dv">100</span>),</span>
-<span id="cb65-8"><a></a>  <span class="at">birthday =</span> <span class="fu">ymd</span>(<span class="st">"2022-01-01"</span>) <span class="sc">+</span> (<span class="fu">sample</span>(<span class="dv">365</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb65-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>parties <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb50-2"><a></a>  <span class="at">q =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb50-3"><a></a>  <span class="at">party =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-01-10"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span>))</span>
+<span id="cb50-4"><a></a>)</span>
+<span id="cb50-5"><a></a></span>
+<span id="cb50-6"><a></a>employees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb50-7"><a></a>  <span class="at">name =</span> <span class="fu">sample</span>(babynames<span class="sc">::</span>babynames<span class="sc">$</span>name, <span class="dv">100</span>),</span>
+<span id="cb50-8"><a></a>  <span class="at">birthday =</span> <span class="fu">ymd</span>(<span class="st">"2022-01-01"</span>) <span class="sc">+</span> (<span class="fu">sample</span>(<span class="dv">365</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb50-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="ejemplo-fechas-de-fiestas-1" class="slide level2">
+<h2>Ejemplo: Fechas de fiestas</h2>
 <p>¿Qué fiesta corresponde a cada cumpleaños?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>employees <span class="sc">|&gt;</span></span>
-<span id="cb66-2"><a></a>  <span class="fu">left_join</span>(parties, <span class="fu">join_by</span>(<span class="fu">closest</span>(birthday <span class="sc">&gt;=</span> party)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>employees <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a></a>  <span class="fu">left_join</span>(parties, <span class="fu">join_by</span>(<span class="fu">closest</span>(birthday <span class="sc">&gt;=</span> party)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 100 × 4
    name     birthday       q party     
    &lt;chr&gt;    &lt;date&gt;     &lt;int&gt; &lt;date&gt;    
- 1 Mckenley 2022-06-20     2 2022-04-04
- 2 Elliana  2022-05-28     2 2022-04-04
- 3 Carey    2022-06-29     2 2022-04-04
- 4 Geoffrey 2022-02-01     1 2022-01-10
- 5 Lanee    2022-03-19     1 2022-01-10
- 6 Ivey     2022-09-26     3 2022-07-11
- 7 Rodrick  2022-11-02     4 2022-10-03
- 8 Oneil    2022-12-09     4 2022-10-03
- 9 Breeauna 2022-06-14     2 2022-04-04
-10 Antoine  2022-03-18     1 2022-01-10
+ 1 Adan     2022-07-07     2 2022-04-04
+ 2 Valen    2022-07-28     3 2022-07-11
+ 3 Kyria    2022-04-17     2 2022-04-04
+ 4 Gibran   2022-12-18     4 2022-10-03
+ 5 Librado  2022-01-29     1 2022-01-10
+ 6 Alanea   2022-04-11     2 2022-04-04
+ 7 Sanjit   2022-04-23     2 2022-04-04
+ 8 Moises   2022-09-07     3 2022-07-11
+ 9 Shekinah 2022-08-17     3 2022-07-11
+10 Sahiti   2022-09-08     3 2022-07-11
 # ℹ 90 more rows</code></pre>
 </div>
 </div>
@@ -1415,31 +1218,31 @@
 <section id="ejemplo-periodos-de-fiestas" class="slide level2 smaller">
 <h2>Ejemplo: Periodos de fiestas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>parties <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb68-2"><a></a>  <span class="at">q =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb68-3"><a></a>  <span class="at">party =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-01-10"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span>)),</span>
-<span id="cb68-4"><a></a>  <span class="at">start =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-01-01"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span>)),</span>
-<span id="cb68-5"><a></a>  <span class="at">end =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-04-03"</span>, <span class="st">"2022-07-10"</span>, <span class="st">"2022-10-02"</span>, <span class="st">"2022-12-31"</span>))</span>
-<span id="cb68-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>parties <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb53-2"><a></a>  <span class="at">q =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb53-3"><a></a>  <span class="at">party =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-01-10"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span>)),</span>
+<span id="cb53-4"><a></a>  <span class="at">start =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-01-01"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span>)),</span>
+<span id="cb53-5"><a></a>  <span class="at">end =</span> <span class="fu">ymd</span>(<span class="fu">c</span>(<span class="st">"2022-04-03"</span>, <span class="st">"2022-07-10"</span>, <span class="st">"2022-10-02"</span>, <span class="st">"2022-12-31"</span>))</span>
+<span id="cb53-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>employees <span class="sc">|&gt;</span></span>
-<span id="cb69-2"><a></a>  <span class="fu">inner_join</span>(parties, <span class="fu">join_by</span>(<span class="fu">between</span>(birthday, start, end)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>employees <span class="sc">|&gt;</span></span>
+<span id="cb54-2"><a></a>  <span class="fu">inner_join</span>(parties, <span class="fu">join_by</span>(<span class="fu">between</span>(birthday, start, end)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 100 × 6
    name     birthday       q party      start      end       
    &lt;chr&gt;    &lt;date&gt;     &lt;int&gt; &lt;date&gt;     &lt;date&gt;     &lt;date&gt;    
- 1 Mckenley 2022-06-20     2 2022-04-04 2022-04-04 2022-07-10
- 2 Elliana  2022-05-28     2 2022-04-04 2022-04-04 2022-07-10
- 3 Carey    2022-06-29     2 2022-04-04 2022-04-04 2022-07-10
- 4 Geoffrey 2022-02-01     1 2022-01-10 2022-01-01 2022-04-03
- 5 Lanee    2022-03-19     1 2022-01-10 2022-01-01 2022-04-03
- 6 Ivey     2022-09-26     3 2022-07-11 2022-07-11 2022-10-02
- 7 Rodrick  2022-11-02     4 2022-10-03 2022-10-03 2022-12-31
- 8 Oneil    2022-12-09     4 2022-10-03 2022-10-03 2022-12-31
- 9 Breeauna 2022-06-14     2 2022-04-04 2022-04-04 2022-07-10
-10 Antoine  2022-03-18     1 2022-01-10 2022-01-01 2022-04-03
+ 1 Adan     2022-07-07     2 2022-04-04 2022-04-04 2022-07-10
+ 2 Valen    2022-07-28     3 2022-07-11 2022-07-11 2022-10-02
+ 3 Kyria    2022-04-17     2 2022-04-04 2022-04-04 2022-07-10
+ 4 Gibran   2022-12-18     4 2022-10-03 2022-10-03 2022-12-31
+ 5 Librado  2022-01-29     1 2022-01-10 2022-01-01 2022-04-03
+ 6 Alanea   2022-04-11     2 2022-04-04 2022-04-04 2022-07-10
+ 7 Sanjit   2022-04-23     2 2022-04-04 2022-04-04 2022-07-10
+ 8 Moises   2022-09-07     3 2022-07-11 2022-07-11 2022-10-02
+ 9 Shekinah 2022-08-17     3 2022-07-11 2022-07-11 2022-10-02
+10 Sahiti   2022-09-08     3 2022-07-11 2022-07-11 2022-10-02
 # ℹ 90 more rows</code></pre>
 </div>
 </div>
@@ -1461,9 +1264,9 @@
 <section id="detectar-superposiciones" class="slide level2">
 <h2>Detectar superposiciones</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>parties <span class="sc">|&gt;</span></span>
-<span id="cb71-2"><a></a>  <span class="fu">inner_join</span>(parties, <span class="fu">join_by</span>(<span class="fu">overlaps</span>(start, end, start, end), q <span class="sc">&lt;</span> q)) <span class="sc">|&gt;</span></span>
-<span id="cb71-3"><a></a>  <span class="fu">select</span>(start.x, end.x, start.y, end.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>parties <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a></a>  <span class="fu">inner_join</span>(parties, <span class="fu">join_by</span>(<span class="fu">overlaps</span>(start, end, start, end), q <span class="sc">&lt;</span> q)) <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a></a>  <span class="fu">select</span>(start.x, end.x, start.y, end.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 4
 # ℹ 4 variables: start.x &lt;date&gt;, end.x &lt;date&gt;, start.y &lt;date&gt;, end.y &lt;date&gt;</code></pre>
@@ -1481,114 +1284,6 @@
 <p>Self-join para verificar que los periodos no se superpongan</p>
 </div>
 </div>
-</div>
-</section></section>
-<section>
-<section id="ejemplo-práctico-áreas-naturales" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Ejemplo Práctico: Áreas Naturales</h1>
-
-</section>
-<section id="datos-de-ejemplo" class="slide level2">
-<h2>Datos de ejemplo</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb73-2"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb73-3"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb73-4"><a></a></span>
-<span id="cb73-5"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb73-6"><a></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb73-7"><a></a></span>
-<span id="cb73-8"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb73-9"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="agregar-información-de-departamento" class="slide level2">
-<h2>Agregar información de departamento</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a><span class="co"># Contar áreas por ubicación</span></span>
-<span id="cb74-2"><a></a>anp_por_depto <span class="ot">&lt;-</span> anp <span class="sc">|&gt;</span></span>
-<span id="cb74-3"><a></a>  <span class="fu">count</span>(ubicacion_politica, <span class="at">name =</span> <span class="st">"n_areas"</span>)</span>
-<span id="cb74-4"><a></a></span>
-<span id="cb74-5"><a></a><span class="co"># Unir con datos espaciales</span></span>
-<span id="cb74-6"><a></a>departamentos <span class="sc">|&gt;</span></span>
-<span id="cb74-7"><a></a>  <span class="fu">left_join</span>(anp_por_depto,</span>
-<span id="cb74-8"><a></a>            <span class="fu">join_by</span>(nombdep <span class="sc">==</span> ubicacion_politica))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="filtrar-departamentos-con-anps" class="slide level2">
-<h2>Filtrar departamentos con ANPs</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a><span class="co"># Solo departamentos que tienen áreas naturales</span></span>
-<span id="cb75-2"><a></a>departamentos <span class="sc">|&gt;</span></span>
-<span id="cb75-3"><a></a>  <span class="fu">semi_join</span>(anp_por_depto,</span>
-<span id="cb75-4"><a></a>            <span class="fu">join_by</span>(nombdep <span class="sc">==</span> ubicacion_politica))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="encontrar-departamentos-sin-anps" class="slide level2">
-<h2>Encontrar departamentos sin ANPs</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a><span class="co"># Departamentos SIN áreas naturales protegidas</span></span>
-<span id="cb76-2"><a></a>departamentos <span class="sc">|&gt;</span></span>
-<span id="cb76-3"><a></a>  <span class="fu">anti_join</span>(anp_por_depto,</span>
-<span id="cb76-4"><a></a>            <span class="fu">join_by</span>(nombdep <span class="sc">==</span> ubicacion_politica)) <span class="sc">|&gt;</span></span>
-<span id="cb76-5"><a></a>  <span class="fu">select</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="ejercicios-prácticos" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Ejercicios Prácticos</h1>
-
-</section>
-<section id="ejercicio-1-anps-y-departamentos" class="slide level2">
-<h2>Ejercicio 1: ANPs y departamentos</h2>
-<div class="task">
-<ol type="1">
-<li>Une <code>anp</code> con información de departamentos</li>
-<li>Calcula el área total protegida por departamento</li>
-<li>¿Qué departamento tiene más hectáreas protegidas?</li>
-<li>¿Qué porcentaje del área del departamento está protegido?</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-2-filtering-joins" class="slide level2">
-<h2>Ejercicio 2: Filtering joins</h2>
-<div class="task">
-<p>Usando <code>anp</code> y <code>departamentos</code>:</p>
-<ol type="1">
-<li>Usa <code>semi_join()</code> para filtrar solo departamentos con Parques Nacionales</li>
-<li>Usa <code>anti_join()</code> para encontrar departamentos sin ninguna ANP</li>
-<li>Cuenta cuántos departamentos están en cada caso</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-3-multiple-joins" class="slide level2 smaller">
-<h2>Ejercicio 3: Multiple joins</h2>
-<div class="task">
-<p>Crea un análisis que:</p>
-<ol type="1">
-<li>Una <code>anp</code> con información de departamentos</li>
-<li>Calcule áreas por categoría y departamento</li>
-<li>Encuentre la categoría más común por departamento</li>
-<li>Use <code>pivot_wider()</code> para crear una tabla departamento × categoría</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-4-non-equi-join" class="slide level2">
-<h2>Ejercicio 4: Non-equi join</h2>
-<div class="task">
-<p>Crea datos de monitoreo de ANPs:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a>monitoreo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb77-2"><a></a>  <span class="at">area =</span> <span class="fu">sample</span>(anp<span class="sc">$</span>nombre, <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb77-3"><a></a>  <span class="at">fecha =</span> <span class="fu">ymd</span>(<span class="st">"2023-01-01"</span>) <span class="sc">+</span> <span class="fu">days</span>(<span class="fu">sample</span>(<span class="dv">365</span>, <span class="dv">50</span>)),</span>
-<span id="cb77-4"><a></a>  <span class="at">guardaparques =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb77-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol type="1">
-<li>Agrupa fechas por trimestre</li>
-<li>Usa <code>join_by(between())</code> para asignar cada monitoreo a un trimestre</li>
-<li>Calcula promedio de guardaparques por trimestre</li>
-</ol>
 </div>
 </section></section>
 <section>
@@ -1653,67 +1348,46 @@
 <section id="join_by-y-sus-usos" class="slide level2">
 <h2>join_by() y sus usos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a><span class="co"># Equi join</span></span>
-<span id="cb78-2"><a></a><span class="fu">join_by</span>(key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="co"># Equi join</span></span>
+<span id="cb58-2"><a></a><span class="fu">join_by</span>(key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - key</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a><span class="fu">join_by</span>(key <span class="sc">==</span> key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="fu">join_by</span>(key <span class="sc">==</span> key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - key == key</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a></a><span class="co"># Diferentes nombres</span></span>
-<span id="cb82-2"><a></a><span class="fu">join_by</span>(dest <span class="sc">==</span> faa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="co"># Diferentes nombres</span></span>
+<span id="cb62-2"><a></a><span class="fu">join_by</span>(dest <span class="sc">==</span> faa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - dest == faa</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a><span class="co"># Inequality</span></span>
-<span id="cb84-2"><a></a><span class="fu">join_by</span>(key <span class="sc">&gt;=</span> key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a><span class="co"># Inequality</span></span>
+<span id="cb64-2"><a></a><span class="fu">join_by</span>(key <span class="sc">&gt;=</span> key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - key &gt;= key</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="co"># Rolling</span></span>
-<span id="cb86-2"><a></a><span class="fu">join_by</span>(<span class="fu">closest</span>(birthday <span class="sc">&gt;=</span> party))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a><span class="co"># Rolling</span></span>
+<span id="cb66-2"><a></a><span class="fu">join_by</span>(<span class="fu">closest</span>(birthday <span class="sc">&gt;=</span> party))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - closest(birthday &gt;= party)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a><span class="co"># Overlap</span></span>
-<span id="cb88-2"><a></a><span class="fu">join_by</span>(<span class="fu">between</span>(x, lower, upper))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a><span class="co"># Overlap</span></span>
+<span id="cb68-2"><a></a><span class="fu">join_by</span>(<span class="fu">between</span>(x, lower, upper))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - between(x, lower, upper)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a></a><span class="fu">join_by</span>(<span class="fu">overlaps</span>(x_lo, x_hi, y_lo, y_hi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a><span class="fu">join_by</span>(<span class="fu">overlaps</span>(x_lo, x_hi, y_lo, y_hi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Join By:
 - overlaps(x_lo, x_hi, y_lo, y_hi)</code></pre>
 </div>
-</div>
-</section>
-<section id="workflow-típico" class="slide level2 smaller">
-<h2>Workflow típico</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a></a><span class="co"># 1. Identificar claves</span></span>
-<span id="cb92-2"><a></a>flights <span class="sc">|&gt;</span> <span class="fu">count</span>(time_hour, carrier, flight) <span class="sc">|&gt;</span> <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
-<span id="cb92-3"><a></a></span>
-<span id="cb92-4"><a></a><span class="co"># 2. Verificar claves</span></span>
-<span id="cb92-5"><a></a>planes <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(tailnum))</span>
-<span id="cb92-6"><a></a></span>
-<span id="cb92-7"><a></a><span class="co"># 3. Decidir tipo de join</span></span>
-<span id="cb92-8"><a></a><span class="co"># - ¿Agregar columnas? → mutating join (left_join)</span></span>
-<span id="cb92-9"><a></a><span class="co"># - ¿Filtrar filas? → filtering join (semi/anti_join)</span></span>
-<span id="cb92-10"><a></a></span>
-<span id="cb92-11"><a></a><span class="co"># 4. Especificar claves explícitamente</span></span>
-<span id="cb92-12"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb92-13"><a></a>  <span class="fu">left_join</span>(planes, <span class="fu">join_by</span>(tailnum))</span>
-<span id="cb92-14"><a></a></span>
-<span id="cb92-15"><a></a><span class="co"># 5. Revisar resultado</span></span>
-<span id="cb92-16"><a></a><span class="fu">glimpse</span>(resultado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="consejos-importantes" class="slide level2">
@@ -1727,7 +1401,7 @@
 <li class="fragment"><strong>anti_join()</strong> es perfecto para encontrar valores faltantes</li>
 </ol>
 </section>
-<section id="errores-comunes" class="slide level2 smaller">
+<section id="errores-comunes" class="slide level2">
 <h2>Errores comunes</h2>
 <table class="caption-top">
 <colgroup>
@@ -1767,19 +1441,19 @@
 <section id="debugging-joins" class="slide level2">
 <h2>Debugging joins</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a></a><span class="co"># Ver qué filas no coinciden</span></span>
-<span id="cb93-2"><a></a>x <span class="sc">|&gt;</span></span>
-<span id="cb93-3"><a></a>  <span class="fu">anti_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a><span class="co"># Ver qué filas no coinciden</span></span>
+<span id="cb72-2"><a></a>x <span class="sc">|&gt;</span></span>
+<span id="cb72-3"><a></a>  <span class="fu">anti_join</span>(y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
     key val_x
   &lt;dbl&gt; &lt;chr&gt;
 1     3 x3   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a></a><span class="co"># Contar coincidencias</span></span>
-<span id="cb95-2"><a></a>x <span class="sc">|&gt;</span></span>
-<span id="cb95-3"><a></a>  <span class="fu">left_join</span>(y, <span class="fu">join_by</span>(key)) <span class="sc">|&gt;</span></span>
-<span id="cb95-4"><a></a>  <span class="fu">count</span>(<span class="fu">is.na</span>(val_y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a><span class="co"># Contar coincidencias</span></span>
+<span id="cb74-2"><a></a>x <span class="sc">|&gt;</span></span>
+<span id="cb74-3"><a></a>  <span class="fu">left_join</span>(y, <span class="fu">join_by</span>(key)) <span class="sc">|&gt;</span></span>
+<span id="cb74-4"><a></a>  <span class="fu">count</span>(<span class="fu">is.na</span>(val_y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   `is.na(val_y)`     n
@@ -1787,10 +1461,10 @@
 1 FALSE              2
 2 TRUE               1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a></a><span class="co"># Encontrar duplicados</span></span>
-<span id="cb97-2"><a></a>x <span class="sc">|&gt;</span></span>
-<span id="cb97-3"><a></a>  <span class="fu">count</span>(key) <span class="sc">|&gt;</span></span>
-<span id="cb97-4"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a><span class="co"># Encontrar duplicados</span></span>
+<span id="cb76-2"><a></a>x <span class="sc">|&gt;</span></span>
+<span id="cb76-3"><a></a>  <span class="fu">count</span>(key) <span class="sc">|&gt;</span></span>
+<span id="cb76-4"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 2
 # ℹ 2 variables: key &lt;dbl&gt;, n &lt;int&gt;</code></pre>
@@ -1806,30 +1480,25 @@
 <li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf">Data transformation cheatsheet</a></li>
 </ul>
 </section>
-<section id="próximos-pasos" class="slide level2">
-<h2>Próximos pasos</h2>
-<p>En las siguientes sesiones:</p>
-<ul>
-<li class="fragment"><strong>Trabajo con texto</strong> (stringr)</li>
-<li class="fragment"><strong>Fechas y tiempos</strong> (lubridate)</li>
-<li class="fragment"><strong>Funciones</strong> (escribir tus propias funciones)</li>
-<li class="fragment"><strong>Iteración</strong> (purrr)</li>
-<li class="fragment"><strong>Visualización avanzada</strong> (ggplot2)</li>
-</ul>
-</section></section>
-<section>
-<section id="gracias" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>¡Gracias!</h1>
-
-</section>
-<div class="centered">
-<p><strong>¿Preguntas?</strong></p>
-<p>📧 paul.santos@example.com</p>
-<p>🌐 Materiales del curso disponibles en el repositorio</p>
-<h3 id="próxima-sesión-trabajo-con-texto-stringr">Próxima sesión: Trabajo con Texto (stringr)</h3>
+<section id="contacto" class="slide level2">
+<h2>Contacto</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Paul Efren Santos Andrade</strong></p>
+<p>📧 [Correo electrónico]</p>
+<p>🌐 <a href="https://paulefrensa.rbind.io">paulefrensa.rbind.io</a></p>
+<p>🐦 <a href="https://twitter.com/PaulEfrenSantos"><span class="citation" data-cites="PaulEfrenSantos">@PaulEfrenSantos</span></a></p>
+<p>💻 <a href="https://github.com/PaulESantos">github.com/PaulESantos</a></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/DSC_0140.JPG" class="quarto-figure quarto-figure-center" style="border-radius: 50% / 35%; object-fit: cover;;width:60.0%"></p>
+</figure>
 </div>
+</div></div>
 
-</section>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

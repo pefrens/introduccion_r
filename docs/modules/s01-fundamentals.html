@@ -105,12 +105,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <meta property="og:title" content="Fundamentos de R y RStudio">
-<meta property="og:description" content="Sesión 1">
+<meta property="og:description" content="Sesion 1">
 <meta property="og:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/01-fundamentals.png">
 <meta property="og:image:height" content="1688">
 <meta property="og:image:width" content="2189">
 <meta name="twitter:title" content="Fundamentos de R y RStudio">
-<meta name="twitter:description" content="Sesión 1">
+<meta name="twitter:description" content="Sesion 1">
 <meta name="twitter:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/01-fundamentals.png">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:image-height" content="1688">
@@ -155,16 +155,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Fundamentos de R y RStudio</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s03-text.html">
+    <a class="dropdown-item" href="../modules/s03-import-data.html">
  <span class="dropdown-text">Importar y Revisar Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s05-colors.html">
+    <a class="dropdown-item" href="../modules/s05-dplyr.html">
  <span class="dropdown-text">dplyr - Manipulación de Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s07-theming.html">
+    <a class="dropdown-item" href="../modules/s07-tidying-data.html">
  <span class="dropdown-text">tidyr - Organización de Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s06-joins.html">
+ <span class="dropdown-text">Unión de Datos (Joins)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../modules/s08-spatial.html">
@@ -213,30 +217,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#contenido" id="toc-contenido" class="nav-link active" data-scroll-target="#contenido">Contenido</a>
-  <ul class="collapse">
-  <li><a href="#el-lenguaje-de-programación" id="toc-el-lenguaje-de-programación" class="nav-link" data-scroll-target="#el-lenguaje-de-programación">El Lenguaje de Programación</a>
-  <ul class="collapse">
-  <li><a href="#valores-atómicos" id="toc-valores-atómicos" class="nav-link" data-scroll-target="#valores-atómicos">Valores Atómicos</a></li>
-  <li><a href="#creación-de-objetos" id="toc-creación-de-objetos" class="nav-link" data-scroll-target="#creación-de-objetos">Creación de Objetos</a></li>
-  <li><a href="#vectores" id="toc-vectores" class="nav-link" data-scroll-target="#vectores">Vectores</a></li>
-  <li><a href="#operadores" id="toc-operadores" class="nav-link" data-scroll-target="#operadores">Operadores</a></li>
-  <li><a href="#operadores-lógicos" id="toc-operadores-lógicos" class="nav-link" data-scroll-target="#operadores-lógicos">Operadores Lógicos</a></li>
-  <li><a href="#operadores-booleanos" id="toc-operadores-booleanos" class="nav-link" data-scroll-target="#operadores-booleanos">Operadores Booleanos</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#estructuras-básicas" id="toc-estructuras-básicas" class="nav-link" data-scroll-target="#estructuras-básicas">Estructuras Básicas</a>
-  <ul class="collapse">
-  <li><a href="#vectores-1" id="toc-vectores-1" class="nav-link" data-scroll-target="#vectores-1">Vectores</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices</a></li>
-  <li><a href="#dataframes-y-tibbles" id="toc-dataframes-y-tibbles" class="nav-link" data-scroll-target="#dataframes-y-tibbles">Dataframes y Tibbles</a></li>
-  </ul></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a>
-  <ul class="collapse">
-  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1">Ejercicio 1</a></li>
-  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2">Ejercicio 2</a></li>
-  </ul></li>
-  <li><a href="#recapitulación" id="toc-recapitulación" class="nav-link" data-scroll-target="#recapitulación">Recapitulación</a></li>
+  <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
+  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
+  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
+  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s01-fundamentals.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -246,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Fundamentos de R y RStudio</h1>
-<p class="subtitle lead"><span class="code">Sesión 1</span></p>
+<p class="subtitle lead"><span class="code">Sesion 1</span></p>
 </div>
 
 
@@ -270,176 +256,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <iframe class="slide-deck" src="../materials/01-fundamentals-intro-r.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
-<p><a href="../materials/01-fundamentals-intro-r.html" target="_blank">Ver diapositivas en pantalla completa</a> # Esquema</p>
+<p><a href="../materials/01-fundamentals-intro-r.html" target="_blank">Ver diapositivas en pantalla completa</a></p>
+<section id="esquema" class="level1">
+<h1>Esquema</h1>
 <ul>
-<li>Introducción a R y RStudio</li>
-<li>El lenguaje de programación R</li>
-<li>Valores atómicos</li>
-<li>Creación de objetos</li>
-<li>Operadores básicos</li>
-<li>Estructuras básicas de datos</li>
-<li>Funciones en R</li>
-</ul>
-<section id="contenido" class="level1">
-<h1>Contenido</h1>
-<section id="el-lenguaje-de-programación" class="level2">
-<h2 class="anchored" data-anchor-id="el-lenguaje-de-programación">El Lenguaje de Programación</h2>
-<section id="valores-atómicos" class="level3">
-<h3 class="anchored" data-anchor-id="valores-atómicos">Valores Atómicos</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"cusco"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">"  Cusco"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">"16-08-2021"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fl">1.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="creación-de-objetos" class="level3">
-<h3 class="anchored" data-anchor-id="creación-de-objetos">Creación de Objetos</h3>
-<p>El operador usado para crear objetos es <code>&lt;-</code></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="st">"ser"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="vectores" class="level3">
-<h3 class="anchored" data-anchor-id="vectores">Vectores</h3>
-<p>Para almacenar más de un elemento en un objeto se usa <code>c()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"El"</span>, <span class="st">"dia"</span>, <span class="st">"cusco"</span>, <span class="st">"r"</span>, <span class="st">"programacion"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="operadores" class="level3">
-<h3 class="anchored" data-anchor-id="operadores">Operadores</h3>
-<section id="secuencia" class="level4">
-<h4 class="anchored" data-anchor-id="secuencia">Secuencia <code>:</code></h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="indexación" class="level4">
-<h4 class="anchored" data-anchor-id="indexación">Indexación <code>[]</code></h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>letters</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>letters[<span class="dv">2</span>]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>letters[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="operadores-lógicos" class="level3">
-<h3 class="anchored" data-anchor-id="operadores-lógicos">Operadores Lógicos</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Operador</th>
-<th style="text-align: left;">Significado</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">x &lt; y</td>
-<td style="text-align: left;">menor que</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">x &gt; y</td>
-<td style="text-align: left;">mayor que</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">x == y</td>
-<td style="text-align: left;">igual</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">x &lt;= y</td>
-<td style="text-align: left;">menor igual</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">x &gt;= y</td>
-<td style="text-align: left;">mayor igual</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">x != y</td>
-<td style="text-align: left;">diferente</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">x %in% y</td>
-<td style="text-align: left;">pertenece</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="operadores-booleanos" class="level3">
-<h3 class="anchored" data-anchor-id="operadores-booleanos">Operadores Booleanos</h3>
-<ul>
-<li><code>&amp;</code> - y</li>
-<li><code>|</code> - o</li>
-<li><code>!</code> - negación</li>
-<li><code>%in%</code> - perteneciente a un grupo</li>
+<li>Tipos de datos en R</li>
+<li>Objetos y asignacion</li>
+<li>Vectores y data frames</li>
+<li>Funciones y ayuda</li>
 </ul>
 </section>
+<section id="objetivo-de-la-sesion" class="level1">
+<h1>Objetivo de la sesion</h1>
+<p>Escribir codigo basico en R con sintaxis correcta y leer objetos en consola de forma segura.</p>
 </section>
+<section id="datos-usados" class="level1">
+<h1>Datos usados</h1>
+<ul>
+<li>No requiere archivos de datos</li>
+</ul>
 </section>
-<section id="estructuras-básicas" class="level1">
-<h1>Estructuras Básicas</h1>
-<section id="vectores-1" class="level2">
-<h2 class="anchored" data-anchor-id="vectores-1">Vectores</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.5</span><span class="sc">:</span><span class="fl">5.5</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"i"</span>, <span class="st">"o"</span>, <span class="st">"u"</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="matrices" class="level2">
-<h2 class="anchored" data-anchor-id="matrices">Matrices</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">ncol =</span> <span class="dv">5</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>], <span class="at">nrow =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="dataframes-y-tibbles" class="level2">
-<h2 class="anchored" data-anchor-id="dataframes-y-tibbles">Dataframes y Tibbles</h2>
-<p>Los dataframes son estructuras bidimensionales que pueden contener diferentes tipos de datos en cada columna.</p>
-</section>
+<section id="practica-guiada" class="level1">
+<h1>Practica guiada</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tipos basicos</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x_num <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x_chr <span class="ot">&lt;-</span> <span class="st">"cusco"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x_lgl <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x_num)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x_chr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x_lgl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectores y funciones</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>poblacion <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">340</span>, <span class="dv">560</span>, <span class="dv">210</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(poblacion)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(poblacion)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(poblacion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frame simple</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">distrito =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">habitantes =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">850</span>, <span class="dv">920</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="ejercicios" class="level1">
 <h1>Ejercicios</h1>
-<section id="ejercicio-1" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
-<div class="question">
-<ul>
-<li>Crea un vector con los números del 1 al 10</li>
-<li>Crea un vector con tu nombre, apellido y ciudad</li>
-<li>Indexa el vector de números para obtener los elementos del 5 al 8</li>
-</ul>
-</div>
+<ol type="1">
+<li>Crear un vector numerico de 5 elementos y calcular media y maximo.</li>
+<li>Crear un data frame con 3 columnas y 4 filas.</li>
+<li>Usar <code>?mean</code> y probar el argumento <code>na.rm</code>.</li>
+</ol>
 </section>
-<section id="ejercicio-2" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h2>
-<div class="question">
-<ul>
-<li>Crea una matriz de 3x3 con los números del 1 al 9</li>
-<li>Verifica la clase de diferentes tipos de objetos usando <code>class()</code></li>
-</ul>
-</div>
-</section>
-</section>
-<section id="recapitulación" class="level1">
-<h1>Recapitulación</h1>
-<div class="recap">
-<ul>
-<li>R es un lenguaje de programación orientado a objetos</li>
-<li>Los valores atómicos son los elementos básicos</li>
-<li>El operador <code>&lt;-</code> se usa para crear objetos</li>
-<li>Los vectores almacenan múltiples elementos del mismo tipo</li>
-<li>Las funciones toman argumentos entre paréntesis <code>()</code></li>
-<li>Existen múltiples estructuras de datos: vectores, matrices, dataframes, listas</li>
-</ul>
-</div>
+<section id="resultado-esperado" class="level1">
+<h1>Resultado esperado</h1>
+<p>Poder crear objetos, inspeccionarlos y usar funciones basicas sin errores de sintaxis.</p>
 
 
 </section>

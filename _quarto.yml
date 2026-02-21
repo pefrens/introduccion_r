@@ -53,10 +53,10 @@ website:
             href: modules/s05-dplyr.qmd
           - text: tidyr - Organización de Datos
             href: modules/s07-tidying-data.qmd
+          - text: Unión de Datos (Joins)
+            href: modules/s06-joins.qmd
           - text: Datos Espaciales con sf
             href: modules/s08-spatial.qmd
-          - text: Unión de Datos (Joins)
-            href: modules/s05-joins.qmd
 format:
   html:
     theme:

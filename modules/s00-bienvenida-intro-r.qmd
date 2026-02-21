@@ -1,6 +1,6 @@
 ---
-title: "Bienvenida e Introducción a R"
-subtitle: "<span class='code'>Sesión 1</span>"
+title: "Bienvenida e Introduccion al curso"
+subtitle: "<span class='code'>Sesion 0</span>"
 date: "2026-02"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
@@ -11,64 +11,48 @@ tbl-colwidths: [5,20,75]
 
 <a href='../materials/00-bienvenida-intro-r.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
+# Esquema
 
-## Objetivos del Curso
+- Objetivos del curso
+- Ruta de sesiones
+- Datos y herramientas a usar
+- Acuerdos de trabajo
 
-Al finalizar este curso podrás:
+# Objetivo de la sesion
 
-- ✓ Escribir código R básico de forma legible
-- ✓ Importar datos desde múltiples formatos
-- ✓ Limpiar y transformar datos con dplyr
-- ✓ Organizar datos con tidyr
-- ✓ Trabajar con datos espaciales usando sf
-- ✓ Crear visualizaciones con ggplot2
-- ✓ Integrar análisis espacial con tidyverse
-- ✓ Crear análisis reproducibles
+Entender la estructura del curso, los resultados esperados y el flujo de trabajo para las sesiones practicas.
 
-## Contenido del Curso
+# Datos usados
 
-### Sesión 1: Fundamentos de R
+- No requiere archivos de datos
 
-- Valores atómicos y tipos de datos
-- Creación de objetos (`<-`)
-- Operadores básicos
-- Estructuras de datos: vectores, matrices, data frames, listas
-- Funciones en R
+# Ruta de sesiones
 
-### Sesión 2: Importar y Revisar Datos
+1. Sesion 1: Fundamentos de R y RStudio
+2. Sesion 2: Importar y revisar datos
+3. Sesion 3: Manipulacion de datos con dplyr
+4. Sesion 4: Organizacion de datos con tidyr
+5. Sesion 5: Union de datos (joins)
+6. Sesion 6: Introduccion a datos espaciales con sf
 
-- Importar desde diferentes formatos (CSV con `readr`, Excel con `readxl`, datos espaciales con `sf`)
-- Revisar estructura de datos
-- Limpiar nombres con `janitor`
-- Visualizar tipos de datos con `visdat`
-- El operador pipe `|>`
+# Practica guiada
 
-### Sesión 3: dplyr - Manipulación de Datos
+1. Verificar instalacion de paquetes base del curso.
+2. Revisar la carpeta `modules` y su correspondencia con `materials`.
+3. Confirmar el orden de sesiones y objetivos.
 
-Los verbos principales de dplyr:
+# Herramientas del curso
 
-- `select()`: Seleccionar columnas
-- `filter()`: Filtrar filas
-- `mutate()`: Crear/modificar variables
-- `summarise()`: Resumir datos
-- `group_by()`: Agrupar datos
-- `arrange()`: Ordenar datos
+- `R` y `RStudio`
+- `tidyverse`
+- `sf`
+- `quarto`
 
-### Sesión 4: tidyr - Organización de Datos
+# Ejercicios
 
-- Principios de **Tidy Data**
-- `pivot_longer()`: Datos anchos → largos
-- `pivot_wider()`: Datos largos → anchos
-- `separate()` y `unite()`: Dividir y unir columnas
-- Aplicaciones prácticas
+1. Identificar que sesion resuelve cada objetivo del curso.
+2. Explicar que paquetes se usaran en sesiones 3, 4, 5 y 6.
 
-### Sesión 5: Datos Espaciales con sf
+# Resultado esperado
 
-- ¿Qué son datos espaciales?
-- El paquete `sf` (Simple Features)
-- Tipos de geometrías (puntos, líneas, polígonos)
-- Lectura/escritura de formatos espaciales
-- Integración con tidyverse
-- Visualización con `geom_sf()`
-- Operaciones espaciales básicas
-
+Terminar la sesion con el entorno listo y con claridad sobre el orden de contenidos de `modules` y `materials`.

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(ls -la \"D:\\\\introduccion_r\\\\fonts\"\" 2>/dev/null || echo \"Directorio de fuentes no encontrado \")",
-      "WebFetch(domain:mhallwor.github.io)"
+      "WebFetch(domain:mhallwor.github.io)",
+      "WebFetch(domain:r.geocompx.org)"
     ]
   }
 }

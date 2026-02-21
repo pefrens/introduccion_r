@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-02-01">
 
-<title>tidyr - Organización de Datos (Tidy Data)</title>
+<title>tidyr - Organizacion de datos (Tidy Data)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,13 +104,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="tidyr - Organización de Datos (Tidy Data)">
-<meta property="og:description" content="Sesión 4">
+<meta property="og:title" content="tidyr - Organizacion de datos (Tidy Data)">
+<meta property="og:description" content="Sesion 4">
 <meta property="og:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/04-theming.png">
 <meta property="og:image:height" content="1688">
 <meta property="og:image:width" content="2189">
-<meta name="twitter:title" content="tidyr - Organización de Datos (Tidy Data)">
-<meta name="twitter:description" content="Sesión 4">
+<meta name="twitter:title" content="tidyr - Organizacion de datos (Tidy Data)">
+<meta name="twitter:description" content="Sesion 4">
 <meta name="twitter:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/04-theming.png">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:image-height" content="1688">
@@ -163,8 +163,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">dplyr - Manipulación de Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s07-theming.html">
+    <a class="dropdown-item" href="../modules/s07-tidying-data.html">
  <span class="dropdown-text">tidyr - Organización de Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s06-joins.html">
+ <span class="dropdown-text">Unión de Datos (Joins)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../modules/s08-spatial.html">
@@ -214,87 +218,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
-  <li><a href="#tidy-data-datos-ordenados" id="toc-tidy-data-datos-ordenados" class="nav-link" data-scroll-target="#tidy-data-datos-ordenados">Tidy Data (Datos Ordenados)</a>
-  <ul class="collapse">
-  <li><a href="#definición-de-tidy-data" id="toc-definición-de-tidy-data" class="nav-link" data-scroll-target="#definición-de-tidy-data">Definición de Tidy Data</a></li>
-  <li><a href="#principios-de-tidy-data" id="toc-principios-de-tidy-data" class="nav-link" data-scroll-target="#principios-de-tidy-data">Principios de Tidy Data</a></li>
-  <li><a href="#por-qué-tidy-data" id="toc-por-qué-tidy-data" class="nav-link" data-scroll-target="#por-qué-tidy-data">¿Por qué Tidy Data?</a></li>
-  <li><a href="#datos-no-ordenados-ejemplos" id="toc-datos-no-ordenados-ejemplos" class="nav-link" data-scroll-target="#datos-no-ordenados-ejemplos">Datos No Ordenados: Ejemplos</a>
-  <ul class="collapse">
-  <li><a href="#ejemplo-1-columnas-contienen-valores-no-variables" id="toc-ejemplo-1-columnas-contienen-valores-no-variables" class="nav-link" data-scroll-target="#ejemplo-1-columnas-contienen-valores-no-variables">Ejemplo 1: Columnas contienen valores, no variables</a></li>
-  </ul></li>
-  <li><a href="#datos-no-ordenados-ejemplos-1" id="toc-datos-no-ordenados-ejemplos-1" class="nav-link" data-scroll-target="#datos-no-ordenados-ejemplos-1">Datos No Ordenados: Ejemplos</a>
-  <ul class="collapse">
-  <li><a href="#ejemplo-2-múltiples-variables-en-una-columna" id="toc-ejemplo-2-múltiples-variables-en-una-columna" class="nav-link" data-scroll-target="#ejemplo-2-múltiples-variables-en-una-columna">Ejemplo 2: Múltiples variables en una columna</a></li>
-  </ul></li>
-  <li><a href="#datos-ordenados-el-mismo-ejemplo" id="toc-datos-ordenados-el-mismo-ejemplo" class="nav-link" data-scroll-target="#datos-ordenados-el-mismo-ejemplo">Datos Ordenados: El Mismo Ejemplo</a></li>
-  </ul></li>
-  <li><a href="#pivot_longer---pivotear-a-más-largo" id="toc-pivot_longer---pivotear-a-más-largo" class="nav-link" data-scroll-target="#pivot_longer---pivotear-a-más-largo">pivot_longer() - Pivotear a Más Largo</a>
-  <ul class="collapse">
-  <li><a href="#cuándo-usar-pivot_longer" id="toc-cuándo-usar-pivot_longer" class="nav-link" data-scroll-target="#cuándo-usar-pivot_longer">¿Cuándo usar pivot_longer()?</a></li>
-  <li><a href="#ejemplo-básico-de-ancho-a-largo" id="toc-ejemplo-básico-de-ancho-a-largo" class="nav-link" data-scroll-target="#ejemplo-básico-de-ancho-a-largo">Ejemplo Básico: De Ancho a Largo</a></li>
-  <li><a href="#aplicando-pivot_longer" id="toc-aplicando-pivot_longer" class="nav-link" data-scroll-target="#aplicando-pivot_longer">Aplicando pivot_longer()</a></li>
-  <li><a href="#sintaxis-de-pivot_longer" id="toc-sintaxis-de-pivot_longer" class="nav-link" data-scroll-target="#sintaxis-de-pivot_longer">Sintaxis de pivot_longer()</a></li>
-  <li><a href="#seleccionando-columnas-en-pivot_longer" id="toc-seleccionando-columnas-en-pivot_longer" class="nav-link" data-scroll-target="#seleccionando-columnas-en-pivot_longer">Seleccionando Columnas en pivot_longer()</a></li>
-  <li><a href="#problema-tipos-de-datos" id="toc-problema-tipos-de-datos" class="nav-link" data-scroll-target="#problema-tipos-de-datos">Problema: Tipos de Datos</a></li>
-  <li><a href="#transformar-tipos-en-pivot_longer" id="toc-transformar-tipos-en-pivot_longer" class="nav-link" data-scroll-target="#transformar-tipos-en-pivot_longer">Transformar Tipos en pivot_longer()</a></li>
-  <li><a href="#ejemplo-real-datos-de-áreas-naturales" id="toc-ejemplo-real-datos-de-áreas-naturales" class="nav-link" data-scroll-target="#ejemplo-real-datos-de-áreas-naturales">Ejemplo Real: Datos de Áreas Naturales</a></li>
-  <li><a href="#pivotear-bci-a-formato-largo" id="toc-pivotear-bci-a-formato-largo" class="nav-link" data-scroll-target="#pivotear-bci-a-formato-largo">Pivotear BCI a Formato Largo</a></li>
-  <li><a href="#filtrar-valores-cero" id="toc-filtrar-valores-cero" class="nav-link" data-scroll-target="#filtrar-valores-cero">Filtrar Valores Cero</a></li>
-  </ul></li>
-  <li><a href="#pivot_wider---pivotear-a-más-ancho" id="toc-pivot_wider---pivotear-a-más-ancho" class="nav-link" data-scroll-target="#pivot_wider---pivotear-a-más-ancho">pivot_wider() - Pivotear a Más Ancho</a>
-  <ul class="collapse">
-  <li><a href="#cuándo-usar-pivot_wider" id="toc-cuándo-usar-pivot_wider" class="nav-link" data-scroll-target="#cuándo-usar-pivot_wider">¿Cuándo usar pivot_wider()?</a></li>
-  <li><a href="#de-largo-a-ancho-ejemplo-básico" id="toc-de-largo-a-ancho-ejemplo-básico" class="nav-link" data-scroll-target="#de-largo-a-ancho-ejemplo-básico">De Largo a Ancho: Ejemplo Básico</a></li>
-  <li><a href="#sintaxis-de-pivot_wider" id="toc-sintaxis-de-pivot_wider" class="nav-link" data-scroll-target="#sintaxis-de-pivot_wider">Sintaxis de pivot_wider()</a></li>
-  <li><a href="#rellenar-valores-faltantes" id="toc-rellenar-valores-faltantes" class="nav-link" data-scroll-target="#rellenar-valores-faltantes">Rellenar Valores Faltantes</a></li>
-  <li><a href="#ejemplo-práctico-tabla-de-resumen" id="toc-ejemplo-práctico-tabla-de-resumen" class="nav-link" data-scroll-target="#ejemplo-práctico-tabla-de-resumen">Ejemplo Práctico: Tabla de Resumen</a></li>
-  </ul></li>
-  <li><a href="#separate-y-unite" id="toc-separate-y-unite" class="nav-link" data-scroll-target="#separate-y-unite">separate() y unite()</a>
-  <ul class="collapse">
-  <li><a href="#separate-separar-una-columna" id="toc-separate-separar-una-columna" class="nav-link" data-scroll-target="#separate-separar-una-columna">separate(): Separar Una Columna</a></li>
-  <li><a href="#aplicando-separate" id="toc-aplicando-separate" class="nav-link" data-scroll-target="#aplicando-separate">Aplicando separate()</a></li>
-  <li><a href="#separate-sintaxis" id="toc-separate-sintaxis" class="nav-link" data-scroll-target="#separate-sintaxis">separate(): Sintaxis</a></li>
-  <li><a href="#separate_rows-separar-y-expandir-filas" id="toc-separate_rows-separar-y-expandir-filas" class="nav-link" data-scroll-target="#separate_rows-separar-y-expandir-filas">separate_rows(): Separar y Expandir Filas</a></li>
-  <li><a href="#aplicando-separate_rows" id="toc-aplicando-separate_rows" class="nav-link" data-scroll-target="#aplicando-separate_rows">Aplicando separate_rows()</a></li>
-  <li><a href="#unite-unir-columnas" id="toc-unite-unir-columnas" class="nav-link" data-scroll-target="#unite-unir-columnas">unite(): Unir Columnas</a></li>
-  <li><a href="#unite-sintaxis" id="toc-unite-sintaxis" class="nav-link" data-scroll-target="#unite-sintaxis">unite(): Sintaxis</a></li>
-  </ul></li>
-  <li><a href="#aplicación-práctica-completa" id="toc-aplicación-práctica-completa" class="nav-link" data-scroll-target="#aplicación-práctica-completa">Aplicación Práctica Completa</a>
-  <ul class="collapse">
-  <li><a href="#caso-de-estudio-áreas-naturales-del-perú" id="toc-caso-de-estudio-áreas-naturales-del-perú" class="nav-link" data-scroll-target="#caso-de-estudio-áreas-naturales-del-perú">Caso de Estudio: Áreas Naturales del Perú</a></li>
-  <li><a href="#paso-1-explorar-los-datos" id="toc-paso-1-explorar-los-datos" class="nav-link" data-scroll-target="#paso-1-explorar-los-datos">Paso 1: Explorar los Datos</a></li>
-  <li><a href="#paso-2-separar-ubicaciones-múltiples" id="toc-paso-2-separar-ubicaciones-múltiples" class="nav-link" data-scroll-target="#paso-2-separar-ubicaciones-múltiples">Paso 2: Separar Ubicaciones Múltiples</a></li>
-  <li><a href="#paso-3-separar-fechas-múltiples" id="toc-paso-3-separar-fechas-múltiples" class="nav-link" data-scroll-target="#paso-3-separar-fechas-múltiples">Paso 3: Separar Fechas Múltiples</a></li>
-  <li><a href="#paso-4-limpiar-y-transformar" id="toc-paso-4-limpiar-y-transformar" class="nav-link" data-scroll-target="#paso-4-limpiar-y-transformar">Paso 4: Limpiar y Transformar</a></li>
-  <li><a href="#resultado-final-dataset-ordenado" id="toc-resultado-final-dataset-ordenado" class="nav-link" data-scroll-target="#resultado-final-dataset-ordenado">Resultado Final: Dataset Ordenado</a></li>
-  </ul></li>
-  <li><a href="#resumen-cuándo-pivotear" id="toc-resumen-cuándo-pivotear" class="nav-link" data-scroll-target="#resumen-cuándo-pivotear">Resumen: ¿Cuándo Pivotear?</a>
-  <ul class="collapse">
-  <li><a href="#señales-de-que-necesitas-pivot_longer" id="toc-señales-de-que-necesitas-pivot_longer" class="nav-link" data-scroll-target="#señales-de-que-necesitas-pivot_longer">Señales de que Necesitas pivot_longer()</a></li>
-  <li><a href="#señales-de-que-necesitas-pivot_wider" id="toc-señales-de-que-necesitas-pivot_wider" class="nav-link" data-scroll-target="#señales-de-que-necesitas-pivot_wider">Señales de que Necesitas pivot_wider()</a></li>
-  <li><a href="#ancho-vs.-largo-no-es-absoluto" id="toc-ancho-vs.-largo-no-es-absoluto" class="nav-link" data-scroll-target="#ancho-vs.-largo-no-es-absoluto">Ancho vs.&nbsp;Largo: No es Absoluto</a></li>
-  </ul></li>
-  <li><a href="#ejercicios-prácticos" id="toc-ejercicios-prácticos" class="nav-link" data-scroll-target="#ejercicios-prácticos">Ejercicios Prácticos</a>
-  <ul class="collapse">
-  <li><a href="#ejercicio-1-bci---básico" id="toc-ejercicio-1-bci---básico" class="nav-link" data-scroll-target="#ejercicio-1-bci---básico">Ejercicio 1: BCI - Básico</a></li>
-  <li><a href="#ejercicio-2-pivotear-ida-y-vuelta" id="toc-ejercicio-2-pivotear-ida-y-vuelta" class="nav-link" data-scroll-target="#ejercicio-2-pivotear-ida-y-vuelta">Ejercicio 2: Pivotear Ida y Vuelta</a></li>
-  <li><a href="#ejercicio-3-áreas-naturales---avanzado" id="toc-ejercicio-3-áreas-naturales---avanzado" class="nav-link" data-scroll-target="#ejercicio-3-áreas-naturales---avanzado">Ejercicio 3: Áreas Naturales - Avanzado</a></li>
-  <li><a href="#ejercicio-4-datos-propios" id="toc-ejercicio-4-datos-propios" class="nav-link" data-scroll-target="#ejercicio-4-datos-propios">Ejercicio 4: Datos Propios</a></li>
-  </ul></li>
-  <li><a href="#consejos-y-mejores-prácticas" id="toc-consejos-y-mejores-prácticas" class="nav-link" data-scroll-target="#consejos-y-mejores-prácticas">Consejos y Mejores Prácticas</a>
-  <ul class="collapse">
-  <li><a href="#consejos-para-pivotear" id="toc-consejos-para-pivotear" class="nav-link" data-scroll-target="#consejos-para-pivotear">Consejos para Pivotear</a></li>
-  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">Errores Comunes</a></li>
-  <li><a href="#debugging-de-pivots" id="toc-debugging-de-pivots" class="nav-link" data-scroll-target="#debugging-de-pivots">Debugging de Pivots</a></li>
-  </ul></li>
-  <li><a href="#recapitulación" id="toc-recapitulación" class="nav-link" data-scroll-target="#recapitulación">Recapitulación</a>
-  <ul class="collapse">
-  <li><a href="#conceptos-clave" id="toc-conceptos-clave" class="nav-link" data-scroll-target="#conceptos-clave">Conceptos Clave</a></li>
-  <li><a href="#flujo-de-trabajo-típico" id="toc-flujo-de-trabajo-típico" class="nav-link" data-scroll-target="#flujo-de-trabajo-típico">Flujo de Trabajo Típico</a></li>
-  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales">Recursos Adicionales</a></li>
-  <li><a href="#próximos-pasos" id="toc-próximos-pasos" class="nav-link" data-scroll-target="#próximos-pasos">Próximos Pasos</a></li>
-  </ul></li>
+  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
+  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
+  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s07-tidying-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -303,8 +231,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">tidyr - Organización de Datos (Tidy Data)</h1>
-<p class="subtitle lead"><span class="code">Sesión 4</span></p>
+<h1 class="title">tidyr - Organizacion de datos (Tidy Data)</h1>
+<p class="subtitle lead"><span class="code">Sesion 4</span></p>
 </div>
 
 
@@ -327,777 +255,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<iframe class="slide-deck" src="../materials/04-tidying-data.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+<p><a href="../materials/04-tidying-data.html" target="_blank">Ver diapositivas en pantalla completa</a></p>
 <section id="esquema" class="level1">
 <h1>Esquema</h1>
 <ul>
-<li>Principios de Tidy Data</li>
-<li><code>pivot_longer()</code>: Pivotear a más largo</li>
-<li><code>pivot_wider()</code>: Pivotear a más ancho</li>
-<li>Transformación de tipos de datos en pivot</li>
-<li><code>separate()</code> y <code>unite()</code>: Separar y unir columnas</li>
-<li>Aplicaciones prácticas con datos reales</li>
+<li>Principios de tidy data</li>
+<li><code>pivot_longer()</code> y <code>pivot_wider()</code></li>
+<li><code>separate()</code> y <code>unite()</code></li>
+<li>Flujo de limpieza previo al analisis</li>
 </ul>
 </section>
-<section id="tidy-data-datos-ordenados" class="level1">
-<h1>Tidy Data (Datos Ordenados)</h1>
-<section id="definición-de-tidy-data" class="level2">
-<h2 class="anchored" data-anchor-id="definición-de-tidy-data">Definición de Tidy Data</h2>
-<blockquote class="blockquote">
-<p>“Los conjuntos de datos ordenados son fáciles de manipular, modelar y visualizar, y tienen una estructura específica: cada variable es una columna, cada observación es una fila y cada tipo de unidad observacional es una tabla.”</p>
-<p>Hadley Wickham, Tidy Data</p>
-</blockquote>
+<section id="objetivo-de-la-sesion" class="level1">
+<h1>Objetivo de la sesion</h1>
+<p>Transformar tablas entre formato ancho y largo de forma consistente para analisis y visualizacion.</p>
 </section>
-<section id="principios-de-tidy-data" class="level2">
-<h2 class="anchored" data-anchor-id="principios-de-tidy-data">Principios de Tidy Data</h2>
-<p>Un dataset es “tidy” (ordenado) cuando cumple:</p>
-<ol type="1">
-<li><strong>Cada variable es una columna</strong></li>
-<li><strong>Cada observación es una fila</strong></li>
-<li><strong>Cada valor tiene su propia celda</strong></li>
-</ol>
-</section>
-<section id="por-qué-tidy-data" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-tidy-data">¿Por qué Tidy Data?</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><strong>Facilita el análisis y visualización</strong>: estructura consistente</li>
-<li><strong>Funciona mejor con tidyverse</strong>: todos los verbos de dplyr esperan datos ordenados</li>
-<li><strong>Simplifica la manipulación</strong>: no necesitas pensar en la estructura</li>
-<li><strong>Permite código más limpio</strong>: menos transformaciones intermedias</li>
-</ul>
-</div>
-</section>
-<section id="datos-no-ordenados-ejemplos" class="level2">
-<h2 class="anchored" data-anchor-id="datos-no-ordenados-ejemplos">Datos No Ordenados: Ejemplos</h2>
-<section id="ejemplo-1-columnas-contienen-valores-no-variables" class="level3">
-<h3 class="anchored" data-anchor-id="ejemplo-1-columnas-contienen-valores-no-variables">Ejemplo 1: Columnas contienen valores, no variables</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato ancho (NO ordenado)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pais      año_2020  año_2021  año_2022</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Peru      <span class="dv">100</span>       <span class="dv">120</span>       <span class="dv">140</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Chile     <span class="dv">150</span>       <span class="dv">160</span>       <span class="dv">170</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Problema</strong>: Los años deberían ser valores de una variable, no nombres de columnas.</p>
-</section>
-</section>
-<section id="datos-no-ordenados-ejemplos-1" class="level2">
-<h2 class="anchored" data-anchor-id="datos-no-ordenados-ejemplos-1">Datos No Ordenados: Ejemplos</h2>
-<section id="ejemplo-2-múltiples-variables-en-una-columna" class="level3">
-<h3 class="anchored" data-anchor-id="ejemplo-2-múltiples-variables-en-una-columna">Ejemplo 2: Múltiples variables en una columna</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NO ordenado</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>departamento    tipo_valor</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Cusco           poblacion_300000</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Lima            poblacion_9000000</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Cusco           area_71986</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Problema</strong>: <code>tipo_valor</code> contiene dos variables: tipo y valor.</p>
-</section>
-</section>
-<section id="datos-ordenados-el-mismo-ejemplo" class="level2">
-<h2 class="anchored" data-anchor-id="datos-ordenados-el-mismo-ejemplo">Datos Ordenados: El Mismo Ejemplo</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato largo (ordenado)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pais      año    poblacion</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Peru      <span class="dv">2020</span>   <span class="dv">100</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Peru      <span class="dv">2021</span>   <span class="dv">120</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Peru      <span class="dv">2022</span>   <span class="dv">140</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Chile     <span class="dv">2020</span>   <span class="dv">150</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Chile     <span class="dv">2021</span>   <span class="dv">160</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Chile     <span class="dv">2022</span>   <span class="dv">170</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Ahora sí</strong>: Cada variable en su columna, cada observación en su fila.</p>
-</section>
-</section>
-<section id="pivot_longer---pivotear-a-más-largo" class="level1">
-<h1>pivot_longer() - Pivotear a Más Largo</h1>
-<section id="cuándo-usar-pivot_longer" class="level2">
-<h2 class="anchored" data-anchor-id="cuándo-usar-pivot_longer">¿Cuándo usar pivot_longer()?</h2>
-<p>Usa <code>pivot_longer()</code> cuando:</p>
+<section id="datos-usados" class="level1">
+<h1>Datos usados</h1>
 <ul>
-<li>Los nombres de columnas son valores de una variable, no nombres de variables</li>
-<li>Tienes datos en formato “ancho” que necesitas hacer “largos”</li>
-<li>Quieres preparar datos para graficar con ggplot2</li>
+<li>Datos creados en memoria con <code>tibble()</code></li>
 </ul>
 </section>
-<section id="ejemplo-básico-de-ancho-a-largo" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo-básico-de-ancho-a-largo">Ejemplo Básico: De Ancho a Largo</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos en formato ancho</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pais =</span> <span class="fu">c</span>(<span class="st">"Peru"</span>, <span class="st">"Chile"</span>, <span class="st">"Argentina"</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  año<span class="at">_2020 =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  año<span class="at">_2021 =</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">160</span>, <span class="dv">210</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  año<span class="at">_2022 =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">170</span>, <span class="dv">220</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>data_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       pais año_2020 año_2021 año_2022
-1      Peru      100      120      140
-2     Chile      150      160      170
-3 Argentina      200      210      220</code></pre>
-</div>
-</div>
+<section id="practica-guiada" class="level1">
+<h1>Practica guiada</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos_ancho <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">departamento =</span> <span class="fu">c</span>(<span class="st">"CUSCO"</span>, <span class="st">"LIMA"</span>, <span class="st">"AREQUIPA"</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2022 =</span> <span class="fu">c</span>(<span class="dv">1350</span>, <span class="dv">9700</span>, <span class="dv">1500</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2023 =</span> <span class="fu">c</span>(<span class="dv">1380</span>, <span class="dv">9850</span>, <span class="dv">1530</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>datos_ancho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos_largo <span class="ot">&lt;-</span> datos_ancho <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"pob_"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"anio"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"poblacion"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"pob_"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>datos_largo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>datos_largo <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> anio,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> poblacion,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"pob_"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">codigo =</span> <span class="fu">c</span>(<span class="st">"08-01-01"</span>, <span class="st">"15-01-01"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ids <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(codigo, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ccdd"</span>, <span class="st">"ccpp"</span>, <span class="st">"ccdi"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="aplicando-pivot_longer" class="level2">
-<h2 class="anchored" data-anchor-id="aplicando-pivot_longer">Aplicando pivot_longer()</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir a formato largo</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_wide <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"año_"</span>),  <span class="co"># columnas a pivotar</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"año"</span>,             <span class="co"># nombre de la nueva columna para los nombres</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"poblacion"</span>       <span class="co"># nombre de la nueva columna para los valores</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>data_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 3
-  pais      año      poblacion
-  &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
-1 Peru      año_2020       100
-2 Peru      año_2021       120
-3 Peru      año_2022       140
-4 Chile     año_2020       150
-5 Chile     año_2021       160
-6 Chile     año_2022       170
-7 Argentina año_2020       200
-8 Argentina año_2021       210
-9 Argentina año_2022       220</code></pre>
-</div>
-</div>
-</section>
-<section id="sintaxis-de-pivot_longer" class="level2">
-<h2 class="anchored" data-anchor-id="sintaxis-de-pivot_longer">Sintaxis de pivot_longer()</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> ___________________,    <span class="co"># Columnas a pivotar</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> _______________,    <span class="co"># Nombre de la nueva variable con nombres</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> ______________     <span class="co"># Nombre de la nueva variable con valores</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="seleccionando-columnas-en-pivot_longer" class="level2">
-<h2 class="anchored" data-anchor-id="seleccionando-columnas-en-pivot_longer">Seleccionando Columnas en pivot_longer()</h2>
-<p>Diferentes formas de seleccionar columnas:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por nombre</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="fu">c</span>(año_2020, año_2021, año_2022)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Con helper de select</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="fu">starts_with</span>(<span class="st">"año_"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="fu">ends_with</span>(<span class="st">"_total"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="fu">contains</span>(<span class="st">"temp"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Todas excepto...</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="sc">-</span>pais</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="sc">-</span><span class="fu">c</span>(pais, region)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Por posición</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="problema-tipos-de-datos" class="level2">
-<h2 class="anchored" data-anchor-id="problema-tipos-de-datos">Problema: Tipos de Datos</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 3
-  pais      año      poblacion
-  &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
-1 Peru      año_2020       100
-2 Peru      año_2021       120
-3 Peru      año_2022       140
-4 Chile     año_2020       150
-5 Chile     año_2021       160
-6 Chile     año_2022       170
-7 Argentina año_2020       200
-8 Argentina año_2021       210
-9 Argentina año_2022       220</code></pre>
-</div>
-</div>
-<div class="question">
-<p>¿Cuál es el tipo de la variable <code>año</code>?</p>
-<p>¿Por qué es problemático?</p>
-<p>¿Qué deberíamos hacer?</p>
-</div>
-</section>
-<section id="transformar-tipos-en-pivot_longer" class="level2">
-<h2 class="anchored" data-anchor-id="transformar-tipos-en-pivot_longer">Transformar Tipos en pivot_longer()</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data_long_corrected <span class="ot">&lt;-</span> data_wide <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"año_"</span>),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"año"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"poblacion"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"año_"</span>,           <span class="co"># Remover prefijo</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> as.numeric     <span class="co"># Convertir a numérico</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>data_long_corrected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 3
-  pais        año poblacion
-  &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 Peru       2020       100
-2 Peru       2021       120
-3 Peru       2022       140
-4 Chile      2020       150
-5 Chile      2021       160
-6 Chile      2022       170
-7 Argentina  2020       200
-8 Argentina  2021       210
-9 Argentina  2022       220</code></pre>
-</div>
-</div>
-</section>
-<section id="ejemplo-real-datos-de-áreas-naturales" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo-real-datos-de-áreas-naturales">Ejemplo Real: Datos de Áreas Naturales</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"BCI"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver estructura original</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(BCI[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>BCI tiene especies como columnas (formato ancho).</p>
-</section>
-<section id="pivotear-bci-a-formato-largo" class="level2">
-<h2 class="anchored" data-anchor-id="pivotear-bci-a-formato-largo">Pivotear BCI a Formato Largo</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir a tibble y agregar ID de parcela</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bci_long <span class="ot">&lt;-</span> BCI <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"plot_n"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>plot_n,                    <span class="co"># Todas menos plot_n</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"especies"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"abundancia"</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>bci_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="filtrar-valores-cero" class="level2">
-<h2 class="anchored" data-anchor-id="filtrar-valores-cero">Filtrar Valores Cero</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover especies con abundancia cero</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>bci_long_clean <span class="ot">&lt;-</span> bci_long <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(abundancia <span class="sc">!=</span> <span class="dv">0</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparar tamaños</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(bci_long)        <span class="co"># Con ceros</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(bci_long_clean)  <span class="co"># Sin ceros</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="pivot_wider---pivotear-a-más-ancho" class="level1">
-<h1>pivot_wider() - Pivotear a Más Ancho</h1>
-<section id="cuándo-usar-pivot_wider" class="level2">
-<h2 class="anchored" data-anchor-id="cuándo-usar-pivot_wider">¿Cuándo usar pivot_wider()?</h2>
-<p>Usa <code>pivot_wider()</code> cuando:</p>
-<ul>
-<li>Tienes valores en filas que deberían ser columnas</li>
-<li>Necesitas crear una tabla de resumen</li>
-<li>Quieres un formato más legible para presentación</li>
-</ul>
-</section>
-<section id="de-largo-a-ancho-ejemplo-básico" class="level2">
-<h2 class="anchored" data-anchor-id="de-largo-a-ancho-ejemplo-básico">De Largo a Ancho: Ejemplo Básico</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Volver de largo a ancho</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>data_wide_again <span class="ot">&lt;-</span> data_long_corrected <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> año,           <span class="co"># Columna con nombres</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> poblacion     <span class="co"># Columna con valores</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>data_wide_again</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  pais      `2020` `2021` `2022`
-  &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 Peru         100    120    140
-2 Chile        150    160    170
-3 Argentina    200    210    220</code></pre>
-</div>
-</div>
-</section>
-<section id="sintaxis-de-pivot_wider" class="level2">
-<h2 class="anchored" data-anchor-id="sintaxis-de-pivot_wider">Sintaxis de pivot_wider()</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> _______________,    <span class="co"># Columna con nombres</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> ______________,    <span class="co"># Columna con valores</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> _______________    <span class="co"># Valor para celdas vacías (opcional)</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="rellenar-valores-faltantes" class="level2">
-<h2 class="anchored" data-anchor-id="rellenar-valores-faltantes">Rellenar Valores Faltantes</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con valores NA por defecto</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>bci_wide <span class="ot">&lt;-</span> bci_long_clean <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> especies,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> abundancia</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Rellenar NA con 0</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>bci_wide_filled <span class="ot">&lt;-</span> bci_long_clean <span class="sc">|&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> especies,</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> abundancia,</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span>              <span class="co"># Cambiar NA por 0</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ejemplo-práctico-tabla-de-resumen" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo-práctico-tabla-de-resumen">Ejemplo Práctico: Tabla de Resumen</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear tabla resumen de áreas por categoría y año</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>anp_summary <span class="ot">&lt;-</span> anp <span class="sc">|&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(categoria, año_creacion) <span class="sc">|&gt;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_areas =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> año_creacion,</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> n_areas,</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>anp_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="separate-y-unite" class="level1">
-<h1>separate() y unite()</h1>
-<section id="separate-separar-una-columna" class="level2">
-<h2 class="anchored" data-anchor-id="separate-separar-una-columna">separate(): Separar Una Columna</h2>
-<p>Divide una columna en múltiples columnas.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos con fechas combinadas</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data_fechas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fecha =</span> <span class="fu">c</span>(<span class="st">"2021-01-15"</span>, <span class="st">"2021-02-20"</span>, <span class="st">"2021-03-25"</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>data_fechas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id      fecha
-1  1 2021-01-15
-2  2 2021-02-20
-3  3 2021-03-25</code></pre>
-</div>
-</div>
-</section>
-<section id="aplicando-separate" class="level2">
-<h2 class="anchored" data-anchor-id="aplicando-separate">Aplicando separate()</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar fecha en año, mes, día</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>data_separada <span class="ot">&lt;-</span> data_fechas <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    fecha,</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"año"</span>, <span class="st">"mes"</span>, <span class="st">"dia"</span>),</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"-"</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>data_separada</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id  año mes dia
-1  1 2021  01  15
-2  2 2021  02  20
-3  3 2021  03  25</code></pre>
-</div>
-</div>
-</section>
-<section id="separate-sintaxis" class="level2">
-<h2 class="anchored" data-anchor-id="separate-sintaxis">separate(): Sintaxis</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> _______________,          <span class="co"># Columna a separar</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"col1"</span>, <span class="st">"col2"</span>),       <span class="co"># Nombres de nuevas columnas</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"___"</span>,                    <span class="co"># Separador (regex)</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">convert =</span> <span class="cn">TRUE</span>                  <span class="co"># Convertir tipos automáticamente</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="separate_rows-separar-y-expandir-filas" class="level2">
-<h2 class="anchored" data-anchor-id="separate_rows-separar-y-expandir-filas">separate_rows(): Separar y Expandir Filas</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos con múltiples ubicaciones</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>data_multi <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">area =</span> <span class="fu">c</span>(<span class="st">"Manu"</span>, <span class="st">"Huascaran"</span>),</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">departamentos =</span> <span class="fu">c</span>(<span class="st">"Cusco y Madre de Dios"</span>, <span class="st">"Ancash"</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>data_multi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       area         departamentos
-1      Manu Cusco y Madre de Dios
-2 Huascaran                Ancash</code></pre>
-</div>
-</div>
-</section>
-<section id="aplicando-separate_rows" class="level2">
-<h2 class="anchored" data-anchor-id="aplicando-separate_rows">Aplicando separate_rows()</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar departamentos en filas diferentes</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>data_expandida <span class="ot">&lt;-</span> data_multi <span class="sc">|&gt;</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(departamentos, <span class="at">sep =</span> <span class="st">" y "</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>data_expandida</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  area      departamentos
-  &lt;chr&gt;     &lt;chr&gt;        
-1 Manu      Cusco        
-2 Manu      Madre de Dios
-3 Huascaran Ancash       </code></pre>
-</div>
-</div>
-</section>
-<section id="unite-unir-columnas" class="level2">
-<h2 class="anchored" data-anchor-id="unite-unir-columnas">unite(): Unir Columnas</h2>
-<p>Combina múltiples columnas en una.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unir año, mes, día de vuelta</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>data_unida <span class="ot">&lt;-</span> data_separada <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"fecha_completa"</span>,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    año, mes, dia,</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"-"</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>data_unida</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id fecha_completa
-1  1     2021-01-15
-2  2     2021-02-20
-3  3     2021-03-25</code></pre>
-</div>
-</div>
-</section>
-<section id="unite-sintaxis" class="level2">
-<h2 class="anchored" data-anchor-id="unite-sintaxis">unite(): Sintaxis</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nueva_columna"</span>,              <span class="co"># Nombre de la columna resultante</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    col1, col2, col3,             <span class="co"># Columnas a unir</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"_"</span>,                    <span class="co"># Separador</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove =</span> <span class="cn">TRUE</span>                 <span class="co"># ¿Eliminar columnas originales?</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="aplicación-práctica-completa" class="level1">
-<h1>Aplicación Práctica Completa</h1>
-<section id="caso-de-estudio-áreas-naturales-del-perú" class="level2">
-<h2 class="anchored" data-anchor-id="caso-de-estudio-áreas-naturales-del-perú">Caso de Estudio: Áreas Naturales del Perú</h2>
-<p>Objetivos:</p>
+<section id="ejercicios" class="level1">
+<h1>Ejercicios</h1>
 <ol type="1">
-<li>Separar ubicaciones políticas múltiples</li>
-<li>Separar fechas de modificación múltiples</li>
-<li>Limpiar texto de categorías</li>
-<li>Crear un dataset ordenado y listo para análisis</li>
+<li>Convertir un dataset de meses en columnas a formato largo.</li>
+<li>Regresar el resultado a formato ancho con <code>pivot_wider()</code>.</li>
+<li>Separar un identificador compuesto y volver a unirlo con <code>unite()</code>.</li>
 </ol>
 </section>
-<section id="paso-1-explorar-los-datos" class="level2">
-<h2 class="anchored" data-anchor-id="paso-1-explorar-los-datos">Paso 1: Explorar los Datos</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>, <span class="at">skip =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver estructura</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(anp)</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Examinar ubicaciones problemáticas</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>anp <span class="sc">|&gt;</span> <span class="fu">select</span>(ubicacion_politica) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="paso-2-separar-ubicaciones-múltiples" class="level2">
-<h2 class="anchored" data-anchor-id="paso-2-separar-ubicaciones-múltiples">Paso 2: Separar Ubicaciones Múltiples</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>anp_tidy <span class="ot">&lt;-</span> anp <span class="sc">|&gt;</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    ubicacion_politica,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" y |</span><span class="sc">\\</span><span class="st">, | Y "</span>    <span class="co"># Separadores múltiples</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>anp_tidy <span class="sc">|&gt;</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nombre_area, ubicacion_politica) <span class="sc">|&gt;</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(nombre_area, <span class="st">"Manu"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="paso-3-separar-fechas-múltiples" class="level2">
-<h2 class="anchored" data-anchor-id="paso-3-separar-fechas-múltiples">Paso 3: Separar Fechas Múltiples</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>anp_tidy <span class="ot">&lt;-</span> anp_tidy <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    fecha_promulgacion__modificacion,</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" </span><span class="sc">\\</span><span class="st">/ |</span><span class="sc">\\</span><span class="st">;|</span><span class="sc">\\</span><span class="st">-"</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    base_legal_modificacion,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">;|</span><span class="sc">\\</span><span class="st">/|</span><span class="sc">\\</span><span class="st">,"</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="paso-4-limpiar-y-transformar" class="level2">
-<h2 class="anchored" data-anchor-id="paso-4-limpiar-y-transformar">Paso 4: Limpiar y Transformar</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tm)  <span class="co"># Para removePunctuation, removeNumbers</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr.plus)  <span class="co"># Para str_extract_before/after</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>anp_clean <span class="ot">&lt;-</span> anp_tidy <span class="sc">|&gt;</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Limpiar categoría</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">categoria =</span> categoria <span class="sc">|&gt;</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>() <span class="sc">|&gt;</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">removeNumbers</span>() <span class="sc">|&gt;</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">removePunctuation</span>() <span class="sc">|&gt;</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_title</span>(),</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extraer tipo de documento</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">tipo_doc_crea =</span> <span class="fu">str_extract_before</span>(base_legal_creacion, <span class="st">"Nº"</span>),</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_doc_crea =</span> <span class="fu">str_extract_after</span>(base_legal_creacion, <span class="st">"Nº"</span>),</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Limpiar espacios en todas las columnas de texto</span></span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.character), str_squish)</span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="resultado-final-dataset-ordenado" class="level2">
-<h2 class="anchored" data-anchor-id="resultado-final-dataset-ordenado">Resultado Final: Dataset Ordenado</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar el resultado</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(anp_clean)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ahora podemos hacer análisis fácilmente</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>anp_clean <span class="sc">|&gt;</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ubicacion_politica) <span class="sc">|&gt;</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_areas =</span> <span class="fu">n_distinct</span>(nombre_area)) <span class="sc">|&gt;</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_areas))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="resumen-cuándo-pivotear" class="level1">
-<h1>Resumen: ¿Cuándo Pivotear?</h1>
-<section id="señales-de-que-necesitas-pivot_longer" class="level2">
-<h2 class="anchored" data-anchor-id="señales-de-que-necesitas-pivot_longer">Señales de que Necesitas pivot_longer()</h2>
-<div class="incremental">
-<ul class="incremental">
-<li>Los nombres de columnas son valores, no variables</li>
-<li>Tienes datos en formato “ancho”</li>
-<li>Ves patrones en nombres de columnas (año_2020, año_2021, etc.)</li>
-<li>Quieres graficar con ggplot2 y necesitas una variable categórica</li>
-<li>Necesitas filtrar o agrupar por lo que ahora son columnas</li>
-</ul>
-</div>
-</section>
-<section id="señales-de-que-necesitas-pivot_wider" class="level2">
-<h2 class="anchored" data-anchor-id="señales-de-que-necesitas-pivot_wider">Señales de que Necesitas pivot_wider()</h2>
-<div class="incremental">
-<ul class="incremental">
-<li>Quieres crear una tabla de resumen legible</li>
-<li>Necesitas comparar valores lado a lado</li>
-<li>Vas a exportar a Excel para presentación</li>
-<li>Tienes múltiples observaciones por fila que deberían ser columnas</li>
-</ul>
-</div>
-</section>
-<section id="ancho-vs.-largo-no-es-absoluto" class="level2">
-<h2 class="anchored" data-anchor-id="ancho-vs.-largo-no-es-absoluto">Ancho vs.&nbsp;Largo: No es Absoluto</h2>
-<div class="important">
-<p>Los datasets no son inherentemente “anchos” o “largos”. Son más anchos o más largos dependiendo de:</p>
-<ul>
-<li>El análisis que quieres hacer</li>
-<li>La visualización que quieres crear</li>
-<li>Las operaciones que necesitas realizar</li>
-</ul>
-</div>
-</section>
-</section>
-<section id="ejercicios-prácticos" class="level1">
-<h1>Ejercicios Prácticos</h1>
-<section id="ejercicio-1-bci---básico" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-1-bci---básico">Ejercicio 1: BCI - Básico</h2>
-<div class="question">
-<ol type="1">
-<li>Carga los datos BCI del paquete vegan</li>
-<li>Convierte a formato largo</li>
-<li>Filtra especies con abundancia mayor a 10</li>
-<li>¿Cuántas observaciones quedan?</li>
-<li>¿Cuál es la especie más abundante?</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-2-pivotear-ida-y-vuelta" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-2-pivotear-ida-y-vuelta">Ejercicio 2: Pivotear Ida y Vuelta</h2>
-<div class="question">
-<ol type="1">
-<li>Crea un dataset simple con 3 países y 4 años (formato ancho)</li>
-<li>Pivotea a formato largo</li>
-<li>Calcula la media por país</li>
-<li>Vuelve a pivotear a formato ancho</li>
-<li>Verifica que obtienes el dataset original</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-3-áreas-naturales---avanzado" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-3-áreas-naturales---avanzado">Ejercicio 3: Áreas Naturales - Avanzado</h2>
-<div class="question">
-<ol type="1">
-<li>Importa <code>areas_naturales_peru.xlsx</code></li>
-<li>Separa ubicaciones políticas múltiples</li>
-<li>Cuenta áreas por departamento</li>
-<li>Crea una tabla ancha con categorías como columnas</li>
-<li>¿Qué departamento tiene más Parques Nacionales?</li>
-</ol>
-</div>
-</section>
-<section id="ejercicio-4-datos-propios" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-4-datos-propios">Ejercicio 4: Datos Propios</h2>
-<div class="question">
-<ol type="1">
-<li>Piensa en datos que uses regularmente</li>
-<li>¿Están en formato ordenado?</li>
-<li>¿Qué transformaciones necesitarían?</li>
-<li>Bosqueja el código necesario para ordenarlos</li>
-</ol>
-</div>
-</section>
-</section>
-<section id="consejos-y-mejores-prácticas" class="level1">
-<h1>Consejos y Mejores Prácticas</h1>
-<section id="consejos-para-pivotear" class="level2">
-<h2 class="anchored" data-anchor-id="consejos-para-pivotear">Consejos para Pivotear</h2>
-<div class="incremental">
-<ol class="incremental" type="1">
-<li><strong>Explora primero</strong>: Usa <code>head()</code>, <code>glimpse()</code>, <code>names()</code> antes de pivotear</li>
-<li><strong>Prueba con subset</strong>: Usa <code>slice(1:10)</code> para probar el código con pocos datos</li>
-<li><strong>Verifica tipos</strong>: Usa <code>names_transform</code> para convertir tipos automáticamente</li>
-<li><strong>Maneja NA</strong>: Decide si usar <code>values_drop_na</code> o <code>values_fill</code></li>
-<li><strong>Nombra bien</strong>: Usa nombres descriptivos para <code>names_to</code> y <code>values_to</code></li>
-</ol>
-</div>
-</section>
-<section id="errores-comunes" class="level2">
-<h2 class="anchored" data-anchor-id="errores-comunes">Errores Comunes</h2>
-<div class="incremental">
-<ol class="incremental" type="1">
-<li><strong>Olvidar el pipe</strong>: Recuerda usar <code>|&gt;</code> o <code>%&gt;%</code></li>
-<li><strong>Tipo de dato incorrecto</strong>: Las columnas pivoteadas son siempre character por defecto</li>
-<li><strong>Separadores complejos</strong>: Usa regex para patrones múltiples</li>
-<li><strong>Valores duplicados</strong>: <code>pivot_wider()</code> falla si hay duplicados - usa <code>values_fn</code></li>
-<li><strong>Columnas sin nombre</strong>: Asegúrate que todas las columnas tengan nombre</li>
-</ol>
-</div>
-</section>
-<section id="debugging-de-pivots" class="level2">
-<h2 class="anchored" data-anchor-id="debugging-de-pivots">Debugging de Pivots</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Ver qué columnas seleccionas</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"año_"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>()</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Pivotar subset pequeño</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(...)</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Verificar tipos</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>data_pivoted <span class="sc">|&gt;</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Buscar duplicados antes de pivot_wider</span></span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(id_var, categoria_var) <span class="sc">|&gt;</span></span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="recapitulación" class="level1">
-<h1>Recapitulación</h1>
-<section id="conceptos-clave" class="level2">
-<h2 class="anchored" data-anchor-id="conceptos-clave">Conceptos Clave</h2>
-<div class="recap">
-<ul>
-<li><strong>Tidy data</strong> = cada variable es una columna, cada observación es una fila</li>
-<li><code>pivot_longer()</code> convierte datos anchos a largos</li>
-<li><code>pivot_wider()</code> convierte datos largos a anchos</li>
-<li><code>separate()</code> divide una columna en múltiples</li>
-<li><code>separate_rows()</code> divide y crea nuevas filas</li>
-<li><code>unite()</code> combina múltiples columnas</li>
-<li>Usa <code>names_transform</code> para convertir tipos de datos</li>
-<li>Usa <code>values_fill</code> para manejar valores faltantes</li>
-</ul>
-</div>
-</section>
-<section id="flujo-de-trabajo-típico" class="level2">
-<h2 class="anchored" data-anchor-id="flujo-de-trabajo-típico">Flujo de Trabajo Típico</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flujo completo de ordenamiento</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>datos_ordenados <span class="ot">&lt;-</span> datos_crudos <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Limpiar nombres</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Pivotar si es necesario</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(...) <span class="sc">|&gt;</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Separar columnas complejas</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(...) <span class="sc">|&gt;</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Limpiar y transformar</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(...) <span class="sc">|&gt;</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5. Filtrar valores problemáticos</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(...))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="recursos-adicionales" class="level2">
-<h2 class="anchored" data-anchor-id="recursos-adicionales">Recursos Adicionales</h2>
-<ul>
-<li><a href="https://vita.had.co.nz/papers/tidy-data.pdf">Tidy Data paper</a> - Artículo original</li>
-<li><a href="https://tidyr.tidyverse.org/">tidyr documentation</a> - Documentación oficial</li>
-<li><a href="https://r4ds.hadley.nz/data-tidy">R for Data Science - Tidy Data</a> - Capítulo del libro</li>
-<li><a href="https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf">tidyr cheatsheet</a> - Hoja de referencia</li>
-</ul>
-</section>
-<section id="próximos-pasos" class="level2">
-<h2 class="anchored" data-anchor-id="próximos-pasos">Próximos Pasos</h2>
-<p>En la siguiente sesión aprenderemos sobre <strong>datos espaciales con sf</strong>:</p>
-<ul>
-<li>Estructuras de datos espaciales</li>
-<li>Lectura/escritura de formatos geoespaciales</li>
-<li>Integración de sf con tidyverse</li>
-<li>Visualización de mapas</li>
-<li>Operaciones espaciales básicas</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Los principios de tidy data también aplican a datos espaciales!</p>
-</div>
-</div>
+<section id="resultado-esperado" class="level1">
+<h1>Resultado esperado</h1>
+<p>Preparar datos en formato tidy con transformaciones reproducibles.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

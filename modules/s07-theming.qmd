@@ -1,6 +1,6 @@
 ---
-title: "tidyr - Organización de Datos"
-subtitle: "<span class='code'>Sesión 4</span>"
+title: "Theming y estilo de graficos (complementario)"
+subtitle: "<span class='code'>Sesion complementaria</span>"
 date: "2026-02"
 image: "images/04-theming.png"
 tbl-colwidths: [5,20,75]
@@ -8,199 +8,44 @@ tbl-colwidths: [5,20,75]
 
 # Esquema
 
--   Principios de Tidy Data
--   `pivot_longer()`: Datos largos
--   `pivot_wider()`: Datos anchos
--   `separate()` y `unite()`: Separar y unir columnas
--   Aplicaciones prácticas
+- Principios de estilo visual
+- Temas base en `ggplot2`
+- Ajustes de tipografia y colores
+- Guia de consistencia visual
 
-# Tidy Data
+# Objetivo de la sesion
 
-## Principios
+Aplicar reglas de estilo en graficos para mantener legibilidad y consistencia visual.
 
-Un dataset es "tidy" cuando:
+# Datos usados
 
-1. Cada variable es una columna
-2. Cada observación es una fila
-3. Cada valor tiene su propia celda
+- `data/poblacion_peru.csv`
 
-## ¿Por qué Tidy Data?
-
-- Facilita el análisis y visualización
-- Estructura consistente
-- Funciona mejor con tidyverse
-
-# pivot_longer() - Datos Largos
-
-Convierte datos anchos a formato largo.
-
-## Ejemplo básico
+# Practica guiada
 
 ```r
-library(tidyr)
+library(tidyverse)
+library(janitor)
 
-# De ancho a largo
-data_wide <- data.frame(
-  pais = c("Peru", "Chile"),
-  año_2020 = c(100, 150),
-  año_2021 = c(120, 160)
-)
-
-data_long <- data_wide |>
-  pivot_longer(
-    cols = starts_with("año"),
-    names_to = "año",
-    values_to = "valor"
-  )
+pob <- read_csv("data/poblacion_peru.csv") |>
+  clean_names() |>
+  mutate(total = hombres + mujeres)
 ```
 
-## Ejemplo con datos reales
-
 ```r
-library(vegan)
-data("BCI")
-
-# Convertir a formato largo
-bci_long <- BCI |>
-  as_tibble(rownames = "plot_n") |>
-  pivot_longer(
-    -plot_n,
-    names_to = "especies",
-    values_to = "abundancia"
-  )
-```
-
-## Filtrar ceros
-
-```r
-bci_long_clean <- bci_long |>
-  filter(abundancia != 0)
-```
-
-# pivot_wider() - Datos Anchos
-
-Convierte datos largos a formato ancho.
-
-## Ejemplo básico
-
-```r
-# De largo a ancho
-data_long |>
-  pivot_wider(
-    names_from = año,
-    values_from = valor
-  )
-```
-
-## Rellenar valores faltantes
-
-```r
-bci_long_clean |>
-  pivot_wider(
-    names_from = especies,
-    values_from = abundancia,
-    values_fill = 0
-  )
-```
-
-# separate() y unite()
-
-## separate() - Separar columnas
-
-```r
-# Ejemplo: separar fecha
-data <- data.frame(
-  fecha = c("2021-01-15", "2021-02-20")
-)
-
-data |>
-  separate(
-    fecha,
-    into = c("año", "mes", "dia"),
-    sep = "-"
-  )
-```
-
-## separate_rows() - Separar y expandir
-
-```r
-anp |>
-  separate_rows(
-    ubicacion_politica,
-    sep = " y |\\, | Y "
-  )
-```
-
-## unite() - Unir columnas
-
-```r
-# Unir columnas
-data |>
-  unite(
-    "fecha_completa",
-    año, mes, dia,
-    sep = "-"
-  )
-```
-
-# Aplicación Práctica
-
-## Limpieza de datos ANP
-
-```r
-anp_clean <- anp |>
-  # Separar ubicaciones múltiples
-  separate_rows(ubicacion_politica, sep = " y |\\, | Y ") |>
-  # Separar fechas múltiples
-  separate_rows(
-    fecha_promulgacion__modificacion,
-    sep = " \\/ |\\;|\\-"
-  ) |>
-  # Limpiar texto
-  mutate(
-    categoria = str_squish(categoria) |>
-      removeNumbers() |>
-      removePunctuation() |>
-      str_to_title()
-  )
+ggplot(pob, aes(x = reorder(departamento, total), y = total)) +
+  geom_col(fill = "#2C3E50") +
+  coord_flip() +
+  labs(title = "Poblacion total por departamento") +
+  theme_minimal(base_size = 13)
 ```
 
 # Ejercicios
 
-## Ejercicio 1
+1. Cambiar paleta de colores con contraste alto.
+2. Ajustar titulo, subtitulo y fuente.
+3. Mover leyenda y limpiar lineas de grilla.
 
-::: question
-- Carga los datos BCI del paquete vegan
-- Convierte los datos a formato largo
-- Filtra las especies con abundancia mayor a 10
-- ¿Cuántas observaciones quedan?
-:::
+# Resultado esperado
 
-## Ejercicio 2
-
-::: question
-- Crea un dataset simple con datos en formato ancho (3 columnas de años)
-- Convierte a formato largo
-- Vuelve a convertir a formato ancho
-- Verifica que obtienes el mismo resultado inicial
-:::
-
-## Ejercicio 3
-
-::: question
-- Trabaja con el dataset de áreas naturales
-- Separa las ubicaciones políticas que tienen múltiples departamentos
-- Cuenta cuántas áreas hay por departamento
-- ¿Qué departamento tiene más áreas naturales protegidas?
-:::
-
-# Recapitulación
-
-::: recap
-- Tidy data tiene cada variable en una columna y cada observación en una fila
-- `pivot_longer()` convierte datos anchos a largos
-- `pivot_wider()` convierte datos largos a anchos
-- `separate()` y `separate_rows()` dividen columnas
-- `unite()` combina columnas
-- Estos verbos son esenciales para preparar datos para análisis
-:::
+Generar graficos con un estilo coherente con el resto del curso.

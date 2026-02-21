@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-02-01">
 
-<title>tidyr - Organización de Datos</title>
+<title>Theming y estilo de graficos (complementario)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="..//images/logo1.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -105,15 +104,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="tidyr - Organización de Datos">
-<meta property="og:description" content="Sesión 4">
+<meta property="og:title" content="Theming y estilo de graficos (complementario)">
+<meta property="og:description" content="Sesion complementaria">
 <meta property="og:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/04-theming.png">
 <meta property="og:image:height" content="1688">
 <meta property="og:image:width" content="2189">
-<meta name="twitter:title" content="tidyr - Organización de Datos">
-<meta name="twitter:description" content="Sesión 4">
+<meta name="twitter:title" content="Theming y estilo de graficos (complementario)">
+<meta name="twitter:description" content="Sesion complementaria">
 <meta name="twitter:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/04-theming.png">
-<meta name="twitter:creator" content="@PaulESantosr">
+<meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:image-height" content="1688">
 <meta name="twitter:image-width" content="2189">
 <meta name="twitter:card" content="summary_large_image">
@@ -125,11 +124,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../images/logo1.png" alt="" class="navbar-logo">
-    </a>
-  </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -137,75 +131,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-information" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Information</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-información" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Información</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-information">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-información">    
         <li>
     <a class="dropdown-item" href="../prework.html">
- <span class="dropdown-text">Prework</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../schedule.html">
- <span class="dropdown-text">Schedule</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../team.html">
- <span class="dropdown-text">Teaching Team</span></a>
+ <span class="dropdown-text">Preparación</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sessions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Sessions</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sesiones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sesiones</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-sessions">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sesiones">    
+        <li>
+    <a class="dropdown-item" href="../modules/s00-bienvenida-intro-r.html">
+ <span class="dropdown-text">Introducción</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/s01-fundamentals.html">
- <span class="dropdown-text">Fundamentals &amp; Workflows</span></a>
+ <span class="dropdown-text">Fundamentos de R y RStudio</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s03-text.html">
- <span class="dropdown-text">Working with Text</span></a>
+    <a class="dropdown-item" href="../modules/s03-import-data.html">
+ <span class="dropdown-text">Importar y Revisar Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s05-colors.html">
- <span class="dropdown-text">Working with Colors</span></a>
+    <a class="dropdown-item" href="../modules/s05-dplyr.html">
+ <span class="dropdown-text">dplyr - Manipulación de Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s07-theming.html">
- <span class="dropdown-text">Working with Theming</span></a>
+    <a class="dropdown-item" href="../modules/s07-tidying-data.html">
+ <span class="dropdown-text">tidyr - Organización de Datos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s06-joins.html">
+ <span class="dropdown-text">Unión de Datos (Joins)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s08-spatial.html">
+ <span class="dropdown-text">Datos Espaciales con sf</span></a>
   </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-downloads" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-descargas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-download" role="img">
 </i> 
- <span class="menu-text">Downloads</span>
+ <span class="menu-text">Descargas</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-downloads">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">    
         <li>
     <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-materials.zip">
- <span class="dropdown-text">All Course Materials</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-data.zip">
- <span class="dropdown-text">Data Sets</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-fonts.zip">
- <span class="dropdown-text">Font Files</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-scripts.zip">
- <span class="dropdown-text">Scripts</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-exercises.zip">
- <span class="dropdown-text">Exercises</span></a>
+ <span class="dropdown-text">Todos los Materiales del Curso</span></a>
   </li>  
     </ul>
   </li>
@@ -215,14 +197,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Licencia</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/posit-conf-2023/dataviz-ggplot2"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/pefrens/introduccion_r"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text">GitHub</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://posit.cloud/spaces/397253"> <i class="bi bi-cloud-fill" role="img">
-</i> 
-<span class="menu-text">Posit Cloud</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -241,39 +218,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
-  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data">Tidy Data</a>
-  <ul class="collapse">
-  <li><a href="#principios" id="toc-principios" class="nav-link" data-scroll-target="#principios">Principios</a></li>
-  <li><a href="#por-qué-tidy-data" id="toc-por-qué-tidy-data" class="nav-link" data-scroll-target="#por-qué-tidy-data">¿Por qué Tidy Data?</a></li>
-  </ul></li>
-  <li><a href="#pivot_longer---datos-largos" id="toc-pivot_longer---datos-largos" class="nav-link" data-scroll-target="#pivot_longer---datos-largos">pivot_longer() - Datos Largos</a>
-  <ul class="collapse">
-  <li><a href="#ejemplo-básico" id="toc-ejemplo-básico" class="nav-link" data-scroll-target="#ejemplo-básico">Ejemplo básico</a></li>
-  <li><a href="#ejemplo-con-datos-reales" id="toc-ejemplo-con-datos-reales" class="nav-link" data-scroll-target="#ejemplo-con-datos-reales">Ejemplo con datos reales</a></li>
-  <li><a href="#filtrar-ceros" id="toc-filtrar-ceros" class="nav-link" data-scroll-target="#filtrar-ceros">Filtrar ceros</a></li>
-  </ul></li>
-  <li><a href="#pivot_wider---datos-anchos" id="toc-pivot_wider---datos-anchos" class="nav-link" data-scroll-target="#pivot_wider---datos-anchos">pivot_wider() - Datos Anchos</a>
-  <ul class="collapse">
-  <li><a href="#ejemplo-básico-1" id="toc-ejemplo-básico-1" class="nav-link" data-scroll-target="#ejemplo-básico-1">Ejemplo básico</a></li>
-  <li><a href="#rellenar-valores-faltantes" id="toc-rellenar-valores-faltantes" class="nav-link" data-scroll-target="#rellenar-valores-faltantes">Rellenar valores faltantes</a></li>
-  </ul></li>
-  <li><a href="#separate-y-unite" id="toc-separate-y-unite" class="nav-link" data-scroll-target="#separate-y-unite">separate() y unite()</a>
-  <ul class="collapse">
-  <li><a href="#separate---separar-columnas" id="toc-separate---separar-columnas" class="nav-link" data-scroll-target="#separate---separar-columnas">separate() - Separar columnas</a></li>
-  <li><a href="#separate_rows---separar-y-expandir" id="toc-separate_rows---separar-y-expandir" class="nav-link" data-scroll-target="#separate_rows---separar-y-expandir">separate_rows() - Separar y expandir</a></li>
-  <li><a href="#unite---unir-columnas" id="toc-unite---unir-columnas" class="nav-link" data-scroll-target="#unite---unir-columnas">unite() - Unir columnas</a></li>
-  </ul></li>
-  <li><a href="#aplicación-práctica" id="toc-aplicación-práctica" class="nav-link" data-scroll-target="#aplicación-práctica">Aplicación Práctica</a>
-  <ul class="collapse">
-  <li><a href="#limpieza-de-datos-anp" id="toc-limpieza-de-datos-anp" class="nav-link" data-scroll-target="#limpieza-de-datos-anp">Limpieza de datos ANP</a></li>
-  </ul></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a>
-  <ul class="collapse">
-  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1">Ejercicio 1</a></li>
-  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2">Ejercicio 2</a></li>
-  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3">Ejercicio 3</a></li>
-  </ul></li>
-  <li><a href="#recapitulación" id="toc-recapitulación" class="nav-link" data-scroll-target="#recapitulación">Recapitulación</a></li>
+  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
+  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
+  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s07-theming.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -282,8 +231,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">tidyr - Organización de Datos</h1>
-<p class="subtitle lead"><span class="code">Sesión 4</span></p>
+<h1 class="title">Theming y estilo de graficos (complementario)</h1>
+<p class="subtitle lead"><span class="code">Sesion complementaria</span></p>
 </div>
 
 
@@ -309,200 +258,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="esquema" class="level1">
 <h1>Esquema</h1>
 <ul>
-<li>Principios de Tidy Data</li>
-<li><code>pivot_longer()</code>: Datos largos</li>
-<li><code>pivot_wider()</code>: Datos anchos</li>
-<li><code>separate()</code> y <code>unite()</code>: Separar y unir columnas</li>
-<li>Aplicaciones prácticas</li>
+<li>Principios de estilo visual</li>
+<li>Temas base en <code>ggplot2</code></li>
+<li>Ajustes de tipografia y colores</li>
+<li>Guia de consistencia visual</li>
 </ul>
 </section>
-<section id="tidy-data" class="level1">
-<h1>Tidy Data</h1>
-<section id="principios" class="level2">
-<h2 class="anchored" data-anchor-id="principios">Principios</h2>
-<p>Un dataset es “tidy” cuando:</p>
-<ol type="1">
-<li>Cada variable es una columna</li>
-<li>Cada observación es una fila</li>
-<li>Cada valor tiene su propia celda</li>
-</ol>
+<section id="objetivo-de-la-sesion" class="level1">
+<h1>Objetivo de la sesion</h1>
+<p>Aplicar reglas de estilo en graficos para mantener legibilidad y consistencia visual.</p>
 </section>
-<section id="por-qué-tidy-data" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-tidy-data">¿Por qué Tidy Data?</h2>
+<section id="datos-usados" class="level1">
+<h1>Datos usados</h1>
 <ul>
-<li>Facilita el análisis y visualización</li>
-<li>Estructura consistente</li>
-<li>Funciona mejor con tidyverse</li>
+<li><code>data/poblacion_peru.csv</code></li>
 </ul>
 </section>
-</section>
-<section id="pivot_longer---datos-largos" class="level1">
-<h1>pivot_longer() - Datos Largos</h1>
-<p>Convierte datos anchos a formato largo.</p>
-<section id="ejemplo-básico" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo-básico">Ejemplo básico</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># De ancho a largo</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pais =</span> <span class="fu">c</span>(<span class="st">"Peru"</span>, <span class="st">"Chile"</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  año<span class="at">_2020 =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  año<span class="at">_2021 =</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">160</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_wide <span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"año"</span>),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"año"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"valor"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="ejemplo-con-datos-reales" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo-con-datos-reales">Ejemplo con datos reales</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"BCI"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir a formato largo</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bci_long <span class="ot">&lt;-</span> BCI <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"plot_n"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>plot_n,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"especies"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"abundancia"</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="filtrar-ceros" class="level2">
-<h2 class="anchored" data-anchor-id="filtrar-ceros">Filtrar ceros</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bci_long_clean <span class="ot">&lt;-</span> bci_long <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(abundancia <span class="sc">!=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="pivot_wider---datos-anchos" class="level1">
-<h1>pivot_wider() - Datos Anchos</h1>
-<p>Convierte datos largos a formato ancho.</p>
-<section id="ejemplo-básico-1" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo-básico-1">Ejemplo básico</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># De largo a ancho</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_long <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> año,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> valor</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="rellenar-valores-faltantes" class="level2">
-<h2 class="anchored" data-anchor-id="rellenar-valores-faltantes">Rellenar valores faltantes</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bci_long_clean <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> especies,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> abundancia,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="separate-y-unite" class="level1">
-<h1>separate() y unite()</h1>
-<section id="separate---separar-columnas" class="level2">
-<h2 class="anchored" data-anchor-id="separate---separar-columnas">separate() - Separar columnas</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo: separar fecha</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fecha =</span> <span class="fu">c</span>(<span class="st">"2021-01-15"</span>, <span class="st">"2021-02-20"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    fecha,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"año"</span>, <span class="st">"mes"</span>, <span class="st">"dia"</span>),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"-"</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="separate_rows---separar-y-expandir" class="level2">
-<h2 class="anchored" data-anchor-id="separate_rows---separar-y-expandir">separate_rows() - Separar y expandir</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>anp <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ubicacion_politica,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" y |</span><span class="sc">\\</span><span class="st">, | Y "</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="unite---unir-columnas" class="level2">
-<h2 class="anchored" data-anchor-id="unite---unir-columnas">unite() - Unir columnas</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unir columnas</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"fecha_completa"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    año, mes, dia,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"-"</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="aplicación-práctica" class="level1">
-<h1>Aplicación Práctica</h1>
-<section id="limpieza-de-datos-anp" class="level2">
-<h2 class="anchored" data-anchor-id="limpieza-de-datos-anp">Limpieza de datos ANP</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>anp_clean <span class="ot">&lt;-</span> anp <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separar ubicaciones múltiples</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(ubicacion_politica, <span class="at">sep =</span> <span class="st">" y |</span><span class="sc">\\</span><span class="st">, | Y "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separar fechas múltiples</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    fecha_promulgacion__modificacion,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" </span><span class="sc">\\</span><span class="st">/ |</span><span class="sc">\\</span><span class="st">;|</span><span class="sc">\\</span><span class="st">-"</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Limpiar texto</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">categoria =</span> <span class="fu">str_squish</span>(categoria) <span class="sc">|&gt;</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">removeNumbers</span>() <span class="sc">|&gt;</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">removePunctuation</span>() <span class="sc">|&gt;</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_title</span>()</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
+<section id="practica-guiada" class="level1">
+<h1>Practica guiada</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pob <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/poblacion_peru.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> hombres <span class="sc">+</span> mujeres)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pob, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(departamento, total), <span class="at">y =</span> total)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#2C3E50"</span>) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Poblacion total por departamento"</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="ejercicios" class="level1">
 <h1>Ejercicios</h1>
-<section id="ejercicio-1" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
-<div class="question">
-<ul>
-<li>Carga los datos BCI del paquete vegan</li>
-<li>Convierte los datos a formato largo</li>
-<li>Filtra las especies con abundancia mayor a 10</li>
-<li>¿Cuántas observaciones quedan?</li>
-</ul>
-</div>
+<ol type="1">
+<li>Cambiar paleta de colores con contraste alto.</li>
+<li>Ajustar titulo, subtitulo y fuente.</li>
+<li>Mover leyenda y limpiar lineas de grilla.</li>
+</ol>
 </section>
-<section id="ejercicio-2" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h2>
-<div class="question">
-<ul>
-<li>Crea un dataset simple con datos en formato ancho (3 columnas de años)</li>
-<li>Convierte a formato largo</li>
-<li>Vuelve a convertir a formato ancho</li>
-<li>Verifica que obtienes el mismo resultado inicial</li>
-</ul>
-</div>
-</section>
-<section id="ejercicio-3" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-3">Ejercicio 3</h2>
-<div class="question">
-<ul>
-<li>Trabaja con el dataset de áreas naturales</li>
-<li>Separa las ubicaciones políticas que tienen múltiples departamentos</li>
-<li>Cuenta cuántas áreas hay por departamento</li>
-<li>¿Qué departamento tiene más áreas naturales protegidas?</li>
-</ul>
-</div>
-</section>
-</section>
-<section id="recapitulación" class="level1">
-<h1>Recapitulación</h1>
-<div class="recap">
-<ul>
-<li>Tidy data tiene cada variable en una columna y cada observación en una fila</li>
-<li><code>pivot_longer()</code> convierte datos anchos a largos</li>
-<li><code>pivot_wider()</code> convierte datos largos a anchos</li>
-<li><code>separate()</code> y <code>separate_rows()</code> dividen columnas</li>
-<li><code>unite()</code> combina columnas</li>
-<li>Estos verbos son esenciales para preparar datos para análisis</li>
-</ul>
-</div>
+<section id="resultado-esperado" class="level1">
+<h1>Resultado esperado</h1>
+<p>Generar graficos con un estilo coherente con el resto del curso.</p>
 
 
 </section>
