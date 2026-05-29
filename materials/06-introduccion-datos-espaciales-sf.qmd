@@ -1,0 +1,229 @@
+---
+title: "Introducción a la Programación con R - Tidyverse"
+subtitle: "Sesión 6: Introducción a la manipulación de datos espaciales con sf"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
+format:
+  revealjs:
+    theme: slides.scss
+    footer: '[Paul Efren Santos Andrade](https://paulefrensa.rbind.io) // Introducción a R - Tidyverse'
+    transition: fade
+    progress: true
+    multiplex: false
+    preview-links: true
+    scrollable: false
+    hide-inactive-cursor: true
+    highlight-style: printing
+    pause: true
+    slide-number: true
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 10
+  fig-height: 6
+  fig-align: center
+---
+
+## Esquema de la sesion {.smaller}
+
+::: incremental
+- Que es `sf` y por que se usa para datos vectoriales
+- Estructura `sfg` / `sfc` / `sf`
+- Cargar y explorar capas espaciales
+- Manipular atributos y geometria con `dplyr + sf`
+- CRS: inspeccionar y transformar coordenadas
+- Join espacial y resumen por grupos
+:::
+
+## Basado en Geocomputation with R
+
+Esta sesion adapta conceptos introductorios de:
+
+- https://r.geocompx.org/
+- Capitulo 2 (`sf` y datos vectoriales)
+- Capitulo 3 (operaciones con objetos espaciales)
+
+# Preparacion {background-color="#2C3E50"}
+
+## Paquetes
+
+```{r}
+library(tidyverse)
+library(sf)
+```
+
+## Cargar datos del curso
+
+```{r}
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+```
+
+## Primera inspeccion
+
+```{r}
+departamentos
+
+```
+
+::: callout-note
+Un objeto `sf` es una tabla con atributos + una columna de geometria.
+:::
+
+## Primera inspeccion
+
+```{r}
+st_geometry_type(departamentos) |> table()
+
+```
+## Primera inspeccion
+
+```{r}
+
+st_crs(departamentos)
+```
+
+# Modelo mental de sf {background-color="#2C3E50"}
+
+## Jerarquia de objetos
+
+::: incremental
+- `sfg`: una geometria individual (ej. un POINT)
+- `sfc`: una coleccion de geometrias con CRS
+- `sf`: data frame + columna `geometry`
+:::
+
+## Crear puntos desde coordenadas
+
+```{r}
+ciudades <- tibble(
+  ciudad = c("Lima", "Cusco", "Arequipa"),
+  lon = c(-77.0428, -71.9675, -71.5350),
+  lat = c(-12.0464, -13.5319, -16.4090)
+)
+
+ciudades_sf <- st_as_sf(ciudades, coords = c("lon", "lat"), crs = 4326)
+ciudades_sf <- st_transform(ciudades_sf, st_crs(departamentos))
+ciudades_sf
+```
+
+## Plot rapido de geometria
+
+```{r}
+plot(st_geometry(departamentos), col = "grey92", border = "white")
+plot(st_geometry(ciudades_sf), add = TRUE, pch = 16, col = "red")
+```
+
+# Manipulacion con dplyr + sf {background-color="#2C3E50"}
+
+## Verbos sobre objetos sf
+
+```{r}
+departamentos |>
+  select(ccdd, nombdep) |>
+  slice_head(n = 5)
+```
+
+```{r}
+departamentos |>
+  filter(ccdd %in% c("08", "04", "15")) |>
+  arrange(nombdep)
+```
+
+## Crear variables geometricas
+
+```{r}
+depto_area <- departamentos |>
+  mutate(area_m2 = st_area(geom),
+         area_km2 = as.numeric(area_m2) / 1e6) |>
+  select(ccdd, nombdep, area_km2)
+
+depto_area |> slice_head(n = 5)
+```
+
+::: callout-tip
+`st_area()` devuelve unidades. Conviene convertir explicitamente cuando quieras operar o exportar.
+:::
+
+# CRS y proyecciones {background-color="#2C3E50"}
+
+## Revisar CRS
+
+```{r}
+st_crs(departamentos)
+```
+
+## Transformar coordenadas
+
+```{r}
+departamentos_utm18s <- st_transform(departamentos, 32718)
+
+departamentos_utm18s |>
+  mutate(area_km2_utm = as.numeric(st_area(geom)) / 1e6) |>
+  select(nombdep, area_km2_utm) |>
+  slice_head(n = 5)
+```
+
+::: callout-warning
+Para distancias y areas, evita usar coordenadas geograficas sin proyectar.
+:::
+
+# Operaciones espaciales {background-color="#2C3E50"}
+
+## Join espacial: ciudades dentro de departamentos
+
+```{r}
+ciudades_deptos <- st_join(
+  ciudades_sf,
+  departamentos |> select(ccdd, nombdep, geom),
+  join = st_within,
+  left = FALSE
+)
+
+ciudades_deptos |> select(ciudad, nombdep)
+```
+
+## Resumen espacial por departamento
+
+```{r}
+n_ciudades <- ciudades_deptos |>
+  st_drop_geometry() |>
+  count(nombdep, name = "n_ciudades")
+
+n_ciudades |> arrange(desc(n_ciudades))
+```
+
+## Mapa rapido con ggplot2
+
+```{r}
+ggplot() +
+  geom_sf(data = departamentos, fill = "grey95", color = "white", linewidth = 0.2) +
+  geom_sf(data = ciudades_sf, color = "#d7301f", size = 2.2) +
+  labs(
+    title = "Peru: departamentos y ciudades de ejemplo",
+    subtitle = "Capa poligonal + capa puntual en sf"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+# Cierre {background-color="#2C3E50"}
+
+## Ideas clave
+
+::: incremental
+- `sf` integra geometrias y atributos en una sola estructura
+- Se manipula con verbos de `dplyr` casi igual que un tibble
+- Antes de medir, revisa y transforma el CRS
+- `st_join()` habilita analisis entre capas (punto, linea, poligono)
+:::
+
+## Proximos pasos
+
+1. Agregar validacion de geometria con `st_is_valid()` y `st_make_valid()`.
+2. Explorar operaciones como `st_intersection()`, `st_buffer()` y `st_union()`.
+3. Pasar a mapas tematicos con `geom_sf(aes(fill = ...))`.
