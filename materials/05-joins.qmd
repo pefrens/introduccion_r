@@ -1,7 +1,7 @@
 ---
 title: "Introducción a la Programación con R - Tidyverse"
 subtitle: "Sesión 5: Unión de Datos (Joins)"
-author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
 format:
   revealjs:
     theme: slides.scss
@@ -69,7 +69,6 @@ Dos categorías principales:
 
 ```{r}
 library(tidyverse)
-library(sf)
 library(janitor)
 
 ```
@@ -92,10 +91,15 @@ library(janitor)
 ::: {.columns}
 ::: {.column width="50%"}
 
-Ejemplo en `departamento`:
+Ejemplo en `departamentos`:
 
 ```{r}
-departamentos <- read_csv("data/departamento.csv")
+departamentos <- tribble(
+  ~ccdd, ~nombdep,
+  "04",  "AREQUIPA",
+  "08",  "CUSCO",
+  "15",  "LIMA"
+)
 departamentos
 ```
 :::
@@ -112,7 +116,13 @@ departamentos
 Cuando necesitas **múltiples variables** para identificar una observación:
 
 ```{r}
-provincias <- read_csv("data/provincia.csv")
+provincias <- tribble(
+  ~ccdd, ~ccpp, ~nombprov,
+  "04",  "01",  "AREQUIPA",
+  "08",  "01",  "CUSCO",
+  "08",  "02",  "ACOMAYO",
+  "15",  "01",  "LIMA"
+)
 provincias
 ```
 
@@ -126,7 +136,13 @@ provincias
 Cuando necesitas **múltiples variables** para identificar una observación:
 
 ```{r}
-distritos <-  read_csv("data/distritos.csv")
+distritos <- tribble(
+  ~ccdd, ~ccpp, ~ccdi, ~ubigeo,   ~nombdist,
+  "04",  "01",  "01",  "040101", "AREQUIPA",
+  "08",  "01",  "01",  "080101", "CUSCO",
+  "08",  "02",  "01",  "080201", "ACOMAYO",
+  "15",  "01",  "01",  "150101", "LIMA"
+)
 distritos
 ```
 
@@ -266,7 +282,7 @@ provincias |>
 ## Claves con nombres diferentes
 
 ```{r}
-provincias_2 <- sample_n(provincias, 15) |> 
+provincias_2 <- slice_sample(provincias, n = 3) |> 
   mutate(cod_dep = ccdd)
 provincias_2 |>
   left_join(departamentos, 
@@ -560,7 +576,7 @@ parties <- tibble(
 )
 
 employees <- tibble(
-  name = sample(babynames::babynames$name, 100),
+  name = paste0("persona_", 1:100),
   birthday = ymd("2022-01-01") + (sample(365, 100, replace = TRUE) - 1)
 )
 ```

@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="author" content="Paul Efren Santos Andrade // Febrero 2026">
+  <meta name="author" content="Paul Efren Santos Andrade // 2026">
   <title>Introducción a la Programación con R - Tidyverse</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -205,7 +205,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // Febrero 2026 
+<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // 2026 
 </div>
 </div>
 </div>
@@ -283,32 +283,12 @@
 <section id="cargar-paquetes" class="slide level2">
 <h2>Cargar paquetes</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.0     ✔ readr     2.1.6
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.2     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb4-2"><a></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'janitor'
-
-The following objects are masked from 'package:stats':
-
-    chisq.test, fisher.test</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Cargar datos de los planes urbanos</span></span>
-<span id="cb6-2"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/catalogo_planes.xlsx"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-3"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb2-4"><a></a><span class="co"># Cargar datos de los planes urbanos</span></span>
+<span id="cb2-5"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/catalogo_planes.xlsx"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -320,9 +300,9 @@ The following objects are masked from 'package:stats':
 <h2><code>filter()</code> - Filtrar filas</h2>
 <p>Selecciona filas que cumplen una o más condiciones:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Planes Urbanos</span></span>
-<span id="cb7-2"><a></a><span class="fu">filter</span>(planes,</span>
-<span id="cb7-3"><a></a>       departamento <span class="sc">==</span> <span class="st">"TUMBES"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># Planes Urbanos</span></span>
+<span id="cb3-2"><a></a><span class="fu">filter</span>(planes,</span>
+<span id="cb3-3"><a></a>       departamento <span class="sc">==</span> <span class="st">"TUMBES"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
   ubigeo departamento provincia             ambito     tipo_de_plan estado o_m  
@@ -339,37 +319,25 @@ The following objects are masked from 'package:stats':
 <section id="filter---filtrar-filas-1" class="slide level2">
 <h2><code>filter()</code> - Filtrar filas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.13.1, GDAL 3.11.4, PROJ 9.7.0; sf_use_s2() is TRUE</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>distrito <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DISTRITO.gpkg"</span>)</span>
-<span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a>distrito <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a></a>  <span class="fu">filter</span>( ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="co"># Cusco </span></span>
-<span id="cb11-5"><a></a>                      <span class="st">"04"</span>) <span class="co"># Arequipa</span></span>
-<span id="cb11-6"><a></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb5-2"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb5-3"><a></a></span>
+<span id="cb5-4"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a></a>  <span class="fu">filter</span>( ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="co"># Cusco </span></span>
+<span id="cb5-6"><a></a>                      <span class="st">"04"</span>) <span class="co"># Arequipa</span></span>
+<span id="cb5-7"><a></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 225 features and 12 fields
+<pre><code>Simple feature collection with 2 features and 6 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: -75.07333 ymin: -17.28501 xmax: -70.34507 ymax: -11.21229
 Geodetic CRS:  WGS 84
-# A tibble: 225 × 13
-   objectid ccdd  ccpp  ccdi  ubigeo nombdist       fuente periodo ccdd_c ccpp_c
- *    &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; 
- 1      338 04    01    03    040103 CAYMA          V Cen…       1 040    02    
- 2      339 04    01    04    040104 CERRO COLORADO V Cen…       1 040    02    
- 3      340 04    01    05    040105 CHARACATO      V Cen…       1 040    03    
- 4      343 04    01    08    040108 LA JOYA        V Cen…       1 040    04    
- 5      354 04    01    19    040119 SAN JUAN DE T… V Cen…       1 040    02    
- 6      355 04    01    20    040120 SANTA ISABEL … V Cen…       1 040    04    
- 7      356 04    01    21    040121 SANTA RITA DE… V Cen…       1 040    04    
- 8      424 04    06    05    040605 IRAY           V Cen…       1 040    05    
- 9      425 04    06    06    040606 RIO GRANDE     V Cen…       1 040    05    
-10      426 04    06    07    040607 SALAMANCA      V Cen…       1 040    05    
-# ℹ 215 more rows
-# ℹ 3 more variables: ccdi_c &lt;chr&gt;, fec_reg &lt;dttm&gt;, geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
+# A tibble: 2 × 7
+  objectid ccdd  nombdep  fuente                     periodo fec_reg            
+*    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                        &lt;int&gt; &lt;dttm&gt;             
+1        4 04    AREQUIPA V Censo Nacional Economico       1 2022-07-13 17:13:57
+2        8 08    CUSCO    V Censo Nacional Economico       1 2022-07-13 17:13:57
+# ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -453,12 +421,12 @@ Geodetic CRS:  WGS 84
 <h2>Operador <code>%in%</code></h2>
 <p>Para comparar con múltiples valores:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="co"># Áreas en varios departamentos (forma larga)</span></span>
-<span id="cb13-2"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
-<span id="cb13-3"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb13-4"><a></a><span class="fu">filter</span>(ccdd <span class="sc">==</span> <span class="st">"08"</span> <span class="sc">|</span> <span class="co"># CUSCO</span></span>
-<span id="cb13-5"><a></a>       ccdd <span class="sc">==</span> <span class="st">"05"</span> <span class="sc">|</span> <span class="co"># AYACUCHO</span></span>
-<span id="cb13-6"><a></a>       ccdd <span class="sc">==</span> <span class="st">"04"</span>)  <span class="co"># AREQUIPA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Áreas en varios departamentos (forma larga)</span></span>
+<span id="cb7-2"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb7-3"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a></a><span class="fu">filter</span>(ccdd <span class="sc">==</span> <span class="st">"08"</span> <span class="sc">|</span> <span class="co"># CUSCO</span></span>
+<span id="cb7-5"><a></a>       ccdd <span class="sc">==</span> <span class="st">"05"</span> <span class="sc">|</span> <span class="co"># AYACUCHO</span></span>
+<span id="cb7-6"><a></a>       ccdd <span class="sc">==</span> <span class="st">"04"</span>)  <span class="co"># AREQUIPA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 3 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -478,9 +446,9 @@ Geodetic CRS:  WGS 84
 <section id="operador-in-1" class="slide level2">
 <h2>Operador <code>%in%</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Forma más elegante con %in%</span></span>
-<span id="cb15-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb15-3"><a></a><span class="fu">filter</span>( ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"05"</span>, <span class="st">"04"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># Forma más elegante con %in%</span></span>
+<span id="cb9-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a></a><span class="fu">filter</span>( ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"05"</span>, <span class="st">"04"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 3 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -500,62 +468,21 @@ Geodetic CRS:  WGS 84
 <section id="valores-faltantes-na" class="slide level2">
 <h2>Valores faltantes (NA)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb17-2"><a></a>indicadores_anta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
-<span id="cb17-3"><a></a>                               <span class="at">skip =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb17-4"><a></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb17-5"><a></a><span class="co"># is.na() identifica valores faltantes</span></span>
-<span id="cb17-6"><a></a>indicadores_anta <span class="sc">|&gt;</span> </span>
-<span id="cb17-7"><a></a><span class="fu">filter</span>(<span class="fu">is.na</span>(percent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 3
-   variable_indicador                                           absoluto percent
-   &lt;chr&gt;                                                        &lt;chr&gt;    &lt;chr&gt;  
- 1 Población total                                              55       &lt;NA&gt;   
- 2 Sexo                                                         &lt;NA&gt;     &lt;NA&gt;   
- 3 Grupo de edad quinquenal                                     53       &lt;NA&gt;   
- 4 Afiliada  a algún seguro de salud                            54       &lt;NA&gt;   
- 5 Con alguna dificultad o limitación permanente para           58       &lt;NA&gt;   
- 6 Idioma o lengua materna con el que aprendió a hablar en su … 50       &lt;NA&gt;   
- 7 Nivel educativo alcanzado                                    48       &lt;NA&gt;   
- 8 Asistencia a una institución educativa, colegio, instituto … 50       &lt;NA&gt;   
- 9 Sabe leer y escribir                                         37       &lt;NA&gt;   
-10 Sabe leer y escribir (Hombre)                                18       &lt;NA&gt;   
-11 Sabe leer y escribir (Mujer)                                 19       &lt;NA&gt;   
-12 Estado civil o conyugal                                      38       &lt;NA&gt;   
-13 Por sus costumbres y antepasados se siente o considera       38       &lt;NA&gt;   
-14 Religión que profesa                                         38       &lt;NA&gt;   
-15 Población en edad de trabajar                                38       &lt;NA&gt;   
-16 Razón por la que no dio su número de DNI                     6        &lt;NA&gt;   
-17 &lt;NA&gt;                                                         &lt;NA&gt;     &lt;NA&gt;   
-18 &lt;NA&gt;                                                         &lt;NA&gt;     &lt;NA&gt;   
-19 Censos Nacionales 2017. XII de Población y VII de Vivienda   &lt;NA&gt;     &lt;NA&gt;   
-20 *Población total: es la población censada más la omitida     &lt;NA&gt;     &lt;NA&gt;   </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb11-2"><a></a>indicadores_anta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb11-3"><a></a>                               <span class="at">skip =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb11-5"><a></a><span class="co"># is.na() identifica valores faltantes</span></span>
+<span id="cb11-6"><a></a>indicadores_anta <span class="sc">|&gt;</span> </span>
+<span id="cb11-7"><a></a><span class="fu">filter</span>(<span class="fu">is.na</span>(percent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="valores-faltantes-na-1" class="slide level2">
 <h2>Valores faltantes (NA)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># !is.na() identifica valores NO faltantes</span></span>
-<span id="cb19-2"><a></a>indicadores_anta <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a></a><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(percent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 98 × 3
-   variable_indicador     absoluto percent          
-   &lt;chr&gt;                  &lt;chr&gt;    &lt;chr&gt;            
- 1 Manzanas seleccionadas 1        -                
- 2 Hombre                 24       44.6             
- 3 Mujer                  30       55.4             
- 4 Menos de 1             1        1.9              
- 5 De 1 a 4               6        11.6             
- 6 De 5 a 9               7        13.4             
- 7 10 a 14                3        5.7              
- 8 15 a 19                4        7.6              
- 9 De 20 a 24             5        9.699999999999999
-10 De 25 a 29             8        13.6             
-# ℹ 88 more rows</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># !is.na() identifica valores NO faltantes</span></span>
+<span id="cb12-2"><a></a>indicadores_anta <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a></a><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(percent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -575,10 +502,10 @@ Geodetic CRS:  WGS 84
 <h2><code>arrange()</code> - Ordenar filas</h2>
 <p>Ordena filas según una o más columnas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># Ordenar por población (de menor a mayor)</span></span>
-<span id="cb21-2"><a></a><span class="co"># ?population - data de tidyr</span></span>
-<span id="cb21-3"><a></a>population <span class="sc">|&gt;</span> </span>
-<span id="cb21-4"><a></a><span class="fu">arrange</span>(population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="co"># Ordenar por población (de menor a mayor)</span></span>
+<span id="cb13-2"><a></a><span class="co"># ?population - data de tidyr</span></span>
+<span id="cb13-3"><a></a>population <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a></a><span class="fu">arrange</span>(population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,060 × 3
    country  year population
@@ -600,9 +527,9 @@ Geodetic CRS:  WGS 84
 <section id="arrange---ordenar-filas-1" class="slide level2">
 <h2><code>arrange()</code> - Ordenar filas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># Ordenar de mayor a menor con desc()</span></span>
-<span id="cb23-2"><a></a>population <span class="sc">|&gt;</span> </span>
-<span id="cb23-3"><a></a><span class="fu">arrange</span>(<span class="fu">desc</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Ordenar de mayor a menor con desc()</span></span>
+<span id="cb15-2"><a></a>population <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a></a><span class="fu">arrange</span>(<span class="fu">desc</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,060 × 3
    country  year population
@@ -624,11 +551,11 @@ Geodetic CRS:  WGS 84
 <section id="ordenar-por-múltiples-columnas" class="slide level2">
 <h2>Ordenar por múltiples columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb25-2"><a></a><span class="co"># Primero por expectativa de vida, luego por poblacion</span></span>
-<span id="cb25-3"><a></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a></a><span class="fu">arrange</span>(lifeExp, </span>
-<span id="cb25-5"><a></a>        <span class="fu">desc</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb17-2"><a></a><span class="co"># Primero por expectativa de vida, luego por poblacion</span></span>
+<span id="cb17-3"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a></a><span class="fu">arrange</span>(lifeExp, </span>
+<span id="cb17-5"><a></a>        <span class="fu">desc</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,704 × 6
    country      continent  year lifeExp     pop gdpPercap
@@ -664,9 +591,9 @@ Geodetic CRS:  WGS 84
 <h2><code>distinct()</code> - Filas únicas</h2>
 <p>Encuentra filas únicas (elimina duplicados):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Categorías únicas de áreas naturales</span></span>
-<span id="cb27-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb27-3"><a></a><span class="fu">distinct</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># Categorías únicas de áreas naturales</span></span>
+<span id="cb19-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a></a><span class="fu">distinct</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 1
    nombdep     
@@ -690,9 +617,9 @@ Geodetic CRS:  WGS 84
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="co"># distinct() muestra valores únicos</span></span>
-<span id="cb29-2"><a></a>planes <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a></a><span class="fu">distinct</span>(estado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># distinct() muestra valores únicos</span></span>
+<span id="cb21-2"><a></a>planes <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a></a><span class="fu">distinct</span>(estado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 1
   estado    
@@ -705,9 +632,9 @@ Geodetic CRS:  WGS 84
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="co"># count() cuenta las ocurrencias</span></span>
-<span id="cb31-2"><a></a>planes <span class="sc">|&gt;</span> </span>
-<span id="cb31-3"><a></a>  <span class="fu">count</span>(estado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># count() cuenta las ocurrencias</span></span>
+<span id="cb23-2"><a></a>planes <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a></a>  <span class="fu">count</span>(estado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   estado         n
@@ -720,9 +647,9 @@ Geodetic CRS:  WGS 84
 </div>
 </div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># Ordenar por frecuencia</span></span>
-<span id="cb33-2"><a></a>planes <span class="sc">|&gt;</span> </span>
-<span id="cb33-3"><a></a><span class="fu">count</span>(estado, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="co"># Ordenar por frecuencia</span></span>
+<span id="cb25-2"><a></a>planes <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a></a><span class="fu">count</span>(estado, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   estado         n
@@ -743,9 +670,9 @@ Geodetic CRS:  WGS 84
 <h2><code>mutate()</code> - Crear/modificar columnas</h2>
 <p>Crea nuevas columnas o modifica existentes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Convertir superficie de hectáreas a km²</span></span>
-<span id="cb35-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb35-3"><a></a><span class="fu">mutate</span>( <span class="at">superficie_m2 =</span> <span class="fu">st_area</span>(departamentos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># Convertir superficie de hectáreas a km²</span></span>
+<span id="cb27-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a></a><span class="fu">mutate</span>( <span class="at">superficie_m2 =</span> <span class="fu">st_area</span>(departamentos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 7 fields
 Geometry type: MULTIPOLYGON
@@ -773,24 +700,15 @@ Geodetic CRS:  WGS 84
 <section id="mutate---crearmodificar-columnas-1" class="slide level2">
 <h2><code>mutate()</code> - Crear/modificar columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="co"># Crear múltiples columnas</span></span>
-<span id="cb37-2"><a></a>pob_peru <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/poblacion_peru.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb37-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 24 Columns: 3
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (3): anio, hombres, mujeres
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a></a>   <span class="fu">mutate</span>(</span>
-<span id="cb39-3"><a></a>    <span class="at">total =</span> hombres <span class="sc">+</span> mujeres,</span>
-<span id="cb39-4"><a></a>    <span class="at">pct_hombres =</span> (hombres <span class="sc">/</span> total) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb39-5"><a></a>    <span class="at">pct_mujeres =</span> (mujeres <span class="sc">/</span> total) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb39-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="co"># Crear múltiples columnas</span></span>
+<span id="cb29-2"><a></a>pob_peru <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/poblacion_peru.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb29-4"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a></a>   <span class="fu">mutate</span>(</span>
+<span id="cb29-6"><a></a>    <span class="at">total =</span> hombres <span class="sc">+</span> mujeres,</span>
+<span id="cb29-7"><a></a>    <span class="at">pct_hombres =</span> (hombres <span class="sc">/</span> total) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb29-8"><a></a>    <span class="at">pct_mujeres =</span> (mujeres <span class="sc">/</span> total) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb29-9"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 6
     anio hombres mujeres  total pct_hombres pct_mujeres
@@ -813,12 +731,12 @@ dbl (3): anio, hombres, mujeres
 <h2>Operaciones con <code>mutate()</code></h2>
 <p>Puedes usar operadores aritméticos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb41-3"><a></a>    <span class="co"># Operaciones aritméticas</span></span>
-<span id="cb41-4"><a></a>   <span class="at">pob_total =</span> hombres <span class="sc">+</span> mujeres,</span>
-<span id="cb41-5"><a></a>    <span class="co"># Operaciones lógicas</span></span>
-<span id="cb41-6"><a></a>    <span class="at">sexo_dominante =</span> <span class="fu">if_else</span>( mujeres <span class="sc">&gt;</span> hombres, <span class="st">"Mayoría Mujeres"</span>, <span class="st">"Mayoría Hombres"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-3"><a></a>    <span class="co"># Operaciones aritméticas</span></span>
+<span id="cb31-4"><a></a>   <span class="at">pob_total =</span> hombres <span class="sc">+</span> mujeres,</span>
+<span id="cb31-5"><a></a>    <span class="co"># Operaciones lógicas</span></span>
+<span id="cb31-6"><a></a>    <span class="at">sexo_dominante =</span> <span class="fu">if_else</span>( mujeres <span class="sc">&gt;</span> hombres, <span class="st">"Mayoría Mujeres"</span>, <span class="st">"Mayoría Hombres"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 5
     anio hombres mujeres pob_total sexo_dominante 
@@ -845,10 +763,10 @@ dbl (3): anio, hombres, mujeres
 <li><code>.keep</code> - qué columnas mantener</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># Colocar nueva columna al inicio</span></span>
-<span id="cb43-2"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
-<span id="cb43-3"><a></a><span class="fu">mutate</span>( <span class="at">pob_total =</span> hombres <span class="sc">+</span> mujeres,</span>
-<span id="cb43-4"><a></a>        <span class="at">.before =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># Colocar nueva columna al inicio</span></span>
+<span id="cb33-2"><a></a>pob_peru <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a></a><span class="fu">mutate</span>( <span class="at">pob_total =</span> hombres <span class="sc">+</span> mujeres,</span>
+<span id="cb33-4"><a></a>        <span class="at">.before =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 4
    pob_total  anio hombres mujeres
@@ -871,11 +789,11 @@ dbl (3): anio, hombres, mujeres
 <h2><code>select()</code> - Seleccionar columnas</h2>
 <p>Selecciona columnas por nombre:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
-<span id="cb45-2"><a></a></span>
-<span id="cb45-3"><a></a><span class="co"># Seleccionar columnas específicas</span></span>
-<span id="cb45-4"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb45-5"><a></a>  <span class="fu">select</span>(ccdd, nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb35-2"><a></a></span>
+<span id="cb35-3"><a></a><span class="co"># Seleccionar columnas específicas</span></span>
+<span id="cb35-4"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb35-5"><a></a>  <span class="fu">select</span>(ccdd, nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 2 fields
 Geometry type: MULTIPOLYGON
@@ -902,39 +820,38 @@ Geodetic CRS:  WGS 84
 <section id="select---seleccionar-columnas-1" class="slide level2">
 <h2><code>select()</code> - Seleccionar columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>distrito <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DISTRITO.gpkg"</span>)</span>
-<span id="cb47-2"><a></a><span class="co"># Seleccionar rango de columnas</span></span>
-<span id="cb47-3"><a></a>distrito <span class="sc">|&gt;</span> </span>
-<span id="cb47-4"><a></a><span class="fu">select</span>(ccdd<span class="sc">:</span>ccdi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="co"># Seleccionar rango de columnas</span></span>
+<span id="cb37-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a></a><span class="fu">select</span>(ccdd<span class="sc">:</span>nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 1890 features and 3 fields
+<pre><code>Simple feature collection with 25 features and 2 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
 Geodetic CRS:  WGS 84
-# A tibble: 1,890 × 4
-   ccdd  ccpp  ccdi                                                         geom
-   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                                          &lt;MULTIPOLYGON [°]&gt;
- 1 09    02    03    (((-74.65993 -12.75712, -74.65999 -12.75645, -74.66033 -12…
- 2 01    01    01    (((-77.8858 -6.1778, -77.88844 -6.177492, -77.88954 -6.177…
- 3 01    01    06    (((-77.86211 -6.868805, -77.86311 -6.868375, -77.86538 -6.…
- 4 01    03    01    (((-77.84223 -5.82379, -77.84235 -5.82357, -77.84292 -5.82…
- 5 01    05    03    (((-77.99757 -6.51978, -77.99846 -6.519061, -78 -6.519812,…
- 6 01    01    10    (((-77.74017 -6.64825, -77.7403 -6.647456, -77.74329 -6.65…
- 7 05    03    04    (((-74.60843 -13.69537, -74.60998 -13.69534, -74.61162 -13…
- 8 01    01    19    (((-77.87434 -6.30649, -77.87556 -6.30633, -77.87591 -6.30…
- 9 05    05    07    (((-73.72504 -12.63673, -73.72555 -12.63665, -73.72693 -12…
-10 05    05    08    (((-73.99072 -12.83775, -73.99221 -12.83758, -73.99445 -12…
-# ℹ 1,880 more rows</code></pre>
+# A tibble: 25 × 3
+   ccdd  nombdep                                                            geom
+   &lt;chr&gt; &lt;chr&gt;                                                &lt;MULTIPOLYGON [°]&gt;
+ 1 01    AMAZONAS     (((-77.81399 -2.992779, -77.81332 -2.990943, -77.81211 -2…
+ 2 02    ANCASH       (((-77.64697 -8.05086, -77.64716 -8.05028, -77.64735 -8.0…
+ 3 03    APURIMAC     (((-73.74655 -13.17442, -73.74744 -13.17352, -73.74744 -1…
+ 4 04    AREQUIPA     (((-71.98109 -14.64062, -71.98142 -14.63941, -71.9815 -14…
+ 5 05    AYACUCHO     (((-74.34843 -12.17503, -74.3484 -12.17502, -74.34714 -12…
+ 6 06    CAJAMARCA    (((-78.70034 -4.627693, -78.70165 -4.626257, -78.70315 -4…
+ 7 07    CALLAO       (((-77.13504 -11.8182, -77.13522 -11.81819, -77.13527 -11…
+ 8 08    CUSCO        (((-72.9728 -11.25189, -72.97361 -11.25161, -72.97422 -11…
+ 9 09    HUANCAVELICA (((-74.57118 -11.9871, -74.5711 -11.98616, -74.57112 -11.…
+10 10    HUANUCO      (((-75.992 -8.321078, -75.99257 -8.32073, -75.99412 -8.31…
+# ℹ 15 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="select---seleccionar-columnas-2" class="slide level2">
 <h2><code>select()</code> - Seleccionar columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="co"># Excluir columnas con -</span></span>
-<span id="cb49-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb49-3"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># Excluir columnas con -</span></span>
+<span id="cb39-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb39-3"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 5 fields
 Geometry type: MULTIPOLYGON
@@ -998,9 +915,9 @@ Geodetic CRS:  WGS 84
 <section id="ejemplos-de-funciones-auxiliares" class="slide level2">
 <h2>Ejemplos de funciones auxiliares</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># Columnas que empiezan con "superficie"</span></span>
-<span id="cb51-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb51-3"><a></a><span class="fu">select</span>( <span class="fu">starts_with</span>(<span class="st">"cc"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="co"># Columnas que empiezan con "superficie"</span></span>
+<span id="cb41-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a></a><span class="fu">select</span>( <span class="fu">starts_with</span>(<span class="st">"cc"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 1 field
 Geometry type: MULTIPOLYGON
@@ -1027,9 +944,9 @@ Geodetic CRS:  WGS 84
 <section id="ejemplos-de-funciones-auxiliares-1" class="slide level2">
 <h2>Ejemplos de funciones auxiliares</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># Columnas numéricas</span></span>
-<span id="cb53-2"><a></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb53-3"><a></a><span class="fu">select</span>( <span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># Columnas numéricas</span></span>
+<span id="cb43-2"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a></a><span class="fu">select</span>( <span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,704 × 4
     year lifeExp      pop gdpPercap
@@ -1051,9 +968,9 @@ Geodetic CRS:  WGS 84
 <section id="ejemplos-de-funciones-auxiliares-2" class="slide level2">
 <h2>Ejemplos de funciones auxiliares</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="co"># Reorganizar: nombre primero, luego todo lo demás</span></span>
-<span id="cb55-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb55-3"><a></a><span class="fu">select</span>(nombdep, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="co"># Reorganizar: nombre primero, luego todo lo demás</span></span>
+<span id="cb45-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a></a><span class="fu">select</span>(nombdep, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1081,10 +998,10 @@ Geodetic CRS:  WGS 84
 <section id="rename---renombrar-columnas" class="slide level2">
 <h2><code>rename()</code> - Renombrar columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="co"># Sintaxis: nuevo_nombre = nombre_antiguo</span></span>
-<span id="cb57-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb57-3"><a></a><span class="fu">rename</span>(<span class="at">departamento =</span> nombdep,</span>
-<span id="cb57-4"><a></a>       <span class="at">cod_dep =</span> ccdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="co"># Sintaxis: nuevo_nombre = nombre_antiguo</span></span>
+<span id="cb47-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb47-3"><a></a><span class="fu">rename</span>(<span class="at">departamento =</span> nombdep,</span>
+<span id="cb47-4"><a></a>       <span class="at">cod_dep =</span> ccdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1113,9 +1030,9 @@ Geodetic CRS:  WGS 84
 <h2><code>rename()</code> - Renombrar columnas</h2>
 <p>También puedes renombrar con <code>select()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb59-2"><a></a><span class="fu">select</span>( <span class="at">departamento =</span> nombdep,</span>
-<span id="cb59-3"><a></a>        <span class="at">cod_dep =</span> ccdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb49-2"><a></a><span class="fu">select</span>( <span class="at">departamento =</span> nombdep,</span>
+<span id="cb49-3"><a></a>        <span class="at">cod_dep =</span> ccdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 2 fields
 Geometry type: MULTIPOLYGON
@@ -1143,9 +1060,9 @@ Geodetic CRS:  WGS 84
 <h2><code>relocate()</code> - Reordenar columnas</h2>
 <p>Cambia la posición de columnas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="co"># Mover columna al inicio</span></span>
-<span id="cb61-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb61-3"><a></a><span class="fu">relocate</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># Mover columna al inicio</span></span>
+<span id="cb51-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb51-3"><a></a><span class="fu">relocate</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1173,9 +1090,9 @@ Geodetic CRS:  WGS 84
 <section id="relocate---reordenar-columnas-1" class="slide level2">
 <h2><code>relocate()</code> - Reordenar columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="co"># Mover después de otra columna</span></span>
-<span id="cb63-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb63-3"><a></a><span class="fu">relocate</span>(ccdd, <span class="at">.after =</span> nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># Mover después de otra columna</span></span>
+<span id="cb53-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb53-3"><a></a><span class="fu">relocate</span>(ccdd, <span class="at">.after =</span> nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1203,9 +1120,9 @@ Geodetic CRS:  WGS 84
 <section id="relocate---reordenar-columnas-2" class="slide level2">
 <h2><code>relocate()</code> - Reordenar columnas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="co"># Mover antes de otra columna</span></span>
-<span id="cb65-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
-<span id="cb65-3"><a></a><span class="fu">relocate</span>(fuente, <span class="at">.before =</span> geom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="co"># Mover antes de otra columna</span></span>
+<span id="cb55-2"><a></a>departamentos <span class="sc">|&gt;</span> </span>
+<span id="cb55-3"><a></a><span class="fu">relocate</span>(fuente, <span class="at">.before =</span> geom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1249,31 +1166,23 @@ Geodetic CRS:  WGS 84
 <h2>Sin pipe vs con pipe</h2>
 <p><strong>Sin pipe</strong> (anidado y difícil de leer):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="fu">arrange</span>(</span>
-<span id="cb67-2"><a></a>  <span class="fu">filter</span>(</span>
-<span id="cb67-3"><a></a>    <span class="fu">select</span>(distrito, nombdist, ccdd, ccdi), ccdd <span class="sc">==</span> <span class="st">"08"</span>),</span>
-<span id="cb67-4"><a></a>  <span class="fu">desc</span>(<span class="fu">as.numeric</span>(ccdi))</span>
-<span id="cb67-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">arrange</span>(</span>
+<span id="cb57-2"><a></a>  <span class="fu">filter</span>(</span>
+<span id="cb57-3"><a></a>    <span class="fu">select</span>(departamentos, nombdep, ccdd), ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"04"</span>, <span class="st">"15"</span>)),</span>
+<span id="cb57-4"><a></a>  nombdep</span>
+<span id="cb57-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 116 features and 3 fields
+<pre><code>Simple feature collection with 3 features and 2 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
-Bounding box:  xmin: -73.974 ymin: -15.45829 xmax: -70.34507 ymax: -11.21229
+Bounding box:  xmin: -77.88631 ymin: -17.28501 xmax: -70.34507 ymax: -10.27419
 Geodetic CRS:  WGS 84
-# A tibble: 116 × 4
-   nombdist         ccdd  ccdi                                              geom
-   &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;                               &lt;MULTIPOLYGON [°]&gt;
- 1 UNION ASHANINKA  08    18    (((-73.79562 -12.26228, -73.79565 -12.26203, -7…
- 2 MANITEA          08    17    (((-73.54421 -12.6579, -73.54364 -12.65739, -73…
- 3 CIELO PUNCO      08    16    (((-73.51659 -12.73756, -73.51724 -12.73535, -7…
- 4 KUMPIRUSHIATO    08    15    (((-73.22644 -12.36002, -73.22691 -12.35968, -7…
- 5 MEGANTONI        08    14    (((-72.9728 -11.25189, -72.97361 -11.25161, -72…
- 6 VILLA KINTIARINA 08    13    (((-73.51148 -12.81937, -73.51189 -12.8193, -73…
- 7 QUIQUIJANA       08    12    (((-71.51821 -13.69929, -71.51934 -13.69926, -7…
- 8 VILLA VIRGEN     08    12    (((-73.37081 -12.95754, -73.37128 -12.957, -73.…
- 9 INKAWASI         08    11    (((-73.44847 -13.12207, -73.45224 -13.12153, -7…
-10 OROPESA          08    11    (((-71.8038 -13.50837, -71.80463 -13.50826, -71…
-# ℹ 106 more rows</code></pre>
+# A tibble: 3 × 3
+  nombdep  ccdd                                                             geom
+  &lt;chr&gt;    &lt;chr&gt;                                              &lt;MULTIPOLYGON [°]&gt;
+1 AREQUIPA 04    (((-71.98109 -14.64062, -71.98142 -14.63941, -71.9815 -14.6387…
+2 CUSCO    08    (((-72.9728 -11.25189, -72.97361 -11.25161, -72.97422 -11.2506…
+3 LIMA     15    (((-76.90483 -10.27726, -76.90514 -10.27642, -76.90555 -10.275…</code></pre>
 </div>
 </div>
 </section>
@@ -1281,30 +1190,22 @@ Geodetic CRS:  WGS 84
 <h2>Sin pipe vs con pipe</h2>
 <p><strong>Con pipe</strong> (fluido y claro):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>distrito <span class="sc">|&gt;</span></span>
-<span id="cb69-2"><a></a>  <span class="fu">select</span>(nombdist, ccdd, ccdi) <span class="sc">|&gt;</span></span>
-<span id="cb69-3"><a></a>  <span class="fu">filter</span>(ccdd <span class="sc">==</span> <span class="st">"08"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">as.numeric</span>(ccdi)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a></a>  <span class="fu">select</span>(nombdep, ccdd) <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a></a>  <span class="fu">filter</span>(ccdd <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"04"</span>, <span class="st">"15"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb59-4"><a></a>  <span class="fu">arrange</span>(nombdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 116 features and 3 fields
+<pre><code>Simple feature collection with 3 features and 2 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
-Bounding box:  xmin: -73.974 ymin: -15.45829 xmax: -70.34507 ymax: -11.21229
+Bounding box:  xmin: -77.88631 ymin: -17.28501 xmax: -70.34507 ymax: -10.27419
 Geodetic CRS:  WGS 84
-# A tibble: 116 × 4
-   nombdist         ccdd  ccdi                                              geom
-   &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;                               &lt;MULTIPOLYGON [°]&gt;
- 1 UNION ASHANINKA  08    18    (((-73.79562 -12.26228, -73.79565 -12.26203, -7…
- 2 MANITEA          08    17    (((-73.54421 -12.6579, -73.54364 -12.65739, -73…
- 3 CIELO PUNCO      08    16    (((-73.51659 -12.73756, -73.51724 -12.73535, -7…
- 4 KUMPIRUSHIATO    08    15    (((-73.22644 -12.36002, -73.22691 -12.35968, -7…
- 5 MEGANTONI        08    14    (((-72.9728 -11.25189, -72.97361 -11.25161, -72…
- 6 VILLA KINTIARINA 08    13    (((-73.51148 -12.81937, -73.51189 -12.8193, -73…
- 7 QUIQUIJANA       08    12    (((-71.51821 -13.69929, -71.51934 -13.69926, -7…
- 8 VILLA VIRGEN     08    12    (((-73.37081 -12.95754, -73.37128 -12.957, -73.…
- 9 INKAWASI         08    11    (((-73.44847 -13.12207, -73.45224 -13.12153, -7…
-10 OROPESA          08    11    (((-71.8038 -13.50837, -71.80463 -13.50826, -71…
-# ℹ 106 more rows</code></pre>
+# A tibble: 3 × 3
+  nombdep  ccdd                                                             geom
+  &lt;chr&gt;    &lt;chr&gt;                                              &lt;MULTIPOLYGON [°]&gt;
+1 AREQUIPA 04    (((-71.98109 -14.64062, -71.98142 -14.63941, -71.9815 -14.6387…
+2 CUSCO    08    (((-72.9728 -11.25189, -72.97361 -11.25161, -72.97422 -11.2506…
+3 LIMA     15    (((-76.90483 -10.27726, -76.90514 -10.27642, -76.90555 -10.275…</code></pre>
 </div>
 </div>
 </section>
@@ -1336,12 +1237,12 @@ Geodetic CRS:  WGS 84
 </section>
 <section id="ejemplo-completo-con-pipe" class="slide level2">
 <h2>Ejemplo completo con pipe</h2>
-<div class="sourceCode" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
-<span id="cb71-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb71-3"><a></a>    <span class="at">area_km2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geom)) <span class="sc">/</span> <span class="fl">1e6</span>  <span class="co"># Convertir m² a km²</span></span>
-<span id="cb71-4"><a></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb71-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(area_km2)) <span class="sc">|&gt;</span></span>
-<span id="cb71-6"><a></a>  <span class="fu">select</span>(nombdep, area_km2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>departamentos <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb61-3"><a></a>    <span class="at">area_km2 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geom)) <span class="sc">/</span> <span class="fl">1e6</span>  <span class="co"># Convertir m² a km²</span></span>
+<span id="cb61-4"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb61-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(area_km2)) <span class="sc">|&gt;</span></span>
+<span id="cb61-6"><a></a>  <span class="fu">select</span>(nombdep, area_km2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="operaciones-agrupadas" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -1352,8 +1253,8 @@ Geodetic CRS:  WGS 84
 <h2><code>group_by()</code> - Agrupar datos</h2>
 <p>Agrupa filas para aplicar operaciones por grupo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb72-2"><a></a>  <span class="fu">group_by</span>(departamento)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb62-2"><a></a>  <span class="fu">group_by</span>(departamento)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 113 × 7
 # Groups:   departamento [20]
@@ -1390,12 +1291,12 @@ Geodetic CRS:  WGS 84
 <h2><code>summarise()</code> - Resumir datos</h2>
 <p>Colapsa filas en resúmenes estadísticos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb74-2"><a></a>  <span class="fu">group_by</span>(departamento) <span class="sc">|&gt;</span></span>
-<span id="cb74-3"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb74-4"><a></a>    <span class="at">n_planes =</span> <span class="fu">n</span>(),</span>
-<span id="cb74-5"><a></a>    <span class="at">n_tipos =</span> <span class="fu">n_distinct</span>(tipo_de_plan)</span>
-<span id="cb74-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a></a>  <span class="fu">group_by</span>(departamento) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb64-4"><a></a>    <span class="at">n_planes =</span> <span class="fu">n</span>(),</span>
+<span id="cb64-5"><a></a>    <span class="at">n_tipos =</span> <span class="fu">n_distinct</span>(tipo_de_plan)</span>
+<span id="cb64-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
    departamento                  n_planes n_tipos
@@ -1431,19 +1332,19 @@ Geodetic CRS:  WGS 84
 </section>
 <section id="múltiples-resúmenes" class="slide level2">
 <h2>Múltiples resúmenes</h2>
-<div class="sourceCode" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb76-2"><a></a>  <span class="fu">group_by</span>(departamento) <span class="sc">|&gt;</span></span>
-<span id="cb76-3"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb76-4"><a></a>    <span class="co"># Conteos</span></span>
-<span id="cb76-5"><a></a>    <span class="at">total_planes        =</span> <span class="fu">n</span>(),</span>
-<span id="cb76-6"><a></a>    <span class="at">total_aprobados     =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"Aprobado"</span>,    <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb76-7"><a></a>    <span class="at">total_terminados    =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"Terminado"</span>,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb76-8"><a></a>    <span class="at">total_en_proceso    =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"En proceso"</span>,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb76-9"><a></a>    <span class="at">no_detarminado      =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(estado)),</span>
-<span id="cb76-10"><a></a>    <span class="co"># Proporciones</span></span>
-<span id="cb76-11"><a></a>    <span class="at">pct_aprobados       =</span> <span class="fu">round</span>(total_aprobados <span class="sc">/</span> total_planes <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb76-12"><a></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb76-13"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_planes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a></a>  <span class="fu">group_by</span>(departamento) <span class="sc">|&gt;</span></span>
+<span id="cb66-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb66-4"><a></a>    <span class="co"># Conteos</span></span>
+<span id="cb66-5"><a></a>    <span class="at">total_planes        =</span> <span class="fu">n</span>(),</span>
+<span id="cb66-6"><a></a>    <span class="at">total_aprobados     =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"Aprobado"</span>,    <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-7"><a></a>    <span class="at">total_terminados    =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"Terminado"</span>,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-8"><a></a>    <span class="at">total_en_proceso    =</span> <span class="fu">sum</span>(estado <span class="sc">==</span> <span class="st">"En proceso"</span>,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-9"><a></a>    <span class="at">no_determinado      =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(estado)),</span>
+<span id="cb66-10"><a></a>    <span class="co"># Proporciones</span></span>
+<span id="cb66-11"><a></a>    <span class="at">pct_aprobados       =</span> <span class="fu">round</span>(total_aprobados <span class="sc">/</span> total_planes <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb66-12"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb66-13"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_planes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="funciones-de-slice" class="slide level2">
 <h2>Funciones de slice</h2>
@@ -1482,10 +1383,10 @@ Geodetic CRS:  WGS 84
 <section id="ejemplos-de-slice" class="slide level2">
 <h2>Ejemplos de slice</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a><span class="co"># El área más grande de cada categoría</span></span>
-<span id="cb77-2"><a></a>gapminder <span class="sc">|&gt;</span></span>
-<span id="cb77-3"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span></span>
-<span id="cb77-4"><a></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="co"># El área más grande de cada categoría</span></span>
+<span id="cb67-2"><a></a>gapminder <span class="sc">|&gt;</span></span>
+<span id="cb67-3"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span></span>
+<span id="cb67-4"><a></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
 # Groups:   continent [5]
@@ -1502,10 +1403,10 @@ Geodetic CRS:  WGS 84
 <section id="ejemplos-de-slice-1" class="slide level2">
 <h2>Ejemplos de slice</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a><span class="co"># Los 6 paises más poblados en 2002 </span></span>
-<span id="cb79-2"><a></a>gapminder <span class="sc">|&gt;</span></span>
-<span id="cb79-3"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb79-4"><a></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a><span class="co"># Los 6 paises más poblados en 2002 </span></span>
+<span id="cb69-2"><a></a>gapminder <span class="sc">|&gt;</span></span>
+<span id="cb69-3"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2002</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-4"><a></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   country       continent  year lifeExp        pop gdpPercap
@@ -1522,13 +1423,13 @@ Geodetic CRS:  WGS 84
 <section id="múltiples-variables-de-agrupación" class="slide level2">
 <h2>Múltiples variables de agrupación</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a><span class="co"># Agrupar por continente y ciudad</span></span>
-<span id="cb81-2"><a></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb81-3"><a></a>  <span class="fu">group_by</span>(continent, country) <span class="sc">|&gt;</span> </span>
-<span id="cb81-4"><a></a>  <span class="fu">summarise</span>(<span class="at">mean_lifeexp =</span> <span class="fu">mean</span>(lifeExp),</span>
-<span id="cb81-5"><a></a>            <span class="at">min_lifeexp =</span> <span class="fu">min</span>(lifeExp), </span>
-<span id="cb81-6"><a></a>            <span class="at">max_lifeexp =</span> <span class="fu">max</span>(lifeExp),</span>
-<span id="cb81-7"><a></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a><span class="co"># Agrupar por continente y ciudad</span></span>
+<span id="cb71-2"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb71-3"><a></a>  <span class="fu">group_by</span>(continent, country) <span class="sc">|&gt;</span> </span>
+<span id="cb71-4"><a></a>  <span class="fu">summarise</span>(<span class="at">mean_lifeexp =</span> <span class="fu">mean</span>(lifeExp),</span>
+<span id="cb71-5"><a></a>            <span class="at">min_lifeexp =</span> <span class="fu">min</span>(lifeExp), </span>
+<span id="cb71-6"><a></a>            <span class="at">max_lifeexp =</span> <span class="fu">max</span>(lifeExp),</span>
+<span id="cb71-7"><a></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 142 × 5
    continent country                  mean_lifeexp min_lifeexp max_lifeexp
@@ -1803,6 +1704,82 @@ Geodetic CRS:  WGS 84
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -1872,7 +1849,7 @@ Geodetic CRS:  WGS 84
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

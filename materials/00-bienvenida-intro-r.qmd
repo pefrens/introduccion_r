@@ -1,7 +1,7 @@
 ---
 title: "Introducción a la Programación con R - Tidyverse"
 subtitle: "<span style='font-size:1.8em;'>¡Bienvenidos!</span>"
-author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
 format:
   revealjs:
     theme: slides.scss
@@ -162,7 +162,7 @@ Fuente: [Modern Dive](https://moderndive.com/1-getting-started.html).
 
 ::: incremental
 -   **Paquetes**: Unidades fundamentales de código R reproducible, incluyendo funciones R reutilizables, documentación y datos de muestra
--   Al 15 de febrero de 2026, hay 23, 178 paquetes R disponibles en **CRAN** (Comprehensive R Archive Network)
+-   En 2026, hay 23, 178 paquetes R disponibles en **CRAN** (Comprehensive R Archive Network)
 -   ¡Trabajaremos con un subconjunto importante de estos!
 :::
 
@@ -436,12 +436,12 @@ format: html
 
 ## Introducción
 
-Este es un análisis de datos de áreas naturales.
+Este es un análisis de datos de planes urbanos.
 
 ```{{r}}
 library(tidyverse)
-anp <- read_csv("data/areas_naturales.csv")
-summary(anp)
+planes <- read_csv("data/catalogo_planes.csv")
+summary(planes)
 ```
 ````
 

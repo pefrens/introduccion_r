@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="author" content="Paul Efren Santos Andrade // Febrero 2026">
+  <meta name="author" content="Paul Efren Santos Andrade // 2026">
   <title>Introducción a la Programación con R - Tidyverse</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -205,7 +205,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // Febrero 2026 
+<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // 2026 
 </div>
 </div>
 </div>
@@ -453,36 +453,20 @@
 <section id="solución-pivot_longer" class="slide level2">
 <h2>Solución: pivot_longer()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>indicadores_inei <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/indicadores_demograficos.xlsx"</span>, </span>
-<span id="cb15-2"><a></a>          <span class="at">range =</span> <span class="st">"A4:AA20"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb15-3"><a></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
-<span id="cb15-4"><a></a>indicadores_inei</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>indicadores_inei <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb15-2"><a></a>  <span class="sc">~</span>indicador,              <span class="sc">~</span>amazonas, <span class="sc">~</span>ancash, <span class="sc">~</span>cusco,</span>
+<span id="cb15-3"><a></a>  <span class="st">"poblacion_total"</span>,       <span class="dv">426806</span>,    <span class="dv">1180638</span>, <span class="dv">1423807</span>,</span>
+<span id="cb15-4"><a></a>  <span class="st">"poblacion_urbana_pct"</span>,  <span class="fl">41.5</span>,      <span class="fl">63.4</span>,    <span class="fl">60.7</span>,</span>
+<span id="cb15-5"><a></a>  <span class="st">"poblacion_rural_pct"</span>,   <span class="fl">58.5</span>,      <span class="fl">36.6</span>,    <span class="fl">39.3</span></span>
+<span id="cb15-6"><a></a>)</span>
+<span id="cb15-7"><a></a>indicadores_inei</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 16 × 27
-   tipo     indicadores_demograf…¹ amazonas apurimac arequipa ayacucho cajamarca
-   &lt;chr&gt;    &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
- 1 Fecundi… Nacimientos anuales: B   8653     7423    23965    12152     25235  
- 2 Fecundi… Tasa bruta de natalid…     20.2     17.7     14.2     18.3      17.6
- 3 Fecundi… Tasa global de fecund…      2.4      2.1      1.6      2.1       2  
- 4 Fecundi… Tasa bruta de reprodu…      1.2      1        0.8      1         1  
- 5 Mortali… Muertes anuales: D       2265     2612    10655     4129      8028  
- 6 Mortali… Tasa bruta de mortali…      5.3      6.2      6.3      6.2       5.6
- 7 Esperan… Ambos sexos                NA       75.3     79.7     75.1      76.6
- 8 Esperan… Hombres                    72.9     72.5     77.1     72.5      74.1
- 9 Esperan… Mujeres                    78.3     78.3     82.5     77.7      79.3
-10 Mortali… Tasa de mortalidad in…     13.8     15.5     11.3     13.8      14.7
-11 Crecimi… Crecimiento anual: B-D   6388     4811    13310     8023     17207  
-12 Crecimi… Tasa de crecimiento n…     14.9     11.5      7.9     12.1      12  
-13 Migraci… Migración neta anual:…  -2073    -1514     6193    -2237    -11790  
-14 Migraci… Tasa de migración net…     -5.1     -4        3       -3.7      -8.5
-15 Crecimi… Crecimiento anual: B-…   4315     3297    19503     5786      5417  
-16 Crecimi… Tasa de crecimiento t…      9.8      7.5     10.9      8.4       3.5
-# ℹ abbreviated name: ¹​indicadores_demograficos
-# ℹ 20 more variables: cusco &lt;dbl&gt;, huancavelica &lt;dbl&gt;, huanuco &lt;dbl&gt;,
-#   ica &lt;dbl&gt;, junin &lt;dbl&gt;, la_libertad &lt;dbl&gt;, lambayeque &lt;dbl&gt;, lima &lt;dbl&gt;,
-#   loreto &lt;dbl&gt;, madre_de_dios &lt;dbl&gt;, moquegua &lt;dbl&gt;, pasco &lt;dbl&gt;,
-#   piura &lt;dbl&gt;, prov_const_del_callao &lt;dbl&gt;, puno &lt;dbl&gt;, san_martin &lt;dbl&gt;,
-#   tacna &lt;dbl&gt;, tumbes &lt;dbl&gt;, ucayali &lt;dbl&gt;, ancash &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 3 × 4
+  indicador            amazonas    ancash     cusco
+  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 poblacion_total      426806   1180638   1423807  
+2 poblacion_urbana_pct     41.5      63.4      60.7
+3 poblacion_rural_pct      58.5      36.6      39.3</code></pre>
 </div>
 </div>
 </section>
@@ -752,87 +736,83 @@
 </div>
 </section></section>
 <section>
-<section id="ejemplo-práctico-áreas-naturales" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Ejemplo Práctico: Áreas Naturales</h1>
+<section id="ejemplo-práctico-planes-urbanos" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Ejemplo Práctico: Planes Urbanos</h1>
 
 </section>
 <section id="datos-de-ejemplo" class="slide level2">
 <h2>Datos de ejemplo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb34-2"><a></a></span>
-<span id="cb34-3"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/areas_naturales_peru.xlsx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-4"><a></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb34-5"><a></a></span>
-<span id="cb34-6"><a></a><span class="fu">glimpse</span>(anp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb34-3"><a></a></span>
+<span id="cb34-4"><a></a><span class="fu">glimpse</span>(planes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 268
-Columns: 9
-$ x1           &lt;chr&gt; "CATEGORIAS", "PARQUES NACIONALES         (15)", "PARQUES…
-$ x2           &lt;chr&gt; "CÓDIGO", "PN 01", "PN 02", "PN 03", "PN 04", "PN 05", "P…
-$ x3           &lt;chr&gt; "CATEGORIAS", "de Cutervo", "de Tingo María", "del Manu",…
-$ creacion     &lt;chr&gt; "BASE LEGAL", "LEY Nº 13694", "LEY Nº 15574", "D.S. Nº 64…
-$ x5           &lt;chr&gt; "FECHA PROMULGACIÓN", "08.09.1961", "14.05.1965", "29.05.…
-$ modificacion &lt;chr&gt; "BASE LEGAL", "LEY Nº 28860", NA, "D.S. Nº 045-2002-AG", …
-$ x7           &lt;chr&gt; "FECHA PROMULGACIÓN", "03.08.2006", NA, "11.07.2002", NA,…
-$ x8           &lt;chr&gt; "UBICACIÓN POLITICA", "CAJAMARCA", "HUANUCO", "CUSCO y MA…
-$ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "3400…</code></pre>
+<pre><code>Rows: 113
+Columns: 7
+$ ubigeo       &lt;dbl&gt; 2006, 2006, 2001, 1506, 2001, 1401, 2001, 2008, 2004, 200…
+$ departamento &lt;chr&gt; "PIURA", "PIURA", "PIURA", "LIMA", "PIURA", "LAMBAYEQUE",…
+$ provincia    &lt;chr&gt; "SULLANA", "SULLANA", "PIURA", "HUARAL", "PIURA", "CHICLA…
+$ ambito       &lt;chr&gt; "SULLANA", "Sullana", "Tambo Grande", "Chancay", "Cura Mo…
+$ tipo_de_plan &lt;chr&gt; "PAT", "PDU", "PDU", "PAT", "PDU", "PDU", "PDU", "PDU", "…
+$ estado       &lt;chr&gt; "Aprobado", "Aprobado", "Aprobado", "Terminado", "Aprobad…
+$ o_m          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
 </div>
 </div>
 </section>
-<section id="alargar-múltiples-columnas-de-superficie" class="slide level2">
-<h2>Alargar: Múltiples columnas de superficie</h2>
+<section id="alargar-múltiples-columnas-de-conteo" class="slide level2">
+<h2>Alargar: Múltiples columnas de conteo</h2>
 <p>Supongamos que tenemos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>anp_wide <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb36-2"><a></a>  <span class="sc">~</span>nombre,              <span class="sc">~</span>superficie_2020, <span class="sc">~</span>superficie_2021,</span>
-<span id="cb36-3"><a></a>  <span class="st">"Parque Cutervo"</span>,     <span class="dv">8214</span>,             <span class="dv">8214</span>,</span>
-<span id="cb36-4"><a></a>  <span class="st">"Reserva Pacaya"</span>,     <span class="dv">2080000</span>,          <span class="dv">2080000</span>,</span>
-<span id="cb36-5"><a></a>  <span class="st">"Parque Manu"</span>,        <span class="dv">1716295</span>,          <span class="dv">1716295</span></span>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>planes_wide <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb36-2"><a></a>  <span class="sc">~</span>departamento, <span class="sc">~</span>planes_2024, <span class="sc">~</span>planes_2025,</span>
+<span id="cb36-3"><a></a>  <span class="st">"CUSCO"</span>,       <span class="dv">12</span>,           <span class="dv">14</span>,</span>
+<span id="cb36-4"><a></a>  <span class="st">"LIMA"</span>,        <span class="dv">20</span>,           <span class="dv">23</span>,</span>
+<span id="cb36-5"><a></a>  <span class="st">"AREQUIPA"</span>,    <span class="dv">10</span>,           <span class="dv">11</span></span>
 <span id="cb36-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="solución" class="slide level2">
 <h2>Solución</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>anp_long <span class="ot">&lt;-</span> anp_wide <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>planes_long <span class="ot">&lt;-</span> planes_wide <span class="sc">|&gt;</span></span>
 <span id="cb37-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb37-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"superficie"</span>),</span>
-<span id="cb37-4"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb37-5"><a></a>    <span class="at">names_prefix =</span> <span class="st">"superficie_"</span>,</span>
-<span id="cb37-6"><a></a>    <span class="at">values_to =</span> <span class="st">"superficie_ha"</span></span>
+<span id="cb37-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"planes_"</span>),</span>
+<span id="cb37-4"><a></a>    <span class="at">names_to =</span> <span class="st">"anio"</span>,</span>
+<span id="cb37-5"><a></a>    <span class="at">names_prefix =</span> <span class="st">"planes_"</span>,</span>
+<span id="cb37-6"><a></a>    <span class="at">values_to =</span> <span class="st">"n_planes"</span></span>
 <span id="cb37-7"><a></a>  )</span>
 <span id="cb37-8"><a></a></span>
-<span id="cb37-9"><a></a>anp_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-9"><a></a>planes_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
-  nombre         year  superficie_ha
-  &lt;chr&gt;          &lt;chr&gt;         &lt;dbl&gt;
-1 Parque Cutervo 2020           8214
-2 Parque Cutervo 2021           8214
-3 Reserva Pacaya 2020        2080000
-4 Reserva Pacaya 2021        2080000
-5 Parque Manu    2020        1716295
-6 Parque Manu    2021        1716295</code></pre>
+  departamento anio  n_planes
+  &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt;
+1 CUSCO        2024        12
+2 CUSCO        2025        14
+3 LIMA         2024        20
+4 LIMA         2025        23
+5 AREQUIPA     2024        10
+6 AREQUIPA     2025        11</code></pre>
 </div>
 </div>
 </section>
 <section id="ensanchar-de-largo-a-ancho" class="slide level2">
 <h2>Ensanchar: De largo a ancho</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>anp_long <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>planes_long <span class="sc">|&gt;</span></span>
 <span id="cb39-2"><a></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb39-3"><a></a>    <span class="at">names_from =</span> year,</span>
-<span id="cb39-4"><a></a>    <span class="at">names_prefix =</span> <span class="st">"superficie_"</span>,</span>
-<span id="cb39-5"><a></a>    <span class="at">values_from =</span> superficie_ha</span>
+<span id="cb39-3"><a></a>    <span class="at">names_from =</span> anio,</span>
+<span id="cb39-4"><a></a>    <span class="at">names_prefix =</span> <span class="st">"planes_"</span>,</span>
+<span id="cb39-5"><a></a>    <span class="at">values_from =</span> n_planes</span>
 <span id="cb39-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
-  nombre         superficie_2020 superficie_2021
-  &lt;chr&gt;                    &lt;dbl&gt;           &lt;dbl&gt;
-1 Parque Cutervo            8214            8214
-2 Reserva Pacaya         2080000         2080000
-3 Parque Manu            1716295         1716295</code></pre>
+  departamento planes_2024 planes_2025
+  &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;
+1 CUSCO                 12          14
+2 LIMA                  20          23
+3 AREQUIPA              10          11</code></pre>
 </div>
 </div>
 </section></section>
@@ -1353,7 +1333,7 @@ $ x9           &lt;chr&gt; "EXTENSION  (ha)", "8214.23", "4777", "1716295.22", "
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="author" content="Paul Efren Santos Andrade // Febrero 2026">
+  <meta name="author" content="Paul Efren Santos Andrade // 2026">
   <title>Introducción a la Programación con R - Tidyverse</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -215,7 +215,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // Febrero 2026 
+<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // 2026 
 </div>
 </div>
 </div>
@@ -265,8 +265,7 @@
 <h2>Paquetes necesarios</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-3"><a></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -290,25 +289,22 @@
 <p><strong>Primary key</strong> = variable(s) que identifican <strong>únicamente</strong> cada observación</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Ejemplo en <code>departamento</code>:</p>
+<p>Ejemplo en <code>departamentos</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/departamento.csv"</span>)</span>
-<span id="cb2-2"><a></a>departamentos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb2-2"><a></a>  <span class="sc">~</span>ccdd, <span class="sc">~</span>nombdep,</span>
+<span id="cb2-3"><a></a>  <span class="st">"04"</span>,  <span class="st">"AREQUIPA"</span>,</span>
+<span id="cb2-4"><a></a>  <span class="st">"08"</span>,  <span class="st">"CUSCO"</span>,</span>
+<span id="cb2-5"><a></a>  <span class="st">"15"</span>,  <span class="st">"LIMA"</span></span>
+<span id="cb2-6"><a></a>)</span>
+<span id="cb2-7"><a></a>departamentos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 25 × 2
-   ccdd  nombdep     
-   &lt;chr&gt; &lt;chr&gt;       
- 1 01    AMAZONAS    
- 2 02    ANCASH      
- 3 03    APURIMAC    
- 4 04    AREQUIPA    
- 5 05    AYACUCHO    
- 6 06    CAJAMARCA   
- 7 07    CALLAO      
- 8 08    CUSCO       
- 9 09    HUANCAVELICA
-10 10    HUANUCO     
-# ℹ 15 more rows</code></pre>
+<pre><code># A tibble: 3 × 2
+  ccdd  nombdep 
+  &lt;chr&gt; &lt;chr&gt;   
+1 04    AREQUIPA
+2 08    CUSCO   
+3 15    LIMA    </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -331,23 +327,22 @@
 <h2>Clave compuesta</h2>
 <p>Cuando necesitas <strong>múltiples variables</strong> para identificar una observación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>provincias <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/provincia.csv"</span>)</span>
-<span id="cb4-2"><a></a>provincias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>provincias <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb4-2"><a></a>  <span class="sc">~</span>ccdd, <span class="sc">~</span>ccpp, <span class="sc">~</span>nombprov,</span>
+<span id="cb4-3"><a></a>  <span class="st">"04"</span>,  <span class="st">"01"</span>,  <span class="st">"AREQUIPA"</span>,</span>
+<span id="cb4-4"><a></a>  <span class="st">"08"</span>,  <span class="st">"01"</span>,  <span class="st">"CUSCO"</span>,</span>
+<span id="cb4-5"><a></a>  <span class="st">"08"</span>,  <span class="st">"02"</span>,  <span class="st">"ACOMAYO"</span>,</span>
+<span id="cb4-6"><a></a>  <span class="st">"15"</span>,  <span class="st">"01"</span>,  <span class="st">"LIMA"</span></span>
+<span id="cb4-7"><a></a>)</span>
+<span id="cb4-8"><a></a>provincias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 196 × 3
-   ccdd  ccpp  nombprov            
-   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;               
- 1 01    01    CHACHAPOYAS         
- 2 01    02    BAGUA               
- 3 01    03    BONGARA             
- 4 01    04    CONDORCANQUI        
- 5 01    05    LUYA                
- 6 01    06    RODRIGUEZ DE MENDOZA
- 7 01    07    UTCUBAMBA           
- 8 02    01    HUARAZ              
- 9 02    02    AIJA                
-10 02    03    ANTONIO RAYMONDI    
-# ℹ 186 more rows</code></pre>
+<pre><code># A tibble: 4 × 3
+  ccdd  ccpp  nombprov
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   
+1 04    01    AREQUIPA
+2 08    01    CUSCO   
+3 08    02    ACOMAYO 
+4 15    01    LIMA    </code></pre>
 </div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -368,24 +363,22 @@
 <h2>Clave compuesta</h2>
 <p>Cuando necesitas <strong>múltiples variables</strong> para identificar una observación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>distritos <span class="ot">&lt;-</span>  <span class="fu">read_csv</span>(<span class="st">"data/distritos.csv"</span>)</span>
-<span id="cb6-2"><a></a>distritos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>distritos <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb6-2"><a></a>  <span class="sc">~</span>ccdd, <span class="sc">~</span>ccpp, <span class="sc">~</span>ccdi, <span class="sc">~</span>ubigeo,   <span class="sc">~</span>nombdist,</span>
+<span id="cb6-3"><a></a>  <span class="st">"04"</span>,  <span class="st">"01"</span>,  <span class="st">"01"</span>,  <span class="st">"040101"</span>, <span class="st">"AREQUIPA"</span>,</span>
+<span id="cb6-4"><a></a>  <span class="st">"08"</span>,  <span class="st">"01"</span>,  <span class="st">"01"</span>,  <span class="st">"080101"</span>, <span class="st">"CUSCO"</span>,</span>
+<span id="cb6-5"><a></a>  <span class="st">"08"</span>,  <span class="st">"02"</span>,  <span class="st">"01"</span>,  <span class="st">"080201"</span>, <span class="st">"ACOMAYO"</span>,</span>
+<span id="cb6-6"><a></a>  <span class="st">"15"</span>,  <span class="st">"01"</span>,  <span class="st">"01"</span>,  <span class="st">"150101"</span>, <span class="st">"LIMA"</span></span>
+<span id="cb6-7"><a></a>)</span>
+<span id="cb6-8"><a></a>distritos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,890 × 12
-   objectid ccdd  ccpp  ccdi  ubigeo nombdist       fuente periodo ccdd_c ccpp_c
-      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
- 1      840 09    02    03    090203 ANTA           V Cen…       1 090    01    
- 2        1 01    01    01    010101 CHACHAPOYAS    V Cen…       1 010    01    
- 3        6 01    01    06    010106 CHUQUIBAMBA    V Cen…       1 010    01    
- 4       28 01    03    01    010301 JUMBILLA       V Cen…       1 010    01    
- 5       45 01    05    03    010503 COCABAMBA      V Cen…       1 010    01    
- 6       10 01    01    10    010110 LEIMEBAMBA     V Cen…       1 010    01    
- 7      470 05    03    04    050304 SANTIAGO DE L… V Cen…       1 050    01    
- 8       19 01    01    19    010119 SAN ISIDRO DE… V Cen…       1 010    01    
- 9      490 05    05    07    050507 SANTA ROSA     V Cen…       1 050    02    
-10      491 05    05    08    050508 TAMBO          V Cen…       1 050    02    
-# ℹ 1,880 more rows
-# ℹ 2 more variables: ccdi_c &lt;chr&gt;, fec_reg &lt;dttm&gt;</code></pre>
+<pre><code># A tibble: 4 × 5
+  ccdd  ccpp  ccdi  ubigeo nombdist
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   
+1 04    01    01    040101 AREQUIPA
+2 08    01    01    080101 CUSCO   
+3 08    02    01    080201 ACOMAYO 
+4 15    01    01    150101 LIMA    </code></pre>
 </div>
 </div>
 </section>
@@ -605,30 +598,18 @@
 <section id="claves-con-nombres-diferentes" class="slide level2">
 <h2>Claves con nombres diferentes</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>provincias_2 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(provincias, <span class="dv">15</span>) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>provincias_2 <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(provincias, <span class="at">n =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb22-2"><a></a>  <span class="fu">mutate</span>(<span class="at">cod_dep =</span> ccdd)</span>
 <span id="cb22-3"><a></a>provincias_2 <span class="sc">|&gt;</span></span>
 <span id="cb22-4"><a></a>  <span class="fu">left_join</span>(departamentos, </span>
 <span id="cb22-5"><a></a>            <span class="fu">join_by</span>(cod_dep <span class="sc">==</span> ccdd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 5
-   ccdd  ccpp  nombprov       cod_dep nombdep    
-   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;      
- 1 02    08    CASMA          02      ANCASH     
- 2 21    03    CARABAYA       21      PUNO       
- 3 20    02    AYABACA        20      PIURA      
- 4 15    10    YAUYOS         15      LIMA       
- 5 11    03    NASCA          11      ICA        
- 6 05    10    VICTOR FAJARDO 05      AYACUCHO   
- 7 13    04    CHEPEN         13      LA LIBERTAD
- 8 01    04    CONDORCANQUI   01      AMAZONAS   
- 9 05    09    SUCRE          05      AYACUCHO   
-10 15    02    BARRANCA       15      LIMA       
-11 22    05    LAMAS          22      SAN MARTIN 
-12 20    06    SULLANA        20      PIURA      
-13 12    02    CONCEPCION     12      JUNIN      
-14 01    01    CHACHAPOYAS    01      AMAZONAS   
-15 11    01    ICA            11      ICA        </code></pre>
+<pre><code># A tibble: 3 × 5
+  ccdd  ccpp  nombprov cod_dep nombdep 
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   
+1 08    01    CUSCO    08      CUSCO   
+2 04    01    AREQUIPA 04      AREQUIPA
+3 15    01    LIMA     15      LIMA    </code></pre>
 </div>
 </div>
 </section>
@@ -1168,7 +1149,7 @@
 <span id="cb50-4"><a></a>)</span>
 <span id="cb50-5"><a></a></span>
 <span id="cb50-6"><a></a>employees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb50-7"><a></a>  <span class="at">name =</span> <span class="fu">sample</span>(babynames<span class="sc">::</span>babynames<span class="sc">$</span>name, <span class="dv">100</span>),</span>
+<span id="cb50-7"><a></a>  <span class="at">name =</span> <span class="fu">paste0</span>(<span class="st">"persona_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>),</span>
 <span id="cb50-8"><a></a>  <span class="at">birthday =</span> <span class="fu">ymd</span>(<span class="st">"2022-01-01"</span>) <span class="sc">+</span> (<span class="fu">sample</span>(<span class="dv">365</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
 <span id="cb50-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1859,7 +1840,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

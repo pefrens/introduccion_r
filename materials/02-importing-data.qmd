@@ -1,7 +1,7 @@
 ---
 title: "Introducción a la Programación con R - Tidyverse"
 subtitle: "Sesión 2: Importar y Revisar Datos"
-author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
 format:
   revealjs:
     theme: slides.scss
@@ -97,7 +97,7 @@ El paquete **readr** (parte de tidyverse) proporciona funciones para leer datos.
 planes <- read_csv("data/catalogo_planes.csv")
 
 # Ejemplo con datos de estudiantes
-ciudades_mundo <- read_csv("data/ciudades_mundo.csv")
+ciudades_mundo <- read_csv("data/ciudades_1.csv")
 ```
 
 . . .
@@ -169,7 +169,7 @@ Especifica qué cadenas deben interpretarse como valores faltantes:
 #| eval: false
 #| echo: true
 ciudades <- read_csv(
-  "data/ciudades.csv",
+  "data/ciudades_1.csv",
   na = c("N/A", "")  # Reconocer "N/A" y "" como NA
 )
 ```
@@ -300,7 +300,7 @@ $ region_type   <fct> Emirate, Province, Parish, County, Capital
 ```{r}
 #| eval: false
 #| echo: true
-ciudades <- read_csv("data/ciudades.csv", na = c("N/A", "")) |>
+ciudades <- read_csv("data/ciudades_1.csv", na = c("N/A", "")) |>
   clean_names() |>
   mutate(
     region_type = factor(region_type),
@@ -479,7 +479,7 @@ Opciones para `col_types`:
 Ver todas las hojas de un archivo:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 excel_sheets("data/indicadoresCPV2017.xlsx")
 ```
@@ -489,7 +489,7 @@ excel_sheets("data/indicadoresCPV2017.xlsx")
 Leer una hoja específica:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 indicadores_inei <- read_excel(
   "data/indicadoresCPV2017.xlsx",
@@ -524,7 +524,7 @@ indicadores_hogar <- read_excel(
 ```{r}
 
 #| echo: true
-#| eval: true
+#| eval: false
 huarocondo <- read_xlsx("data/reporte_centro_poblado_HUAROCONDO.xlsx",skip = 4)
 anta <- read_excel("data/reporte_centro_poblado_ANTA.xlsx", 
                    skip = 4)
@@ -544,7 +544,7 @@ bind_rows(
 A veces solo necesitas un rango específico:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 # Leer rango específico (A6:C31)
 huarocondo <- read_excel(
@@ -598,7 +598,7 @@ Al leer de vuelta, los tipos de datos se pierden (factor → character)
 ## Ejemplo Práctico {.smaller}
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 library(readxl)
 library(janitor)
@@ -616,7 +616,7 @@ huarocondo_clean
 ## Consejos para Hojas de Cálculo
 
 ::: incremental
-1. **Siempre mira el archivo primero** en Excel (
+1. **Siempre mira el archivo primero** en Excel
 2. **Proceso iterativo**: importa → revisa → ajusta → reimporta
 3. **Usa `range`** si hay texto extra arriba/abajo
 4. **No confíes en el formato visual** - verifica tipos
@@ -686,7 +686,7 @@ library(sf)
 departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 
 # Alternativa más verbosa
-dist_cusco <- st_read("data/distritos_cusco.shp")
+departamentos <- st_read("data/DEPARTAMENTO.gpkg")
 ```
 
 
@@ -795,7 +795,7 @@ departamentos_clean <- departamentos |>
   st_transform(crs = "EPSG:32718")  # Proyectar a UTM
 
 # 3. Guardar resultado
-write_sf(departamentos_metrics, "output/departamentos_procesado.gpkg")
+write_sf(departamentos_clean, "output/departamentos_procesado.gpkg")
 ```
 
 
@@ -807,7 +807,7 @@ write_sf(departamentos_metrics, "output/departamentos_procesado.gpkg")
 A veces los datos están divididos en múltiples archivos:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 indicadores_files <- c(
   "data/reporte_centro_poblado_ANTA.csv",
@@ -822,6 +822,7 @@ El argumento `id` añade una columna identificando el archivo de origen.
 
 
 ```{r}
+#| eval: false
 indicadores <- read_csv(indicadores_files, id = "file")
 indicadores
 ```
@@ -831,7 +832,7 @@ indicadores
 Usa `list.files()` para buscar archivos por patrón:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 # Encontrar todos los CSV que contienen "sales"
 reporte_files <- list.files(

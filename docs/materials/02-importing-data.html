@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="author" content="Paul Efren Santos Andrade // Febrero 2026">
+  <meta name="author" content="Paul Efren Santos Andrade // 2026">
   <title>Introducción a la Programación con R - Tidyverse</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -205,7 +205,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // Febrero 2026 
+<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // 2026 
 </div>
 </div>
 </div>
@@ -305,7 +305,7 @@
 <span id="cb2-2"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>)</span>
 <span id="cb2-3"><a></a></span>
 <span id="cb2-4"><a></a><span class="co"># Ejemplo con datos de estudiantes</span></span>
-<span id="cb2-5"><a></a>ciudades_mundo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ciudades_mundo.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a></a>ciudades_mundo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ciudades_1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><code>read_csv()</code> imprime información útil:</p>
@@ -386,7 +386,7 @@
 <p>Especifica qué cadenas deben interpretarse como valores faltantes:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>ciudades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb5-2"><a></a>  <span class="st">"data/ciudades.csv"</span>,</span>
+<span id="cb5-2"><a></a>  <span class="st">"data/ciudades_1.csv"</span>,</span>
 <span id="cb5-3"><a></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)  <span class="co"># Reconocer "N/A" y "" como NA</span></span>
 <span id="cb5-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -502,7 +502,7 @@
 <section id="pipeline-completo-de-limpieza" class="slide level2 smaller">
 <h2>Pipeline Completo de Limpieza</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>ciudades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ciudades.csv"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>ciudades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ciudades_1.csv"</span>, <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
 <span id="cb16-3"><a></a>  <span class="fu">mutate</span>(</span>
 <span id="cb16-4"><a></a>    <span class="at">region_type =</span> <span class="fu">factor</span>(region_type),</span>
@@ -768,52 +768,49 @@
 <p>Ver todas las hojas de un archivo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">excel_sheets</span>(<span class="st">"data/indicadoresCPV2017.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Poblacion" "Vivienda"  "Hogar"    </code></pre>
-</div>
 </div>
 <div class="fragment">
 <p>Leer una hoja específica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>indicadores_inei <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb33-2"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
-<span id="cb33-3"><a></a>  <span class="at">sheet =</span> <span class="st">"Poblacion"</span></span>
-<span id="cb33-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>indicadores_inei <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb32-2"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb32-3"><a></a>  <span class="at">sheet =</span> <span class="st">"Poblacion"</span></span>
+<span id="cb32-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="leer-todas-las-hojas" class="slide level2 smaller">
 <h2>Leer Todas las Hojas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="co"># Leer cada hoja</span></span>
-<span id="cb34-2"><a></a>indicadores_poblacion <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb34-3"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
-<span id="cb34-4"><a></a>  <span class="at">sheet =</span> <span class="st">"Poblacion"</span></span>
-<span id="cb34-5"><a></a>)</span>
-<span id="cb34-6"><a></a></span>
-<span id="cb34-7"><a></a>indicadores_vivienda <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb34-8"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
-<span id="cb34-9"><a></a>  <span class="at">sheet =</span> <span class="st">"Vivienda"</span></span>
-<span id="cb34-10"><a></a>)</span>
-<span id="cb34-11"><a></a></span>
-<span id="cb34-12"><a></a>indicadores_hogar <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb34-13"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
-<span id="cb34-14"><a></a>  <span class="at">sheet =</span> <span class="st">"Hogar"</span></span>
-<span id="cb34-15"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># Leer cada hoja</span></span>
+<span id="cb33-2"><a></a>indicadores_poblacion <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb33-3"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb33-4"><a></a>  <span class="at">sheet =</span> <span class="st">"Poblacion"</span></span>
+<span id="cb33-5"><a></a>)</span>
+<span id="cb33-6"><a></a></span>
+<span id="cb33-7"><a></a>indicadores_vivienda <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb33-8"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb33-9"><a></a>  <span class="at">sheet =</span> <span class="st">"Vivienda"</span></span>
+<span id="cb33-10"><a></a>)</span>
+<span id="cb33-11"><a></a></span>
+<span id="cb33-12"><a></a>indicadores_hogar <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb33-13"><a></a>  <span class="st">"data/indicadoresCPV2017.xlsx"</span>,</span>
+<span id="cb33-14"><a></a>  <span class="at">sheet =</span> <span class="st">"Hogar"</span></span>
+<span id="cb33-15"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
 <section id="combinar-objetos" class="title-slide slide level1 center">
 <h1>Combinar objetos</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co">#| echo: true</span></span>
-<span id="cb35-2"><a></a><span class="co">#| eval: true</span></span>
-<span id="cb35-3"><a></a>huarocondo <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,<span class="at">skip =</span> <span class="dv">4</span>)</span>
-<span id="cb35-4"><a></a>anta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/reporte_centro_poblado_ANTA.xlsx"</span>, </span>
-<span id="cb35-5"><a></a>                   <span class="at">skip =</span> <span class="dv">4</span>)</span>
-<span id="cb35-6"><a></a></span>
-<span id="cb35-7"><a></a><span class="fu">bind_rows</span>(huarocondo, </span>
-<span id="cb35-8"><a></a>          anta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="co">#| echo: true</span></span>
+<span id="cb34-2"><a></a><span class="co">#| eval: false</span></span>
+<span id="cb34-3"><a></a>huarocondo <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,<span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb34-4"><a></a>anta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/reporte_centro_poblado_ANTA.xlsx"</span>, </span>
+<span id="cb34-5"><a></a>                   <span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb34-6"><a></a></span>
+<span id="cb34-7"><a></a><span class="fu">bind_rows</span>(huarocondo, </span>
+<span id="cb34-8"><a></a>          anta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 58 × 3
    `VARIABLE / INDICADOR`                           Absoluto `%`              
@@ -830,10 +827,10 @@
 10 Población de 15 a 29 años                        643      26.1             
 # ℹ 48 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">bind_rows</span>(</span>
-<span id="cb37-2"><a></a>  <span class="fu">lst</span>(huarocondo, anta),</span>
-<span id="cb37-3"><a></a>  <span class="at">.id =</span> <span class="st">"distrito"</span></span>
-<span id="cb37-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">bind_rows</span>(</span>
+<span id="cb36-2"><a></a>  <span class="fu">lst</span>(huarocondo, anta),</span>
+<span id="cb36-3"><a></a>  <span class="at">.id =</span> <span class="st">"distrito"</span></span>
+<span id="cb36-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 58 × 4
    distrito   `VARIABLE / INDICADOR`                           Absoluto `%`     
@@ -856,11 +853,11 @@
 <h2>Leer Parte de una Hoja</h2>
 <p>A veces solo necesitas un rango específico:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># Leer rango específico (A6:C31)</span></span>
-<span id="cb39-2"><a></a>huarocondo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb39-3"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,</span>
-<span id="cb39-4"><a></a>  <span class="at">range =</span> <span class="st">"A6:C31"</span></span>
-<span id="cb39-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="co"># Leer rango específico (A6:C31)</span></span>
+<span id="cb38-2"><a></a>huarocondo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb38-3"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,</span>
+<span id="cb38-4"><a></a>  <span class="at">range =</span> <span class="st">"A6:C31"</span></span>
+<span id="cb38-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tipos-de-datos-en-excel" class="slide level2 smaller">
@@ -891,16 +888,16 @@
 <section id="escribir-a-excel" class="slide level2">
 <h2>Escribir a Excel</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(writexl)</span>
-<span id="cb40-2"><a></a></span>
-<span id="cb40-3"><a></a><span class="co"># Crear datos de ejemplo</span></span>
-<span id="cb40-4"><a></a>bake_sale <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb40-5"><a></a>  <span class="at">item =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"brownie"</span>, <span class="st">"cupcake"</span>, <span class="st">"cookie"</span>)),</span>
-<span id="cb40-6"><a></a>  <span class="at">quantity =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">8</span>)</span>
-<span id="cb40-7"><a></a>)</span>
-<span id="cb40-8"><a></a></span>
-<span id="cb40-9"><a></a><span class="co"># Escribir a Excel</span></span>
-<span id="cb40-10"><a></a><span class="fu">write_xlsx</span>(bake_sale, <span class="at">path =</span> <span class="st">"data/bake-sale.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">library</span>(writexl)</span>
+<span id="cb39-2"><a></a></span>
+<span id="cb39-3"><a></a><span class="co"># Crear datos de ejemplo</span></span>
+<span id="cb39-4"><a></a>bake_sale <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb39-5"><a></a>  <span class="at">item =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"brownie"</span>, <span class="st">"cupcake"</span>, <span class="st">"cookie"</span>)),</span>
+<span id="cb39-6"><a></a>  <span class="at">quantity =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">8</span>)</span>
+<span id="cb39-7"><a></a>)</span>
+<span id="cb39-8"><a></a></span>
+<span id="cb39-9"><a></a><span class="co"># Escribir a Excel</span></span>
+<span id="cb39-10"><a></a><span class="fu">write_xlsx</span>(bake_sale, <span class="at">path =</span> <span class="st">"data/bake-sale.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -921,38 +918,22 @@
 <section id="ejemplo-práctico" class="slide level2 smaller">
 <h2>Ejemplo Práctico</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">library</span>(readxl)</span>
-<span id="cb41-2"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb41-3"><a></a></span>
-<span id="cb41-4"><a></a><span class="co"># Leer y limpiar en un pipeline</span></span>
-<span id="cb41-5"><a></a>huarocondo_clean <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb41-6"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,</span>
-<span id="cb41-7"><a></a>  <span class="at">range =</span> <span class="st">"A6:C31"</span></span>
-<span id="cb41-8"><a></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb41-9"><a></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb41-10"><a></a>huarocondo_clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 25 × 3
-   variable_indicador                               absoluto percent          
-   &lt;chr&gt;                                            &lt;chr&gt;    &lt;chr&gt;            
- 1 Población total 2017                             2468     -                
- 2 Población en Edad de trabajar (14 y más años)    1947     78.90000000000001
- 3 Población total en edad electoral (18 a 70 años) 1570     63.6             
- 4 Población total 2017 masculina                   1220     49.4             
- 5 Población total 2017 femenina                    1247     50.5             
- 6 Relación de masculinidad (h/m)                   97.8348  -                
- 7 Población urbana                                 2468     100              
- 8 Población rural                                  -        -                
- 9 Población de 0 a 14 años                         566      22.9             
-10 Población de 15 a 29 años                        643      26.1             
-# ℹ 15 more rows</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb40-2"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb40-3"><a></a></span>
+<span id="cb40-4"><a></a><span class="co"># Leer y limpiar en un pipeline</span></span>
+<span id="cb40-5"><a></a>huarocondo_clean <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb40-6"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.xlsx"</span>,</span>
+<span id="cb40-7"><a></a>  <span class="at">range =</span> <span class="st">"A6:C31"</span></span>
+<span id="cb40-8"><a></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb40-9"><a></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb40-10"><a></a>huarocondo_clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="consejos-para-hojas-de-cálculo" class="slide level2">
 <h2>Consejos para Hojas de Cálculo</h2>
 <ol type="1">
-<li class="fragment"><strong>Siempre mira el archivo primero</strong> en Excel (</li>
+<li class="fragment"><strong>Siempre mira el archivo primero</strong> en Excel</li>
 <li class="fragment"><strong>Proceso iterativo</strong>: importa → revisa → ajusta → reimporta</li>
 <li class="fragment"><strong>Usa <code>range</code></strong> si hay texto extra arriba/abajo</li>
 <li class="fragment"><strong>No confíes en el formato visual</strong> - verifica tipos</li>
@@ -975,7 +956,7 @@
 <section id="paquete-sf-para-datos-vectoriales" class="slide level2">
 <h2>Paquete sf para Datos Vectoriales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">library</span>(sf)  <span class="co"># Simple Features for R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">library</span>(sf)  <span class="co"># Simple Features for R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><code>sf</code> proporciona:</p>
@@ -1012,19 +993,19 @@
 <section id="leer-datos-espaciales" class="slide level2">
 <h2>Leer Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb44-2"><a></a><span class="co"># Leer shapefile, geopackage, geojson, etc.</span></span>
-<span id="cb44-3"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
-<span id="cb44-4"><a></a></span>
-<span id="cb44-5"><a></a><span class="co"># Alternativa más verbosa</span></span>
-<span id="cb44-6"><a></a>dist_cusco <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/distritos_cusco.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb42-2"><a></a><span class="co"># Leer shapefile, geopackage, geojson, etc.</span></span>
+<span id="cb42-3"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb42-4"><a></a></span>
+<span id="cb42-5"><a></a><span class="co"># Alternativa más verbosa</span></span>
+<span id="cb42-6"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `distritos_cusco' from data source 
-  `D:\introduccion_r\materials\data\distritos_cusco.shp' using driver `ESRI Shapefile'
-Simple feature collection with 116 features and 12 fields
-Geometry type: POLYGON
+<pre><code>Reading layer `tb_departamento_v2022' from data source 
+  `D:\introduccion_r\materials\data\DEPARTAMENTO.gpkg' using driver `GPKG'
+Simple feature collection with 25 features and 6 fields
+Geometry type: MULTIPOLYGON
 Dimension:     XY
-Bounding box:  xmin: -73.974 ymin: -15.45829 xmax: -70.34507 ymax: -11.21229
+Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
 Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
@@ -1032,7 +1013,7 @@ Geodetic CRS:  WGS 84</code></pre>
 <section id="estructura-de-objetos-sf" class="slide level2">
 <h2>Estructura de Objetos sf</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">class</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">class</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sf"         "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
@@ -1060,8 +1041,8 @@ Geodetic CRS:  WGS 84</code></pre>
 <section id="explorar-datos-espaciales" class="slide level2 smaller">
 <h2>Explorar Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="co"># Ver estructura</span></span>
-<span id="cb48-2"><a></a><span class="fu">glimpse</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="co"># Ver estructura</span></span>
+<span id="cb46-2"><a></a><span class="fu">glimpse</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 25
 Columns: 7
@@ -1073,8 +1054,8 @@ $ periodo  &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 $ fec_reg  &lt;dttm&gt; 2022-07-13 17:13:57, 2022-07-13 17:13:57, 2022-07-13 17:13:5…
 $ geom     &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-77.81399 -..., MULTIPOLYGON (((…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># Ver primeras filas</span></span>
-<span id="cb50-2"><a></a><span class="fu">head</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="co"># Ver primeras filas</span></span>
+<span id="cb48-2"><a></a><span class="fu">head</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 6 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1092,8 +1073,8 @@ Geodetic CRS:  WGS 84
 6        6 06    CAJAMARCA V Censo Nacional Economi…       1 2022-07-13 17:13:57
 # ℹ 1 more variable: geom &lt;MULTIPOLYGON [°]&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="co"># Obtener CRS</span></span>
-<span id="cb52-2"><a></a><span class="fu">st_crs</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># Obtener CRS</span></span>
+<span id="cb50-2"><a></a><span class="fu">st_crs</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: WGS 84 
@@ -1131,22 +1112,22 @@ GEOGCRS["WGS 84",
 <section id="visualizar-datos-espaciales" class="slide level2">
 <h2>Visualizar Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="co"># Mapa básico con plot()</span></span>
-<span id="cb54-2"><a></a><span class="fu">plot</span>(departamentos[<span class="st">"nombdep"</span>])</span>
-<span id="cb54-3"><a></a></span>
-<span id="cb54-4"><a></a><span class="co"># Con ggplot2</span></span>
-<span id="cb54-5"><a></a><span class="fu">ggplot</span>(departamentos) <span class="sc">+</span></span>
-<span id="cb54-6"><a></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> nombdep)) <span class="sc">+</span></span>
-<span id="cb54-7"><a></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="co"># Mapa básico con plot()</span></span>
+<span id="cb52-2"><a></a><span class="fu">plot</span>(departamentos[<span class="st">"nombdep"</span>])</span>
+<span id="cb52-3"><a></a></span>
+<span id="cb52-4"><a></a><span class="co"># Con ggplot2</span></span>
+<span id="cb52-5"><a></a><span class="fu">ggplot</span>(departamentos) <span class="sc">+</span></span>
+<span id="cb52-6"><a></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> nombdep)) <span class="sc">+</span></span>
+<span id="cb52-7"><a></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="operaciones-espaciales-básicas" class="slide level2 smaller">
 <h2>Operaciones Espaciales Básicas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb55-2"><a></a><span class="co"># Transformar CRS (proyectar)</span></span>
-<span id="cb55-3"><a></a> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb55-4"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># UTM Zone 18S</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb53-2"><a></a><span class="co"># Transformar CRS (proyectar)</span></span>
+<span id="cb53-3"><a></a> departamentos <span class="sc">|&gt;</span></span>
+<span id="cb53-4"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># UTM Zone 18S</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 25 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -1169,9 +1150,9 @@ Projected CRS: WGS 84 / UTM zone 18S
 # ℹ 15 more rows
 # ℹ 1 more variable: geom &lt;MULTIPOLYGON [m]&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="co"># Centroides</span></span>
-<span id="cb57-2"><a></a><span class="fu">st_centroid</span>(departamentos) <span class="sc">|&gt;</span>  </span>
-<span id="cb57-3"><a></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="co"># Centroides</span></span>
+<span id="cb55-2"><a></a><span class="fu">st_centroid</span>(departamentos) <span class="sc">|&gt;</span>  </span>
+<span id="cb55-3"><a></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 7
    objectid ccdd  nombdep      fuente                periodo fec_reg            
@@ -1194,14 +1175,14 @@ Projected CRS: WGS 84 / UTM zone 18S
 <section id="escribir-datos-espaciales" class="slide level2">
 <h2>Escribir Datos Espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="co"># Guardar como GeoPackage (recomendado)</span></span>
-<span id="cb59-2"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos_procesado.gpkg"</span>)</span>
-<span id="cb59-3"><a></a></span>
-<span id="cb59-4"><a></a><span class="co"># Guardar como shapefile</span></span>
-<span id="cb59-5"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.shp"</span>)</span>
-<span id="cb59-6"><a></a></span>
-<span id="cb59-7"><a></a><span class="co"># Guardar como GeoJSON</span></span>
-<span id="cb59-8"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="co"># Guardar como GeoPackage (recomendado)</span></span>
+<span id="cb57-2"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos_procesado.gpkg"</span>)</span>
+<span id="cb57-3"><a></a></span>
+<span id="cb57-4"><a></a><span class="co"># Guardar como shapefile</span></span>
+<span id="cb57-5"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.shp"</span>)</span>
+<span id="cb57-6"><a></a></span>
+<span id="cb57-7"><a></a><span class="co"># Guardar como GeoJSON</span></span>
+<span id="cb57-8"><a></a><span class="fu">write_sf</span>(departamentos, <span class="st">"data/departamentos.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="formatos-espaciales-comunes" class="slide level2">
@@ -1241,19 +1222,19 @@ Projected CRS: WGS 84 / UTM zone 18S
 <section id="ejemplo-completo-workflow-espacial" class="slide level2 smaller">
 <h2>Ejemplo Completo: Workflow Espacial</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb60-2"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb60-3"><a></a></span>
-<span id="cb60-4"><a></a><span class="co"># 1. Leer datos espaciales</span></span>
-<span id="cb60-5"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
-<span id="cb60-6"><a></a></span>
-<span id="cb60-7"><a></a><span class="co"># 2. Limpiar y transformar</span></span>
-<span id="cb60-8"><a></a>departamentos_clean <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
-<span id="cb60-9"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb60-10"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># Proyectar a UTM</span></span>
-<span id="cb60-11"><a></a></span>
-<span id="cb60-12"><a></a><span class="co"># 3. Guardar resultado</span></span>
-<span id="cb60-13"><a></a><span class="fu">write_sf</span>(departamentos_metrics, <span class="st">"output/departamentos_procesado.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb58-2"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb58-3"><a></a></span>
+<span id="cb58-4"><a></a><span class="co"># 1. Leer datos espaciales</span></span>
+<span id="cb58-5"><a></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span>
+<span id="cb58-6"><a></a></span>
+<span id="cb58-7"><a></a><span class="co"># 2. Limpiar y transformar</span></span>
+<span id="cb58-8"><a></a>departamentos_clean <span class="ot">&lt;-</span> departamentos <span class="sc">|&gt;</span></span>
+<span id="cb58-9"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb58-10"><a></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">"EPSG:32718"</span>)  <span class="co"># Proyectar a UTM</span></span>
+<span id="cb58-11"><a></a></span>
+<span id="cb58-12"><a></a><span class="co"># 3. Guardar resultado</span></span>
+<span id="cb58-13"><a></a><span class="fu">write_sf</span>(departamentos_clean, <span class="st">"output/departamentos_procesado.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -1265,71 +1246,33 @@ Projected CRS: WGS 84 / UTM zone 18S
 <h2>Leer Varios Archivos a la Vez</h2>
 <p>A veces los datos están divididos en múltiples archivos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>indicadores_files <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb61-2"><a></a>  <span class="st">"data/reporte_centro_poblado_ANTA.csv"</span>,</span>
-<span id="cb61-3"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.csv"</span></span>
-<span id="cb61-4"><a></a>)</span>
-<span id="cb61-5"><a></a> <span class="fu">read_csv</span>(indicadores_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 50 × 4
-   file                                 `VARIABLE / INDICADOR`    Absoluto `%`  
-   &lt;chr&gt;                                &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;
- 1 data/reporte_centro_poblado_ANTA.csv Población total 2017      10647    -    
- 2 data/reporte_centro_poblado_ANTA.csv Población en Edad de tra… 7695     72.3 
- 3 data/reporte_centro_poblado_ANTA.csv Población total en edad … 6511     61.2 
- 4 data/reporte_centro_poblado_ANTA.csv Población total 2017 mas… 5161     48.5 
- 5 data/reporte_centro_poblado_ANTA.csv Población total 2017 fem… 5486     51.5 
- 6 data/reporte_centro_poblado_ANTA.csv Relación de masculinidad… 94.07583 -    
- 7 data/reporte_centro_poblado_ANTA.csv Población urbana          10647    100  
- 8 data/reporte_centro_poblado_ANTA.csv Población rural           -        -    
- 9 data/reporte_centro_poblado_ANTA.csv Población de 0 a 14 años  3169     29.8 
-10 data/reporte_centro_poblado_ANTA.csv Población de 15 a 29 años 3002     28.2 
-# ℹ 40 more rows</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>indicadores_files <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb59-2"><a></a>  <span class="st">"data/reporte_centro_poblado_ANTA.csv"</span>,</span>
+<span id="cb59-3"><a></a>  <span class="st">"data/reporte_centro_poblado_HUAROCONDO.csv"</span></span>
+<span id="cb59-4"><a></a>)</span>
+<span id="cb59-5"><a></a> <span class="fu">read_csv</span>(indicadores_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>El argumento <code>id</code> añade una columna identificando el archivo de origen.</p>
 </section>
 <section id="resultado" class="slide level2">
 <h2>Resultado</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>indicadores <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(indicadores_files, <span class="at">id =</span> <span class="st">"file"</span>)</span>
-<span id="cb63-2"><a></a>indicadores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 50 × 4
-   file                                 `VARIABLE / INDICADOR`    Absoluto `%`  
-   &lt;chr&gt;                                &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;
- 1 data/reporte_centro_poblado_ANTA.csv Población total 2017      10647    -    
- 2 data/reporte_centro_poblado_ANTA.csv Población en Edad de tra… 7695     72.3 
- 3 data/reporte_centro_poblado_ANTA.csv Población total en edad … 6511     61.2 
- 4 data/reporte_centro_poblado_ANTA.csv Población total 2017 mas… 5161     48.5 
- 5 data/reporte_centro_poblado_ANTA.csv Población total 2017 fem… 5486     51.5 
- 6 data/reporte_centro_poblado_ANTA.csv Relación de masculinidad… 94.07583 -    
- 7 data/reporte_centro_poblado_ANTA.csv Población urbana          10647    100  
- 8 data/reporte_centro_poblado_ANTA.csv Población rural           -        -    
- 9 data/reporte_centro_poblado_ANTA.csv Población de 0 a 14 años  3169     29.8 
-10 data/reporte_centro_poblado_ANTA.csv Población de 15 a 29 años 3002     28.2 
-# ℹ 40 more rows</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a>indicadores <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(indicadores_files, <span class="at">id =</span> <span class="st">"file"</span>)</span>
+<span id="cb60-2"><a></a>indicadores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="encontrar-archivos-automáticamente" class="slide level2">
 <h2>Encontrar Archivos Automáticamente</h2>
 <p>Usa <code>list.files()</code> para buscar archivos por patrón:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="co"># Encontrar todos los CSV que contienen "sales"</span></span>
-<span id="cb65-2"><a></a>reporte_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
-<span id="cb65-3"><a></a>  <span class="st">"data"</span>,</span>
-<span id="cb65-4"><a></a>  <span class="at">pattern =</span> <span class="st">"^reporte"</span>,</span>
-<span id="cb65-5"><a></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb65-6"><a></a>)</span>
-<span id="cb65-7"><a></a></span>
-<span id="cb65-8"><a></a>reporte_files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "data/reporte_centro_poblado_ANTA.csv"       
-[2] "data/reporte_centro_poblado_ANTA.xlsx"      
-[3] "data/reporte_centro_poblado_HUAROCONDO.csv" 
-[4] "data/reporte_centro_poblado_HUAROCONDO.xlsx"</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="co"># Encontrar todos los CSV que contienen "sales"</span></span>
+<span id="cb61-2"><a></a>reporte_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb61-3"><a></a>  <span class="st">"data"</span>,</span>
+<span id="cb61-4"><a></a>  <span class="at">pattern =</span> <span class="st">"^reporte"</span>,</span>
+<span id="cb61-5"><a></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb61-6"><a></a>)</span>
+<span id="cb61-7"><a></a></span>
+<span id="cb61-8"><a></a>reporte_files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -1340,10 +1283,10 @@ Projected CRS: WGS 84 / UTM zone 18S
 <section id="escribir-a-csv" class="slide level2">
 <h2>Escribir a CSV</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="co"># Guardar data frame como CSV</span></span>
-<span id="cb67-2"><a></a>indicadores <span class="sc">|&gt;</span> </span>
-<span id="cb67-3"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb67-4"><a></a>  <span class="fu">write_csv</span>(<span class="st">"indicadores-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="co"># Guardar data frame como CSV</span></span>
+<span id="cb62-2"><a></a>indicadores <span class="sc">|&gt;</span> </span>
+<span id="cb62-3"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb62-4"><a></a>  <span class="fu">write_csv</span>(<span class="st">"indicadores-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparación-de-formatos" class="slide level2">
@@ -1952,7 +1895,7 @@ Projected CRS: WGS 84 / UTM zone 18S
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

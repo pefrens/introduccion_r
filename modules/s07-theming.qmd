@@ -1,7 +1,7 @@
 ---
 title: "Theming y estilo de graficos (complementario)"
 subtitle: "<span class='code'>Sesion complementaria</span>"
-date: "2026-02"
+date: "2026"
 image: "images/04-theming.png"
 tbl-colwidths: [5,20,75]
 ---
@@ -33,10 +33,14 @@ pob <- read_csv("data/poblacion_peru.csv") |>
 ```
 
 ```r
-ggplot(pob, aes(x = reorder(departamento, total), y = total)) +
-  geom_col(fill = "#2C3E50") +
-  coord_flip() +
-  labs(title = "Poblacion total por departamento") +
+ggplot(pob, aes(x = ano, y = total)) +
+  geom_line(color = "#2C3E50", linewidth = 1) +
+  geom_point(color = "#28A87D", size = 2) +
+  labs(
+    title = "Poblacion total del Peru",
+    x = "Anio",
+    y = "Poblacion total"
+  ) +
   theme_minimal(base_size = 13)
 ```
 

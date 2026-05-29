@@ -25,10 +25,6 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -40,18 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -70,15 +54,11 @@ ul.task-list li input[type="checkbox"] {
 
 <meta property="og:title" content="Bienvenida e Introduccion al curso">
 <meta property="og:description" content="Sesion 0">
-<meta property="og:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/01-fundamentals.png">
-<meta property="og:image:height" content="1688">
-<meta property="og:image:width" content="2189">
+<meta property="og:image" content="images/01-fundamentals.png">
 <meta name="twitter:title" content="Bienvenida e Introduccion al curso">
 <meta name="twitter:description" content="Sesion 0">
-<meta name="twitter:image" content="https://posit-conf-2023.github.io/dataviz-ggplot2/modules/images/01-fundamentals.png">
+<meta name="twitter:image" content="images/01-fundamentals.png">
 <meta name="twitter:creator" content="@PaulESantos">
-<meta name="twitter:image-height" content="1688">
-<meta name="twitter:image-width" content="2189">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -88,12 +68,15 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-información" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Información</span>
@@ -119,23 +102,23 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Fundamentos de R y RStudio</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s03-import-data.html">
+    <a class="dropdown-item" href="../modules/s02-import-data.html">
  <span class="dropdown-text">Importar y Revisar Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s05-dplyr.html">
+    <a class="dropdown-item" href="../modules/s03-dplyr.html">
  <span class="dropdown-text">dplyr - Manipulación de Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s07-tidying-data.html">
+    <a class="dropdown-item" href="../modules/s04-tidying-data.html">
  <span class="dropdown-text">tidyr - Organización de Datos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s06-joins.html">
+    <a class="dropdown-item" href="../modules/s05-joins.html">
  <span class="dropdown-text">Unión de Datos (Joins)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../modules/s08-spatial.html">
+    <a class="dropdown-item" href="../modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
   </li>  
     </ul>
@@ -150,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">    
         <li>
-    <a class="dropdown-item" href="../materials/positconf-2023-ggplot2-materials.zip">
+    <a class="dropdown-item" href="../materials/data_introduccion_r.zip.zip">
  <span class="dropdown-text">Todos los Materiales del Curso</span></a>
   </li>  
     </ul>
@@ -190,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -351,7 +334,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -686,7 +669,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/posit-conf-2023/dataviz-ggplot2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>© Derechos de autor 2026</p>
 </div>

@@ -6,13 +6,14 @@ project:
   render:
     - "*.qmd"
     - "!materials/exercises"
+    - "!materials/solutions"
+search: false
 website:
   page-navigation: true
+  search: false
   title: ""
   description: "Página principal del taller posit::conf(2023)"
-  site-url: "https://posit-conf-2023.github.io/dataviz-ggplot2/"
-  
-  repo-url: https://github.com/posit-conf-2023/dataviz-ggplot2
+  repo-url: https://github.com/pefrens/introduccion_r
   repo-actions: [edit, issue]
   open-graph: true
   twitter-card:
@@ -38,6 +39,8 @@ website:
         href: https://github.com/pefrens/introduccion_r
         text: GitHub
     left:
+      - text: Inicio
+        href: index.qmd
       - text: Información
         menu: 
           - text: Preparación
@@ -49,15 +52,15 @@ website:
           - text: Fundamentos de R y RStudio
             href: modules/s01-fundamentals.qmd
           - text: Importar y Revisar Datos
-            href: modules/s03-import-data.qmd
+            href: modules/s02-import-data.qmd
           - text: dplyr - Manipulación de Datos
-            href: modules/s05-dplyr.qmd
+            href: modules/s03-dplyr.qmd
           - text: tidyr - Organización de Datos
-            href: modules/s07-tidying-data.qmd
+            href: modules/s04-tidying-data.qmd
           - text: Unión de Datos (Joins)
-            href: modules/s06-joins.qmd
+            href: modules/s05-joins.qmd
           - text: Datos Espaciales con sf
-            href: modules/s08-spatial.qmd
+            href: modules/s06-spatial.qmd
 format:
   html:
     theme:

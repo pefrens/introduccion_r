@@ -1,7 +1,7 @@
 ---
 title: "Introducción a la Programación con R - Tidyverse"
 subtitle: "Sesión 4: Organización de Datos"
-author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
 format:
   revealjs:
     theme: slides.scss
@@ -174,9 +174,12 @@ billboard
 ## Solución: pivot_longer()
 
 ```{r}
-indicadores_inei <- readxl::read_excel("data/indicadores_demograficos.xlsx", 
-          range = "A4:AA20") |> 
-  janitor::clean_names()
+indicadores_inei <- tribble(
+  ~indicador,              ~amazonas, ~ancash, ~cusco,
+  "poblacion_total",       426806,    1180638, 1423807,
+  "poblacion_urbana_pct",  41.5,      63.4,    60.7,
+  "poblacion_rural_pct",   58.5,      36.6,    39.3
+)
 indicadores_inei
 
 ```
@@ -360,55 +363,53 @@ df |>
 Investiga y resuelve el problema antes de pivotar
 :::
 
-# Ejemplo Práctico: Áreas Naturales {background-color="#2C3E50"}
+# Ejemplo Práctico: Planes Urbanos {background-color="#2C3E50"}
 
 ## Datos de ejemplo
 
 ```{r}
-library(readxl)
-
-anp <- read_excel("data/areas_naturales_peru.xlsx") |>
+planes <- read_csv("data/catalogo_planes.csv") |>
   clean_names()
 
-glimpse(anp)
+glimpse(planes)
 ```
 
-## Alargar: Múltiples columnas de superficie
+## Alargar: Múltiples columnas de conteo
 
 Supongamos que tenemos:
 
 ```{r}
-anp_wide <- tribble(
-  ~nombre,              ~superficie_2020, ~superficie_2021,
-  "Parque Cutervo",     8214,             8214,
-  "Reserva Pacaya",     2080000,          2080000,
-  "Parque Manu",        1716295,          1716295
+planes_wide <- tribble(
+  ~departamento, ~planes_2024, ~planes_2025,
+  "CUSCO",       12,           14,
+  "LIMA",        20,           23,
+  "AREQUIPA",    10,           11
 )
 ```
 
 ## Solución
 
 ```{r}
-anp_long <- anp_wide |>
+planes_long <- planes_wide |>
   pivot_longer(
-    cols = starts_with("superficie"),
-    names_to = "year",
-    names_prefix = "superficie_",
-    values_to = "superficie_ha"
+    cols = starts_with("planes_"),
+    names_to = "anio",
+    names_prefix = "planes_",
+    values_to = "n_planes"
   )
 
-anp_long
+planes_long
 ```
 
 
 ## Ensanchar: De largo a ancho
 
 ```{r}
-anp_long |>
+planes_long |>
   pivot_wider(
-    names_from = year,
-    names_prefix = "superficie_",
-    values_from = superficie_ha
+    names_from = anio,
+    names_prefix = "planes_",
+    values_from = n_planes
   )
 ```
 

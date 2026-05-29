@@ -1,7 +1,7 @@
 ---
 title: "Introducción a la Programación con R - Tidyverse"
 subtitle: "Sesión 1: Fundamentos de R y RStudio"
-author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
 format:
   revealjs:
     theme: slides.scss
@@ -43,12 +43,14 @@ ggplot2::theme_set(ggplot2::theme_gray(base_size = 16))
 
 ### Tipos de elementos atomicos
 
-1. Numericos
-  - Enteros - int
-  - Dobles - double
-2. Carcater / Textos - char
-3. Logicos - logical
-4. Factor
+| Tipo            | Subtipo  | Código R   |
+|-----------------|----------|------------|
+| **Numérico**    | Entero   | `int`      |
+| **Numérico**    | Doble    | `double`   |
+| **Carácter**    | —        | `char`     |
+| **Lógico**      | —        | `logical`  |
+| **Factor**      | —        | `factor`   |
+
 
 ## Valores Atómicos
 
@@ -387,6 +389,7 @@ datos_final <- datos |>
 ## Pipe: Ejemplo
 ```{r}
 #| echo: false
+#| messaje: false
 
 library(janitor)
 planes <- readr::read_csv("data/catalogo_planes.csv")

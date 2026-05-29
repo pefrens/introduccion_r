@@ -1,7 +1,7 @@
 ---
 title: "Introducción a la Programación con R - Tidyverse"
 subtitle: "Sesión 3: Transformación de Datos"
-author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;Febrero 2026"
+author: "<a href='https://paulefrensa.rbind.io' style='color:#28a87d;font-weight:600;'>Paul Efren Santos Andrade</a>&ensp;//&ensp;2026"
 format:
   revealjs:
     theme: slides.scss
@@ -99,9 +99,9 @@ filter(planes,
 
 ```{r}
 library(sf)
-distrito <- read_sf("data/DISTRITO.gpkg")
+departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 
-distrito |> 
+departamentos |> 
   filter( ccdd %in% c("08", # Cusco 
                       "04") # Arequipa
           )
@@ -161,6 +161,7 @@ filter( ccdd %in% c("08", "05", "04"))
 ## Valores faltantes (NA)
 
 ```{r}
+#| eval: false
 library(readxl)
 indicadores_anta <- read_excel("data/indicadoresCPV2017.xlsx",
                                skip = 1) |> 
@@ -173,6 +174,7 @@ filter(is.na(percent))
 ## Valores faltantes (NA)
 
 ```{r}
+#| eval: false
 # !is.na() identifica valores NO faltantes
 indicadores_anta |> 
 filter(!is.na(percent))
@@ -326,10 +328,9 @@ departamentos |>
 ## `select()` - Seleccionar columnas
 
 ```{r}
-distrito <- read_sf("data/DISTRITO.gpkg")
 # Seleccionar rango de columnas
-distrito |> 
-select(ccdd:ccdi)
+departamentos |> 
+select(ccdd:nombdep)
 ```
 
 ## `select()` - Seleccionar columnas
@@ -438,8 +439,8 @@ El **pipe** (tubería) te permite encadenar operaciones:
 ```{r}
 arrange(
   filter(
-    select(distrito, nombdist, ccdd, ccdi), ccdd == "08"),
-  desc(as.numeric(ccdi))
+    select(departamentos, nombdep, ccdd), ccdd %in% c("08", "04", "15")),
+  nombdep
 )
 ```
 
@@ -448,10 +449,10 @@ arrange(
 **Con pipe** (fluido y claro):
 
 ```{r}
-distrito |>
-  select(nombdist, ccdd, ccdi) |>
-  filter(ccdd == "08") |>
-  arrange(desc(as.numeric(ccdi)))
+departamentos |>
+  select(nombdep, ccdd) |>
+  filter(ccdd %in% c("08", "04", "15")) |>
+  arrange(nombdep)
 ```
 
 ## Ventajas del pipe 
@@ -527,7 +528,7 @@ planes |>
     total_aprobados     = sum(estado == "Aprobado",    na.rm = TRUE),
     total_terminados    = sum(estado == "Terminado",   na.rm = TRUE),
     total_en_proceso    = sum(estado == "En proceso",  na.rm = TRUE),
-    no_detarminado      = sum(is.na(estado)),
+    no_determinado      = sum(is.na(estado)),
     # Proporciones
     pct_aprobados       = round(total_aprobados / total_planes * 100, 1)
   ) |>
