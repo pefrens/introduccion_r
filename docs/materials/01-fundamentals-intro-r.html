@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="author" content="Paul Efren Santos Andrade // Febrero 2026">
+  <meta name="author" content="Paul Efren Santos Andrade // 2026">
   <title>Introducción a la Programación con R - Tidyverse</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -205,7 +205,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // Febrero 2026 
+<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // 2026 
 </div>
 </div>
 </div>
@@ -219,18 +219,42 @@
 <section id="valores-atómicos" class="slide level2">
 <h2>Valores Atómicos</h2>
 <h3 id="tipos-de-elementos-atomicos">Tipos de elementos atomicos</h3>
-<ol type="1">
-<li>Numericos</li>
-</ol>
-<ul>
-<li>Enteros - int</li>
-<li>Dobles - double</li>
-</ul>
-<ol start="2" type="1">
-<li>Carcater / Textos - char</li>
-<li>Logicos - logical</li>
-<li>Factor</li>
-</ol>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Subtipo</th>
+<th>Código R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Numérico</strong></td>
+<td>Entero</td>
+<td><code>int</code></td>
+</tr>
+<tr class="even">
+<td><strong>Numérico</strong></td>
+<td>Doble</td>
+<td><code>double</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Carácter</strong></td>
+<td>—</td>
+<td><code>char</code></td>
+</tr>
+<tr class="even">
+<td><strong>Lógico</strong></td>
+<td>—</td>
+<td><code>logical</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Factor</strong></td>
+<td>—</td>
+<td><code>factor</code></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="valores-atómicos-1" class="slide level2">
 <h2>Valores Atómicos</h2>
@@ -747,31 +771,9 @@ Geodetic CRS:  NAD27
 <section id="pipe-ejemplo" class="slide level2">
 <h2>Pipe: Ejemplo</h2>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'janitor'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    chisq.test, fisher.test</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 113 Columns: 7
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (5): DEPARTAMENTO, PROVINCIA, ÁMBITO, TIPO DE PLAN, ESTADO
-dbl (1): UBIGEO
-lgl (1): O.M.
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a></a><span class="co"># Ver primeras filas después de limpiar nombres</span></span>
-<span id="cb87-2"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb87-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a><span class="co"># Ver primeras filas después de limpiar nombres</span></span>
+<span id="cb84-2"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb84-3"><a></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 113 × 7
    ubigeo departamento provincia ambito              tipo_de_plan estado   o_m  
@@ -793,10 +795,10 @@ lgl (1): O.M.
 <section id="pipe-ejemplo-1" class="slide level2">
 <h2>Pipe: Ejemplo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a></a><span class="co"># Encadenar múltiples operaciones</span></span>
-<span id="cb89-2"><a></a>planes <span class="sc">|&gt;</span></span>
-<span id="cb89-3"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb89-4"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="co"># Encadenar múltiples operaciones</span></span>
+<span id="cb86-2"><a></a>planes <span class="sc">|&gt;</span></span>
+<span id="cb86-3"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb86-4"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 113 × 7
    ubigeo departamento provincia ambito              tipo_de_plan estado   o_m  
@@ -1139,6 +1141,82 @@ lgl (1): O.M.
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -1208,7 +1286,7 @@ lgl (1): O.M.
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

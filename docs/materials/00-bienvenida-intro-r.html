@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8f6726c79dff2af28c45c64c8336ec2b.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <meta name="author" content="Paul Efren Santos Andrade // Febrero 2026">
+  <meta name="author" content="Paul Efren Santos Andrade // 2026">
   <title>Introducción a la Programación con R - Tidyverse</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -205,7 +205,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // Febrero 2026 
+<a href="https://paulefrensa.rbind.io" style="color:#28a87d;font-weight:600;">Paul Efren Santos Andrade</a> // 2026 
 </div>
 </div>
 </div>
@@ -361,7 +361,7 @@
 <h2>Paquetes de R</h2>
 <ul>
 <li class="fragment"><strong>Paquetes</strong>: Unidades fundamentales de código R reproducible, incluyendo funciones R reutilizables, documentación y datos de muestra</li>
-<li class="fragment">Al 15 de febrero de 2026, hay 23, 178 paquetes R disponibles en <strong>CRAN</strong> (Comprehensive R Archive Network)</li>
+<li class="fragment">En 2026, hay 23, 178 paquetes R disponibles en <strong>CRAN</strong> (Comprehensive R Archive Network)</li>
 <li class="fragment">¡Trabajaremos con un subconjunto importante de estos!</li>
 </ul>
 </section>
@@ -637,12 +637,12 @@
 <span id="cb9-5"><a></a></span>
 <span id="cb9-6"><a></a><span class="fu">## Introducción</span></span>
 <span id="cb9-7"><a></a></span>
-<span id="cb9-8"><a></a>Este es un análisis de datos de áreas naturales.</span>
+<span id="cb9-8"><a></a>Este es un análisis de datos de planes urbanos.</span>
 <span id="cb9-9"><a></a></span>
 <span id="cb9-10"><a></a><span class="in">```{r}</span></span>
 <span id="cb9-11"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-12"><a></a>anp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/areas_naturales.csv"</span>)</span>
-<span id="cb9-13"><a></a><span class="fu">summary</span>(anp)</span>
+<span id="cb9-12"><a></a>planes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>)</span>
+<span id="cb9-13"><a></a><span class="fu">summary</span>(planes)</span>
 <span id="cb9-14"><a></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="contacto" class="slide level2">
@@ -1024,7 +1024,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/posit-conf-2023\.github\.io\/dataviz-ggplot2\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

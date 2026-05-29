@@ -4,7 +4,7 @@ title: "Introduccion a la Programacion con R - Tidyverse"
 
 ---
 
-<span class='code'>Febrero 2026</span>
+<span class='code'>2026</span>
 
 ---
 

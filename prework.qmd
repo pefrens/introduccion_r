@@ -15,7 +15,7 @@ Necesitarás tu propia computadora portátil con una versión reciente de R (4.5
 
 Descarga e instala los siguientes programas:
 
-1. **R** (versión 4.5.2 o superior): <a href="https://cloud.r-project.org" target="_blank">cloud.r-project.org</a>
+1. **R** (versión 4.6.0 o superior): <a href="https://cloud.r-project.org" target="_blank">cloud.r-project.org</a>
 2. **RStudio** (versión 1.1.401 o superior): <a href="https://posit.co/download/rstudio-desktop/" target="_blank">posit.co/download/rstudio-desktop/</a>
 3. **Rtools 45** (solo Windows): <a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank">cran.r-project.org/bin/windows/Rtools/</a>
 
@@ -76,7 +76,6 @@ install.packages(spatial_packages)
 Los archivos de datos que se utilizarán en el curso están disponibles en la carpeta `data/` del repositorio del curso. Incluyen:
 
 ### Datos Tabulares
-* `areas_naturales_peru.xlsx`: Datos de áreas naturales protegidas del Perú
 * `catalogo_planes.csv`, `catalogo_planes.txt`, `catalogo_planes.xlsx`: Datos de ejemplo en diferentes formatos
 
 ### Datos Espaciales
