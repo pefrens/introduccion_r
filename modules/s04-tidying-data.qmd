@@ -1,6 +1,6 @@
 ---
-title: "tidyr - Organizacion de datos (Tidy Data)"
-subtitle: "<span class='code'>Sesion 4</span>"
+title: "tidyr - Organización de Datos (Tidy Data)"
+subtitle: "<span class='code'>Sesión 4</span>"
 image: "images/04-theming.png"
 tbl-colwidths: [5,20,75]
 ---
@@ -11,22 +11,28 @@ tbl-colwidths: [5,20,75]
 
 <a href='../materials/04-tidying-data.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Principios de tidy data
-- `pivot_longer()` y `pivot_wider()`
-- `separate()` y `unite()`
-- Flujo de limpieza previo al analisis
+- Principios formales de los datos ordenados (*Tidy Data*).
+- De formato ancho a formato largo: `pivot_longer()`.
+- De formato largo a formato ancho: `pivot_wider()`.
+- Separación de variables compuestas: `separate()`.
+- Fusión de múltiples columnas en una sola clave: `unite()`.
+- Tratamiento de celdas anidadas y valores implícitos.
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Transformar tablas entre formato ancho y largo de forma consistente para analisis y visualizacion.
+Comprender los principios de estructuración de *Tidy Data* y aplicar transformaciones entre formato ancho y largo para habilitar análisis tabulares y visualizaciones sin fricción.
 
-# Datos usados
+# Conexión con el curso
 
-- Datos creados en memoria con `tibble()`
+En la [Sesión 3](s03-dplyr.qmd) aplicamos filtros y resúmenes sobre tablas que ya contaban con una estructura fija. Sin embargo, en la práctica profesional muchos datos vienen estructurados para visualización en tablas dinámicas o reportes humanos (formato ancho). En esta sesión aprendemos a reestructurarlos para que los *joins* de la [Sesión 5](s05-joins.qmd) y los análisis espaciales de la [Sesión 6](s06-spatial.qmd) funcionen sin inconsistencias.
 
-# Practica guiada
+# Datos utilizados
+
+- Ejemplos prácticos creados en memoria mediante `tibble()` y datasets demográficos departamentales.
+
+# Práctica guiada
 
 ```r
 library(tidyverse)
@@ -34,49 +40,71 @@ library(tidyr)
 ```
 
 ```r
+# 1. Ejemplo de tabla en formato ancho (inadecuado para análisis agrupado)
 datos_ancho <- tibble(
-  departamento = c("CUSCO", "LIMA", "AREQUIPA"),
-  pob_2022 = c(1350, 9700, 1500),
-  pob_2023 = c(1380, 9850, 1530)
+  departamento = c("Cusco", "Lima", "Arequipa"),
+  pob_2020 = c(1350000, 9670000, 1490000),
+  pob_2021 = c(1365000, 9780000, 1510000),
+  pob_2022 = c(1380000, 9890000, 1530000)
 )
 
 datos_ancho
 ```
 
 ```r
+# 2. Convertir a formato largo con pivot_longer()
 datos_largo <- datos_ancho |>
   pivot_longer(
     cols = starts_with("pob_"),
     names_to = "anio",
-    values_to = "poblacion",
+    values_to = "habitantes",
     names_prefix = "pob_"
-  )
+  ) |>
+  mutate(anio = as.integer(anio))
 
 datos_largo
 ```
 
 ```r
-datos_largo |>
+# 3. Regresar de formato largo a formato ancho con pivot_wider()
+datos_recuperados <- datos_largo |>
   pivot_wider(
     names_from = anio,
-    values_from = poblacion,
+    values_from = habitantes,
     names_prefix = "pob_"
   )
+
+datos_recuperados
 ```
 
 ```r
-ids <- tibble(codigo = c("08-01-01", "15-01-01"))
+# 4. Descomponer códigos compuestos con separate()
+codigos_ubigeo <- tibble(
+  ubigeo = c("08-01-01", "08-01-02", "04-01-01", "15-01-01")
+)
 
-ids |>
-  separate(codigo, into = c("ccdd", "ccpp", "ccdi"), sep = "-")
+codigos_desglosados <- codigos_ubigeo |>
+  separate(ubigeo, into = c("ccdd", "ccpp", "ccdi"), sep = "-")
+
+codigos_desglosados
 ```
 
-# Ejercicios
+```r
+# 5. Volver a fusionar componentes con unite()
+codigos_desglosados |>
+  unite(ubigeo_completo, ccdd, ccpp, ccdi, sep = "")
+```
 
-1. Convertir un dataset de meses en columnas a formato largo.
-2. Regresar el resultado a formato ancho con `pivot_wider()`.
-3. Separar un identificador compuesto y volver a unirlo con `unite()`.
+# Ejercicios propuestos
+
+1. Construir un tibble con las ventas trimestrales (`t1`, `t2`, `t3`, `t4`) de 3 provincias y reestructurarlo a formato largo.
+2. Calcular la media de habitantes agrupada por año a partir del objeto `datos_largo`.
+3. Crear un dataset con fechas compuestas en formato `"2026_09_02"`, separarlas en `anio`, `mes` y `dia`, y luego reunificarlas con guiones (`"-"`).
 
 # Resultado esperado
 
-Preparar datos en formato tidy con transformaciones reproducibles.
+Dominar la conversión fluida entre formatos ancho y largo, reconociendo instantáneamente cuándo una tabla requiere ser ordenada para procesarse con herramientas analíticas modernas.
+
+---
+
+[← Volver a Sesión 3: dplyr - Manipulación de Datos](s03-dplyr.qmd) | [**Avanzar a Sesión 5: Unión de Datos (Joins) →**](s05-joins.qmd)

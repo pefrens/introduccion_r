@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Importar y revisar datos</title>
+<title>Importar y Revisar Datos – Introducción a R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6090d82a8ca7f4d671bcce5879e3a2b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -87,11 +87,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Importar y revisar datos">
-<meta property="og:description" content="Sesion 2">
+<meta property="og:title" content="Importar y Revisar Datos – Introducción a R - Tidyverse">
+<meta property="og:description" content="Sesión 2">
 <meta property="og:image" content="images/02-text.png">
-<meta name="twitter:title" content="Importar y revisar datos">
-<meta name="twitter:description" content="Sesion 2">
+<meta property="og:site_name" content="Introducción a R - Tidyverse">
+<meta name="twitter:title" content="Importar y Revisar Datos – Introducción a R - Tidyverse">
+<meta name="twitter:description" content="Sesión 2">
 <meta name="twitter:image" content="images/02-text.png">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary_large_image">
@@ -103,6 +104,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Introducción a R - Tidyverse</span>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -120,6 +126,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../prework.html">
  <span class="dropdown-text">Preparación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Recursos</span></a>
   </li>  
     </ul>
   </li>
@@ -156,6 +166,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s07-theming.html">
+ <span class="dropdown-text">Estilo y Theming (Complementario)</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -168,11 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">    
         <li>
-<<<<<<< HEAD
     <a class="dropdown-item" href="../materials/data/data_introduccion_r.zip">
-=======
-    <a class="dropdown-item" href="../materials/data_introduccion_r.zip.zip">
->>>>>>> 03c1e963c1993e339421e9a1a8023fa3d6bd822d
  <span class="dropdown-text">Todos los Materiales del Curso</span></a>
   </li>  
     </ul>
@@ -203,11 +213,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
-  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
-  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
-  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#esquema-de-la-sesión" id="toc-esquema-de-la-sesión" class="nav-link active" data-scroll-target="#esquema-de-la-sesión">Esquema de la sesión</a></li>
+  <li><a href="#objetivo-de-la-sesión" id="toc-objetivo-de-la-sesión" class="nav-link" data-scroll-target="#objetivo-de-la-sesión">Objetivo de la sesión</a></li>
+  <li><a href="#conexión-con-el-curso" id="toc-conexión-con-el-curso" class="nav-link" data-scroll-target="#conexión-con-el-curso">Conexión con el curso</a></li>
+  <li><a href="#datos-utilizados" id="toc-datos-utilizados" class="nav-link" data-scroll-target="#datos-utilizados">Datos utilizados</a></li>
+  <li><a href="#práctica-guiada" id="toc-práctica-guiada" class="nav-link" data-scroll-target="#práctica-guiada">Práctica guiada</a></li>
+  <li><a href="#ejercicios-propuestos" id="toc-ejercicios-propuestos" class="nav-link" data-scroll-target="#ejercicios-propuestos">Ejercicios propuestos</a></li>
   <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/modules/s02-import-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -217,8 +228,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Importar y revisar datos</h1>
-<p class="subtitle lead"><span class="code">Sesion 2</span></p>
+<h1 class="title">Importar y Revisar Datos</h1>
+<p class="subtitle lead"><span class="code">Sesión 2</span></p>
 </div>
 
 
@@ -237,57 +248,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <iframe class="slide-deck" src="../materials/02-importing-data.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 <p><a href="../materials/02-importing-data.html" target="_blank">Ver diapositivas en pantalla completa</a></p>
-<section id="esquema" class="level1">
-<h1>Esquema</h1>
+<section id="esquema-de-la-sesión" class="level1">
+<h1>Esquema de la sesión</h1>
 <ul>
-<li>Importar CSV, Excel y geopackage</li>
-<li>Revisar estructura y tipos</li>
-<li>Limpiar nombres de columnas</li>
-<li>Flujo de importacion reproducible</li>
+<li>Importación de datos delimitados por comas (CSV) con <code>readr::read_csv()</code>.</li>
+<li>Lectura de hojas de cálculo de Microsoft Excel con <code>readxl::read_excel()</code>.</li>
+<li>Introducción a la lectura de formatos geoespaciales con <code>sf::read_sf()</code>.</li>
+<li>Auditoría inicial de tablas: inspección de tipos con <code>glimpse()</code> y <code>summary()</code>.</li>
+<li>Limpieza y estandarización automática de nombres de variables con <code>janitor::clean_names()</code>.</li>
+<li>Exportación de resultados procesados a disco (<code>write_csv()</code>, <code>write_xlsx()</code>).</li>
 </ul>
 </section>
-<section id="objetivo-de-la-sesion" class="level1">
-<h1>Objetivo de la sesion</h1>
-<p>Construir un flujo de importacion limpio y verificable para datos tabulares y espaciales.</p>
+<section id="objetivo-de-la-sesión" class="level1">
+<h1>Objetivo de la sesión</h1>
+<p>Construir un flujo de trabajo reproducible para cargar datos externos en R, diagnosticando y corrigiendo inconsistencias en nombres de columnas y tipos de datos antes del análisis.</p>
 </section>
-<section id="datos-usados" class="level1">
-<h1>Datos usados</h1>
+<section id="conexión-con-el-curso" class="level1">
+<h1>Conexión con el curso</h1>
+<p>En la <a href="../modules/s01-fundamentals.html">Sesión 1</a> vimos la estructura interna de los data frames creados en memoria. En esta sesión damos el salto hacia datos del mundo real, aprendiendo a leer archivos almacenados en el disco local y preparándolos para la manipulación avanzada con <code>dplyr</code> en la <a href="../modules/s03-dplyr.html">Sesión 3</a>.</p>
+</section>
+<section id="datos-utilizados" class="level1">
+<h1>Datos utilizados</h1>
 <ul>
-<li><code>data/catalogo_planes.csv</code></li>
-<li><code>data/catalogo_planes.xlsx</code></li>
-<li><code>data/DEPARTAMENTO.gpkg</code></li>
+<li><code>data/catalogo_planes.csv</code>: Catálogo de planes territoriales en formato plano delimitado por comas.</li>
+<li><code>data/catalogo_planes.xlsx</code>: Misma información provista en formato de hoja de cálculo Excel.</li>
+<li><code>data/DEPARTAMENTO.gpkg</code>: Capa vectorial con límites departamentales del Perú.</li>
+<li><code>data/ciudades_1.csv</code>: Dataset complementario para práctica de valores faltantes (<code>na</code>).</li>
 </ul>
 </section>
-<section id="practica-guiada" class="level1">
-<h1>Practica guiada</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>planes_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>planes_xlsx <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/catalogo_planes.xlsx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(planes_csv)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(planes_xlsx)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="práctica-guiada" class="level1">
+<h1>Práctica guiada</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar librerías necesarias</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Lectura de CSV y limpieza de nombres</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>planes_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/catalogo_planes.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Lectura de Excel</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>planes_xlsx <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/catalogo_planes.xlsx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Lectura de capa espacial GeoPackage</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>departamentos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/DEPARTAMENTO.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Inspección y auditoría de la estructura</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(planes_csv)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(planes_xlsx)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar dimensiones y columnas</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(planes_csv)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(planes_csv)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspeccionar sistema de coordenadas de la capa espacial</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(departamentos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Manejo explícito de valores faltantes (NA)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ciudades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/ciudades_1.csv"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>, <span class="st">"Sin dato"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ciudades)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="ejercicios" class="level1">
-<h1>Ejercicios</h1>
+<section id="ejercicios-propuestos" class="level1">
+<h1>Ejercicios propuestos</h1>
 <ol type="1">
-<li>Comparar <code>planes_csv</code> y <code>planes_xlsx</code> en numero de filas y columnas.</li>
-<li>Estandarizar tipos de 2 columnas con <code>mutate()</code>.</li>
-<li>Calcular area en km2 para <code>departamentos</code>.</li>
-<li>Guardar <code>planes_csv</code> limpio como <code>csv</code>.</li>
+<li>Comparar <code>planes_csv</code> y <code>planes_xlsx</code> verificando si coinciden en número de filas y tipos de columnas.</li>
+<li>Identificar si existen valores <code>NA</code> en las columnas clave (<code>departamento</code>, <code>estado</code>).</li>
+<li>Usar <code>st_crs(departamentos)</code> para averiguar cuál es el código EPSG del sistema de referencia de coordenadas de la capa geográfica.</li>
+<li>Exportar el objeto limpio <code>planes_csv</code> a un nuevo archivo llamado <code>data/catalogo_planes_limpio.csv</code> usando <code>write_csv()</code>.</li>
 </ol>
 </section>
 <section id="resultado-esperado" class="level1">
 <h1>Resultado esperado</h1>
-<p>Tener objetos listos para analisis, con nombres limpios y tipos revisados.</p>
+<p>Disponer de data frames y objetos espaciales importados correctamente en el entorno de R, con nombres en minúsculas y formato sintáctico limpio, listos para ser transformados.</p>
+<hr>
+<p><a href="../modules/s01-fundamentals.html">← Volver a Sesión 1: Fundamentos</a> | <a href="../modules/s03-dplyr.html"><strong>Avanzar a Sesión 3: dplyr - Manipulación de Datos →</strong></a></p>
 
 
 </section>

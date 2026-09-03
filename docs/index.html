@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduccion a la Programacion con R - Tidyverse</title>
+<title>Introducción a la Programación con R - Tidyverse – Introducción a R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6090d82a8ca7f4d671bcce5879e3a2b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -87,10 +87,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Introduccion a la Programacion con R - Tidyverse">
-<meta property="og:description" content="Página principal del taller posit::conf(2023)">
-<meta name="twitter:title" content="Introduccion a la Programacion con R - Tidyverse">
-<meta name="twitter:description" content="Página principal del taller posit::conf(2023)">
+<meta property="og:title" content="Introducción a la Programación con R - Tidyverse – Introducción a R - Tidyverse">
+<meta property="og:description" content="Curso de Introducción a la Programación con R y Tidyverse (2026)">
+<meta property="og:site_name" content="Introducción a R - Tidyverse">
+<meta name="twitter:title" content="Introducción a la Programación con R - Tidyverse – Introducción a R - Tidyverse">
+<meta name="twitter:description" content="Curso de Introducción a la Programación con R y Tidyverse (2026)">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary">
 </head>
@@ -101,6 +102,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Introducción a R - Tidyverse</span>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -118,6 +124,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./prework.html">
  <span class="dropdown-text">Preparación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources.html">
+ <span class="dropdown-text">Recursos</span></a>
   </li>  
     </ul>
   </li>
@@ -153,6 +163,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/s07-theming.html">
+ <span class="dropdown-text">Estilo y Theming (Complementario)</span></a>
   </li>  
     </ul>
   </li>
@@ -197,15 +211,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#descripcion-general" id="toc-descripcion-general" class="nav-link active" data-scroll-target="#descripcion-general">Descripcion general</a>
+  <li><a href="#descripción-general" id="toc-descripción-general" class="nav-link active" data-scroll-target="#descripción-general">Descripción general</a>
   <ul class="collapse">
-  <li><a href="#ruta-del-curso" id="toc-ruta-del-curso" class="nav-link" data-scroll-target="#ruta-del-curso">Ruta del curso</a></li>
-  <li><a href="#que-aprenderas" id="toc-que-aprenderas" class="nav-link" data-scroll-target="#que-aprenderas">Que aprenderas</a></li>
+  <li><a href="#ruta-de-aprendizaje" id="toc-ruta-de-aprendizaje" class="nav-link" data-scroll-target="#ruta-de-aprendizaje">Ruta de aprendizaje</a></li>
+  <li><a href="#qué-aprenderás" id="toc-qué-aprenderás" class="nav-link" data-scroll-target="#qué-aprenderás">¿Qué aprenderás?</a></li>
   </ul></li>
   <li><a href="#entorno-necesario" id="toc-entorno-necesario" class="nav-link" data-scroll-target="#entorno-necesario">Entorno necesario</a></li>
-  <li><a href="#paquetes-necesarios-segun-modules" id="toc-paquetes-necesarios-segun-modules" class="nav-link" data-scroll-target="#paquetes-necesarios-segun-modules">Paquetes necesarios (segun modules)</a></li>
-  <li><a href="#archivos-de-datos-usados-en-las-sesiones" id="toc-archivos-de-datos-usados-en-las-sesiones" class="nav-link" data-scroll-target="#archivos-de-datos-usados-en-las-sesiones">Archivos de datos usados en las sesiones</a></li>
-  <li><a href="#referencias-recomendadas" id="toc-referencias-recomendadas" class="nav-link" data-scroll-target="#referencias-recomendadas">Referencias recomendadas</a></li>
+  <li><a href="#paquetes-requeridos" id="toc-paquetes-requeridos" class="nav-link" data-scroll-target="#paquetes-requeridos">Paquetes requeridos</a></li>
+  <li><a href="#archivos-de-datos-del-curso" id="toc-archivos-de-datos-del-curso" class="nav-link" data-scroll-target="#archivos-de-datos-del-curso">Archivos de datos del curso</a>
+  <ul class="collapse">
+  <li><a href="#contenido-principal-de-data" id="toc-contenido-principal-de-data" class="nav-link" data-scroll-target="#contenido-principal-de-data">Contenido principal de <code>data/</code>:</a></li>
+  </ul></li>
+  <li><a href="#recursos-y-enlaces-recomendados" id="toc-recursos-y-enlaces-recomendados" class="nav-link" data-scroll-target="#recursos-y-enlaces-recomendados">Recursos y enlaces recomendados</a></li>
   <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -215,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduccion a la Programacion con R - Tidyverse</h1>
+<h1 class="title">Introducción a la Programación con R - Tidyverse</h1>
 </div>
 
 
@@ -235,72 +252,147 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <p><span class="code">2026</span></p>
 <hr>
-<section id="descripcion-general" class="level1">
-<h1>Descripcion general</h1>
-<p>Este curso introduce programacion en R con enfoque practico en manejo de datos tabulares y espaciales.</p>
-<section id="ruta-del-curso" class="level2">
-<h2 class="anchored" data-anchor-id="ruta-del-curso">Ruta del curso</h2>
-<ol type="1">
-<li>Sesion 0: Bienvenida e introduccion</li>
-<li>Sesion 1: Fundamentos de R y RStudio</li>
-<li>Sesion 2: Importar y revisar datos</li>
-<li>Sesion 3: Manipulacion con dplyr</li>
-<li>Sesion 4: Organizacion de datos con tidyr</li>
-<li>Sesion 5: Union de datos (joins)</li>
-<li>Sesion 6: Datos espaciales con sf</li>
-</ol>
+<section id="descripción-general" class="level1">
+<h1>Descripción general</h1>
+<p>Este curso introduce la programación en R con un enfoque práctico y reproducible, centrado en la importación, manipulación, organización, unión y análisis espacial de datos con el ecosistema <strong>Tidyverse</strong> y <strong>sf</strong>.</p>
+<section id="ruta-de-aprendizaje" class="level2">
+<h2 class="anchored" data-anchor-id="ruta-de-aprendizaje">Ruta de aprendizaje</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Sesión</th>
+<th style="text-align: left;">Tema</th>
+<th style="text-align: left;">Descripción clave</th>
+<th style="text-align: center;">Acceso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: left;"><strong>Bienvenida e Introducción</strong></td>
+<td style="text-align: left;">Ciclo de ciencia de datos, ecosistema Tidyverse, R, RStudio y Quarto</td>
+<td style="text-align: center;"><a href="./modules/s00-bienvenida-intro-r.html">Ir al módulo</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>Fundamentos de R y RStudio</strong></td>
+<td style="text-align: left;">Tipos atómicos, operadores, vectores, data frames y el pipe (<code>\|&gt;</code>)</td>
+<td style="text-align: center;"><a href="./modules/s01-fundamentals.html">Ir al módulo</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>Importar y Revisar Datos</strong></td>
+<td style="text-align: left;">Lectura de CSV, Excel y GeoPackage con <code>readr</code>, <code>readxl</code> y <code>janitor</code></td>
+<td style="text-align: center;"><a href="./modules/s02-import-data.html">Ir al módulo</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>dplyr - Manipulación de Datos</strong></td>
+<td style="text-align: left;">Verbos principales: <code>filter()</code>, <code>select()</code>, <code>mutate()</code>, <code>group_by()</code>, <code>summarise()</code></td>
+<td style="text-align: center;"><a href="./modules/s03-dplyr.html">Ir al módulo</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>tidyr - Organización de Datos</strong></td>
+<td style="text-align: left;">Principios de <em>Tidy Data</em>, <code>pivot_longer()</code>, <code>pivot_wider()</code>, <code>separate()</code>, <code>unite()</code></td>
+<td style="text-align: center;"><a href="./modules/s04-tidying-data.html">Ir al módulo</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>Unión de Datos (Joins)</strong></td>
+<td style="text-align: left;">Claves primarias y foráneas, mutating joins y filtering joins</td>
+<td style="text-align: center;"><a href="./modules/s05-joins.html">Ir al módulo</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;"><strong>Datos Espaciales con sf</strong></td>
+<td style="text-align: left;">Estructura <code>sf</code>, geometrías vectoriales, CRS, transformaciones y mapas</td>
+<td style="text-align: center;"><a href="./modules/s06-spatial.html">Ir al módulo</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>★</strong></td>
+<td style="text-align: left;"><strong>Estilo y Theming (Complementario)</strong></td>
+<td style="text-align: left;">Buenas prácticas visuales, personalización de gráficos y consistencia temática</td>
+<td style="text-align: center;"><a href="./modules/s07-theming.html">Ir al módulo</a></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="que-aprenderas" class="level2">
-<h2 class="anchored" data-anchor-id="que-aprenderas">Que aprenderas</h2>
+<section id="qué-aprenderás" class="level2">
+<h2 class="anchored" data-anchor-id="qué-aprenderás">¿Qué aprenderás?</h2>
 <ul>
-<li>Crear objetos y trabajar con estructuras basicas de R</li>
-<li>Importar y validar datos desde CSV, Excel y GPKG</li>
-<li>Transformar datos con <code>dplyr</code> y <code>tidyr</code></li>
-<li>Unir tablas con joins de forma segura</li>
-<li>Manipular geometria y atributos con <code>sf</code></li>
+<li>Comprender la filosofía de diseño y la sintaxis moderna del <strong>Tidyverse</strong>.</li>
+<li>Crear y transformar objetos usando estructuras de datos fundamentales en R.</li>
+<li>Importar y auditar datasets desde múltiples formatos (CSV, XLSX, GPKG) validando tipos y limpiando nombres.</li>
+<li>Filtrar, resumir, transformar y ordenar tablas complejas con fluidez mediante pipes (<code>|&gt;</code>).</li>
+<li>Reestructurar datos tabulares entre formato ancho y largo aplicando los principios de <em>Tidy Data</em>.</li>
+<li>Vincular múltiples tablas relacionales asegurando la integridad de observaciones mediante joins seguros.</li>
+<li>Cargar, consultar y proyectar capas espaciales vectoriales con <code>sf</code>, integrándolas con <code>ggplot2</code>.</li>
 </ul>
 </section>
 </section>
 <section id="entorno-necesario" class="level1">
 <h1>Entorno necesario</h1>
+<p>Para seguir el curso se requiere contar con:</p>
 <ol type="1">
-<li>R (version reciente)</li>
-<li>RStudio Desktop (version reciente)</li>
-<li>Quarto (para renderizar contenidos)</li>
+<li><strong>R</strong> (versión 4.3.0 o superior recomendada) — <a href="https://cloud.r-project.org">Descargar R</a></li>
+<li><strong>RStudio Desktop</strong> (versión reciente) — <a href="https://posit.co/download/rstudio-desktop/">Descargar RStudio</a></li>
+<li><strong>Quarto CLI</strong> (incluido con RStudio o descargable) — <a href="https://quarto.org">Descargar Quarto</a></li>
 </ol>
 </section>
-<section id="paquetes-necesarios-segun-modules" class="level1">
-<h1>Paquetes necesarios (segun modules)</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"readxl"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sf"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Nota: <code>readr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>ggplot2</code> vienen incluidos en <code>tidyverse</code>.</p>
+<section id="paquetes-requeridos" class="level1">
+<h1>Paquetes requeridos</h1>
+<p>Ejecuta el siguiente bloque en la consola de R para instalar los paquetes necesarios:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>paquetes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>, <span class="co"># Incluye readr, dplyr, tidyr, ggplot2, tibble, etc.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,   <span class="co"># Limpieza de nombres de variables y tablas</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"readxl"</span>,    <span class="co"># Lectura de hojas de cálculo Excel</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"writexl"</span>,   <span class="co"># Exportación a formato Excel</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sf"</span>         <span class="co"># Manejo de geometrías y datos espaciales vectoriales</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(paquetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="archivos-de-datos-usados-en-las-sesiones" class="level1">
-<h1>Archivos de datos usados en las sesiones</h1>
+<section id="archivos-de-datos-del-curso" class="level1">
+<h1>Archivos de datos del curso</h1>
+<p>Todos los archivos de datos utilizados en las prácticas se encuentran organizados en la carpeta <code>data/</code> del proyecto. Puedes descargarlos todos juntos listos para usar:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Paquete de datos listo para descargar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Descarga el archivo comprimido con todos los datasets estructurados para el curso:<br>
+📥 <a href="materials/data/data_introduccion_r.zip"><strong>Descargar Todos los Materiales del Curso (ZIP, ~7 MB)</strong></a><br>
+<em>(También disponible en cualquier momento desde el menú superior <strong>Descargas</strong>)</em></p>
+</div>
+</div>
+<section id="contenido-principal-de-data" class="level3">
+<h3 class="anchored" data-anchor-id="contenido-principal-de-data">Contenido principal de <code>data/</code>:</h3>
 <ul>
-<li><code>data/catalogo_planes.csv</code></li>
-<li><code>data/catalogo_planes.xlsx</code></li>
-<li><code>data/poblacion_peru.csv</code></li>
-<li><code>data/DEPARTAMENTO.gpkg</code></li>
+<li><strong>Planes territoriales</strong>: <code>catalogo_planes.csv</code>, <code>catalogo_planes.xlsx</code>, <code>catalogo_planes.txt</code></li>
+<li><strong>Demografía</strong>: <code>poblacion_peru.csv</code>, <code>indicadoresCPV2017.xlsx</code>, <code>indicadores_demograficos.xlsx</code></li>
+<li><strong>Capas espaciales</strong>: <code>DEPARTAMENTO.gpkg</code>, <code>distritos_cusco.gpkg</code>, <code>distritos_cusco.shp</code> (shapefile completo)</li>
+<li><strong>Centros poblados y ciudades</strong>: <code>ciudades_1.csv</code>, <code>ciudades_mundo.csv</code>, reportes de <code>ANTA</code> y <code>HUAROCONDO</code> (CSV y XLSX)</li>
+<li><strong>Maestros de codificación</strong>: <code>departamento.csv</code>, <code>provincia.csv</code>, <code>distritos.csv</code></li>
 </ul>
 </section>
-<section id="referencias-recomendadas" class="level1">
-<h1>Referencias recomendadas</h1>
+</section>
+<section id="recursos-y-enlaces-recomendados" class="level1">
+<h1>Recursos y enlaces recomendados</h1>
 <ul>
-<li><a href="https://r4ds.hadley.nz/">R for Data Science</a></li>
-<li><a href="https://es.r4ds.hadley.nz/">R for Data Science (espanol)</a></li>
+<li>Consulta la sección completa de <a href="./resources.html">Recursos</a> y la guía de <a href="./prework.html">Preparación previa</a>.</li>
+<li><a href="https://r4ds.hadley.nz/">R for Data Science (2da edición en inglés)</a> / <a href="https://es.r4ds.hadley.nz/">Edición en español</a></li>
 <li><a href="https://r.geocompx.org/">Geocomputation with R</a></li>
 </ul>
 </section>
 <section id="instructor" class="level1">
 <h1>Instructor</h1>
-<p><a href="https://github.com/PaulESantos"><strong>Paul Efren Santos Andrade</strong></a></p>
+<p><a href="https://paulefrensa.rbind.io"><strong>Paul Efrén Santos Andrade</strong></a> // <a href="https://github.com/PaulESantos">GitHub</a></p>
 
 
 </section>

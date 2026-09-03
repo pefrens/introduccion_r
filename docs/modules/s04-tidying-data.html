@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>tidyr - Organizacion de datos (Tidy Data)</title>
+<title>tidyr - Organización de Datos (Tidy Data) – Introducción a R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6090d82a8ca7f4d671bcce5879e3a2b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -87,11 +87,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="tidyr - Organizacion de datos (Tidy Data)">
-<meta property="og:description" content="Sesion 4">
+<meta property="og:title" content="tidyr - Organización de Datos (Tidy Data) – Introducción a R - Tidyverse">
+<meta property="og:description" content="Sesión 4">
 <meta property="og:image" content="images/04-theming.png">
-<meta name="twitter:title" content="tidyr - Organizacion de datos (Tidy Data)">
-<meta name="twitter:description" content="Sesion 4">
+<meta property="og:site_name" content="Introducción a R - Tidyverse">
+<meta name="twitter:title" content="tidyr - Organización de Datos (Tidy Data) – Introducción a R - Tidyverse">
+<meta name="twitter:description" content="Sesión 4">
 <meta name="twitter:image" content="images/04-theming.png">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary_large_image">
@@ -103,6 +104,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Introducción a R - Tidyverse</span>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -120,6 +126,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../prework.html">
  <span class="dropdown-text">Preparación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Recursos</span></a>
   </li>  
     </ul>
   </li>
@@ -156,6 +166,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s07-theming.html">
+ <span class="dropdown-text">Estilo y Theming (Complementario)</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -168,11 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">    
         <li>
-<<<<<<< HEAD
     <a class="dropdown-item" href="../materials/data/data_introduccion_r.zip">
-=======
-    <a class="dropdown-item" href="../materials/data_introduccion_r.zip.zip">
->>>>>>> 03c1e963c1993e339421e9a1a8023fa3d6bd822d
  <span class="dropdown-text">Todos los Materiales del Curso</span></a>
   </li>  
     </ul>
@@ -203,11 +213,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
-  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
-  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
-  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#esquema-de-la-sesión" id="toc-esquema-de-la-sesión" class="nav-link active" data-scroll-target="#esquema-de-la-sesión">Esquema de la sesión</a></li>
+  <li><a href="#objetivo-de-la-sesión" id="toc-objetivo-de-la-sesión" class="nav-link" data-scroll-target="#objetivo-de-la-sesión">Objetivo de la sesión</a></li>
+  <li><a href="#conexión-con-el-curso" id="toc-conexión-con-el-curso" class="nav-link" data-scroll-target="#conexión-con-el-curso">Conexión con el curso</a></li>
+  <li><a href="#datos-utilizados" id="toc-datos-utilizados" class="nav-link" data-scroll-target="#datos-utilizados">Datos utilizados</a></li>
+  <li><a href="#práctica-guiada" id="toc-práctica-guiada" class="nav-link" data-scroll-target="#práctica-guiada">Práctica guiada</a></li>
+  <li><a href="#ejercicios-propuestos" id="toc-ejercicios-propuestos" class="nav-link" data-scroll-target="#ejercicios-propuestos">Ejercicios propuestos</a></li>
   <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/modules/s04-tidying-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -217,8 +228,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">tidyr - Organizacion de datos (Tidy Data)</h1>
-<p class="subtitle lead"><span class="code">Sesion 4</span></p>
+<h1 class="title">tidyr - Organización de Datos (Tidy Data)</h1>
+<p class="subtitle lead"><span class="code">Sesión 4</span></p>
 </div>
 
 
@@ -237,67 +248,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <iframe class="slide-deck" src="../materials/04-tidying-data.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 <p><a href="../materials/04-tidying-data.html" target="_blank">Ver diapositivas en pantalla completa</a></p>
-<section id="esquema" class="level1">
-<h1>Esquema</h1>
+<section id="esquema-de-la-sesión" class="level1">
+<h1>Esquema de la sesión</h1>
 <ul>
-<li>Principios de tidy data</li>
-<li><code>pivot_longer()</code> y <code>pivot_wider()</code></li>
-<li><code>separate()</code> y <code>unite()</code></li>
-<li>Flujo de limpieza previo al analisis</li>
+<li>Principios formales de los datos ordenados (<em>Tidy Data</em>).</li>
+<li>De formato ancho a formato largo: <code>pivot_longer()</code>.</li>
+<li>De formato largo a formato ancho: <code>pivot_wider()</code>.</li>
+<li>Separación de variables compuestas: <code>separate()</code>.</li>
+<li>Fusión de múltiples columnas en una sola clave: <code>unite()</code>.</li>
+<li>Tratamiento de celdas anidadas y valores implícitos.</li>
 </ul>
 </section>
-<section id="objetivo-de-la-sesion" class="level1">
-<h1>Objetivo de la sesion</h1>
-<p>Transformar tablas entre formato ancho y largo de forma consistente para analisis y visualizacion.</p>
+<section id="objetivo-de-la-sesión" class="level1">
+<h1>Objetivo de la sesión</h1>
+<p>Comprender los principios de estructuración de <em>Tidy Data</em> y aplicar transformaciones entre formato ancho y largo para habilitar análisis tabulares y visualizaciones sin fricción.</p>
 </section>
-<section id="datos-usados" class="level1">
-<h1>Datos usados</h1>
+<section id="conexión-con-el-curso" class="level1">
+<h1>Conexión con el curso</h1>
+<p>En la <a href="../modules/s03-dplyr.html">Sesión 3</a> aplicamos filtros y resúmenes sobre tablas que ya contaban con una estructura fija. Sin embargo, en la práctica profesional muchos datos vienen estructurados para visualización en tablas dinámicas o reportes humanos (formato ancho). En esta sesión aprendemos a reestructurarlos para que los <em>joins</em> de la <a href="../modules/s05-joins.html">Sesión 5</a> y los análisis espaciales de la <a href="../modules/s06-spatial.html">Sesión 6</a> funcionen sin inconsistencias.</p>
+</section>
+<section id="datos-utilizados" class="level1">
+<h1>Datos utilizados</h1>
 <ul>
-<li>Datos creados en memoria con <code>tibble()</code></li>
+<li>Ejemplos prácticos creados en memoria mediante <code>tibble()</code> y datasets demográficos departamentales.</li>
 </ul>
 </section>
-<section id="practica-guiada" class="level1">
-<h1>Practica guiada</h1>
+<section id="práctica-guiada" class="level1">
+<h1>Práctica guiada</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos_ancho <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">departamento =</span> <span class="fu">c</span>(<span class="st">"CUSCO"</span>, <span class="st">"LIMA"</span>, <span class="st">"AREQUIPA"</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2022 =</span> <span class="fu">c</span>(<span class="dv">1350</span>, <span class="dv">9700</span>, <span class="dv">1500</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2023 =</span> <span class="fu">c</span>(<span class="dv">1380</span>, <span class="dv">9850</span>, <span class="dv">1530</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>datos_ancho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos_largo <span class="ot">&lt;-</span> datos_ancho <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"pob_"</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"anio"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"poblacion"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"pob_"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>datos_largo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>datos_largo <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> anio,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> poblacion,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"pob_"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">codigo =</span> <span class="fu">c</span>(<span class="st">"08-01-01"</span>, <span class="st">"15-01-01"</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ids <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(codigo, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ccdd"</span>, <span class="st">"ccpp"</span>, <span class="st">"ccdi"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Ejemplo de tabla en formato ancho (inadecuado para análisis agrupado)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datos_ancho <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">departamento =</span> <span class="fu">c</span>(<span class="st">"Cusco"</span>, <span class="st">"Lima"</span>, <span class="st">"Arequipa"</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2020 =</span> <span class="fu">c</span>(<span class="dv">1350000</span>, <span class="dv">9670000</span>, <span class="dv">1490000</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2021 =</span> <span class="fu">c</span>(<span class="dv">1365000</span>, <span class="dv">9780000</span>, <span class="dv">1510000</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pob_2022 =</span> <span class="fu">c</span>(<span class="dv">1380000</span>, <span class="dv">9890000</span>, <span class="dv">1530000</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>datos_ancho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Convertir a formato largo con pivot_longer()</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>datos_largo <span class="ot">&lt;-</span> datos_ancho <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"pob_"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"anio"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"habitantes"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"pob_"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">anio =</span> <span class="fu">as.integer</span>(anio))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>datos_largo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Regresar de formato largo a formato ancho con pivot_wider()</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>datos_recuperados <span class="ot">&lt;-</span> datos_largo <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> anio,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> habitantes,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"pob_"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>datos_recuperados</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Descomponer códigos compuestos con separate()</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>codigos_ubigeo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ubigeo =</span> <span class="fu">c</span>(<span class="st">"08-01-01"</span>, <span class="st">"08-01-02"</span>, <span class="st">"04-01-01"</span>, <span class="st">"15-01-01"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>codigos_desglosados <span class="ot">&lt;-</span> codigos_ubigeo <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(ubigeo, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ccdd"</span>, <span class="st">"ccpp"</span>, <span class="st">"ccdi"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>codigos_desglosados</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Volver a fusionar componentes con unite()</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>codigos_desglosados <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(ubigeo_completo, ccdd, ccpp, ccdi, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="ejercicios" class="level1">
-<h1>Ejercicios</h1>
+<section id="ejercicios-propuestos" class="level1">
+<h1>Ejercicios propuestos</h1>
 <ol type="1">
-<li>Convertir un dataset de meses en columnas a formato largo.</li>
-<li>Regresar el resultado a formato ancho con <code>pivot_wider()</code>.</li>
-<li>Separar un identificador compuesto y volver a unirlo con <code>unite()</code>.</li>
+<li>Construir un tibble con las ventas trimestrales (<code>t1</code>, <code>t2</code>, <code>t3</code>, <code>t4</code>) de 3 provincias y reestructurarlo a formato largo.</li>
+<li>Calcular la media de habitantes agrupada por año a partir del objeto <code>datos_largo</code>.</li>
+<li>Crear un dataset con fechas compuestas en formato <code>"2026_09_02"</code>, separarlas en <code>anio</code>, <code>mes</code> y <code>dia</code>, y luego reunificarlas con guiones (<code>"-"</code>).</li>
 </ol>
 </section>
 <section id="resultado-esperado" class="level1">
 <h1>Resultado esperado</h1>
-<p>Preparar datos en formato tidy con transformaciones reproducibles.</p>
+<p>Dominar la conversión fluida entre formatos ancho y largo, reconociendo instantáneamente cuándo una tabla requiere ser ordenada para procesarse con herramientas analíticas modernas.</p>
+<hr>
+<p><a href="../modules/s03-dplyr.html">← Volver a Sesión 3: dplyr - Manipulación de Datos</a> | <a href="../modules/s05-joins.html"><strong>Avanzar a Sesión 5: Unión de Datos (Joins) →</strong></a></p>
 
 
 </section>

@@ -1,6 +1,6 @@
 ---
-title: "Datos espaciales con sf"
-subtitle: "<span class='code'>Sesion 6</span>"
+title: "Datos Espaciales con sf"
+subtitle: "<span class='code'>Sesión 6</span>"
 image: "images/03-colors.png"
 tbl-colwidths: [5,20,75]
 ---
@@ -11,66 +11,98 @@ tbl-colwidths: [5,20,75]
 
 <a href='../materials/06-introduccion-datos-espaciales-sf.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Objetos `sf` y tipos de geometria
-- Lectura de capas vectoriales
-- CRS y transformaciones
-- Operaciones espaciales basicas
+- Introducción a la información geoespacial vectorial y al estándar *Simple Features* (`sf`).
+- Anatomía de un objeto `sf`: tabla de atributos vinculada a una columna de geometría (`geometry`/`geom`).
+- Lectura e inspección de archivos GeoPackage (`.gpkg`) y Shapefile (`.shp`).
+- Sistemas de Coordenadas de Referencia (CRS): inspección con `st_crs()` y reproyección con `st_transform()`.
+- Cálculo de medidas geométricas (áreas con `st_area()`, centroides, distancias).
+- Creación de puntos espaciales a partir de coordenadas tabulares (`st_as_sf()`).
+- Visualización cartográfica integrada con `ggplot2` y `geom_sf()`.
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Manipular datos espaciales vectoriales con `sf` e integrarlos con `dplyr` y `ggplot2`.
+Aprender los fundamentos de la manipulación de datos espaciales vectoriales con `sf`, integrando de forma natural operaciones de análisis geográfico con los verbos de `dplyr` y la visualización de `ggplot2`.
 
-# Datos usados
+# Conexión con el curso
 
-- `data/DEPARTAMENTO.gpkg`
+Esta sesión consolida todo lo aprendido a lo largo del curso: aplicamos la importación de la [Sesión 2](s02-import-data.qmd), las transformaciones con `dplyr` de la [Sesión 3](s03-dplyr.qmd), y los cruces tabulares (*joins*) de la [Sesión 5](s05-joins.qmd), pero ahora añadiendo la dimensión geográfica y espacial a nuestros análisis.
 
-# Practica guiada
+# Datos utilizados
+
+- `data/DEPARTAMENTO.gpkg`: Capa vectorial con los 25 departamentos del Perú en formato GeoPackage.
+
+# Práctica guiada
 
 ```r
 library(sf)
 library(tidyverse)
 
+# 1. Lectura de capa vectorial GeoPackage
 departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
+
+# Inspección básica del objeto espacial
+print(departamentos)
+st_geometry_type(departamentos) |> table()
 ```
 
 ```r
-st_geometry_type(departamentos) |> table()
+# 2. Inspección del Sistema de Referencia de Coordenadas (CRS)
 st_crs(departamentos)
 ```
 
 ```r
-depto_area <- departamentos |>
-  mutate(area_km2 = as.numeric(st_area(geom)) / 1e6) |>
-  select(ccdd, nombdep, area_km2)
+# 3. Integración con dplyr: Calcular el área en kilómetros cuadrados
+departamentos_area <- departamentos |>
+  mutate(
+    area_m2 = as.numeric(st_area(geom)),
+    area_km2 = round(area_m2 / 1e6, 2)
+  ) |>
+  select(ccdd, nombdep, area_km2) |>
+  arrange(desc(area_km2))
 
-depto_area |> slice_head(n = 5)
+departamentos_area |> slice_head(n = 5)
 ```
 
 ```r
-ciudades <- tibble(
-  ciudad = c("Lima", "Cusco", "Arequipa"),
-  lon = c(-77.0428, -71.9675, -71.5350),
-  lat = c(-12.0464, -13.5319, -16.4090)
+# 4. Convertir una tabla con coordenadas geográficas en objeto espacial sf
+ciudades_tbl <- tibble(
+  ciudad = c("Lima", "Cusco", "Arequipa", "Iquitos"),
+  lon = c(-77.0428, -71.9675, -71.5350, -73.2538),
+  lat = c(-12.0464, -13.5319, -16.4090, -3.7491)
 )
 
-ciudades_sf <- st_as_sf(ciudades, coords = c("lon", "lat"), crs = 4326)
+ciudades_sf <- st_as_sf(ciudades_tbl, coords = c("lon", "lat"), crs = 4326)
+
+# Transformar al mismo CRS de la capa departamental si fuese necesario
 ciudades_sf <- st_transform(ciudades_sf, st_crs(departamentos))
 ```
 
 ```r
+# 5. Visualización cartográfica con ggplot2 y geom_sf()
 ggplot() +
-  geom_sf(data = departamentos, fill = "grey95", color = "white", linewidth = 0.2) +
-  geom_sf(data = ciudades_sf, color = "#d7301f", size = 2)
+  geom_sf(data = departamentos, fill = "#f4f6f7", color = "#2c3e50", linewidth = 0.3) +
+  geom_sf(data = ciudades_sf, color = "#e74c3c", size = 3) +
+  geom_sf_text(data = ciudades_sf, aes(label = ciudad), nudge_y = 0.4, size = 3.2, fontface = "bold") +
+  theme_minimal() +
+  labs(
+    title = "Departamentos y Ciudades Principales del Perú",
+    subtitle = "Visualización vectorial con sf y ggplot2",
+    caption = "Fuente: Instituto Geográfico Nacional (IGN)"
+  )
 ```
 
-# Ejercicios
+# Ejercicios propuestos
 
-1. Transformar `departamentos` a EPSG 32718 y recalcular area.
-2. Filtrar 3 departamentos y mapearlos.
-3. Crear 5 puntos de ciudades y superponerlos al mapa.
+1. Filtrar los departamentos de la región sur del Perú (ej. Cusco, Puno, Arequipa, Moquegua, Tacna) y generar un mapa solo con ellos.
+2. Reproyectar la capa `departamentos` a coordenadas proyectadas UTM Zona 18S (código EPSG: `32718`) usando `st_transform()`.
+3. Unir la capa geográfica de departamentos con el dataset tabular `poblacion_peru.csv` mediante un `left_join()` y colorear los departamentos según su población total en `ggplot2`.
 
 # Resultado esperado
 
-Aplicar operaciones espaciales basicas con `sf` sobre capas vectoriales del curso.
+Poder cargar capas vectoriales, verificar y transformar sus sistemas de coordenadas, realizar cálculos geométricos y generar mapas temáticos limpios y reproducibles con `geom_sf()`.
+
+---
+
+[← Volver a Sesión 5: Unión de Datos (Joins)](s05-joins.qmd) | [**Avanzar a Sesión Complementaria: Estilo y Theming →**](s07-theming.qmd)

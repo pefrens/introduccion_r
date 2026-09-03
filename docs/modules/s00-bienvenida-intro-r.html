@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bienvenida e Introduccion al curso</title>
+<title>Bienvenida e Introducción al Curso – Introducción a R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -34,7 +69,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6090d82a8ca7f4d671bcce5879e3a2b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -52,11 +87,12 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Bienvenida e Introduccion al curso">
-<meta property="og:description" content="Sesion 0">
+<meta property="og:title" content="Bienvenida e Introducción al Curso – Introducción a R - Tidyverse">
+<meta property="og:description" content="Sesión 0">
 <meta property="og:image" content="images/01-fundamentals.png">
-<meta name="twitter:title" content="Bienvenida e Introduccion al curso">
-<meta name="twitter:description" content="Sesion 0">
+<meta property="og:site_name" content="Introducción a R - Tidyverse">
+<meta name="twitter:title" content="Bienvenida e Introducción al Curso – Introducción a R - Tidyverse">
+<meta name="twitter:description" content="Sesión 0">
 <meta name="twitter:image" content="images/01-fundamentals.png">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary_large_image">
@@ -68,6 +104,11 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Introducción a R - Tidyverse</span>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -85,6 +126,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../prework.html">
  <span class="dropdown-text">Preparación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Recursos</span></a>
   </li>  
     </ul>
   </li>
@@ -120,6 +165,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s07-theming.html">
+ <span class="dropdown-text">Estilo y Theming (Complementario)</span></a>
   </li>  
     </ul>
   </li>
@@ -164,13 +213,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
-  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
-  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
+  <li><a href="#esquema-de-la-sesión" id="toc-esquema-de-la-sesión" class="nav-link active" data-scroll-target="#esquema-de-la-sesión">Esquema de la sesión</a></li>
+  <li><a href="#objetivo-de-la-sesión" id="toc-objetivo-de-la-sesión" class="nav-link" data-scroll-target="#objetivo-de-la-sesión">Objetivo de la sesión</a></li>
+  <li><a href="#conexión-con-el-curso" id="toc-conexión-con-el-curso" class="nav-link" data-scroll-target="#conexión-con-el-curso">Conexión con el curso</a></li>
+  <li><a href="#datos-utilizados" id="toc-datos-utilizados" class="nav-link" data-scroll-target="#datos-utilizados">Datos utilizados</a></li>
   <li><a href="#ruta-de-sesiones" id="toc-ruta-de-sesiones" class="nav-link" data-scroll-target="#ruta-de-sesiones">Ruta de sesiones</a></li>
-  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
-  <li><a href="#herramientas-del-curso" id="toc-herramientas-del-curso" class="nav-link" data-scroll-target="#herramientas-del-curso">Herramientas del curso</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#práctica-guiada" id="toc-práctica-guiada" class="nav-link" data-scroll-target="#práctica-guiada">Práctica guiada</a></li>
+  <li><a href="#ejercicios-propuestos" id="toc-ejercicios-propuestos" class="nav-link" data-scroll-target="#ejercicios-propuestos">Ejercicios propuestos</a></li>
   <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/modules/s00-bienvenida-intro-r.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -180,8 +229,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bienvenida e Introduccion al curso</h1>
-<p class="subtitle lead"><span class="code">Sesion 0</span></p>
+<h1 class="title">Bienvenida e Introducción al Curso</h1>
+<p class="subtitle lead"><span class="code">Sesión 0</span></p>
 </div>
 
 
@@ -200,63 +249,67 @@ ul.task-list li input[type="checkbox"] {
 
 <iframe class="slide-deck" src="../materials/00-bienvenida-intro-r.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 <p><a href="../materials/00-bienvenida-intro-r.html" target="_blank">Ver diapositivas en pantalla completa</a></p>
-<section id="esquema" class="level1">
-<h1>Esquema</h1>
+<section id="esquema-de-la-sesión" class="level1">
+<h1>Esquema de la sesión</h1>
 <ul>
-<li>Objetivos del curso</li>
-<li>Ruta de sesiones</li>
-<li>Datos y herramientas a usar</li>
-<li>Acuerdos de trabajo</li>
+<li>Introducción a la ciencia de datos y reproducibilidad.</li>
+<li>¿Por qué R y Tidyverse?</li>
+<li>Herramientas del curso: R, RStudio, Quarto y Git/GitHub.</li>
+<li>Hoja de ruta de aprendizaje y acuerdos del taller.</li>
 </ul>
 </section>
-<section id="objetivo-de-la-sesion" class="level1">
-<h1>Objetivo de la sesion</h1>
-<p>Entender la estructura del curso, los resultados esperados y el flujo de trabajo para las sesiones practicas.</p>
+<section id="objetivo-de-la-sesión" class="level1">
+<h1>Objetivo de la sesión</h1>
+<p>Comprender la estructura del curso, los resultados de aprendizaje esperados y configurar el entorno de trabajo para las sesiones prácticas.</p>
 </section>
-<section id="datos-usados" class="level1">
-<h1>Datos usados</h1>
+<section id="conexión-con-el-curso" class="level1">
+<h1>Conexión con el curso</h1>
+<p>Esta sesión inaugural establece el marco conceptual y técnico de todo el programa formativo. Aquí se sientan las bases sobre cómo organizar proyectos reproducibles y cómo interactúan las herramientas antes de comenzar a escribir código en R.</p>
+</section>
+<section id="datos-utilizados" class="level1">
+<h1>Datos utilizados</h1>
 <ul>
-<li>No requiere archivos de datos</li>
+<li>No requiere archivos de datos externos para esta sesión.</li>
 </ul>
 </section>
 <section id="ruta-de-sesiones" class="level1">
 <h1>Ruta de sesiones</h1>
 <ol type="1">
-<li>Sesion 1: Fundamentos de R y RStudio</li>
-<li>Sesion 2: Importar y revisar datos</li>
-<li>Sesion 3: Manipulacion de datos con dplyr</li>
-<li>Sesion 4: Organizacion de datos con tidyr</li>
-<li>Sesion 5: Union de datos (joins)</li>
-<li>Sesion 6: Introduccion a datos espaciales con sf</li>
+<li><strong>Sesión 1</strong>: Fundamentos de R y RStudio (tipos atómicos, objetos y sintaxis básica).</li>
+<li><strong>Sesión 2</strong>: Importar y revisar datos (lectura de CSV, Excel y GeoPackage).</li>
+<li><strong>Sesión 3</strong>: Manipulación de datos con dplyr (filtrado, transformación y resúmenes).</li>
+<li><strong>Sesión 4</strong>: Organización de datos con tidyr (principios de Tidy Data y pivoteo).</li>
+<li><strong>Sesión 5</strong>: Unión de datos (joins relacionales y auditoría de claves).</li>
+<li><strong>Sesión 6</strong>: Introducción a datos espaciales con sf (geometrías vectoriales, CRS y mapas).</li>
+<li><strong>Sesión 7 (Complementaria)</strong>: Estilo y theming de gráficos con ggplot2.</li>
 </ol>
 </section>
-<section id="practica-guiada" class="level1">
-<h1>Practica guiada</h1>
+<section id="práctica-guiada" class="level1">
+<h1>Práctica guiada</h1>
 <ol type="1">
-<li>Verificar instalacion de paquetes base del curso.</li>
-<li>Revisar la carpeta <code>modules</code> y su correspondencia con <code>materials</code>.</li>
-<li>Confirmar el orden de sesiones y objetivos.</li>
+<li><p>Verificar que R (≥ 4.3.0) y RStudio Desktop se encuentren instalados y funcionando.</p></li>
+<li><p>Instalar los paquetes esenciales del curso ejecutando en la consola de R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>paquetes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"janitor"</span>, <span class="st">"readxl"</span>, <span class="st">"writexl"</span>, <span class="st">"sf"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(paquetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Explorar la interfaz de RStudio (paneles de Source, Console, Environment y Files).</p></li>
+<li><p>Verificar la carga exitosa de librerías:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
 </section>
-<section id="herramientas-del-curso" class="level1">
-<h1>Herramientas del curso</h1>
-<ul>
-<li><code>R</code> y <code>RStudio</code></li>
-<li><code>tidyverse</code></li>
-<li><code>sf</code></li>
-<li><code>quarto</code></li>
-</ul>
-</section>
-<section id="ejercicios" class="level1">
-<h1>Ejercicios</h1>
+<section id="ejercicios-propuestos" class="level1">
+<h1>Ejercicios propuestos</h1>
 <ol type="1">
-<li>Identificar que sesion resuelve cada objetivo del curso.</li>
-<li>Explicar que paquetes se usaran en sesiones 3, 4, 5 y 6.</li>
+<li>Identificar qué paquete del Tidyverse resuelve cada etapa del ciclo de ciencia de datos (importar, ordenar, transformar, visualizar).</li>
+<li>Crear un script de prueba en RStudio y calcular una operación aritmética simple.</li>
+<li>Consultar la documentación de bienvenida y verificar que los archivos de <code>data/</code> estén descargados.</li>
 </ol>
 </section>
 <section id="resultado-esperado" class="level1">
 <h1>Resultado esperado</h1>
-<p>Terminar la sesion con el entorno listo y con claridad sobre el orden de contenidos de <code>modules</code> y <code>materials</code>.</p>
+<p>Concluir la sesión con el entorno de cómputo completamente operativo, paquetes instalados y una visión clara de la secuencia formativa.</p>
+<hr>
+<p><a href="../modules/s01-fundamentals.html"><strong>Avanzar a la Sesión 1: Fundamentos de R y RStudio →</strong></a></p>
 
 
 </section>

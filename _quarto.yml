@@ -6,14 +6,12 @@ project:
     - "materials/data/data_introduccion_r.zip"
   render:
     - "*.qmd"
-    - "!materials/exercises"
-    - "!materials/solutions"
 search: false
 website:
   page-navigation: true
   search: false
-  title: ""
-  description: "Página principal del taller posit::conf(2023)"
+  title: "Introducción a R - Tidyverse"
+  description: "Curso de Introducción a la Programación con R y Tidyverse (2026)"
   repo-url: https://github.com/pefrens/introduccion_r
   repo-actions: [edit, issue]
   open-graph: true
@@ -22,9 +20,9 @@ website:
   page-footer:
     left: "Esta página fue creada con ❤️ y [Quarto](https://quarto.org/)."
     right: "&copy; Derechos de autor 2026"
-    background: "#D4EEE5"
+    background: "#F7E7D3"
   navbar:
-    background: "#D4EEE5"
+    background: "#1F6A78"
     pinned: true
     align: center
     right:
@@ -46,6 +44,8 @@ website:
         menu: 
           - text: Preparación
             href: prework.qmd
+          - text: Recursos
+            href: resources.qmd
       - text: Sesiones
         menu:
           - text: Introducción
@@ -62,6 +62,8 @@ website:
             href: modules/s05-joins.qmd
           - text: Datos Espaciales con sf
             href: modules/s06-spatial.qmd
+          - text: Estilo y Theming (Complementario)
+            href: modules/s07-theming.qmd
 format:
   html:
     theme:
@@ -70,4 +72,3 @@ format:
     code-copy: true
     code-overflow: wrap
     mainfont: "Asap SemiCondensed"
-

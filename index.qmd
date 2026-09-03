@@ -1,5 +1,5 @@
 ---
-title: "Introduccion a la Programacion con R - Tidyverse"
+title: "Introducción a la Programación con R - Tidyverse"
 ---
 
 ---
@@ -8,62 +8,81 @@ title: "Introduccion a la Programacion con R - Tidyverse"
 
 ---
 
-# Descripcion general
+# Descripción general
 
-Este curso introduce programacion en R con enfoque practico en manejo de datos tabulares y espaciales.
+Este curso introduce la programación en R con un enfoque práctico y reproducible, centrado en la importación, manipulación, organización, unión y análisis espacial de datos con el ecosistema **Tidyverse** y **sf**.
 
-## Ruta del curso
+## Ruta de aprendizaje
 
-1. Sesion 0: Bienvenida e introduccion
-2. Sesion 1: Fundamentos de R y RStudio
-3. Sesion 2: Importar y revisar datos
-4. Sesion 3: Manipulacion con dplyr
-5. Sesion 4: Organizacion de datos con tidyr
-6. Sesion 5: Union de datos (joins)
-7. Sesion 6: Datos espaciales con sf
+| Sesión | Tema | Descripción clave | Acceso |
+|:------:|:-----|:------------------|:------:|
+| **0** | **Bienvenida e Introducción** | Ciclo de ciencia de datos, ecosistema Tidyverse, R, RStudio y Quarto | [Ir al módulo](modules/s00-bienvenida-intro-r.qmd) |
+| **1** | **Fundamentos de R y RStudio** | Tipos atómicos, operadores, vectores, data frames y el pipe (`\|>`) | [Ir al módulo](modules/s01-fundamentals.qmd) |
+| **2** | **Importar y Revisar Datos** | Lectura de CSV, Excel y GeoPackage con `readr`, `readxl` y `janitor` | [Ir al módulo](modules/s02-import-data.qmd) |
+| **3** | **dplyr - Manipulación de Datos** | Verbos principales: `filter()`, `select()`, `mutate()`, `group_by()`, `summarise()` | [Ir al módulo](modules/s03-dplyr.qmd) |
+| **4** | **tidyr - Organización de Datos** | Principios de *Tidy Data*, `pivot_longer()`, `pivot_wider()`, `separate()`, `unite()` | [Ir al módulo](modules/s04-tidying-data.qmd) |
+| **5** | **Unión de Datos (Joins)** | Claves primarias y foráneas, mutating joins y filtering joins | [Ir al módulo](modules/s05-joins.qmd) |
+| **6** | **Datos Espaciales con sf** | Estructura `sf`, geometrías vectoriales, CRS, transformaciones y mapas | [Ir al módulo](modules/s06-spatial.qmd) |
+| **★** | **Estilo y Theming (Complementario)** | Buenas prácticas visuales, personalización de gráficos y consistencia temática | [Ir al módulo](modules/s07-theming.qmd) |
 
-## Que aprenderas
+## ¿Qué aprenderás?
 
-- Crear objetos y trabajar con estructuras basicas de R
-- Importar y validar datos desde CSV, Excel y GPKG
-- Transformar datos con `dplyr` y `tidyr`
-- Unir tablas con joins de forma segura
-- Manipular geometria y atributos con `sf`
+- Comprender la filosofía de diseño y la sintaxis moderna del **Tidyverse**.
+- Crear y transformar objetos usando estructuras de datos fundamentales en R.
+- Importar y auditar datasets desde múltiples formatos (CSV, XLSX, GPKG) validando tipos y limpiando nombres.
+- Filtrar, resumir, transformar y ordenar tablas complejas con fluidez mediante pipes (`|>`).
+- Reestructurar datos tabulares entre formato ancho y largo aplicando los principios de *Tidy Data*.
+- Vincular múltiples tablas relacionales asegurando la integridad de observaciones mediante joins seguros.
+- Cargar, consultar y proyectar capas espaciales vectoriales con `sf`, integrándolas con `ggplot2`.
 
 # Entorno necesario
 
-1. R (version reciente)
-2. RStudio Desktop (version reciente)
-3. Quarto (para renderizar contenidos)
+Para seguir el curso se requiere contar con:
 
-# Paquetes necesarios (segun modules)
+1. **R** (versión 4.3.0 o superior recomendada) — [Descargar R](https://cloud.r-project.org)
+2. **RStudio Desktop** (versión reciente) — [Descargar RStudio](https://posit.co/download/rstudio-desktop/)
+3. **Quarto CLI** (incluido con RStudio o descargable) — [Descargar Quarto](https://quarto.org)
+
+# Paquetes requeridos
+
+Ejecuta el siguiente bloque en la consola de R para instalar los paquetes necesarios:
 
 ```r
-packages <- c(
-  "tidyverse",
-  "janitor",
-  "readxl",
-  "sf"
+paquetes <- c(
+  "tidyverse", # Incluye readr, dplyr, tidyr, ggplot2, tibble, etc.
+  "janitor",   # Limpieza de nombres de variables y tablas
+  "readxl",    # Lectura de hojas de cálculo Excel
+  "writexl",   # Exportación a formato Excel
+  "sf"         # Manejo de geometrías y datos espaciales vectoriales
 )
 
-install.packages(packages)
+install.packages(paquetes)
 ```
 
-Nota: `readr`, `dplyr`, `tidyr`, `ggplot2` vienen incluidos en `tidyverse`.
+# Archivos de datos del curso
 
-# Archivos de datos usados en las sesiones
+Todos los archivos de datos utilizados en las prácticas se encuentran organizados en la carpeta `data/` del proyecto. Puedes descargarlos todos juntos listos para usar:
 
-- `data/catalogo_planes.csv`
-- `data/catalogo_planes.xlsx`
-- `data/poblacion_peru.csv`
-- `data/DEPARTAMENTO.gpkg`
+::: {.callout-note}
+## Paquete de datos listo para descargar
+Descarga el archivo comprimido con todos los datasets estructurados para el curso:  
+📥 [**Descargar Todos los Materiales del Curso (ZIP, ~7 MB)**](materials/data/data_introduccion_r.zip)  
+*(También disponible en cualquier momento desde el menú superior **Descargas**)*
+:::
 
-# Referencias recomendadas
+### Contenido principal de `data/`:
+- **Planes territoriales**: `catalogo_planes.csv`, `catalogo_planes.xlsx`, `catalogo_planes.txt`
+- **Demografía**: `poblacion_peru.csv`, `indicadoresCPV2017.xlsx`, `indicadores_demograficos.xlsx`
+- **Capas espaciales**: `DEPARTAMENTO.gpkg`, `distritos_cusco.gpkg`, `distritos_cusco.shp` (shapefile completo)
+- **Centros poblados y ciudades**: `ciudades_1.csv`, `ciudades_mundo.csv`, reportes de `ANTA` y `HUAROCONDO` (CSV y XLSX)
+- **Maestros de codificación**: `departamento.csv`, `provincia.csv`, `distritos.csv`
 
-- [R for Data Science](https://r4ds.hadley.nz/)
-- [R for Data Science (espanol)](https://es.r4ds.hadley.nz/)
+# Recursos y enlaces recomendados
+
+- Consulta la sección completa de [Recursos](resources.qmd) y la guía de [Preparación previa](prework.qmd).
+- [R for Data Science (2da edición en inglés)](https://r4ds.hadley.nz/) / [Edición en español](https://es.r4ds.hadley.nz/)
 - [Geocomputation with R](https://r.geocompx.org/)
 
 # Instructor
 
-[**Paul Efren Santos Andrade**](https://github.com/PaulESantos)
+[**Paul Efrén Santos Andrade**](https://paulefrensa.rbind.io) // [GitHub](https://github.com/PaulESantos)

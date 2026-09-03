@@ -1,68 +1,94 @@
 ---
 title: "Fundamentos de R y RStudio"
-subtitle: "<span class='code'>Sesion 1</span>"
+subtitle: "<span class='code'>Sesión 1</span>"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
 ---
+
 ```{=html}
 <iframe class="slide-deck" src="../materials/01-fundamentals-intro-r.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 ```
 
 <a href='../materials/01-fundamentals-intro-r.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Tipos de datos en R
-- Objetos y asignacion
-- Vectores y data frames
-- Funciones y ayuda
+- Tipos de datos atómicos en R (numérico, carácter, lógico, factor).
+- Creación y asignación de objetos con `<-`.
+- Vectores, matrices, listas y data frames.
+- Uso de funciones nativas, argumentos y sistema de ayuda (`?`).
+- El operador pipe nativo (`|>`).
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Escribir codigo basico en R con sintaxis correcta y leer objetos en consola de forma segura.
+Comprender los bloques de construcción fundamentales de R, dominar la sintaxis básica de asignación e inspección, y manipular estructuras tabulares iniciales en consola.
 
-# Datos usados
+# Conexión con el curso
 
-- No requiere archivos de datos
+Tras preparar el entorno en la [Sesión 0](s00-bienvenida-intro-r.qmd), en esta sesión comenzamos formalmente a escribir código. Los conceptos de vectores y data frames aquí aprendidos son el insumo esencial para importar y transformar tablas en las siguientes sesiones.
 
-# Practica guiada
+# Datos utilizados
+
+- Esta sesión utiliza ejemplos generados directamente en memoria con código R.
+
+# Práctica guiada
 
 ```r
-# Tipos basicos
-x_num <- 10
-x_chr <- "cusco"
+# 1. Tipos atómicos básicos
+x_num <- 10.5
+x_ent <- 10L
+x_chr <- "Cusco"
 x_lgl <- TRUE
 
 class(x_num)
+class(x_ent)
 class(x_chr)
 class(x_lgl)
 ```
 
 ```r
-# Vectores y funciones
-poblacion <- c(120, 340, 560, 210)
+# 2. Vectores numéricos y funciones estadísticas básicas
+poblacion <- c(120, 340, 560, 210, 890)
+
 mean(poblacion)
 sum(poblacion)
 length(poblacion)
+min(poblacion)
+max(poblacion)
 ```
 
 ```r
-# Data frame simple
-df <- data.frame(
-  distrito = c("A", "B", "C"),
-  habitantes = c(1000, 850, 920)
+# 3. Creación e inspección de un Data Frame
+datos_distritos <- data.frame(
+  codigo = c("080101", "080102", "080103"),
+  distrito = c("Cusco", "San Jerónimo", "San Sebastián"),
+  habitantes = c(125000, 48000, 85000),
+  es_capital = c(TRUE, FALSE, FALSE)
 )
 
-str(df)
-head(df)
+str(datos_distritos)
+head(datos_distritos)
+summary(datos_distritos)
 ```
 
-# Ejercicios
+```r
+# 4. Introducción al operador pipe (|>)
+# Calcular la raíz cuadrada de la media de la población de forma encadenada
+poblacion |> 
+  mean() |> 
+  sqrt()
+```
 
-1. Crear un vector numerico de 5 elementos y calcular media y maximo.
-2. Crear un data frame con 3 columnas y 4 filas.
-3. Usar `?mean` y probar el argumento `na.rm`.
+# Ejercicios propuestos
+
+1. Crear un vector numérico con 6 valores de precipitación mensual y calcular su promedio y desviación estándar (`sd()`).
+2. Crear un data frame con 4 observaciones que represente ciudades, incluyendo una columna numérica, una de texto y una lógica.
+3. Consultar la ayuda de la función `mean` con `?mean` e investigar para qué sirve el argumento `na.rm = TRUE`.
 
 # Resultado esperado
 
-Poder crear objetos, inspeccionarlos y usar funciones basicas sin errores de sintaxis.
+Poder crear y evaluar objetos en R sin errores de sintaxis, reconociendo con seguridad los tipos de datos y extrayendo resúmenes básicos de data frames.
+
+---
+
+[← Volver a Sesión 0: Bienvenida](s00-bienvenida-intro-r.qmd) | [**Avanzar a Sesión 2: Importar y Revisar Datos →**](s02-import-data.qmd)

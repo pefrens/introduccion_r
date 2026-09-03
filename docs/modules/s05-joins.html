@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Union de datos (Joins)</title>
+<title>Unión de Datos (Joins) – Introducción a R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6090d82a8ca7f4d671bcce5879e3a2b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -87,11 +87,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Union de datos (Joins)">
-<meta property="og:description" content="Sesion 5">
+<meta property="og:title" content="Unión de Datos (Joins) – Introducción a R - Tidyverse">
+<meta property="og:description" content="Sesión 5">
 <meta property="og:image" content="images/03-colors.png">
-<meta name="twitter:title" content="Union de datos (Joins)">
-<meta name="twitter:description" content="Sesion 5">
+<meta property="og:site_name" content="Introducción a R - Tidyverse">
+<meta name="twitter:title" content="Unión de Datos (Joins) – Introducción a R - Tidyverse">
+<meta name="twitter:description" content="Sesión 5">
 <meta name="twitter:image" content="images/03-colors.png">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary_large_image">
@@ -103,6 +104,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Introducción a R - Tidyverse</span>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -120,6 +126,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../prework.html">
  <span class="dropdown-text">Preparación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Recursos</span></a>
   </li>  
     </ul>
   </li>
@@ -156,6 +166,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/s07-theming.html">
+ <span class="dropdown-text">Estilo y Theming (Complementario)</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -168,11 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">    
         <li>
-<<<<<<< HEAD
     <a class="dropdown-item" href="../materials/data/data_introduccion_r.zip">
-=======
-    <a class="dropdown-item" href="../materials/data_introduccion_r.zip.zip">
->>>>>>> 03c1e963c1993e339421e9a1a8023fa3d6bd822d
  <span class="dropdown-text">Todos los Materiales del Curso</span></a>
   </li>  
     </ul>
@@ -203,11 +213,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#esquema" id="toc-esquema" class="nav-link active" data-scroll-target="#esquema">Esquema</a></li>
-  <li><a href="#objetivo-de-la-sesion" id="toc-objetivo-de-la-sesion" class="nav-link" data-scroll-target="#objetivo-de-la-sesion">Objetivo de la sesion</a></li>
-  <li><a href="#datos-usados" id="toc-datos-usados" class="nav-link" data-scroll-target="#datos-usados">Datos usados</a></li>
-  <li><a href="#practica-guiada" id="toc-practica-guiada" class="nav-link" data-scroll-target="#practica-guiada">Practica guiada</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  <li><a href="#esquema-de-la-sesión" id="toc-esquema-de-la-sesión" class="nav-link active" data-scroll-target="#esquema-de-la-sesión">Esquema de la sesión</a></li>
+  <li><a href="#objetivo-de-la-sesión" id="toc-objetivo-de-la-sesión" class="nav-link" data-scroll-target="#objetivo-de-la-sesión">Objetivo de la sesión</a></li>
+  <li><a href="#conexión-con-el-curso" id="toc-conexión-con-el-curso" class="nav-link" data-scroll-target="#conexión-con-el-curso">Conexión con el curso</a></li>
+  <li><a href="#datos-utilizados" id="toc-datos-utilizados" class="nav-link" data-scroll-target="#datos-utilizados">Datos utilizados</a></li>
+  <li><a href="#práctica-guiada" id="toc-práctica-guiada" class="nav-link" data-scroll-target="#práctica-guiada">Práctica guiada</a></li>
+  <li><a href="#ejercicios-propuestos" id="toc-ejercicios-propuestos" class="nav-link" data-scroll-target="#ejercicios-propuestos">Ejercicios propuestos</a></li>
   <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado esperado</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/modules/s05-joins.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -217,8 +228,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Union de datos (Joins)</h1>
-<p class="subtitle lead"><span class="code">Sesion 5</span></p>
+<h1 class="title">Unión de Datos (Joins)</h1>
+<p class="subtitle lead"><span class="code">Sesión 5</span></p>
 </div>
 
 
@@ -237,55 +248,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <iframe class="slide-deck" src="../materials/05-joins.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 <p><a href="../materials/05-joins.html" target="_blank">Ver diapositivas en pantalla completa</a></p>
-<section id="esquema" class="level1">
-<h1>Esquema</h1>
+<section id="esquema-de-la-sesión" class="level1">
+<h1>Esquema de la sesión</h1>
 <ul>
-<li>Claves y relaciones entre tablas</li>
-<li>Mutating joins</li>
-<li>Filtering joins</li>
-<li>Control de duplicados</li>
+<li>Concepto de datos relacionales, claves primarias y claves foráneas.</li>
+<li><em>Mutating joins</em>: agregar columnas desde otra tabla (<code>left_join()</code>, <code>right_join()</code>, <code>inner_join()</code>, <code>full_join()</code>).</li>
+<li><em>Filtering joins</em>: auditar y filtrar observaciones sin alterar columnas (<code>semi_join()</code>, <code>anti_join()</code>).</li>
+<li>Identificación y diagnóstico de claves duplicadas o registros huérfanos.</li>
+<li>Unión de datasets con nombres de claves distintos (<code>by = join_by(...)</code> o <code>by = c("clave_a" = "clave_b")</code>).</li>
 </ul>
 </section>
-<section id="objetivo-de-la-sesion" class="level1">
-<h1>Objetivo de la sesion</h1>
-<p>Unir tablas de forma segura, conservando la integridad de filas y columnas.</p>
+<section id="objetivo-de-la-sesión" class="level1">
+<h1>Objetivo de la sesión</h1>
+<p>Aprender a vincular dos o más fuentes de datos relacionales de manera segura, preservando la integridad de filas y columnas, y detectando registros sin correspondencia.</p>
 </section>
-<section id="datos-usados" class="level1">
-<h1>Datos usados</h1>
+<section id="conexión-con-el-curso" class="level1">
+<h1>Conexión con el curso</h1>
+<p>En el trabajo profesional los datos rara vez vienen en una sola tabla. En las sesiones prev (<a href="../modules/s03-dplyr.html">Sesión 3</a> y <a href="../modules/s04-tidying-data.html">Sesión 4</a>) aprendimos a limpiar y moldear tablas individuales. En esta sesión aprendemos a cruzarlas, lo que resulta indispensable para la <a href="../modules/s06-spatial.html">Sesión 6</a>, donde cruzaremos tablas estadísticas con capas geográficas mediante códigos de departamento (<code>ccdd</code>).</p>
+</section>
+<section id="datos-utilizados" class="level1">
+<h1>Datos utilizados</h1>
 <ul>
-<li>Datos creados en memoria con <code>tibble()</code></li>
+<li>Datasets relacionales creados en memoria y datos tabulares del curso (<code>poblacion_peru.csv</code> y capas de referencia).</li>
 </ul>
 </section>
-<section id="practica-guiada" class="level1">
-<h1>Practica guiada</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ventas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cod_dep =</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"15"</span>, <span class="st">"04"</span>, <span class="st">"08"</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">monto =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">80</span>, <span class="dv">200</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>deps <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">cod_dep =</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"15"</span>, <span class="st">"04"</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">departamento =</span> <span class="fu">c</span>(<span class="st">"CUSCO"</span>, <span class="st">"LIMA"</span>, <span class="st">"AREQUIPA"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># left_join</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ventas <span class="sc">|&gt;</span> <span class="fu">left_join</span>(deps, <span class="at">by =</span> <span class="st">"cod_dep"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anti_join para detectar codigos sin correspondencia</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ventas <span class="sc">|&gt;</span> <span class="fu">anti_join</span>(deps, <span class="at">by =</span> <span class="st">"cod_dep"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="práctica-guiada" class="level1">
+<h1>Práctica guiada</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Definición de tablas maestras y de detalle</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>reporte_inversion <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">id_proyecto =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>, <span class="dv">104</span>, <span class="dv">105</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cod_dep =</span> <span class="fu">c</span>(<span class="st">"08"</span>, <span class="st">"15"</span>, <span class="st">"04"</span>, <span class="st">"08"</span>, <span class="st">"99"</span>), <span class="co"># Nótese el código 99 no existente</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">monto_miles =</span> <span class="fu">c</span>(<span class="dv">450</span>, <span class="dv">1200</span>, <span class="dv">310</span>, <span class="dv">890</span>, <span class="dv">150</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>maestro_departamentos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">cod_dep =</span> <span class="fu">c</span>(<span class="st">"04"</span>, <span class="st">"08"</span>, <span class="st">"15"</span>, <span class="st">"21"</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">nombre_dep =</span> <span class="fu">c</span>(<span class="st">"Arequipa"</span>, <span class="st">"Cusco"</span>, <span class="st">"Lima"</span>, <span class="st">"Puno"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. left_join(): Conserva todas las filas de la tabla izquierda</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reporte_con_nombres <span class="ot">&lt;-</span> reporte_inversion <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(maestro_departamentos, <span class="at">by =</span> <span class="st">"cod_dep"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>reporte_con_nombres</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. inner_join(): Solo conserva coincidencias exactas en ambas tablas</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>reporte_inversion <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(maestro_departamentos, <span class="at">by =</span> <span class="st">"cod_dep"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. anti_join(): Auditoría de inconsistencias (detectar registros huérfanos)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>proyectos_sin_departamento <span class="ot">&lt;-</span> reporte_inversion <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(maestro_departamentos, <span class="at">by =</span> <span class="st">"cod_dep"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>proyectos_sin_departamento</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. semi_join(): Filtrar departamentos que tienen proyectos registrados</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>departamentos_con_inversion <span class="ot">&lt;-</span> maestro_departamentos <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(reporte_inversion, <span class="at">by =</span> <span class="st">"cod_dep"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>departamentos_con_inversion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="ejercicios" class="level1">
-<h1>Ejercicios</h1>
+<section id="ejercicios-propuestos" class="level1">
+<h1>Ejercicios propuestos</h1>
 <ol type="1">
-<li>Repetir el join con <code>inner_join()</code> y comparar filas.</li>
-<li>Identificar codigos huerfanos con <code>anti_join()</code>.</li>
-<li>Resumir monto total por <code>departamento</code>.</li>
+<li>Realizar un <code>full_join()</code> entre <code>reporte_inversion</code> y <code>maestro_departamentos</code> y analizar qué filas contienen valores <code>NA</code>.</li>
+<li>Emplear <code>anti_join()</code> para identificar qué departamentos del maestro <strong>no</strong> tienen ningún proyecto asignado.</li>
+<li>Usar <code>group_by()</code> y <code>summarise()</code> sobre el resultado del <code>left_join()</code> para calcular el monto total de inversión por cada <code>nombre_dep</code>.</li>
 </ol>
 </section>
 <section id="resultado-esperado" class="level1">
 <h1>Resultado esperado</h1>
-<p>Elegir el tipo de join correcto para cada objetivo de analisis.</p>
+<p>Saber elegir el tipo de join apropiado para cada problema analítico, garantizando que ninguna observación se pierda o duplique inadvertidamente durante el proceso de cruce.</p>
+<hr>
+<p><a href="../modules/s04-tidying-data.html">← Volver a Sesión 4: tidyr - Organización de Datos</a> | <a href="../modules/s06-spatial.html"><strong>Avanzar a Sesión 6: Datos Espaciales con sf →</strong></a></p>
 
 
 </section>

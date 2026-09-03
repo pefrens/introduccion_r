@@ -1,96 +1,109 @@
 ---
-title: "Requisitos Previos"
+title: "Requisitos Previos y Preparación"
 ---
 
-Este curso está diseñado para personas que desean aprender programación en R desde cero o que tienen conocimientos básicos y quieren fortalecer sus habilidades en el ecosistema Tidyverse. No se requiere experiencia previa en programación, pero es útil estar familiarizado con conceptos básicos de análisis de datos.
+Este curso está diseñado para personas que desean aprender programación en R desde cero o que cuentan con nociones básicas y desean consolidar sus habilidades en el ecosistema **Tidyverse** y el manejo de datos espaciales con **sf**. No se requiere experiencia previa en programación, pero sí familiaridad elemental con el uso de datos en tablas u hojas de cálculo.
 
-Para aprovechar al máximo el curso, te recomendamos revisar el libro "R for Data Science" (<a href="https://r4ds.hadley.nz/" target="_blank">versión en inglés</a> o <a href="https://es.r4ds.hadley.nz/" target="_blank">versión en español</a>), especialmente los capítulos introductorios.
+Para aprovechar al máximo las sesiones, recomendamos revisar el libro *R for Data Science* ([versión en inglés](https://r4ds.hadley.nz/) o [versión en español](https://es.r4ds.hadley.nz/)), especialmente los capítulos introductorios.
 
-Necesitarás tu propia computadora portátil con una versión reciente de R (4.5.2 o más nueva) y RStudio (1.1.401 o más nuevo) así como varios paquetes de R instalados.
+Necesitarás tu propia computadora portátil con una versión reciente de **R** (4.3.0 o superior) y **RStudio Desktop** (versión 2023 o más reciente), así como los paquetes indicados a continuación.
 
+---
 
 ## Requisitos Técnicos
 
-### Instalar R y RStudio
+### 1. Instalar R y RStudio
 
-Descarga e instala los siguientes programas:
+Descarga e instala los siguientes programas en este orden:
 
-1. **R** (versión 4.6.0 o superior): <a href="https://cloud.r-project.org" target="_blank">cloud.r-project.org</a>
-2. **RStudio** (versión 1.1.401 o superior): <a href="https://posit.co/download/rstudio-desktop/" target="_blank">posit.co/download/rstudio-desktop/</a>
-3. **Rtools 45** (solo Windows): <a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank">cran.r-project.org/bin/windows/Rtools/</a>
+1. **R** (versión 4.3.0 o superior): [cloud.r-project.org](https://cloud.r-project.org)
+2. **RStudio Desktop** (versión reciente): [posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+3. **Rtools** (solo para Windows): [cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/) (instala la versión compatible con tu versión de R).
 
+---
 
-### Instalar Paquetes de R
+### 2. Instalar Paquetes de R
 
-Puedes instalar todos los paquetes necesarios ejecutando el siguiente código en la consola de R:
-
-```r
-packages <- c("tidyverse", "janitor",
-              "here", "writexl", "readxl",
-              "sf", "pdftools", "visdat",
-              "tm", "remotes")
-install.packages(packages)
-```
-
-**Paquetes adicionales** que se usarán en el curso:
+Abre RStudio y pega el siguiente código en la consola (panel inferior izquierdo), luego presiona `Enter`:
 
 ```r
-# stringr.plus (para manipulación avanzada de texto)
-remotes::install_github("johncassil/stringr.plus")
+# Paquetes principales y esenciales del curso
+paquetes <- c(
+  "tidyverse", # dlyr, tidyr, readr, ggplot2, tibble, etc.
+  "janitor",   # Limpieza de nombres de variables y tablas
+  "readxl",    # Lectura de archivos Excel (.xlsx, .xls)
+  "writexl",   # Escritura y exportación a Excel
+  "sf"         # Simple Features para análisis geoespacial vectorial
+)
+
+install.packages(paquetes)
 ```
 
-Para ejecutar el código, abre RStudio. Copia y pega el código en el panel de consola (por defecto en la parte inferior izquierda) y presiona Enter. Deberían aparecer varios mensajes. Revisa estos mensajes en busca de errores y soluciónalos si es necesario. Se pueden ignorar advertencias y otros mensajes informativos.
+Durante la instalación aparecerán varios mensajes informativos en la consola. Revisa que no existan mensajes de error (`Error in...`). Las advertencias (`Warning`) son normales y no impiden el funcionamiento.
 
-### Descripción de los Paquetes Principales
+---
 
-#### Paquetes de Tidyverse y Manipulación de Datos
-* **tidyverse**: Colección de paquetes para ciencia de datos (dplyr, tidyr, ggplot2, readr, etc.)
-* **janitor**: Limpieza de nombres de variables y datos
-* **here**: Manejo de rutas de archivos de forma reproducible
-* **readxl/writexl**: Lectura y escritura de archivos Excel
-* **visdat**: Visualización de tipos de datos
-* **tm**: Procesamiento de texto
-* **stringr.plus**: Funciones adicionales para manipulación de cadenas de texto
+### 3. Descripción de los Paquetes Principales
 
-#### Paquetes Espaciales
-* **sf**: Simple Features - Paquete principal para datos espaciales vectoriales (puntos, líneas, polígonos)
-  - Compatible con tidyverse
-  - Lee/escribe múltiples formatos: shapefile, geopackage, geojson, etc.
-  - Integración perfecta con ggplot2 mediante `geom_sf()`
+#### Ecosistema Tidyverse y Manipulación de Datos
+* **tidyverse**: Metapaquete que carga las herramientas estándar de la ciencia de datos en R:
+  - `readr`: Lectura rápida de archivos de texto delimitados (CSV, TSV).
+  - `dplyr`: Gramática para manipulación, filtrado, creación de variables y resúmenes.
+  - `tidyr`: Herramientas para organizar tablas en formato ordenado (*Tidy Data*).
+  - `ggplot2`: Creación de gráficos declarativos basados en la gramática de los gráficos.
+* **janitor**: Funciones prácticas para limpiar nombres de columnas (`clean_names()`) e identificar filas o columnas vacías.
+* **readxl / writexl**: Módulos especializados para interactuar con hojas de cálculo de Microsoft Excel sin dependencias externas.
 
-**Paquetes espaciales opcionales** (para análisis avanzado):
+#### Paquete Espacial
+* **sf (Simple Features)**: Estándar moderno de R para el análisis de geometrías vectoriales (puntos, líneas y polígonos):
+  - Integración total con la filosofía y funciones del Tidyverse.
+  - Compatibilidad para leer y escribir GeoPackage (`.gpkg`), Shapefile (`.shp`) y GeoJSON.
+  - Integración directa con `ggplot2` mediante la capa `geom_sf()`.
+
+#### Paquetes Opcionales (Análisis Espacial Avanzado)
+
+Si deseas explorar visualizaciones espaciales interactivas más adelante:
+
 ```r
-# Paquetes adicionales para trabajo espacial avanzado
-spatial_packages <- c("terra", "mapview", "leaflet", "tmap")
-install.packages(spatial_packages)
+paquetes_espaciales_extra <- c("mapview", "leaflet", "tmap")
+install.packages(paquetes_espaciales_extra)
 ```
 
-* **terra**: Datos ráster (elevación, temperatura, imágenes satelitales)
-* **mapview**: Visualización interactiva de datos espaciales
-* **leaflet**: Mapas web interactivos
-* **tmap**: Mapas temáticos estáticos e interactivos
+---
 
+## Verificación del Entorno
+
+Para confirmar que la instalación fue exitosa y que el motor espacial `sf` opera correctamente en tu equipo, ejecuta estas líneas en RStudio:
+
+```r
+# 1. Verificar carga de paquetes esenciales
+library(tidyverse)
+library(janitor)
+library(sf)
+
+# 2. Comprobar funcionamiento básico de sf
+punto_prueba <- st_point(c(-71.9675, -13.5319)) # Coordenadas aproximadas de Cusco
+print(punto_prueba)
+```
+
+Si el comando imprime `POINT (-71.9675 -13.5319)` sin errores, ¡tu entorno está 100% listo para comenzar!
+
+---
 
 ## Datos del Curso
 
-Los archivos de datos que se utilizarán en el curso están disponibles en la carpeta `data/` del repositorio del curso. Incluyen:
+Todos los archivos requeridos para las prácticas del curso están disponibles en la carpeta `data/`.
 
-### Datos Tabulares
-* `catalogo_planes.csv`, `catalogo_planes.txt`, `catalogo_planes.xlsx`: Datos de ejemplo en diferentes formatos
+::: {.callout-note}
+## Descarga directa de datos
+Puedes descargar el paquete completo de datos con un solo clic:  
+📥 [**Descargar Todos los Materiales del Curso (ZIP, ~7 MB)**](materials/data/data_introduccion_r.zip)  
+Descomprime este archivo en la carpeta de tu proyecto de RStudio para tener la subcarpeta `data/` lista para las sesiones.
+:::
 
-### Datos Espaciales
-* `DEPARTAMENTO.gpkg`: Datos espaciales vectoriales de departamentos del Perú en formato GeoPackage
-  - Geometría: Polígonos
-  - Sistema de coordenadas: WGS84 (EPSG:4326)
-  - Atributos: Nombres de departamentos, capitales, regiones
-
-
-### Verificar instalación de sf
-
-Después de instalar los requisitos, verifica que sf funciona correctamente:
-
-```r
-library(sf)
-# Si no hay errores, la instalación fue exitosa
-st_point(c(0, 0))
-``` 
+### Archivos incluidos en el paquete:
+* **Planes y catálogos**: `catalogo_planes.csv`, `catalogo_planes.xlsx`, `catalogo_planes.txt`
+* **Datos demográficos**: `poblacion_peru.csv`, `indicadoresCPV2017.xlsx`, `indicadores_demograficos.xlsx`
+* **Capas vectoriales espaciales**: `DEPARTAMENTO.gpkg`, `distritos_cusco.gpkg`, `distritos_cusco.shp` (+ `.shx`, `.dbf`, `.prj`)
+* **Centros poblados y ciudades**: `ciudades_1.csv`, `ciudades_mundo.csv`, reportes de `ANTA` y `HUAROCONDO` (CSV y XLSX)
+* **Tablas maestras de codificación**: `departamento.csv`, `provincia.csv`, `distritos.csv`

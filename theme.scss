@@ -1,67 +1,67 @@
 /*-- scss:defaults --*/
 
 @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wdth,wght@0,87.5,400;0,87.5,500;0,87.5,600;0,87.5,700;0,87.5,800;0,87.5,900;0,100,400;0,100,500;0,100,600;0,100,700;0,100,800;0,100,900;1,87.5,400;1,87.5,500;1,87.5,600;1,87.5,700;1,87.5,800;1,87.5,900;1,100,400;1,100,500;1,100,600;1,100,700;1,100,800;1,100,900&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;0,7..72,900;1,7..72,400;1,7..72,500;1,7..72,600;1,7..72,700;1,7..72,800;1,7..72,900&family=Spline+Sans+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Spline+Sans:wght@400;500;600;700&display=swap');
-  
+
+// Paleta de color del curso:
+// 1. Teal profundo: #1F6A78
+// 2. Salvia / Muted Teal: #86A9B0
+// 3. Crema cálido: #F7E7D3
+// 4. Terracota: #D27C5D
+// 5. Carbón: #1C2024
+
+$theme-teal-dark: #1F6A78;
+$theme-teal-soft: #86A9B0;
+$theme-cream:     #F7E7D3;
+$theme-terracotta:#D27C5D;
+$theme-charcoal:  #1C2024;
+
+$primary:         #1F6A78;
+$secondary:       #86A9B0;
+$success:         #1F6A78;
+$info:            #86A9B0;
+$warning:         #D27C5D;
+$light:           #F7E7D3;
+$dark:            #1C2024;
+
+$body-color:      #1C2024;
+$body-bg:         #FFFFFF;
+$link-color:      #1F6A78;
+$link-color-hover:#D27C5D;
+
+$navbar-bg:       #1F6A78;
+$navbar-fg:       #F7E7D3;
+$navbar-hl:       #D27C5D;
+
+$footer-bg:       #F7E7D3;
+$footer-fg:       #1C2024;
+
 $font-family-sans-serif: 'Asap', 'Asap Condensed', 'Spline Sans', 'Tahoma', 'Arial', sans-serif;
 $font-family-serif: 'Literata', 'Bodoni MT', 'Georgia', 'Times New Roman', Times, serif;
-$presentation-heading-color: #28A87D;
-$presentation-heading-font-weight: 800;
-$link-color: #28a87d;
-$link-color-dark: #79dfbd;
-$link-color-visited: #28A87D;
-$link-color-hover: #28A87D;
-$presentation-selection-background-color: #C2D8D0;
-$presentation-title-slide-text-align: "left";
-$presentation-block-margin: .0375rem;
 
 /*-- scss:rules --*/
+
+h1, h2, h3, h4, span, body, .navbar-title {
+  font-family: 'Asap', 'Asap Condensed', 'Spline Sans', 'Tahoma', 'Arial', sans-serif;
+  font-stretch: 87.5%;
+}
 
 h1 {
   font-family: 'Literata', 'Bodoni MT', 'Georgia', 'Times New Roman', Times, serif;
   font-weight: 800;
   font-style: italic;
+  color: #1F6A78;
 }
 
-h2, h3, h4, span, body, .navbar-title {
-  font-family: 'Asap', 'Asap Condensed', 'Spline Sans', 'Tahoma', 'Arial', sans-serif;
-  font-stretch: 87.5%;
+h2 {
+  font-weight: 700;
+  color: #1F6A78;
+  border-bottom: 2px solid #F7E7D3;
+  padding-bottom: 0.25rem;
 }
 
-h2  {
+h3, h4 {
   font-weight: 600;
-}
-
-.navbar-title {
-  font-weight: 800;
-}
-
-code, .code {
-  font-family: 'Spline Sans Mono', 'Consolas', monospace;
-}
-
-.question {
-  border-left: 3px solid #28a87d;
-  padding: 0.5rem 0.5rem 0.2rem 1rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.3rem;
-  background: #d9f6ec;
-}
-
-.recap {
-  border-left: 3px solid #663399;
-  padding: 0.5rem 0.5rem 0.2rem 1rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  background: #e6d9f2;
-}
-
-.navbar {
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-.navbar-logo {
-  max-height: 60px;
+  color: #1C2024;
 }
 
 h1.title {
@@ -70,10 +70,137 @@ h1.title {
   font-weight: 800;
   line-height: 1.05;
   font-style: italic;
+  color: #1F6A78;
+}
+
+.navbar-title {
+  font-weight: 800;
+  color: #F7E7D3 !important;
+}
+
+.navbar {
+  background-color: #1F6A78 !important;
+  box-shadow: 0 2px 8px rgba(28, 32, 36, 0.15);
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.navbar .nav-link {
+  color: #F7E7D3 !important;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover, 
+.navbar .nav-link:focus,
+.navbar .nav-link.active {
+  color: #D27C5D !important;
+}
+
+.navbar-toggler {
+  border-color: #86A9B0;
+}
+
+code, .code {
+  font-family: 'Spline Sans Mono', 'Consolas', monospace;
+  background-color: #F7E7D3;
+  color: #1F6A78;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid rgba(134, 169, 176, 0.4);
+}
+
+span.code {
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  background: #F7E7D3;
+  color: #D27C5D;
+  border: 1px solid #86A9B0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+}
+
+.nav-page .nav-page-text {
+  color: #1F6A78;
+}
+
+.nav-page:hover .nav-page-text {
+  color: #D27C5D;
+}
+
+.page-footer {
+  background-color: #F7E7D3 !important;
+  color: #1C2024 !important;
+  border-top: 2px solid #86A9B0;
+  font-weight: 500;
+}
+
+.page-footer a {
+  color: #1F6A78 !important;
+  font-weight: 600;
+}
+
+.page-footer a:hover {
+  color: #D27C5D !important;
+  text-decoration: underline;
+}
+
+// Callouts personalizados con la paleta
+.callout.callout-style-default.callout-note {
+  border-left-color: #1F6A78;
+  background-color: rgba(247, 231, 211, 0.4);
+}
+
+.callout.callout-style-default.callout-tip {
+  border-left-color: #86A9B0;
+  background-color: rgba(134, 169, 176, 0.12);
+}
+
+.callout.callout-style-default.callout-important,
+.callout.callout-style-default.callout-warning {
+  border-left-color: #D27C5D;
+  background-color: rgba(210, 124, 93, 0.1);
+}
+
+.callout-header {
+  font-weight: 700;
+  color: #1C2024;
+}
+
+// Estilos de tablas
+table thead th {
+  background-color: #1F6A78;
+  color: #F7E7D3;
+  font-weight: 600;
+  border-color: #86A9B0;
+}
+
+table tbody tr:hover {
+  background-color: rgba(247, 231, 211, 0.45);
+}
+
+// Visor de diapositivas iframe
+iframe.slide-deck {
+  border: 2px solid #1F6A78 !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(28, 32, 36, 0.12);
+}
+
+// Enlaces
+a {
+  color: #1F6A78;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #D27C5D;
+  text-decoration: underline;
 }
 
 @media screen and (max-width:768px) {
   h1.title {
-    font-size: 1.7gith5em;
+    font-size: 2rem;
   }
 }

@@ -1,57 +1,70 @@
 ---
-title: "Bienvenida e Introduccion al curso"
-subtitle: "<span class='code'>Sesion 0</span>"
+title: "Bienvenida e Introducción al Curso"
+subtitle: "<span class='code'>Sesión 0</span>"
 image: "images/01-fundamentals.png"
 tbl-colwidths: [5,20,75]
 ---
+
 ```{=html}
 <iframe class="slide-deck" src="../materials/00-bienvenida-intro-r.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 ```
 
 <a href='../materials/00-bienvenida-intro-r.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Objetivos del curso
-- Ruta de sesiones
-- Datos y herramientas a usar
-- Acuerdos de trabajo
+- Introducción a la ciencia de datos y reproducibilidad.
+- ¿Por qué R y Tidyverse?
+- Herramientas del curso: R, RStudio, Quarto y Git/GitHub.
+- Hoja de ruta de aprendizaje y acuerdos del taller.
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Entender la estructura del curso, los resultados esperados y el flujo de trabajo para las sesiones practicas.
+Comprender la estructura del curso, los resultados de aprendizaje esperados y configurar el entorno de trabajo para las sesiones prácticas.
 
-# Datos usados
+# Conexión con el curso
 
-- No requiere archivos de datos
+Esta sesión inaugural establece el marco conceptual y técnico de todo el programa formativo. Aquí se sientan las bases sobre cómo organizar proyectos reproducibles y cómo interactúan las herramientas antes de comenzar a escribir código en R.
+
+# Datos utilizados
+
+- No requiere archivos de datos externos para esta sesión.
 
 # Ruta de sesiones
 
-1. Sesion 1: Fundamentos de R y RStudio
-2. Sesion 2: Importar y revisar datos
-3. Sesion 3: Manipulacion de datos con dplyr
-4. Sesion 4: Organizacion de datos con tidyr
-5. Sesion 5: Union de datos (joins)
-6. Sesion 6: Introduccion a datos espaciales con sf
+1. **Sesión 1**: Fundamentos de R y RStudio (tipos atómicos, objetos y sintaxis básica).
+2. **Sesión 2**: Importar y revisar datos (lectura de CSV, Excel y GeoPackage).
+3. **Sesión 3**: Manipulación de datos con dplyr (filtrado, transformación y resúmenes).
+4. **Sesión 4**: Organización de datos con tidyr (principios de Tidy Data y pivoteo).
+5. **Sesión 5**: Unión de datos (joins relacionales y auditoría de claves).
+6. **Sesión 6**: Introducción a datos espaciales con sf (geometrías vectoriales, CRS y mapas).
+7. **Sesión 7 (Complementaria)**: Estilo y theming de gráficos con ggplot2.
 
-# Practica guiada
+# Práctica guiada
 
-1. Verificar instalacion de paquetes base del curso.
-2. Revisar la carpeta `modules` y su correspondencia con `materials`.
-3. Confirmar el orden de sesiones y objetivos.
+1. Verificar que R (≥ 4.3.0) y RStudio Desktop se encuentren instalados y funcionando.
+2. Instalar los paquetes esenciales del curso ejecutando en la consola de R:
+   ```r
+   paquetes <- c("tidyverse", "janitor", "readxl", "writexl", "sf")
+   install.packages(paquetes)
+   ```
+3. Explorar la interfaz de RStudio (paneles de Source, Console, Environment y Files).
+4. Verificar la carga exitosa de librerías:
+   ```r
+   library(tidyverse)
+   library(sf)
+   ```
 
-# Herramientas del curso
+# Ejercicios propuestos
 
-- `R` y `RStudio`
-- `tidyverse`
-- `sf`
-- `quarto`
-
-# Ejercicios
-
-1. Identificar que sesion resuelve cada objetivo del curso.
-2. Explicar que paquetes se usaran en sesiones 3, 4, 5 y 6.
+1. Identificar qué paquete del Tidyverse resuelve cada etapa del ciclo de ciencia de datos (importar, ordenar, transformar, visualizar).
+2. Crear un script de prueba en RStudio y calcular una operación aritmética simple.
+3. Consultar la documentación de bienvenida y verificar que los archivos de `data/` estén descargados.
 
 # Resultado esperado
 
-Terminar la sesion con el entorno listo y con claridad sobre el orden de contenidos de `modules` y `materials`.
+Concluir la sesión con el entorno de cómputo completamente operativo, paquetes instalados y una visión clara de la secuencia formativa.
+
+---
+
+[**Avanzar a la Sesión 1: Fundamentos de R y RStudio →**](s01-fundamentals.qmd)

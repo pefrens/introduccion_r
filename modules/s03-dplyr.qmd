@@ -1,37 +1,45 @@
 ---
-title: "dplyr - Manipulacion de datos"
-subtitle: "<span class='code'>Sesion 3</span>"
+title: "dplyr - Manipulación de Datos"
+subtitle: "<span class='code'>Sesión 3</span>"
 image: "images/03-colors.png"
 tbl-colwidths: [5,20,75]
 ---
+
 ```{=html}
 <iframe class="slide-deck" src="../materials/03-data-manipulation.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 ```
 
 <a href='../materials/03-data-manipulation.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Verbos principales de `dplyr`
-- Filtrado y seleccion de columnas
-- Creacion de variables
-- Resumenes por grupos
+- Filosofía y gramática de manipulación con `dplyr`.
+- Filtrado de observaciones según condiciones lógicas (`filter()`).
+- Selección, renombramiento y reordenamiento de columnas (`select()`, `rename()`, `relocate()`).
+- Creación y modificación de variables derivadas (`mutate()`).
+- Ordenamiento de observaciones (`arrange()`).
+- Operaciones agregadas y resúmenes agrupados (`group_by()` y `summarise()`).
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Manipular datos tabulares usando un flujo claro con `|>` y verbos de `dplyr`.
+Manipular, filtrar y transformar datos tabulares de forma eficiente y legible, utilizando la sintaxis de verbos de `dplyr` y el operador pipe nativo (`|>`).
 
-# Datos usados
+# Conexión con el curso
 
-- `data/catalogo_planes.csv`
-- `data/poblacion_peru.csv`
+En la [Sesión 2](s02-import-data.qmd) aprendimos a importar archivos a data frames con nombres estandarizados. En esta sesión dominamos las operaciones cotidianas de transformación de datos con `dplyr`, preparando la estructura para reorganizaciones más complejas con `tidyr` en la [Sesión 4](s04-tidying-data.qmd).
 
-# Practica guiada
+# Datos utilizados
+
+- `data/catalogo_planes.csv`: Catálogo de planes territoriales y su estado.
+- `data/poblacion_peru.csv`: Registro de población censal por departamento y género.
+
+# Práctica guiada
 
 ```r
 library(tidyverse)
 library(janitor)
 
+# Cargar datasets y estandarizar nombres
 planes <- read_csv("data/catalogo_planes.csv") |>
   clean_names()
 
@@ -40,34 +48,51 @@ poblacion <- read_csv("data/poblacion_peru.csv") |>
 ```
 
 ```r
-# select + filter
-planes |>
-  select(departamento, provincia, estado) |>
+# 1. Seleccionar columnas y filtrar observaciones
+planes_vigentes <- planes |>
+  select(departamento, provincia, estado, tipo_plan) |>
   filter(estado == "VIGENTE")
+
+head(planes_vigentes)
 ```
 
 ```r
-# mutate + arrange
-poblacion |>
-  mutate(total = hombres + mujeres) |>
+# 2. Crear variables calculadas y ordenar resultados
+poblacion_ordenada <- poblacion |>
+  mutate(
+    total = hombres + mujeres,
+    pct_mujeres = round((mujeres / total) * 100, 2)
+  ) |>
   arrange(desc(total))
+
+head(poblacion_ordenada)
 ```
 
 ```r
-# group_by + summarise
-planes |>
+# 3. Resúmenes agrupados por categoría
+resumen_departamentos <- planes |>
   group_by(departamento) |>
-  summarise(n_planes = n(), .groups = "drop") |>
-  arrange(desc(n_planes))
+  summarise(
+    total_planes = n(),
+    vigentes = sum(estado == "VIGENTE", na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(total_planes))
+
+head(resumen_departamentos)
 ```
 
-# Ejercicios
+# Ejercicios propuestos
 
-1. Filtrar planes vigentes de un departamento especifico.
-2. Crear indicador `mayoria_mujeres` en `poblacion`.
-3. Contar numero de registros por `estado`.
-4. Ordenar de mayor a menor por total de poblacion.
+1. Filtrar los planes territoriales correspondientes a un departamento de tu interés y seleccionar únicamente las columnas `provincia`, `distrito` y `estado`.
+2. En el dataset `poblacion`, crear una columna lógica llamada `mayoria_femenina` que sea `TRUE` cuando la cantidad de mujeres supere a la de hombres.
+3. Contar la cantidad de planes por cada categoría de `estado` y ordenar los resultados de mayor a menor frecuencia.
+4. Calcular el promedio de población total por año registrado en el dataset demográfico.
 
 # Resultado esperado
 
-Aplicar `select()`, `filter()`, `mutate()`, `group_by()` y `summarise()` en un flujo reproducible.
+Ser capaz de encadenar secuencias fluidas de análisis con `select()`, `filter()`, `mutate()`, `group_by()` y `summarise()`, produciendo resúmenes claros y reproducibles.
+
+---
+
+[← Volver a Sesión 2: Importar y Revisar Datos](s02-import-data.qmd) | [**Avanzar a Sesión 4: tidyr - Organización de Datos →**](s04-tidying-data.qmd)

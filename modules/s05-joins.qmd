@@ -1,63 +1,96 @@
 ---
-title: "Union de datos (Joins)"
-subtitle: "<span class='code'>Sesion 5</span>"
+title: "Unión de Datos (Joins)"
+subtitle: "<span class='code'>Sesión 5</span>"
 image: "images/03-colors.png"
 tbl-colwidths: [5,20,75]
 ---
+
 ```{=html}
 <iframe class="slide-deck" src="../materials/05-joins.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 ```
 
 <a href='../materials/05-joins.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Claves y relaciones entre tablas
-- Mutating joins
-- Filtering joins
-- Control de duplicados
+- Concepto de datos relacionales, claves primarias y claves foráneas.
+- *Mutating joins*: agregar columnas desde otra tabla (`left_join()`, `right_join()`, `inner_join()`, `full_join()`).
+- *Filtering joins*: auditar y filtrar observaciones sin alterar columnas (`semi_join()`, `anti_join()`).
+- Identificación y diagnóstico de claves duplicadas o registros huérfanos.
+- Unión de datasets con nombres de claves distintos (`by = join_by(...)` o `by = c("clave_a" = "clave_b")`).
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Unir tablas de forma segura, conservando la integridad de filas y columnas.
+Aprender a vincular dos o más fuentes de datos relacionales de manera segura, preservando la integridad de filas y columnas, y detectando registros sin correspondencia.
 
-# Datos usados
+# Conexión con el curso
 
-- Datos creados en memoria con `tibble()`
+En el trabajo profesional los datos rara vez vienen en una sola tabla. En las sesiones prev ([Sesión 3](s03-dplyr.qmd) y [Sesión 4](s04-tidying-data.qmd)) aprendimos a limpiar y moldear tablas individuales. En esta sesión aprendemos a cruzarlas, lo que resulta indispensable para la [Sesión 6](s06-spatial.qmd), donde cruzaremos tablas estadísticas con capas geográficas mediante códigos de departamento (`ccdd`).
 
-# Practica guiada
+# Datos utilizados
+
+- Datasets relacionales creados en memoria y datos tabulares del curso (`poblacion_peru.csv` y capas de referencia).
+
+# Práctica guiada
 
 ```r
 library(tidyverse)
+```
 
-ventas <- tibble(
-  id = c(1, 2, 3, 4),
-  cod_dep = c("08", "15", "04", "08"),
-  monto = c(100, 150, 80, 200)
+```r
+# 1. Definición de tablas maestras y de detalle
+reporte_inversion <- tibble(
+  id_proyecto = c(101, 102, 103, 104, 105),
+  cod_dep = c("08", "15", "04", "08", "99"), # Nótese el código 99 no existente
+  monto_miles = c(450, 1200, 310, 890, 150)
 )
 
-deps <- tibble(
-  cod_dep = c("08", "15", "04"),
-  departamento = c("CUSCO", "LIMA", "AREQUIPA")
+maestro_departamentos <- tibble(
+  cod_dep = c("04", "08", "15", "21"),
+  nombre_dep = c("Arequipa", "Cusco", "Lima", "Puno")
 )
 ```
 
 ```r
-# left_join
-ventas |> left_join(deps, by = "cod_dep")
+# 2. left_join(): Conserva todas las filas de la tabla izquierda
+reporte_con_nombres <- reporte_inversion |>
+  left_join(maestro_departamentos, by = "cod_dep")
+
+reporte_con_nombres
 ```
 
 ```r
-# anti_join para detectar codigos sin correspondencia
-ventas |> anti_join(deps, by = "cod_dep")
+# 3. inner_join(): Solo conserva coincidencias exactas en ambas tablas
+reporte_inversion |>
+  inner_join(maestro_departamentos, by = "cod_dep")
 ```
 
-# Ejercicios
+```r
+# 4. anti_join(): Auditoría de inconsistencias (detectar registros huérfanos)
+proyectos_sin_departamento <- reporte_inversion |>
+  anti_join(maestro_departamentos, by = "cod_dep")
 
-1. Repetir el join con `inner_join()` y comparar filas.
-2. Identificar codigos huerfanos con `anti_join()`.
-3. Resumir monto total por `departamento`.
+proyectos_sin_departamento
+```
+
+```r
+# 5. semi_join(): Filtrar departamentos que tienen proyectos registrados
+departamentos_con_inversion <- maestro_departamentos |>
+  semi_join(reporte_inversion, by = "cod_dep")
+
+departamentos_con_inversion
+```
+
+# Ejercicios propuestos
+
+1. Realizar un `full_join()` entre `reporte_inversion` y `maestro_departamentos` y analizar qué filas contienen valores `NA`.
+2. Emplear `anti_join()` para identificar qué departamentos del maestro **no** tienen ningún proyecto asignado.
+3. Usar `group_by()` y `summarise()` sobre el resultado del `left_join()` para calcular el monto total de inversión por cada `nombre_dep`.
 
 # Resultado esperado
 
-Elegir el tipo de join correcto para cada objetivo de analisis.
+Saber elegir el tipo de join apropiado para cada problema analítico, garantizando que ninguna observación se pierda o duplique inadvertidamente durante el proceso de cruce.
+
+---
+
+[← Volver a Sesión 4: tidyr - Organización de Datos](s04-tidying-data.qmd) | [**Avanzar a Sesión 6: Datos Espaciales con sf →**](s06-spatial.qmd)

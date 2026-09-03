@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Requisitos Previos</title>
+<title>Requisitos Previos y Preparación – Introducción a R - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3f9d91c1dec4e7a5f730c5a6b8380498.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6090d82a8ca7f4d671bcce5879e3a2b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -87,10 +87,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Requisitos Previos">
-<meta property="og:description" content="Página principal del taller posit::conf(2023)">
-<meta name="twitter:title" content="Requisitos Previos">
-<meta name="twitter:description" content="Página principal del taller posit::conf(2023)">
+<meta property="og:title" content="Requisitos Previos y Preparación – Introducción a R - Tidyverse">
+<meta property="og:description" content="Curso de Introducción a la Programación con R y Tidyverse (2026)">
+<meta property="og:site_name" content="Introducción a R - Tidyverse">
+<meta name="twitter:title" content="Requisitos Previos y Preparación – Introducción a R - Tidyverse">
+<meta name="twitter:description" content="Curso de Introducción a la Programación con R y Tidyverse (2026)">
 <meta name="twitter:creator" content="@PaulESantos">
 <meta name="twitter:card" content="summary">
 </head>
@@ -101,6 +102,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Introducción a R - Tidyverse</span>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -118,6 +124,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./prework.html">
  <span class="dropdown-text">Preparación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources.html">
+ <span class="dropdown-text">Recursos</span></a>
   </li>  
     </ul>
   </li>
@@ -153,6 +163,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./modules/s06-spatial.html">
  <span class="dropdown-text">Datos Espaciales con sf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/s07-theming.html">
+ <span class="dropdown-text">Estilo y Theming (Complementario)</span></a>
   </li>  
     </ul>
   </li>
@@ -199,15 +213,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#requisitos-técnicos" id="toc-requisitos-técnicos" class="nav-link active" data-scroll-target="#requisitos-técnicos">Requisitos Técnicos</a>
   <ul class="collapse">
-  <li><a href="#instalar-r-y-rstudio" id="toc-instalar-r-y-rstudio" class="nav-link" data-scroll-target="#instalar-r-y-rstudio">Instalar R y RStudio</a></li>
-  <li><a href="#instalar-paquetes-de-r" id="toc-instalar-paquetes-de-r" class="nav-link" data-scroll-target="#instalar-paquetes-de-r">Instalar Paquetes de R</a></li>
-  <li><a href="#descripción-de-los-paquetes-principales" id="toc-descripción-de-los-paquetes-principales" class="nav-link" data-scroll-target="#descripción-de-los-paquetes-principales">Descripción de los Paquetes Principales</a></li>
+  <li><a href="#instalar-r-y-rstudio" id="toc-instalar-r-y-rstudio" class="nav-link" data-scroll-target="#instalar-r-y-rstudio">1. Instalar R y RStudio</a></li>
+  <li><a href="#instalar-paquetes-de-r" id="toc-instalar-paquetes-de-r" class="nav-link" data-scroll-target="#instalar-paquetes-de-r">2. Instalar Paquetes de R</a></li>
+  <li><a href="#descripción-de-los-paquetes-principales" id="toc-descripción-de-los-paquetes-principales" class="nav-link" data-scroll-target="#descripción-de-los-paquetes-principales">3. Descripción de los Paquetes Principales</a></li>
   </ul></li>
+  <li><a href="#verificación-del-entorno" id="toc-verificación-del-entorno" class="nav-link" data-scroll-target="#verificación-del-entorno">Verificación del Entorno</a></li>
   <li><a href="#datos-del-curso" id="toc-datos-del-curso" class="nav-link" data-scroll-target="#datos-del-curso">Datos del Curso</a>
   <ul class="collapse">
-  <li><a href="#datos-tabulares" id="toc-datos-tabulares" class="nav-link" data-scroll-target="#datos-tabulares">Datos Tabulares</a></li>
-  <li><a href="#datos-espaciales" id="toc-datos-espaciales" class="nav-link" data-scroll-target="#datos-espaciales">Datos Espaciales</a></li>
-  <li><a href="#verificar-instalación-de-sf" id="toc-verificar-instalación-de-sf" class="nav-link" data-scroll-target="#verificar-instalación-de-sf">Verificar instalación de sf</a></li>
+  <li><a href="#archivos-incluidos-en-el-paquete" id="toc-archivos-incluidos-en-el-paquete" class="nav-link" data-scroll-target="#archivos-incluidos-en-el-paquete">Archivos incluidos en el paquete:</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pefrens/introduccion_r/edit/main/prework.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pefrens/introduccion_r/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -217,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Requisitos Previos</h1>
+<h1 class="title">Requisitos Previos y Preparación</h1>
 </div>
 
 
@@ -234,96 +247,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Este curso está diseñado para personas que desean aprender programación en R desde cero o que tienen conocimientos básicos y quieren fortalecer sus habilidades en el ecosistema Tidyverse. No se requiere experiencia previa en programación, pero es útil estar familiarizado con conceptos básicos de análisis de datos.</p>
-<p>Para aprovechar al máximo el curso, te recomendamos revisar el libro “R for Data Science” (<a href="https://r4ds.hadley.nz/" target="_blank">versión en inglés</a> o <a href="https://es.r4ds.hadley.nz/" target="_blank">versión en español</a>), especialmente los capítulos introductorios.</p>
-<p>Necesitarás tu propia computadora portátil con una versión reciente de R (4.5.2 o más nueva) y RStudio (1.1.401 o más nuevo) así como varios paquetes de R instalados.</p>
+<p>Este curso está diseñado para personas que desean aprender programación en R desde cero o que cuentan con nociones básicas y desean consolidar sus habilidades en el ecosistema <strong>Tidyverse</strong> y el manejo de datos espaciales con <strong>sf</strong>. No se requiere experiencia previa en programación, pero sí familiaridad elemental con el uso de datos en tablas u hojas de cálculo.</p>
+<p>Para aprovechar al máximo las sesiones, recomendamos revisar el libro <em>R for Data Science</em> (<a href="https://r4ds.hadley.nz/">versión en inglés</a> o <a href="https://es.r4ds.hadley.nz/">versión en español</a>), especialmente los capítulos introductorios.</p>
+<p>Necesitarás tu propia computadora portátil con una versión reciente de <strong>R</strong> (4.3.0 o superior) y <strong>RStudio Desktop</strong> (versión 2023 o más reciente), así como los paquetes indicados a continuación.</p>
+<hr>
 <section id="requisitos-técnicos" class="level2">
 <h2 class="anchored" data-anchor-id="requisitos-técnicos">Requisitos Técnicos</h2>
 <section id="instalar-r-y-rstudio" class="level3">
-<h3 class="anchored" data-anchor-id="instalar-r-y-rstudio">Instalar R y RStudio</h3>
-<p>Descarga e instala los siguientes programas:</p>
+<h3 class="anchored" data-anchor-id="instalar-r-y-rstudio">1. Instalar R y RStudio</h3>
+<p>Descarga e instala los siguientes programas en este orden:</p>
 <ol type="1">
-<li><strong>R</strong> (versión 4.6.0 o superior): <a href="https://cloud.r-project.org" target="_blank">cloud.r-project.org</a></li>
-<li><strong>RStudio</strong> (versión 1.1.401 o superior): <a href="https://posit.co/download/rstudio-desktop/" target="_blank">posit.co/download/rstudio-desktop/</a></li>
-<li><strong>Rtools 45</strong> (solo Windows): <a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank">cran.r-project.org/bin/windows/Rtools/</a></li>
+<li><strong>R</strong> (versión 4.3.0 o superior): <a href="https://cloud.r-project.org">cloud.r-project.org</a></li>
+<li><strong>RStudio Desktop</strong> (versión reciente): <a href="https://posit.co/download/rstudio-desktop/">posit.co/download/rstudio-desktop/</a></li>
+<li><strong>Rtools</strong> (solo para Windows): <a href="https://cran.r-project.org/bin/windows/Rtools/">cran.r-project.org/bin/windows/Rtools/</a> (instala la versión compatible con tu versión de R).</li>
 </ol>
+<hr>
 </section>
 <section id="instalar-paquetes-de-r" class="level3">
-<h3 class="anchored" data-anchor-id="instalar-paquetes-de-r">Instalar Paquetes de R</h3>
-<p>Puedes instalar todos los paquetes necesarios ejecutando el siguiente código en la consola de R:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"janitor"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">"here"</span>, <span class="st">"writexl"</span>, <span class="st">"readxl"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"sf"</span>, <span class="st">"pdftools"</span>, <span class="st">"visdat"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"tm"</span>, <span class="st">"remotes"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Paquetes adicionales</strong> que se usarán en el curso:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stringr.plus (para manipulación avanzada de texto)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"johncassil/stringr.plus"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Para ejecutar el código, abre RStudio. Copia y pega el código en el panel de consola (por defecto en la parte inferior izquierda) y presiona Enter. Deberían aparecer varios mensajes. Revisa estos mensajes en busca de errores y soluciónalos si es necesario. Se pueden ignorar advertencias y otros mensajes informativos.</p>
+<h3 class="anchored" data-anchor-id="instalar-paquetes-de-r">2. Instalar Paquetes de R</h3>
+<p>Abre RStudio y pega el siguiente código en la consola (panel inferior izquierdo), luego presiona <code>Enter</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes principales y esenciales del curso</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>paquetes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>, <span class="co"># dlyr, tidyr, readr, ggplot2, tibble, etc.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,   <span class="co"># Limpieza de nombres de variables y tablas</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"readxl"</span>,    <span class="co"># Lectura de archivos Excel (.xlsx, .xls)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"writexl"</span>,   <span class="co"># Escritura y exportación a Excel</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sf"</span>         <span class="co"># Simple Features para análisis geoespacial vectorial</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(paquetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Durante la instalación aparecerán varios mensajes informativos en la consola. Revisa que no existan mensajes de error (<code>Error in...</code>). Las advertencias (<code>Warning</code>) son normales y no impiden el funcionamiento.</p>
+<hr>
 </section>
 <section id="descripción-de-los-paquetes-principales" class="level3">
-<h3 class="anchored" data-anchor-id="descripción-de-los-paquetes-principales">Descripción de los Paquetes Principales</h3>
-<section id="paquetes-de-tidyverse-y-manipulación-de-datos" class="level4">
-<h4 class="anchored" data-anchor-id="paquetes-de-tidyverse-y-manipulación-de-datos">Paquetes de Tidyverse y Manipulación de Datos</h4>
+<h3 class="anchored" data-anchor-id="descripción-de-los-paquetes-principales">3. Descripción de los Paquetes Principales</h3>
+<section id="ecosistema-tidyverse-y-manipulación-de-datos" class="level4">
+<h4 class="anchored" data-anchor-id="ecosistema-tidyverse-y-manipulación-de-datos">Ecosistema Tidyverse y Manipulación de Datos</h4>
 <ul>
-<li><strong>tidyverse</strong>: Colección de paquetes para ciencia de datos (dplyr, tidyr, ggplot2, readr, etc.)</li>
-<li><strong>janitor</strong>: Limpieza de nombres de variables y datos</li>
-<li><strong>here</strong>: Manejo de rutas de archivos de forma reproducible</li>
-<li><strong>readxl/writexl</strong>: Lectura y escritura de archivos Excel</li>
-<li><strong>visdat</strong>: Visualización de tipos de datos</li>
-<li><strong>tm</strong>: Procesamiento de texto</li>
-<li><strong>stringr.plus</strong>: Funciones adicionales para manipulación de cadenas de texto</li>
+<li><strong>tidyverse</strong>: Metapaquete que carga las herramientas estándar de la ciencia de datos en R:
+<ul>
+<li><code>readr</code>: Lectura rápida de archivos de texto delimitados (CSV, TSV).</li>
+<li><code>dplyr</code>: Gramática para manipulación, filtrado, creación de variables y resúmenes.</li>
+<li><code>tidyr</code>: Herramientas para organizar tablas en formato ordenado (<em>Tidy Data</em>).</li>
+<li><code>ggplot2</code>: Creación de gráficos declarativos basados en la gramática de los gráficos.</li>
+</ul></li>
+<li><strong>janitor</strong>: Funciones prácticas para limpiar nombres de columnas (<code>clean_names()</code>) e identificar filas o columnas vacías.</li>
+<li><strong>readxl / writexl</strong>: Módulos especializados para interactuar con hojas de cálculo de Microsoft Excel sin dependencias externas.</li>
 </ul>
 </section>
-<section id="paquetes-espaciales" class="level4">
-<h4 class="anchored" data-anchor-id="paquetes-espaciales">Paquetes Espaciales</h4>
+<section id="paquete-espacial" class="level4">
+<h4 class="anchored" data-anchor-id="paquete-espacial">Paquete Espacial</h4>
 <ul>
-<li><strong>sf</strong>: Simple Features - Paquete principal para datos espaciales vectoriales (puntos, líneas, polígonos)
+<li><strong>sf (Simple Features)</strong>: Estándar moderno de R para el análisis de geometrías vectoriales (puntos, líneas y polígonos):
 <ul>
-<li>Compatible con tidyverse</li>
-<li>Lee/escribe múltiples formatos: shapefile, geopackage, geojson, etc.</li>
-<li>Integración perfecta con ggplot2 mediante <code>geom_sf()</code></li>
+<li>Integración total con la filosofía y funciones del Tidyverse.</li>
+<li>Compatibilidad para leer y escribir GeoPackage (<code>.gpkg</code>), Shapefile (<code>.shp</code>) y GeoJSON.</li>
+<li>Integración directa con <code>ggplot2</code> mediante la capa <code>geom_sf()</code>.</li>
 </ul></li>
 </ul>
-<p><strong>Paquetes espaciales opcionales</strong> (para análisis avanzado):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes adicionales para trabajo espacial avanzado</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>spatial_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"terra"</span>, <span class="st">"mapview"</span>, <span class="st">"leaflet"</span>, <span class="st">"tmap"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(spatial_packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>terra</strong>: Datos ráster (elevación, temperatura, imágenes satelitales)</li>
-<li><strong>mapview</strong>: Visualización interactiva de datos espaciales</li>
-<li><strong>leaflet</strong>: Mapas web interactivos</li>
-<li><strong>tmap</strong>: Mapas temáticos estáticos e interactivos</li>
-</ul>
+</section>
+<section id="paquetes-opcionales-análisis-espacial-avanzado" class="level4">
+<h4 class="anchored" data-anchor-id="paquetes-opcionales-análisis-espacial-avanzado">Paquetes Opcionales (Análisis Espacial Avanzado)</h4>
+<p>Si deseas explorar visualizaciones espaciales interactivas más adelante:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>paquetes_espaciales_extra <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mapview"</span>, <span class="st">"leaflet"</span>, <span class="st">"tmap"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(paquetes_espaciales_extra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
 </section>
 </section>
+</section>
+<section id="verificación-del-entorno" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-del-entorno">Verificación del Entorno</h2>
+<p>Para confirmar que la instalación fue exitosa y que el motor espacial <code>sf</code> opera correctamente en tu equipo, ejecuta estas líneas en RStudio:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Verificar carga de paquetes esenciales</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Comprobar funcionamiento básico de sf</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>punto_prueba <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">71.9675</span>, <span class="sc">-</span><span class="fl">13.5319</span>)) <span class="co"># Coordenadas aproximadas de Cusco</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(punto_prueba)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Si el comando imprime <code>POINT (-71.9675 -13.5319)</code> sin errores, ¡tu entorno está 100% listo para comenzar!</p>
+<hr>
 </section>
 <section id="datos-del-curso" class="level2">
 <h2 class="anchored" data-anchor-id="datos-del-curso">Datos del Curso</h2>
-<p>Los archivos de datos que se utilizarán en el curso están disponibles en la carpeta <code>data/</code> del repositorio del curso. Incluyen:</p>
-<section id="datos-tabulares" class="level3">
-<h3 class="anchored" data-anchor-id="datos-tabulares">Datos Tabulares</h3>
+<p>Todos los archivos requeridos para las prácticas del curso están disponibles en la carpeta <code>data/</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Descarga directa de datos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Puedes descargar el paquete completo de datos con un solo clic:<br>
+📥 <a href="materials/data/data_introduccion_r.zip"><strong>Descargar Todos los Materiales del Curso (ZIP, ~7 MB)</strong></a><br>
+Descomprime este archivo en la carpeta de tu proyecto de RStudio para tener la subcarpeta <code>data/</code> lista para las sesiones.</p>
+</div>
+</div>
+<section id="archivos-incluidos-en-el-paquete" class="level3">
+<h3 class="anchored" data-anchor-id="archivos-incluidos-en-el-paquete">Archivos incluidos en el paquete:</h3>
 <ul>
-<li><code>catalogo_planes.csv</code>, <code>catalogo_planes.txt</code>, <code>catalogo_planes.xlsx</code>: Datos de ejemplo en diferentes formatos</li>
+<li><strong>Planes y catálogos</strong>: <code>catalogo_planes.csv</code>, <code>catalogo_planes.xlsx</code>, <code>catalogo_planes.txt</code></li>
+<li><strong>Datos demográficos</strong>: <code>poblacion_peru.csv</code>, <code>indicadoresCPV2017.xlsx</code>, <code>indicadores_demograficos.xlsx</code></li>
+<li><strong>Capas vectoriales espaciales</strong>: <code>DEPARTAMENTO.gpkg</code>, <code>distritos_cusco.gpkg</code>, <code>distritos_cusco.shp</code> (+ <code>.shx</code>, <code>.dbf</code>, <code>.prj</code>)</li>
+<li><strong>Centros poblados y ciudades</strong>: <code>ciudades_1.csv</code>, <code>ciudades_mundo.csv</code>, reportes de <code>ANTA</code> y <code>HUAROCONDO</code> (CSV y XLSX)</li>
+<li><strong>Tablas maestras de codificación</strong>: <code>departamento.csv</code>, <code>provincia.csv</code>, <code>distritos.csv</code></li>
 </ul>
-</section>
-<section id="datos-espaciales" class="level3">
-<h3 class="anchored" data-anchor-id="datos-espaciales">Datos Espaciales</h3>
-<ul>
-<li><code>DEPARTAMENTO.gpkg</code>: Datos espaciales vectoriales de departamentos del Perú en formato GeoPackage
-<ul>
-<li>Geometría: Polígonos</li>
-<li>Sistema de coordenadas: WGS84 (EPSG:4326)</li>
-<li>Atributos: Nombres de departamentos, capitales, regiones</li>
-</ul></li>
-</ul>
-</section>
-<section id="verificar-instalación-de-sf" class="level3">
-<h3 class="anchored" data-anchor-id="verificar-instalación-de-sf">Verificar instalación de sf</h3>
-<p>Después de instalar los requisitos, verifica que sf funciona correctamente:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Si no hay errores, la instalación fue exitosa</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

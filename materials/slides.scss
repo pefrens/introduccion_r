@@ -4,13 +4,13 @@
 
 $font-family-sans-serif: 'Asap', 'Asap Condensed', 'Spline Sans', 'Tahoma', 'Arial', sans-serif;
 $font-family-serif: 'Literata', 'Bodoni MT', 'Bodoni 72', 'Georgia', 'Times', serif;
-$presentation-heading-color: #28A87D;
+$presentation-heading-color: #1F6A78;
 $presentation-heading-font-weight: 800;
-$link-color: #28a87d;
-$link-color-dark: #79dfbd;
-$link-color-visited: #28A87D;
-$link-color-hover: #28A87D;
-$presentation-selection-background-color: #C2D8D0;
+$link-color: #D27C5D;
+$link-color-dark: #86A9B0;
+$link-color-visited: #1F6A78;
+$link-color-hover: #D27C5D;
+$presentation-selection-background-color: #86A9B0;
 $presentation-title-slide-text-align: "left";
 $presentation-block-margin: .0375rem;
 
@@ -21,7 +21,7 @@ h1.title {
   font-size: 1.8em;
   font-style: italic;
   font-weight: 800;
-  color: #28A87D;
+  color: #1F6A78;
   line-height: 1.07;
   text-align: center;
   margin-bottom: .4em;
@@ -52,7 +52,7 @@ p.subtitle {
 }
 
 .backgrounds .title-slide {
-  background-color: #c9f2e4
+  background-color: #F7E7D3;
 }
 
 h1, h2, h3, h4, body {
@@ -114,7 +114,7 @@ h2 > code {
 
 
 .lightable-minimal.lightable-hover tbody tr:hover { 
-  background-color: #28a87d !important;
+  background-color: #1F6A78 !important;
   color: #ffffff;
 }
 
@@ -160,10 +160,10 @@ code>a, code>span {
 }
 
 a:link,a:visited {
-  color: #28a87d;
+  color: #1F6A78;
 }
-a:hov {
-  color: #79dfbd;
+a:hover {
+  color: #D27C5D;
 }
 
 .small {
@@ -192,37 +192,37 @@ a:hov {
 }
 
 .reveal .slide .question {
-  border-left: 3px solid #28a87d;
+  border-left: 3px solid #D27C5D;
   padding: 0.5rem 0.5rem 0.2rem 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0.3rem;
-  background: #d9f6ec;
+  background: #F7E7D3;
 }
 
 .reveal .slide .poll {
-  border-left: 3px solid #FFD166;
+  border-left: 3px solid #D27C5D;
   padding: 0.5rem 0.5rem 0.2rem 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0.3rem;
-  background: #FFEDC2;
+  background: #F7E7D3;
 }
 
 .reveal .slide .recap {
-  border-left: 3px solid #663399;
+  border-left: 3px solid #1F6A78;
   padding: 0.5rem 0.5rem 0.2rem 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  background: #e6d9f2;
+  background: rgba(134, 169, 176, 0.2);
 }
 
 .simple-highlight-ylw {
- background-color: #FFD166;
+ background-color: #F7E7D3;
  padding: 0.1em 0.2em;
  font-weight: bold;
 }
 
 .simple-highlight-grn {
- background-color: #79dfbd;
+ background-color: rgba(134, 169, 176, 0.35);
  padding: 0.1em 0.2em;
  font-weight: bold;
 }
@@ -238,7 +238,7 @@ a:hov {
   top: -0.15em;
   border-width: 2.7px;
   border-style: solid;
-  border-color: #28a87d;
+  border-color: #D27C5D;
   position: absolute;
   border-right-color: transparent;
   width: 100%;
@@ -257,7 +257,7 @@ a:hov {
   padding: 0.05em 0.29em;
   border-width: 2.7px;
   border-style: solid;
-  border-color: #28a87d;
+  border-color: #D27C5D;
   border-left-color: transparent;
   border-top-color: transparent;
   position:absolute;

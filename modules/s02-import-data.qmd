@@ -1,35 +1,44 @@
 ---
-title: "Importar y revisar datos"
-subtitle: "<span class='code'>Sesion 2</span>"
+title: "Importar y Revisar Datos"
+subtitle: "<span class='code'>Sesión 2</span>"
 image: "images/02-text.png"
 tbl-colwidths: [5,20,75]
 ---
+
 ```{=html}
 <iframe class="slide-deck" src="../materials/02-importing-data.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
 ```
 
 <a href='../materials/02-importing-data.html' target="_blank">Ver diapositivas en pantalla completa</a>
 
-# Esquema
+# Esquema de la sesión
 
-- Importar CSV, Excel y geopackage
-- Revisar estructura y tipos
-- Limpiar nombres de columnas
-- Flujo de importacion reproducible
+- Importación de datos delimitados por comas (CSV) con `readr::read_csv()`.
+- Lectura de hojas de cálculo de Microsoft Excel con `readxl::read_excel()`.
+- Introducción a la lectura de formatos geoespaciales con `sf::read_sf()`.
+- Auditoría inicial de tablas: inspección de tipos con `glimpse()` y `summary()`.
+- Limpieza y estandarización automática de nombres de variables con `janitor::clean_names()`.
+- Exportación de resultados procesados a disco (`write_csv()`, `write_xlsx()`).
 
-# Objetivo de la sesion
+# Objetivo de la sesión
 
-Construir un flujo de importacion limpio y verificable para datos tabulares y espaciales.
+Construir un flujo de trabajo reproducible para cargar datos externos en R, diagnosticando y corrigiendo inconsistencias en nombres de columnas y tipos de datos antes del análisis.
 
-# Datos usados
+# Conexión con el curso
 
-- `data/catalogo_planes.csv`
-- `data/catalogo_planes.xlsx`
-- `data/DEPARTAMENTO.gpkg`
+En la [Sesión 1](s01-fundamentals.qmd) vimos la estructura interna de los data frames creados en memoria. En esta sesión damos el salto hacia datos del mundo real, aprendiendo a leer archivos almacenados en el disco local y preparándolos para la manipulación avanzada con `dplyr` en la [Sesión 3](s03-dplyr.qmd).
 
-# Practica guiada
+# Datos utilizados
+
+- `data/catalogo_planes.csv`: Catálogo de planes territoriales en formato plano delimitado por comas.
+- `data/catalogo_planes.xlsx`: Misma información provista en formato de hoja de cálculo Excel.
+- `data/DEPARTAMENTO.gpkg`: Capa vectorial con límites departamentales del Perú.
+- `data/ciudades_1.csv`: Dataset complementario para práctica de valores faltantes (`na`).
+
+# Práctica guiada
 
 ```r
+# Cargar librerías necesarias
 library(readr)
 library(readxl)
 library(janitor)
@@ -38,28 +47,53 @@ library(sf)
 ```
 
 ```r
+# 1. Lectura de CSV y limpieza de nombres
 planes_csv <- read_csv("data/catalogo_planes.csv") |>
   clean_names()
 
+# 2. Lectura de Excel
 planes_xlsx <- read_excel("data/catalogo_planes.xlsx") |>
   clean_names()
 
+# 3. Lectura de capa espacial GeoPackage
 departamentos <- read_sf("data/DEPARTAMENTO.gpkg")
 ```
 
 ```r
+# 4. Inspección y auditoría de la estructura
 glimpse(planes_csv)
 glimpse(planes_xlsx)
+
+# Verificar dimensiones y columnas
+dim(planes_csv)
+names(planes_csv)
+
+# Inspeccionar sistema de coordenadas de la capa espacial
 st_crs(departamentos)
 ```
 
-# Ejercicios
+```r
+# 5. Manejo explícito de valores faltantes (NA)
+ciudades <- read_csv(
+  "data/ciudades_1.csv",
+  na = c("N/A", "", "Sin dato")
+) |> 
+  clean_names()
 
-1. Comparar `planes_csv` y `planes_xlsx` en numero de filas y columnas.
-2. Estandarizar tipos de 2 columnas con `mutate()`.
-3. Calcular area en km2 para `departamentos`.
-4. Guardar `planes_csv` limpio como `csv`.
+glimpse(ciudades)
+```
+
+# Ejercicios propuestos
+
+1. Comparar `planes_csv` y `planes_xlsx` verificando si coinciden en número de filas y tipos de columnas.
+2. Identificar si existen valores `NA` en las columnas clave (`departamento`, `estado`).
+3. Usar `st_crs(departamentos)` para averiguar cuál es el código EPSG del sistema de referencia de coordenadas de la capa geográfica.
+4. Exportar el objeto limpio `planes_csv` a un nuevo archivo llamado `data/catalogo_planes_limpio.csv` usando `write_csv()`.
 
 # Resultado esperado
 
-Tener objetos listos para analisis, con nombres limpios y tipos revisados.
+Disponer de data frames y objetos espaciales importados correctamente en el entorno de R, con nombres en minúsculas y formato sintáctico limpio, listos para ser transformados.
+
+---
+
+[← Volver a Sesión 1: Fundamentos](s01-fundamentals.qmd) | [**Avanzar a Sesión 3: dplyr - Manipulación de Datos →**](s03-dplyr.qmd)
